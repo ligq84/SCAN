@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CompanyMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		OA_COMPANY
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		COMPANY_ID,	
+		NAME,	
+		CODE,	
+		PROVINCE,	
+		CITY,	
+		AREA,	
+		ADDRESS,	
+		POSTAL_CODE,	
+		NATURE,	
+		BUSINESS_LICENSE,	
+		ORGANIZATION_NUMBER,	
+		ECONOMIC_TYPE,	
+		REGISTERED_CAPITAL,	
+		COMPANY_URL,	
+		ISSUING_AUTHORITY,	
+		START_TIME,	
+		END_TIME,	
+		CORPORATION,	
+		TECHNOLOGY_DIRECTOR,	
+		FINANCIAL_PRINCIPAL,	
+		NUMBER_EMPLOYEE,	
+		NUMBER_PM,	
+		NUMBER_SENIOR,	
+		NUMBER_INTERMEDIATE,	
+		NUMBER_PRIMARY,	
+		NUMBER_TOTAL,	
+		COMPANY_DESC,	
+		CONTACTS_NAME,	
+		CONTACTS_TELEPHONE,	
+		CONTACTS_MAIL,	
+		CONTACTS_FAX,	
+		START_BANK,	
+		BRANCH_BANK,	
+		ACCOUNT_BANK,	
+		IMAGE_BUSINESS,	
+		IMAGE_ORGANIZATION,	
+		IMAGE_SECURITY,	
+		IMAGE_CORPORATION_IDCARD_POSITIVE,	
+		IMAGE_CORPORATION_IDCARD_SIDE,	
+		IMAGE_OTHER1,	
+		IMAGE_OTHER2,	
+		IMAGE_OTHER3,	
+		IMAGE_OTHER4,	
+		IMAGE_OTHER5
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{COMPANY_ID},	
+		#{NAME},	
+		#{CODE},	
+		#{PROVINCE},	
+		#{CITY},	
+		#{AREA},	
+		#{ADDRESS},	
+		#{POSTAL_CODE},	
+		#{NATURE},	
+		#{BUSINESS_LICENSE},	
+		#{ORGANIZATION_NUMBER},	
+		#{ECONOMIC_TYPE},	
+		#{REGISTERED_CAPITAL},	
+		#{COMPANY_URL},	
+		#{ISSUING_AUTHORITY},	
+		#{START_TIME},	
+		#{END_TIME},	
+		#{CORPORATION},	
+		#{TECHNOLOGY_DIRECTOR},	
+		#{FINANCIAL_PRINCIPAL},	
+		#{NUMBER_EMPLOYEE},	
+		#{NUMBER_PM},	
+		#{NUMBER_SENIOR},	
+		#{NUMBER_INTERMEDIATE},	
+		#{NUMBER_PRIMARY},	
+		#{NUMBER_TOTAL},	
+		#{COMPANY_DESC},	
+		#{CONTACTS_NAME},	
+		#{CONTACTS_TELEPHONE},	
+		#{CONTACTS_MAIL},	
+		#{CONTACTS_FAX},	
+		#{START_BANK},	
+		#{BRANCH_BANK},	
+		#{ACCOUNT_BANK},	
+		#{IMAGE_BUSINESS},	
+		#{IMAGE_ORGANIZATION},	
+		#{IMAGE_SECURITY},	
+		#{IMAGE_CORPORATION_IDCARD_POSITIVE},	
+		#{IMAGE_CORPORATION_IDCARD_SIDE},	
+		#{IMAGE_OTHER1},	
+		#{IMAGE_OTHER2},	
+		#{IMAGE_OTHER3},	
+		#{IMAGE_OTHER4},	
+		#{IMAGE_OTHER5}
+
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			COMPANY_ID = #{COMPANY_ID}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			COMPANY_ID = #{COMPANY_ID},
+			NAME = #{NAME},
+			CODE = #{CODE},
+			PROVINCE = #{PROVINCE},
+			CITY = #{CITY},
+			AREA = #{AREA},
+			ADDRESS = #{ADDRESS},
+			POSTAL_CODE = #{POSTAL_CODE},
+			NATURE = #{NATURE},
+			BUSINESS_LICENSE = #{BUSINESS_LICENSE},
+			ORGANIZATION_NUMBER = #{ORGANIZATION_NUMBER},
+			ECONOMIC_TYPE = #{ECONOMIC_TYPE},
+			REGISTERED_CAPITAL = #{REGISTERED_CAPITAL},
+			COMPANY_URL = #{COMPANY_URL},
+			ISSUING_AUTHORITY = #{ISSUING_AUTHORITY},
+			START_TIME = #{START_TIME},
+			END_TIME = #{END_TIME},
+			CORPORATION = #{CORPORATION},
+			TECHNOLOGY_DIRECTOR = #{TECHNOLOGY_DIRECTOR},
+			FINANCIAL_PRINCIPAL = #{FINANCIAL_PRINCIPAL},
+			NUMBER_EMPLOYEE = #{NUMBER_EMPLOYEE},
+			NUMBER_PM = #{NUMBER_PM},
+			NUMBER_SENIOR = #{NUMBER_SENIOR},
+			NUMBER_INTERMEDIATE = #{NUMBER_INTERMEDIATE},
+			NUMBER_PRIMARY = #{NUMBER_PRIMARY},
+			NUMBER_TOTAL = #{NUMBER_TOTAL},
+			COMPANY_DESC = #{COMPANY_DESC},
+			CONTACTS_NAME = #{CONTACTS_NAME},
+			CONTACTS_TELEPHONE = #{CONTACTS_TELEPHONE},
+			CONTACTS_MAIL = #{CONTACTS_MAIL},
+			CONTACTS_FAX = #{CONTACTS_FAX},
+			START_BANK = #{START_BANK},
+			BRANCH_BANK = #{BRANCH_BANK},
+			ACCOUNT_BANK = #{ACCOUNT_BANK},
+			IMAGE_BUSINESS = #{IMAGE_BUSINESS},
+			IMAGE_ORGANIZATION = #{IMAGE_ORGANIZATION},
+			IMAGE_SECURITY = #{IMAGE_SECURITY},
+			IMAGE_CORPORATION_IDCARD_POSITIVE = #{IMAGE_CORPORATION_IDCARD_POSITIVE},
+			IMAGE_CORPORATION_IDCARD_SIDE = #{IMAGE_CORPORATION_IDCARD_SIDE},
+			IMAGE_OTHER1 = #{IMAGE_OTHER1},
+			IMAGE_OTHER2 = #{IMAGE_OTHER2},
+			IMAGE_OTHER3 = #{IMAGE_OTHER3},
+			IMAGE_OTHER4 = #{IMAGE_OTHER4},
+			IMAGE_OTHER5 = #{IMAGE_OTHER5}
+		where 
+		COMPANY_ID = #{COMPANY_ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			COMPANY_ID = #{COMPANY_ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			COMPANY_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- fh313596790qq(青苔) -->
+</mapper>
