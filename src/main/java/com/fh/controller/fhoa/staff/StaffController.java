@@ -2,9 +2,13 @@ package com.fh.controller.fhoa.staff;
 
 import com.fh.controller.base.BaseController;
 import com.fh.entity.Page;
+import com.fh.entity.system.Dictionaries;
+import com.fh.entity.system.Role;
 import com.fh.service.fhoa.datajur.DatajurManager;
 import com.fh.service.fhoa.department.DepartmentManager;
 import com.fh.service.fhoa.staff.StaffManager;
+import com.fh.service.system.dictionaries.DictionariesManager;
+import com.fh.service.system.role.RoleManager;
 import com.fh.util.*;
 import net.sf.json.JSONArray;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -37,7 +41,10 @@ public class StaffController extends BaseController {
 	private DepartmentManager departmentService;
 	@Resource(name="datajurService")
 	private DatajurManager datajurService;
-	
+	@Resource(name="dictionariesService")
+	private DictionariesManager dictionariesService;
+	@Resource(name="roleService")
+	private RoleManager roleService;
 	/**保存
 	 * @param
 	 * @throws Exception
@@ -152,6 +159,41 @@ public class StaffController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		List<Dictionaries>	provinceList = dictionariesService.listSubDictByParentId("1"); //用传过来的ID获取此ID下的子列表数据
+		List<PageData> pnList = new ArrayList<PageData>();
+		for(Dictionaries d :provinceList){
+			PageData pdf = new PageData();
+			pdf.put("DICTIONARIES_ID", d.getDICTIONARIES_ID());
+			pdf.put("NAME", d.getNAME());
+			pnList.add(pdf);
+		}
+		mv.addObject("PROVINCEList",pnList);
+
+		if(null!=pd.get("CITY")){
+			List<Dictionaries>	varList = dictionariesService.listSubDictByParentId(pd.get("PROVINCE").toString()); //用传过来的ID获取此ID下的子列表数据
+			List<PageData> pdList = new ArrayList<PageData>();
+			for(Dictionaries d :varList){
+				PageData pdf = new PageData();
+				pdf.put("DICTIONARIES_ID", d.getDICTIONARIES_ID());
+				pdf.put("NAME", d.getNAME());
+				pdList.add(pdf);
+			}
+			mv.addObject("CITYList",pdList);
+		}
+		if(null!=pd.get("AREA")){
+			List<Dictionaries>	varList = dictionariesService.listSubDictByParentId(pd.get("CITY").toString()); //用传过来的ID获取此ID下的子列表数据
+			List<PageData> pdList = new ArrayList<PageData>();
+			for(Dictionaries d :varList){
+				PageData pdf = new PageData();
+				pdf.put("DICTIONARIES_ID", d.getDICTIONARIES_ID());
+				pdf.put("NAME", d.getNAME());
+				pdList.add(pdf);
+			}
+			mv.addObject("AREAList",pdList);
+		}
+		List<Role> roleList = roleService.listAllRolesByPId(pd);//列出会员组角色
+		mv.addObject("roleList", roleList);
+
 		List<PageData> zdepartmentPdList = new ArrayList<PageData>();
 		JSONArray arr = JSONArray.fromObject(departmentService.listAllDepartmentToSelect(Jurisdiction.getDEPARTMENT_ID(),zdepartmentPdList));
 		mv.addObject("zTreeNodes", (null == arr ?"":arr.toString()));

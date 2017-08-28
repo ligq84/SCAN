@@ -250,28 +250,11 @@
 		
 		//新增
 		function add(){
-			 top.jzts();
-			 var diag = new top.Dialog();
-			 diag.Drag=true;
-			 diag.Title ="新增";
-			 diag.URL = '<%=basePath%>staff/goAdd.do';
-			 diag.Width = 800;
-			 diag.Height = 500;
-			 diag.Modal = true;				//有无遮罩窗口
-			 diag. ShowMaxButton = true;	//最大化按钮
-		     diag.ShowMinButton = true;		//最小化按钮
-			 diag.CancelEvent = function(){ //关闭事件
-				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 if('${page.currentPage}' == '0'){
-						 top.jzts();
-						 setTimeout("self.location=self.location",100);
-					 }else{
-						 nextPage(${page.currentPage});
-					 }
-				}
-				diag.close();
-			 };
-			 diag.show();
+			console.log("<%=basePath%>staff/goAdd.do");
+			// 创建Form
+			var form = $('<form action="<%=basePath%>staff/goAdd.do" method="get"></form>');
+			$(document.body).append(form);
+			form.submit()
 		}
 		
 		//删除

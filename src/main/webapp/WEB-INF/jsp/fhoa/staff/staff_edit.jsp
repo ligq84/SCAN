@@ -13,6 +13,9 @@
 	<script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
 	<!-- jsp文件头和头部 -->
 	<%@ include file="../../system/index/top.jsp"%>
+		<!-- 下拉框 -->
+	<link rel="stylesheet" href="static/ace/css/chosen.css" />
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
 	<!-- 日期框 -->
 	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
 	<!-- 树形下拉框start -->
@@ -33,24 +36,175 @@
 			<div class="page-content">
 				<div class="row">
 					<div class="col-xs-12">
-					
-					<form action="staff/${msg }.do" name="Form" id="Form" method="post">
+					<form action="staff/${msg}.do" name="Form" id="Form" method="post" class="form-horizontal">
 						<input type="hidden" name="STAFF_ID" id="STAFF_ID" value="${pd.STAFF_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
-						<table id="table_report" class="table table-striped table-bordered table-hover">
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">姓名:</td>
-								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="50" placeholder="这里输入姓名" title="姓名" style="width:98%;"/></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">性别:</td>
-								<td>
-									<select name="SEX" id="SEX" style="width:98%;">
+						<div class="widget-header widget-header-blue widget-header-flat wi1dget-header-large">
+							<h4 class="lighter">基础信息</h4>
+						</div>
+						<div class="row" style="margin-left: 15px;">
+							<div class="form-group" style="margin-top: 10px">
+								<label for="NAME" class="col-sm-1 control-label">姓名:</label>
+								<div class="col-sm-2">
+									<input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="50" placeholder="这里输入姓名" title="姓名" class="form-control"/>
+								</div>
+								<label for="SEX" class="col-sm-1 control-label">性别:</label>
+								<div class="col-sm-2">
+									<select name="SEX" id="SEX" class="form-control">
 										<option <c:if test="${pd.SEX == '男'}">selected</c:if>>男</option>
 										<option <c:if test="${pd.SEX == '女'}">selected</c:if>>女</option>
 									</select>
-								</td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">出生日期:</td>
-								<td><input class="span10 date-picker" name="BIRTHDAY" id="BIRTHDAY" value="${pd.BIRTHDAY}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="出生日期" title="出生日期" style="width:98%;"/></td>
-							</tr>
+								</div>
+								<label for="BIRTHDAY" class="col-sm-1 control-label">出生日期:</label>
+								<div class="col-sm-2">
+									<input class="span10 date-picker" name="BIRTHDAY" id="BIRTHDAY" value="${pd.BIRTHDAY}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="出生日期" title="出生日期" class="form-control"/>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-left: 15px;">
+							<div class="form-group" style="margin-top: 10px">
+								<label for="NAME" class="col-sm-1 control-label">籍贯:</label>
+								<div class="col-sm-2">
+									<input type="text" name="FADDRESS" id="FADDRESS" value="${pd.FADDRESS}" maxlength="100" placeholder="这里输入籍贯" title="籍贯" style="width:98%;"/>
+								</div>
+								<label for="SEX" class="col-sm-1 control-label">电话:</label>
+								<div class="col-sm-2">
+									<input type="text" name="TEL" id="TEL" value="${pd.TEL}" maxlength="20" placeholder="这里输入电话" title="电话" style="width:98%;"/>
+								</div>
+								<label for="BIRTHDAY" class="col-sm-1 control-label">身份证号:</label>
+								<div class="col-sm-3">
+									<input type="text" name="SFID" id="SFID" value="${pd.SFID}" maxlength="20" placeholder="这里输入身份证号" title="身份证号" style="width:98%;"/>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-left: 15px;">
+							<div class="form-group" style="margin-top: 10px">
+								<label for="NAME" class="col-sm-1 control-label">现住址:</label>
+								<div class="col-sm-2">
+									<select id="PROVINCE" name="PROVINCE" class="chosen-select form-control" data-placeholder="请选择省份" style="vertical-align:top;">
+										<c:forEach items="${PROVINCEList}" var="province">
+											<option value="${province.DICTIONARIES_ID }" <c:if test="${province.DICTIONARIES_ID == pd.PROVINCE}">selected</c:if>>${province.NAME }</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="col-sm-2">
+									<select id="CITY" name="CITY"   class="chosen-select form-control" data-placeholder="请选择城市" style="vertical-align:top;">
+										<c:forEach items="${CITYList}" var="city">
+											<option value="${city.DICTIONARIES_ID }" <c:if test="${city.DICTIONARIES_ID == pd.CITY}">selected</c:if>>${city.NAME }</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="col-sm-2">
+									<select id="AREA" name="AREA"  class="chosen-select form-control" data-placeholder="请选择区域" style="vertical-align:top;">
+										<c:forEach items="${AREAList}" var="area">
+											<option value="${area.DICTIONARIES_ID }" <c:if test="${area.DICTIONARIES_ID == pd.AREA}">selected</c:if>>${area.NAME }</option>
+										</c:forEach>
+									</select>
+								</div>
+								<div class="col-sm-3">
+									<input type="text" name="ADDRESS" id="ADDRESS" value="${pd.ADDRESS}" maxlength="100" placeholder="这里输入详细地址" title="详细地址" style="width: 98%"/>
+								</div>
+							</div>
+						</div>
+						<div class="widget-header widget-header-blue widget-header-flat wi1dget-header-large">
+							<h4 class="lighter">学历信息</h4>
+						</div>
+						<div class="row" style="margin-left: 15px;">
+							<div class="form-group" style="margin-top: 10px">
+								<label for="NAME" class="col-sm-1 control-label">最高学历:</label>
+								<div class="col-sm-2">
+									<input type="text" name="EDUCATION" id="EDUCATION" value="${pd.EDUCATION}" maxlength="10" placeholder="这里输入学历" title="学历" style="width:98%;"/>
+								</div>
+								<label for="NAME" class="col-sm-1 control-label">毕业学校:</label>
+								<div class="col-sm-2">
+									<input type="text" name="SCHOOL" id="SCHOOL" value="${pd.SCHOOL}" maxlength="30" placeholder="这里输入毕业学校" title="毕业学校" style="width:98%;"/>
+								</div>
+								<label for="NAME" class="col-sm-1 control-label">毕业时间:</label>
+								<div class="col-sm-2">
+									<input class="span10 date-picker" name="BIRTHDAY" id="graduate" value="${pd.GRADUATE}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="毕业时间" title="毕业时间" style="width:98%;"/>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-left: 15px;">
+							<div class="form-group" style="margin-top: 10px">
+								<label for="NAME" class="col-sm-1 control-label">专业:</label>
+								<div class="col-sm-2">
+									<input type="text" name="MAJOR" id="MAJOR" value="${pd.MAJOR}" maxlength="30" placeholder="这里输入专业" title="专业" style="width:98%;"/>
+								</div>
+								<label for="NAME" class="col-sm-1 control-label">邮箱:</label>
+								<div class="col-sm-2">
+									<input type="text" name="EMAIL" id="EMAIL" value="${pd.EMAIL}" maxlength="50" placeholder="这里输入邮箱" title="邮箱" style="width:98%;"/>
+								</div>
+							</div>
+						</div>
+						<div class="widget-header widget-header-blue widget-header-flat wi1dget-header-large">
+							<h4 class="lighter">工作信息</h4>
+						</div>
+						<div class="row" style="margin-left: 15px;">
+							<div class="form-group" style="margin-top: 10px">
+								<label for="NAME" class="col-sm-1 control-label">工作时间:</label>
+								<div class="col-sm-2">
+									<input class="span10 date-picker" name="JOBJOINTIME" id="JOBJOINTIME" value="${pd.JOBJOINTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="首次参加工作时间" title="参加工作时间" style="width:98%;"/>
+								</div>
+								<label for="NAME" class="col-sm-1 control-label">入职时间:</label>
+								<div class="col-sm-2">
+									<input class="span10 date-picker" name="DJOINTIME" id="DJOINTIME" value="${pd.DJOINTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="进本单位时间" title="进本单位时间" style="width:98%;"/>
+								</div>
+								<label for="NAME" class="col-sm-1 control-label">所在部门:</label>
+								<div class="col-sm-2">
+									<input type="hidden" name="DEPARTMENT_ID" id="DEPARTMENT_ID" value="${pd.DEPARTMENT_ID}"/>
+									<div class="selectTree" id="selectTree"></div>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-left: 15px;">
+							<div class="form-group" style="margin-top: 10px">
+								<label for="NAME" class="col-sm-1 control-label">所在岗位:</label>
+								<div class="col-sm-2">
+									<input type="text" name="POST" id="POST" value="${pd.POST}" maxlength="30" placeholder="这里输入现岗位" title="现岗位" style="width:98%;"/>
+								</div>
+								<label for="NAME" class="col-sm-1 control-label">在职状态:</label>
+								<div class="col-sm-2">
+									<select name="STATUS" id="STATUS" class="form-control">
+										<option <c:if test="${pd.STATUS == 0}">selected</c:if>>在职</option>
+										<option <c:if test="${pd.STATUS == 1}">selected</c:if>>离职</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="row" style="margin-left: 15px;">
+							<div class="form-group" style="margin-top: 10px">
+								<label for="NAME" class="col-sm-1 control-label">人员简介:</label>
+								<div class="col-sm-4">
+									<textarea name="FUNCTIONS" id="FUNCTIONS" rows="6" cols="95">${pd.FUNCTIONS}</textarea>
+								</div>
+							</div>
+						</div>
+						<div class="widget-header widget-header-blue widget-header-flat wi1dget-header-large">
+							<h4 class="lighter">系统账号</h4>
+						</div>
+						<div class="row" style="margin-left: 15px;">
+							<div class="form-group" style="margin-top: 10px">
+								<label for="USERNAME" class="col-sm-1 control-label">系统账号:</label>
+								<div class="col-sm-2">
+									<input type="text" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="30" placeholder="这里输入系统账号" title="系统账号" style="width:98%;"/>
+								</div>
+								<label for="PASSWORD" class="col-sm-1 control-label">登录密码:</label>
+								<div class="col-sm-2">
+									<input type="text" name="PASSWORD" id="PASSWORD" value="${pd.PASSWORD}" maxlength="30" placeholder="这里输入登录密码" title="登录密码" style="width:98%;"/>
+								</div>
+								<label for="role_id" class="col-sm-1 control-label">系统角色:</label>
+								<div class="col-sm-2">
+									<select class="chosen-select form-control" name="ROLE_ID" id="role_id" data-placeholder="这里输入系统角色" style="vertical-align:top;"  title="系统角色" style="width:98%;" >
+										<option value=""></option>
+										<c:forEach items="${roleList}" var="role">
+											<option value="${role.ROLE_ID }" <c:if test="${role.ROLE_ID == pd.ROLE_ID }">selected</c:if>>${role.ROLE_NAME }</option>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+						</div>
+						<table id="table_report" class="table table-striped table-bordered table-hover" style="margin-top: 10px">
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">英文:</td>
 								<td><input type="text" name="NAME_EN" id="NAME_EN" value="${pd.NAME_EN}" maxlength="50" placeholder="这里输入英文" title="英文" style="width:98%;"/></td>
@@ -73,59 +227,29 @@
 								<td><input class="span10 date-picker" name="PJOINTIME" id="PJOINTIME" value="${pd.PJOINTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="入团时间" title="入团时间" style="width:100%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">身份证号:</td>
-								<td colspan="10"><input type="text" name="SFID" id="SFID" value="${pd.SFID}" maxlength="20" placeholder="这里输入身份证号" title="身份证号" style="width:98%;"/></td>
-							</tr>
-						</table>
-						<table id="table_report" class="table table-striped table-bordered table-hover">
-							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">所在部门:</td>
 								<td>
-									<input type="hidden" name="DEPARTMENT_ID" id="DEPARTMENT_ID" value="${pd.DEPARTMENT_ID}"/>
-									<div class="selectTree" id="selectTree"></div>
+
 								</td>
 								<td style="width:75px;text-align: right;padding-top: 13px;">所在岗位:</td>
-								<td><input type="text" name="POST" id="POST" value="${pd.POST}" maxlength="30" placeholder="这里输入现岗位" title="现岗位" style="width:98%;"/></td>
+								<td></td>
 								<td style="width:75px;text-align: right;padding-top: 13px;">岗位类别:</td>
 								<td><input type="text" name="JOBTYPE" id="JOBTYPE" value="${pd.JOBTYPE}" maxlength="30" placeholder="这里输入岗位类别" title="岗位类别" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">工作职责:</td>
-								<td colspan="10"><input type="text" name="FUNCTIONS" id="FUNCTIONS" value="${pd.FUNCTIONS}" maxlength="255" placeholder="这里输入职责" title="职责" style="width:98%;"/></td>
+								<td colspan="10"></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">工作时间:</td>
-								<td><input class="span10 date-picker" name="JOBJOINTIME" id="JOBJOINTIME" value="${pd.JOBJOINTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="首次参加工作时间" title="参加工作时间" style="width:98%;"/></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">入职时间:</td>
-								<td><input class="span10 date-picker" name="DJOINTIME" id="DJOINTIME" value="${pd.DJOINTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="进本单位时间" title="进本单位时间" style="width:98%;"/></td>
+								<td></td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">:</td>
+								<td></td>
 								<td style="width:75px;text-align: right;padding-top: 13px;">上岗时间:</td>
 								<td><input class="span10 date-picker" name="POJOINTIME" id="POJOINTIME" value="${pd.POJOINTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="上岗时间" title="上岗时间" style="width:98%;"/></td>
 							</tr>
-						</table>
-						
-						<table id="table_report" class="table table-striped table-bordered table-hover">
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">邮箱:</td>
-								<td><input type="text" name="EMAIL" id="EMAIL" value="${pd.EMAIL}" maxlength="50" placeholder="这里输入邮箱" title="邮箱" style="width:98%;"/></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">电话:</td>
-								<td colspan="10"><input type="text" name="TEL" id="TEL" value="${pd.TEL}" maxlength="20" placeholder="这里输入电话" title="电话" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">籍贯:</td>
-								<td colspan="10"><input type="text" name="FADDRESS" id="FADDRESS" value="${pd.FADDRESS}" maxlength="100" placeholder="这里输入籍贯" title="籍贯" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">现住址:</td>
-								<td colspan="10"><input type="text" name="ADDRESS" id="ADDRESS" value="${pd.ADDRESS}" maxlength="100" placeholder="这里输入现住址" title="现住址" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">毕业学校:</td>
-								<td><input type="text" name="SCHOOL" id="SCHOOL" value="${pd.SCHOOL}" maxlength="30" placeholder="这里输入毕业学校" title="毕业学校" style="width:98%;"/></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">最高学历:</td>
-								<td><input type="text" name="EDUCATION" id="EDUCATION" value="${pd.EDUCATION}" maxlength="10" placeholder="这里输入学历" title="学历" style="width:98%;"/></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">专业:</td>
-								<td><input type="text" name="MAJOR" id="MAJOR" value="${pd.MAJOR}" maxlength="30" placeholder="这里输入专业" title="专业" style="width:98%;"/></td>
-							</tr>
+
+
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">职业职称:</td>
 								<td><input type="text" name="FTITLE" id="FTITLE" value="${pd.FTITLE}" maxlength="30" placeholder="这里输入职称" title="职称" style="width:98%;"/></td>
@@ -173,6 +297,8 @@
 	<%@ include file="../../system/index/foot.jsp"%>
 	<!-- 日期框 -->
 	<script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
+<!-- 下拉框 -->
+<script src="static/ace/js/chosen.jquery.js"></script>
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 		<script type="text/javascript">
@@ -488,7 +614,39 @@
 			//日期框
 			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
 		});
-		
+		function change2(value){
+			$.ajax({
+				type: "POST",
+				url: '<%=basePath%>linkage/getLevels.do?tm='+new Date().getTime(),
+				data: {DICTIONARIES_ID:value},
+				dataType:'json',
+				cache: false,
+				success: function(data){
+					$("#CITY").html('<option>请选择</option>');
+//					$("#level4").html('<option>请选择</option>');
+					$.each(data.list, function(i, dvar){
+						$("#CITY").append("<option value="+dvar.DICTIONARIES_ID+">"+dvar.NAME+"</option>");
+					});
+				}
+			});
+		}
+
+		//第三级值改变事件(初始第四级)
+		function change3(value){
+			$.ajax({
+				type: "POST",
+				url: '<%=basePath%>linkage/getLevels.do?tm='+new Date().getTime(),
+				data: {DICTIONARIES_ID:value},
+				dataType:'json',
+				cache: false,
+				success: function(data){
+					$("#level4").html('<option>请选择</option>');
+					$.each(data.list, function(i, dvar){
+						$("#level4").append("<option value="+dvar.DICTIONARIES_ID+">"+dvar.NAME+"</option>");
+					});
+				}
+			});
+		}
 		//下拉树
 		var defaultNodes = {"treeNodes":${zTreeNodes}};
 		function initComplete(){
@@ -506,7 +664,48 @@
 			$("#selectTree").render();
 			$("#selectTree2_input").val("${null==depname?'请选择':depname}");
 		}
+		$(function() {
+			$('#role_id').chosen({allow_single_deselect:true});
+			//下拉框
+			if(!ace.vars['touch']) {
+				$('#PROVINCE').chosen({allow_single_deselect:true}).change(function(){
+					$.ajax({
+						type: "POST",
+						url: '<%=basePath%>linkage/getLevels.do?tm='+new Date().getTime(),
+						data: {DICTIONARIES_ID:$("#PROVINCE").val()},
+						dataType:'json',
+						cache: false,
+						success: function(data){
+							$("#CITY").html('<option>请选择城市</option>');
+							$("#AREA").html('<option>请选择区域</option>');
+							$.each(data.list, function(i, dvar){
+								$("#CITY").append("<option value="+dvar.DICTIONARIES_ID+">"+dvar.NAME+"</option>");
+							});
+							$('#CITY').trigger("chosen:updated");
+							$('#AREA').trigger("chosen:updated");
+						}
 
+					});
+				});
+				$('#CITY').chosen({allow_single_deselect:true}).change(function(){
+					$.ajax({
+						type: "POST",
+						url: '<%=basePath%>linkage/getLevels.do?tm='+new Date().getTime(),
+						data: {DICTIONARIES_ID:$("#CITY").val()},
+						dataType:'json',
+						cache: false,
+						success: function(data){
+							$("#AREA").html('<option>请选择区域</option>');
+							$.each(data.list, function(i, dvar){
+								$("#AREA").append("<option value="+dvar.DICTIONARIES_ID+">"+dvar.NAME+"</option>");
+							});
+							$('#AREA').trigger("chosen:updated")
+						}
+					});
+				});
+				$('#AREA').chosen();
+			}
+		});
 		</script>
 </body>
 </html>

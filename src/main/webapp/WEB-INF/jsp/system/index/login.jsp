@@ -78,7 +78,7 @@
 	</c:if>
 	<canvas class="cavs"></canvas>
 	<div style="width:100%;text-align: center;margin: 0 auto;position: absolute;">
-		<input type="hidden" name="COMPANYCODE" id="COMPANYCODE" value="TEST" placeholder="COMPANYCODE" />
+		<%--<input type="hidden" name="COMPANYCODE" id="COMPANYCODE" value="TEST" placeholder="COMPANYCODE" />--%>
 		<!-- 登录 -->
 		<div id="windows1">
 		<div id="loginbox" >
@@ -87,6 +87,15 @@
 					<h3>
 						<img src="static/login/logo.png" alt="Logo" />
 					</h3>
+				</div>
+				<div class="control-group">
+					<div class="controls">
+						<div class="main_input_box">
+							<span class="add-on bg_lg">
+							<i><img height="37" src="static/login/user.png" /></i>
+							</span><input type="text" name="COMPANYCODE" id="COMPANYCODE"value="TEST" placeholder="请输入企业编码" />
+						</div>
+					</div>
 				</div>
 				<div class="control-group">
 					<div class="controls">
