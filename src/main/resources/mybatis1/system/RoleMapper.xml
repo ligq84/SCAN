@@ -44,8 +44,7 @@
 		<include refid="Field"></include>
 		from
 		<include refid="tableName"></include>
-		where
-			PARENT_ID = #{ROLE_ID}
+		where deleted= 0 and  PARENT_ID = #{ROLE_ID} and company_id=#{COMPANY_ID}
 		ORDER BY ROLE_ID
 	</select>
 	
@@ -78,12 +77,18 @@
 	</update>
 	
 	<!-- 删除角色  -->
-	<delete id="deleteRoleById" parameterType="String">
-		delete from 
+	<!--<delete id="deleteRoleById" parameterType="String">-->
+		<!--delete from -->
+		<!--<include refid="tableName"></include>-->
+		<!--where ROLE_ID=#{ROLE_ID}-->
+	<!--</delete>-->
+	<update id="deleteRoleById" parameterType="Role">
+		update
 		<include refid="tableName"></include>
+		set deleted=1
 		where ROLE_ID=#{ROLE_ID}
-	</delete>
-	
+	</update>
+
 	<!-- 给当前角色附加菜单权限  -->
 	<update id="updateRoleRights" parameterType="Role">
 		update 

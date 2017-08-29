@@ -4,6 +4,7 @@ import com.fh.controller.base.BaseController;
 import com.fh.entity.Page;
 import com.fh.entity.system.Dictionaries;
 import com.fh.entity.system.Role;
+import com.fh.entity.system.User;
 import com.fh.service.fhoa.datajur.DatajurManager;
 import com.fh.service.fhoa.department.DepartmentManager;
 import com.fh.service.fhoa.staff.StaffManager;
@@ -11,6 +12,7 @@ import com.fh.service.system.dictionaries.DictionariesManager;
 import com.fh.service.system.role.RoleManager;
 import com.fh.util.*;
 import net.sf.json.JSONArray;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -49,24 +51,28 @@ public class StaffController extends BaseController {
 	 * @param
 	 * @throws Exception
 	 */
+
 	@RequestMapping(value="/save")
-	public ModelAndView save() throws Exception{
+	@ResponseBody
+	public ResultData save() throws Exception{
+
 		logBefore(logger, Jurisdiction.getUsername()+"新增Staff");
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
-		ModelAndView mv = this.getModelAndView();
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){ return ResultData.init(ResultData.FAIL,"没有权限",null);} //校验权限
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		//ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("STAFF_ID", this.get32UUID());	//主键
 		pd.put("USER_ID", "");
+		pd.put("COMPANY_ID",user.getCompanyId());
 		//绑定账号ID
 		staffService.save(pd);					//保存员工信息到员工表
 		String DEPARTMENT_IDS = departmentService.getDEPARTMENT_IDS(pd.getString("DEPARTMENT_ID"));//获取某个部门所有下级部门ID
 		pd.put("DATAJUR_ID", pd.getString("STAFF_ID")); //主键
 		pd.put("DEPARTMENT_IDS", DEPARTMENT_IDS);		//部门ID集
 		datajurService.save(pd);						//把此员工默认部门及以下部门ID保存到组织数据权限表
-		mv.addObject("msg","success");
-		mv.setViewName("save_result");
-		return mv;
+		return ResultData.init(ResultData.SUCCESS,"添加成功",null);
 	}
 	
 	/**删除
@@ -156,9 +162,12 @@ public class StaffController extends BaseController {
 	 */
 	@RequestMapping(value="/goAdd")
 	public ModelAndView goAdd()throws Exception{
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+
 		List<Dictionaries>	provinceList = dictionariesService.listSubDictByParentId("1"); //用传过来的ID获取此ID下的子列表数据
 		List<PageData> pnList = new ArrayList<PageData>();
 		for(Dictionaries d :provinceList){

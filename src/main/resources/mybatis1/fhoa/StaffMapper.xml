@@ -40,7 +40,12 @@
 		ADDRESS,	
 		USER_ID,	
 		BZ,	
-		STAFF_ID
+		STAFF_ID,
+		COMPANY_ID,
+		STATUS,
+		PROVINCE,
+		CITY,
+		AREA
 	</sql>
 	
 	<!-- 字段值 -->
@@ -76,7 +81,12 @@
 		#{ADDRESS},	
 		#{USER_ID},	
 		#{BZ},	
-		#{STAFF_ID}
+		#{STAFF_ID},
+		#{COMPANY_ID},
+		#{STATUS},
+		#{PROVINCE},
+		#{CITY},
+		#{AREA}
 	</sql>
 	
 	<!-- 新增-->

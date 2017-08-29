@@ -27,37 +27,39 @@
 				<div class="page-content">
 					<div class="row">
 						<div class="col-xs-12">
-							<table style="margin-top: 8px;">
-								<tr height="35">
-									<c:if test="${QX.add == 1 }">
-									<td style="width:69px;"><a href="javascript:addRole(0);" class="btn btn-sm btn-success">新增组</a></td>
-									</c:if>
-										<c:choose>
-										<c:when test="${not empty roleList}">
-										<c:forEach items="${roleList}" var="role" varStatus="vs">
-											<td style="width:100px;" class="center" <c:choose><c:when test="${pd.ROLE_ID == role.ROLE_ID}">bgcolor="#FFC926" onMouseOut="javascript:this.bgColor='#FFC926';"</c:when><c:otherwise>bgcolor="#E5E5E5" onMouseOut="javascript:this.bgColor='#E5E5E5';"</c:otherwise></c:choose>  onMouseMove="javascript:this.bgColor='#FFC926';" >
-												<a href="role.do?ROLE_ID=${role.ROLE_ID }" style="text-decoration:none; display:block;"><i class="menu-icon fa fa-users"></i><font color="#666666">${role.ROLE_NAME }</font></a>
-											</td>
-											<td style="width:5px;"></td>
-										</c:forEach>
-										</c:when>
-										<c:otherwise>
-											<tr>
-											<td colspan="100">没有相关数据</td>
-											</tr>
-										</c:otherwise>
-										</c:choose>
-									<td></td>
-								</tr>
-							</table>
+							<%--<table style="margin-top: 8px;">--%>
+								<%--<tr height="35">--%>
+									<%--<c:if test="${QX.add == 1 }">--%>
+									<%--<td style="width:69px;"><a href="javascript:addRole(0);" class="btn btn-sm btn-success">新增组</a></td>--%>
+									<%--</c:if>--%>
+										<%--<c:choose>--%>
+										<%--<c:when test="${not empty roleList}">--%>
+										<%--<c:forEach items="${roleList}" var="role" varStatus="vs">--%>
+											<%--<td style="width:100px;" class="center" <c:choose><c:when test="${pd.ROLE_ID == role.ROLE_ID}">bgcolor="#FFC926" onMouseOut="javascript:this.bgColor='#FFC926';"</c:when><c:otherwise>bgcolor="#E5E5E5" onMouseOut="javascript:this.bgColor='#E5E5E5';"</c:otherwise></c:choose>  onMouseMove="javascript:this.bgColor='#FFC926';" >--%>
+												<%--<a href="role.do?ROLE_ID=${role.ROLE_ID }" style="text-decoration:none; display:block;"><i class="menu-icon fa fa-users"></i><font color="#666666">${role.ROLE_NAME }</font></a>--%>
+											<%--</td>--%>
+											<%--<td style="width:5px;"></td>--%>
+										<%--</c:forEach>--%>
+										<%--</c:when>--%>
+										<%--<c:otherwise>--%>
+											<%--<tr>--%>
+											<%--<td colspan="100">没有相关数据</td>--%>
+											<%--</tr>--%>
+										<%--</c:otherwise>--%>
+										<%--</c:choose>--%>
+									<%--<td></td>--%>
+								<%--</tr>--%>
+							<%--</table>--%>
 							
 							<table>
 								<tr height="7px;"><td colspan="100"></td></tr>
 								<tr>
-								<td><font color="#808080">本组：</font></td>
+								<td>
+									<%--<font color="#808080">本组：</font>--%>
+								</td>
 								<td>
 								<c:if test="${QX.edit == 1 }">
-								<a class="btn btn-mini btn-info" onclick="editRole('${pd.ROLE_ID }');">修改组名称<i class="icon-arrow-right  icon-on-right"></i></a>
+								<%--<a class="btn btn-mini btn-info" onclick="editRole('${pd.ROLE_ID }');">修改组名称<i class="icon-arrow-right  icon-on-right"></i></a>--%>
 								</c:if>
 									<c:choose>
 										<c:when test="${pd.ROLE_ID == '99'}">

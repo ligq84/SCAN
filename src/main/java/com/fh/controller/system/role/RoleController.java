@@ -1,15 +1,17 @@
 package com.fh.controller.system.role;
 
-import java.io.PrintWriter;
-import java.math.BigInteger;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
+import com.fh.controller.base.BaseController;
+import com.fh.entity.system.Menu;
+import com.fh.entity.system.Role;
+import com.fh.entity.system.User;
+import com.fh.service.system.appuser.AppuserManager;
+import com.fh.service.system.fhlog.FHlogManager;
+import com.fh.service.system.menu.MenuManager;
+import com.fh.service.system.role.RoleManager;
+import com.fh.service.system.user.UserManager;
+import com.fh.util.*;
 import net.sf.json.JSONArray;
-
+import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,19 +20,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fh.controller.base.BaseController;
-import com.fh.entity.system.Menu;
-import com.fh.entity.system.Role;
-import com.fh.service.system.appuser.AppuserManager;
-import com.fh.service.system.fhlog.FHlogManager;
-import com.fh.service.system.role.RoleManager;
-import com.fh.service.system.user.UserManager;
-import com.fh.service.system.menu.MenuManager;
-import com.fh.util.AppUtil;
-import com.fh.util.Jurisdiction;
-import com.fh.util.PageData;
-import com.fh.util.RightsHelper;
-import com.fh.util.Tools;
+import javax.annotation.Resource;
+import java.io.PrintWriter;
+import java.math.BigInteger;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 /** 
  * 类名称：RoleController 角色权限管理
  * 创建人：FH Q313596790
@@ -61,14 +56,19 @@ public class RoleController extends BaseController {
 	@RequestMapping
 	public ModelAndView list()throws Exception{
 		ModelAndView mv = this.getModelAndView();
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		PageData pd = new PageData();
 		try{
 			pd = this.getPageData();
 			if(pd.getString("ROLE_ID") == null || "".equals(pd.getString("ROLE_ID").trim())){
 				pd.put("ROLE_ID", "1");										//默认列出第一组角色(初始设计系统用户和会员组不能删除)
 			}
+			pd.put("COMPANY_ID",user.getCompanyId());
+
 			PageData fpd = new PageData();
 			fpd.put("ROLE_ID", "0");
+
 			List<Role> roleList = roleService.listAllRolesByPId(fpd);		//列出组(页面横向排列的一级组)
 			List<Role> roleList_z = roleService.listAllRolesByPId(pd);		//列出此组下架角色
 			pd = roleService.findObjectById(pd);							//取得点击的角色组(横排的)
@@ -110,6 +110,8 @@ public class RoleController extends BaseController {
 	public ModelAndView add()throws Exception{
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
 		logBefore(logger, Jurisdiction.getUsername()+"新增角色");
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		try{
@@ -127,6 +129,7 @@ public class RoleController extends BaseController {
 			pd.put("DEL_QX", "0");	//删除权限
 			pd.put("EDIT_QX", "0");	//修改权限
 			pd.put("CHA_QX", "0");	//查看权限
+			pd.put("COMPANY_ID",user.getCompanyId());
 			roleService.add(pd);
 			FHLOG.save(Jurisdiction.getUsername(), "新增角色:"+pd.getString("ROLE_NAME"));
 		} catch(Exception e){

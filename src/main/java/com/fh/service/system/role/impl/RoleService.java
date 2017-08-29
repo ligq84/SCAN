@@ -62,6 +62,7 @@ public class RoleService implements RoleManager{
 	 */
 	public void deleteRoleById(String ROLE_ID) throws Exception {
 		dao.delete("RoleMapper.deleteRoleById", ROLE_ID);
+		dao.update("RoleMapper.deleteRoleById", ROLE_ID);
 	}
 	
 	/**给当前角色附加菜单权限

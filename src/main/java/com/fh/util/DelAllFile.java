@@ -11,11 +11,11 @@ import java.io.File;
 public class DelAllFile {
 	
 	public static void main(String args[]) {
-		delFolder("e:/e/a");			//只删除e下面a及a下面所有文件和文件夹,e不会被删掉
+		//delFolder("e:/e/a");			//只删除e下面a及a下面所有文件和文件夹,e不会被删掉
 		//delFolder("D:/WEBSerser/apache-tomcat-8.0.15/me-webapps/UIMYSQL/WEB-INF/classes/../../admin00/ftl/code");	
 		//delFolder("D:\\WEBSerser\\apache-tomcat-8.0.15\\me-webapps\\UIMYSQL\\admin00\\ftl\\code");
 		//delFolder("D:/WEBSerser/apache-tomcat-8.0.15/me-webapps/UIMYSQL/WEB-INF/classes/../../admin00/ftl/code");
-		System.out.println("deleted");
+		//System.out.println("deleted");
 	}
 
 	/**

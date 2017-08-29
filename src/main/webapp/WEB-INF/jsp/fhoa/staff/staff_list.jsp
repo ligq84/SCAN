@@ -250,7 +250,6 @@
 		
 		//新增
 		function add(){
-			console.log("<%=basePath%>staff/goAdd.do");
 			// 创建Form
 			var form = $('<form action="<%=basePath%>staff/goAdd.do" method="get"></form>');
 			$(document.body).append(form);
