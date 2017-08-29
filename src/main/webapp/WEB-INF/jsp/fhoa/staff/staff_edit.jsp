@@ -35,7 +35,6 @@
 		<div class="main-content-inner">
 			<div class="page-content">
 				<div class="row">
-					<div class="col-xs-12">
 					<form action="staff/${msg}.do" name="Form" id="Form" method="post" class="form-horizontal">
 						<input type="hidden" name="STAFF_ID" id="STAFF_ID" value="${pd.STAFF_ID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
@@ -204,83 +203,87 @@
 								</div>
 							</div>
 						</div>
-						<table id="table_report" class="table table-striped table-bordered table-hover" style="margin-top: 10px">
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">英文:</td>
-								<td><input type="text" name="NAME_EN" id="NAME_EN" value="${pd.NAME_EN}" maxlength="50" placeholder="这里输入英文" title="英文" style="width:98%;"/></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">婚否:</td>
-								<td>
-									<select name="MARITAL" id="MARITAL" style="width:98%;">
-										<option <c:if test="${pd.MARITAL == '未婚'}">selected</c:if>>未婚</option>
-										<option <c:if test="${pd.MARITAL == '已婚'}">selected</c:if>>已婚</option>
-									</select>
-								</td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">政治面貌:</td>
-								<td><input type="text" name="POLITICAL" id="POLITICAL" value="${pd.POLITICAL}" maxlength="30" placeholder="这里输入政治面貌" title="政治面貌" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">员工编号:</td>
-								<td><input type="text" name="BIANMA" id="BIANMA" value="${pd.BIANMA}" maxlength="100" placeholder="这里输入编码" title="编码" style="width:98%;"/></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">民族:</td>
-								<td><input type="text" name="NATION" id="NATION" value="${pd.NATION}" maxlength="10" placeholder="这里输入民族" title="民族" style="width:98%;"/></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">入团时间:</td>
-								<td><input class="span10 date-picker" name="PJOINTIME" id="PJOINTIME" value="${pd.PJOINTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="入团时间" title="入团时间" style="width:100%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">所在部门:</td>
-								<td>
+						<div class="row" style="margin-left:50px;text-align: center;">
+							<div class="form-group" style="margin-top: 10px">
+								<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
+								<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
+							</div>
+						</div>
+						<%--<table id="table_report" class="table table-striped table-bordered table-hover" style="margin-top: 10px">--%>
+							<%--<tr>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">英文:</td>--%>
+								<%--<td><input type="text" name="NAME_EN" id="NAME_EN" value="${pd.NAME_EN}" maxlength="50" placeholder="这里输入英文" title="英文" style="width:98%;"/></td>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">婚否:</td>--%>
+								<%--<td>--%>
+									<%--<select name="MARITAL" id="MARITAL" style="width:98%;">--%>
+										<%--<option <c:if test="${pd.MARITAL == '未婚'}">selected</c:if>>未婚</option>--%>
+										<%--<option <c:if test="${pd.MARITAL == '已婚'}">selected</c:if>>已婚</option>--%>
+									<%--</select>--%>
+								<%--</td>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">政治面貌:</td>--%>
+								<%--<td><input type="text" name="POLITICAL" id="POLITICAL" value="${pd.POLITICAL}" maxlength="30" placeholder="这里输入政治面貌" title="政治面貌" style="width:98%;"/></td>--%>
+							<%--</tr>--%>
+							<%--<tr>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">员工编号:</td>--%>
+								<%--<td><input type="text" name="BIANMA" id="BIANMA" value="${pd.BIANMA}" maxlength="100" placeholder="这里输入编码" title="编码" style="width:98%;"/></td>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">民族:</td>--%>
+								<%--<td><input type="text" name="NATION" id="NATION" value="${pd.NATION}" maxlength="10" placeholder="这里输入民族" title="民族" style="width:98%;"/></td>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">入团时间:</td>--%>
+								<%--<td><input class="span10 date-picker" name="PJOINTIME" id="PJOINTIME" value="${pd.PJOINTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="入团时间" title="入团时间" style="width:100%;"/></td>--%>
+							<%--</tr>--%>
+							<%--<tr>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">所在部门:</td>--%>
+								<%--<td>--%>
 
-								</td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">所在岗位:</td>
-								<td></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">岗位类别:</td>
-								<td><input type="text" name="JOBTYPE" id="JOBTYPE" value="${pd.JOBTYPE}" maxlength="30" placeholder="这里输入岗位类别" title="岗位类别" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">工作职责:</td>
-								<td colspan="10"></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">工作时间:</td>
-								<td></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">:</td>
-								<td></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">上岗时间:</td>
-								<td><input class="span10 date-picker" name="POJOINTIME" id="POJOINTIME" value="${pd.POJOINTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="上岗时间" title="上岗时间" style="width:98%;"/></td>
-							</tr>
+								<%--</td>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">所在岗位:</td>--%>
+								<%--<td></td>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">岗位类别:</td>--%>
+								<%--<td><input type="text" name="JOBTYPE" id="JOBTYPE" value="${pd.JOBTYPE}" maxlength="30" placeholder="这里输入岗位类别" title="岗位类别" style="width:98%;"/></td>--%>
+							<%--</tr>--%>
+							<%--<tr>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">工作职责:</td>--%>
+								<%--<td colspan="10"></td>--%>
+							<%--</tr>--%>
+							<%--<tr>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">工作时间:</td>--%>
+								<%--<td></td>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">:</td>--%>
+								<%--<td></td>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">上岗时间:</td>--%>
+								<%--<td><input class="span10 date-picker" name="POJOINTIME" id="POJOINTIME" value="${pd.POJOINTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="上岗时间" title="上岗时间" style="width:98%;"/></td>--%>
+							<%--</tr>--%>
 
 
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">职业职称:</td>
-								<td><input type="text" name="FTITLE" id="FTITLE" value="${pd.FTITLE}" maxlength="30" placeholder="这里输入职称" title="职称" style="width:98%;"/></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">资格证书:</td>
-								<td colspan="10"><input type="text" name="CERTIFICATE" id="CERTIFICATE" value="${pd.CERTIFICATE}" maxlength="30" placeholder="这里输入职业资格证" title="职业资格证" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">合同时长:</td>
-								<td><input type="number" name="CONTRACTLENGTH" id="CONTRACTLENGTH" value="${pd.CONTRACTLENGTH}" maxlength="32" placeholder="输入劳动合同时长" title="劳动合同时长" style="width:86%;"/>&nbsp;年</td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">签订日期:</td>
-								<td><input class="span10 date-picker" name="CSTARTTIME" id="CSTARTTIME" value="${pd.CSTARTTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="签订日期" title="签订日期" style="width:98%;"/></td>
-								<td style="width:75px;text-align: right;padding-top: 13px;">终止日期:</td>
-								<td><input class="span10 date-picker" name="CENDTIME" id="CENDTIME" value="${pd.CENDTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="终止日期" title="终止日期" style="width:98%;"/></td>
-							</tr>
-						</table>
-						<table id="table_report" class="table table-striped table-bordered table-hover">
-							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">备注:</td>
-								<td><input type="text" name="BZ" id="BZ" value="${pd.BZ}" maxlength="255" placeholder="这里输入备注" title="备注" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="text-align: center;" colspan="10">
-									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
-								</td>
-							</tr>
-						</table>
+							<%--<tr>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">职业职称:</td>--%>
+								<%--<td><input type="text" name="FTITLE" id="FTITLE" value="${pd.FTITLE}" maxlength="30" placeholder="这里输入职称" title="职称" style="width:98%;"/></td>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">资格证书:</td>--%>
+								<%--<td colspan="10"><input type="text" name="CERTIFICATE" id="CERTIFICATE" value="${pd.CERTIFICATE}" maxlength="30" placeholder="这里输入职业资格证" title="职业资格证" style="width:98%;"/></td>--%>
+							<%--</tr>--%>
+							<%--<tr>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">合同时长:</td>--%>
+								<%--<td><input type="number" name="CONTRACTLENGTH" id="CONTRACTLENGTH" value="${pd.CONTRACTLENGTH}" maxlength="32" placeholder="输入劳动合同时长" title="劳动合同时长" style="width:86%;"/>&nbsp;年</td>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">签订日期:</td>--%>
+								<%--<td><input class="span10 date-picker" name="CSTARTTIME" id="CSTARTTIME" value="${pd.CSTARTTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="签订日期" title="签订日期" style="width:98%;"/></td>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">终止日期:</td>--%>
+								<%--<td><input class="span10 date-picker" name="CENDTIME" id="CENDTIME" value="${pd.CENDTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="终止日期" title="终止日期" style="width:98%;"/></td>--%>
+							<%--</tr>--%>
+						<%--</table>--%>
+						<%--<table id="table_report" class="table table-striped table-bordered table-hover" style="border: 0px;">--%>
+							<%--<tr>--%>
+								<%--<td style="width:75px;text-align: right;padding-top: 13px;">备注:</td>--%>
+								<%--<td><input type="text" name="BZ" id="BZ" value="${pd.BZ}" maxlength="255" placeholder="这里输入备注" title="备注" style="width:98%;"/></td>--%>
+							<%--</tr>--%>
+							<%--<tr>--%>
+								<%--<td style="text-align: center;" colspan="10">--%>
+									<%----%>
+								<%--</td>--%>
+							<%--</tr>--%>
+						<%--</table>--%>
 						</div>
 						<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/><br/><img src="static/images/jiazai.gif" /><br/><h4 class="lighter block green">提交中...</h4></div>
 					</form>
-					</div>
 					<!-- /.col -->
 				</div>
 				<!-- /.row -->
@@ -315,16 +318,16 @@
 				$("#NAME").focus();
 			return false;
 			}
-			if($("#NAME_EN").val()==""){
-				$("#NAME_EN").tips({
-					side:3,
-		            msg:'请输入英文',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#NAME_EN").focus();
-			return false;
-			}
+//			if($("#NAME_EN").val()==""){
+//				$("#NAME_EN").tips({
+//					side:3,
+//		            msg:'请输入英文',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#NAME_EN").focus();
+//			return false;
+//			}
 			if($("#BIANMA").val()==""){
 				$("#BIANMA").tips({
 					side:3,
@@ -348,7 +351,7 @@
 			if($("#FUNCTIONS").val()==""){
 				$("#FUNCTIONS").tips({
 					side:3,
-		            msg:'请输入职责',
+		            msg:'请输入简介',
 		            bg:'#AE81FF',
 		            time:2
 		        });
@@ -405,16 +408,16 @@
 				$("#NATION").focus();
 			return false;
 			}
-			if($("#JOBTYPE").val()==""){
-				$("#JOBTYPE").tips({
-					side:3,
-		            msg:'请输入岗位类别',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#JOBTYPE").focus();
-			return false;
-			}
+//			if($("#JOBTYPE").val()==""){
+//				$("#JOBTYPE").tips({
+//					side:3,
+//		            msg:'请输入岗位类别',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#JOBTYPE").focus();
+//			return false;
+//			}
 			if($("#JOBJOINTIME").val()==""){
 				$("#JOBJOINTIME").tips({
 					side:3,
@@ -435,26 +438,26 @@
 				$("#FADDRESS").focus();
 			return false;
 			}
-			if($("#POLITICAL").val()==""){
-				$("#POLITICAL").tips({
-					side:3,
-		            msg:'请输入政治面貌',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#POLITICAL").focus();
-			return false;
-			}
-			if($("#PJOINTIME").val()==""){
-				$("#PJOINTIME").tips({
-					side:3,
-		            msg:'请输入入团时间',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#PJOINTIME").focus();
-			return false;
-			}
+//			if($("#POLITICAL").val()==""){
+//				$("#POLITICAL").tips({
+//					side:3,
+//		            msg:'请输入政治面貌',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#POLITICAL").focus();
+//			return false;
+//			}
+//			if($("#PJOINTIME").val()==""){
+//				$("#PJOINTIME").tips({
+//					side:3,
+//		            msg:'请输入入团时间',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#PJOINTIME").focus();
+//			return false;
+//			}
 			if($("#SFID").val()==""){
 				$("#SFID").tips({
 					side:3,
@@ -465,16 +468,16 @@
 				$("#SFID").focus();
 			return false;
 			}
-			if($("#MARITAL").val()==""){
-				$("#MARITAL").tips({
-					side:3,
-		            msg:'请输入婚姻状况',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#MARITAL").focus();
-			return false;
-			}
+//			if($("#MARITAL").val()==""){
+//				$("#MARITAL").tips({
+//					side:3,
+//		            msg:'请输入婚姻状况',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#MARITAL").focus();
+//			return false;
+//			}
 			if($("#DJOINTIME").val()==""){
 				$("#DJOINTIME").tips({
 					side:3,
@@ -495,16 +498,16 @@
 				$("#POST").focus();
 			return false;
 			}
-			if($("#POJOINTIME").val()==""){
-				$("#POJOINTIME").tips({
-					side:3,
-		            msg:'请输入上岗时间',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#POJOINTIME").focus();
-			return false;
-			}
+//			if($("#POJOINTIME").val()==""){
+//				$("#POJOINTIME").tips({
+//					side:3,
+//		            msg:'请输入上岗时间',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#POJOINTIME").focus();
+//			return false;
+//			}
 			if($("#EDUCATION").val()==""){
 				$("#EDUCATION").tips({
 					side:3,
@@ -535,56 +538,56 @@
 				$("#MAJOR").focus();
 			return false;
 			}
-			if($("#FTITLE").val()==""){
-				$("#FTITLE").tips({
-					side:3,
-		            msg:'请输入职称',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#FTITLE").focus();
-			return false;
-			}
-			if($("#CERTIFICATE").val()==""){
-				$("#CERTIFICATE").tips({
-					side:3,
-		            msg:'请输入职业资格证',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CERTIFICATE").focus();
-			return false;
-			}
-			if($("#CONTRACTLENGTH").val()==""){
-				$("#CONTRACTLENGTH").tips({
-					side:3,
-		            msg:'请输入劳动合同时长',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CONTRACTLENGTH").focus();
-			return false;
-			}
-			if($("#CSTARTTIME").val()==""){
-				$("#CSTARTTIME").tips({
-					side:3,
-		            msg:'请输入签订日期',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CSTARTTIME").focus();
-			return false;
-			}
-			if($("#CENDTIME").val()==""){
-				$("#CENDTIME").tips({
-					side:3,
-		            msg:'请输入终止日期',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#CENDTIME").focus();
-			return false;
-			}
+//			if($("#FTITLE").val()==""){
+//				$("#FTITLE").tips({
+//					side:3,
+//		            msg:'请输入职称',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#FTITLE").focus();
+//			return false;
+//			}
+//			if($("#CERTIFICATE").val()==""){
+//				$("#CERTIFICATE").tips({
+//					side:3,
+//		            msg:'请输入职业资格证',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#CERTIFICATE").focus();
+//			return false;
+//			}
+//			if($("#CONTRACTLENGTH").val()==""){
+//				$("#CONTRACTLENGTH").tips({
+//					side:3,
+//		            msg:'请输入劳动合同时长',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#CONTRACTLENGTH").focus();
+//			return false;
+//			}
+//			if($("#CSTARTTIME").val()==""){
+//				$("#CSTARTTIME").tips({
+//					side:3,
+//		            msg:'请输入签订日期',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#CSTARTTIME").focus();
+//			return false;
+//			}
+//			if($("#CENDTIME").val()==""){
+//				$("#CENDTIME").tips({
+//					side:3,
+//		            msg:'请输入终止日期',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#CENDTIME").focus();
+//			return false;
+//			}
 			if($("#ADDRESS").val()==""){
 				$("#ADDRESS").tips({
 					side:3,
@@ -595,16 +598,16 @@
 				$("#ADDRESS").focus();
 			return false;
 			}
-			if($("#BZ").val()==""){
-				$("#BZ").tips({
-					side:3,
-		            msg:'请输入备注',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#BZ").focus();
-			return false;
-			}
+//			if($("#BZ").val()==""){
+//				$("#BZ").tips({
+//					side:3,
+//		            msg:'请输入备注',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#BZ").focus();
+//			return false;
+//			}
 			$("#Form").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();
