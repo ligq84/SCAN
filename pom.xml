@@ -15,7 +15,7 @@
 		<!-- <spring.version>4.3.7.RELEASE</spring.version> -->
 		<spring.version>4.2.9.RELEASE</spring.version>
 		<mysql-connector-java.version>5.1.34</mysql-connector-java.version>
-		<java.home>D:\tool\JDK\jdk1.8.1_111</java.home>
+		<java.home>${env.JAVA_HOME}</java.home>
 
 	</properties>
 
