@@ -128,7 +128,7 @@ public class LoginController extends BaseController {
                         user.setLAST_LOGIN(pd.getString("LAST_LOGIN"));
                         user.setIP(pd.getString("IP"));
                         user.setSTATUS(pd.getString("STATUS"));
-                        user.setCompanyId(pd.get("COMPANYID").toString());
+                        user.setCompanyId(pd.get("COMPANY_ID").toString());
 						session.setAttribute(Const.SESSION_USER, user);			//把用户信息放session中
 						session.removeAttribute(Const.SESSION_SECURITY_CODE);	//清除登录验证码的session
 						//shiro加入身份验证

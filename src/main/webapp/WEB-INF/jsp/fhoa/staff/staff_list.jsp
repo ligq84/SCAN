@@ -251,7 +251,8 @@
 		//新增
 		function add(){
 			// 创建Form
-			var form = $('<form action="<%=basePath%>staff/goAdd.do" method="get"></form>');
+			var form = $('<form action="<%=basePath%>staff/goAdd.do" method="get"><input name="ZDEPARTMENT_ID" id="ZDEPARTMENT_ID" type="hidden" value="${pd.ZDEPARTMENT_ID }" />'+
+					'<input name="DEPARTMENT_ID" id="DEPARTMENT_ID" type="hidden" value="${pd.DEPARTMENT_ID }" /></form>');
 			$(document.body).append(form);
 			form.submit()
 		}
@@ -288,7 +289,8 @@
 				<%--diag.close();--%>
 			 <%--};--%>
 			 <%--diag.show();--%>
-			var form = $('<form action="<%=basePath%>staff/goEdit.do" method="get"><input type="text" name="STAFF_ID" value="'+Id+'"/></form>');
+			var form = $('<form action="<%=basePath%>staff/goEdit.do" method="get"><input type="text" name="STAFF_ID" value="'+Id+'"/><input name="ZDEPARTMENT_ID" id="ZDEPARTMENT_ID" type="hidden" value="${pd.ZDEPARTMENT_ID }" />'+
+					'<input name="DEPARTMENT_ID" id="DEPARTMENT_ID" type="hidden" value="${pd.DEPARTMENT_ID }" /></form>');
 			$(document.body).append(form);
 			form.submit()
 		}

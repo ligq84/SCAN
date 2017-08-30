@@ -172,7 +172,7 @@
 			a.TEL,	
 			a.SEX,
 			a.USER_ID,	
-			b.NAME DNAME
+			b.NAME as departmentName
 		from 
 		<include refid="tableName"></include> a LEFT JOIN oa_department b
 		on a.DEPARTMENT_ID = b.DEPARTMENT_ID

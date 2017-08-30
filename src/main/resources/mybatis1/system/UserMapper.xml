@@ -13,7 +13,7 @@
 		<result column="IP" property="IP"/>
 		<result column="STATUS" property="STATUS"/>
 		<result column="SKIN" property="SKIN"/>
-		<result column="COMPANYID" property="companyId"/>
+		<result column="COMPANY_ID" property="companyId"/>
 		<association property="role" column="ROLE_ID" javaType="Role">
 			<id column="ROLE_ID" property="ROLE_ID"/>
 			<result column="ROLE_NAME" property="ROLE_NAME"/>
@@ -59,7 +59,8 @@
 		SKIN,
 		EMAIL,
 		NUMBER,
-		PHONE
+		PHONE,
+		company_id
 	</sql>
 	
 	<!-- 字段值 -->
@@ -77,13 +78,13 @@
 		#{SKIN},
 		#{EMAIL},
 		#{NUMBER},
-		#{PHONE}
+		#{PHONE},
+		#{COMPANY_ID}
 	</sql>
 	
 	<!-- 判断用户名和密码 -->
 	<select id="getUserInfo" parameterType="pd" resultType="pd">
-		select a.USER_ID,a.USERNAME,a.PASSWORD,a.NAME,a.RIGHTS,a.ROLE_ID,a.LAST_LOGIN,a.IP,a.STATUS,a.BZ,a.SKIN,a.EMAIL,a.NUMBER,a.PHONE,a.COMPANY_CODE
-		,a.company_id as COMPANYID
+		select a.USER_ID,a.USERNAME,a.PASSWORD,a.NAME,a.RIGHTS,a.ROLE_ID,a.LAST_LOGIN,a.IP,a.STATUS,a.BZ,a.SKIN,a.EMAIL,a.NUMBER,a.PHONE,a.company_id as COMPANY_ID
 		from SYS_USER a
 		LEFT JOIN  OA_COMPANY B ON  a.company_id = b.company_id
 		where  deleted=0
@@ -119,13 +120,13 @@
 				r.ROLE_ID,
 				r.ROLE_NAME,
 				r.RIGHTS as ROLE_RIGHTS,
-				c.company_id as COMPANYID
+				c.company_id as COMPANY_ID
 		from 
 		<include refid="tableName"></include> u 
 		left join 
 		<include refid="roleTableName"></include> r 
 		on u.ROLE_ID=r.ROLE_ID
-		LEFT JOIN OA_COMPANY c ON c.code = u.COMPANY_CODE
+		LEFT JOIN OA_COMPANY c ON c.COMPANY_ID = u.COMPANY_ID
 		where u.STATUS=0  and c.code is not NULL
 		and u.USER_ID=#{USER_ID}
 	</select>
@@ -171,11 +172,12 @@
 				u.NUMBER,
 				u.PHONE,
 				r.ROLE_ID,
-				r.ROLE_NAME
+				r.ROLE_NAME,
+		        u.COMPANY_ID
 		from <include refid="tableName"></include> u, <include refid="roleTableName"></include> r 
 		where u.ROLE_ID = r.ROLE_ID 
 		and u.USERNAME != 'admin'
-		and r.PARENT_ID = '1' and u.deleted = 0 and u.company_id =#{COMPANY_ID}
+		and r.PARENT_ID = '1' and u.deleted = 0 and u.company_id = #{pd.COMPANY_ID}
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(

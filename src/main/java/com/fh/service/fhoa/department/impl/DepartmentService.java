@@ -186,6 +186,7 @@ public class DepartmentService implements DepartmentManager{
 			sb.append("'");
 			sb.append(",");
 		}
+		sb.append("'"+DEPARTMENT_ID+"',");
 		sb.append("'fh')");
 		return sb.toString();
 	}
