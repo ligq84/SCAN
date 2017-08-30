@@ -1,18 +1,16 @@
 package com.fh.controller.system.user;
 
-import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
-
+import com.fh.controller.base.BaseController;
+import com.fh.entity.Page;
+import com.fh.entity.system.Role;
+import com.fh.entity.system.User;
+import com.fh.service.system.fhlog.FHlogManager;
+import com.fh.service.system.menu.MenuManager;
+import com.fh.service.system.role.RoleManager;
+import com.fh.service.system.user.UserManager;
+import com.fh.util.*;
 import org.apache.shiro.crypto.hash.SimpleHash;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -23,24 +21,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fh.controller.base.BaseController;
-import com.fh.entity.Page;
-import com.fh.entity.system.Role;
-import com.fh.service.system.fhlog.FHlogManager;
-import com.fh.service.system.menu.MenuManager;
-import com.fh.service.system.role.RoleManager;
-import com.fh.service.system.user.UserManager;
-import com.fh.util.AppUtil;
-import com.fh.util.Const;
-import com.fh.util.FileDownload;
-import com.fh.util.FileUpload;
-import com.fh.util.GetPinyin;
-import com.fh.util.Jurisdiction;
-import com.fh.util.ObjectExcelRead;
-import com.fh.util.PageData;
-import com.fh.util.ObjectExcelView;
-import com.fh.util.PathUtil;
-import com.fh.util.Tools;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /** 
  * 类名称：UserController
@@ -70,8 +56,11 @@ public class UserController extends BaseController {
 	@RequestMapping(value="/listUsers")
 	public ModelAndView listUsers(Page page)throws Exception{
 		ModelAndView mv = this.getModelAndView();
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		pd.put("COMPANY_ID",user.getCompanyId());
 		String keywords = pd.getString("keywords");				//关键词检索条件
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
@@ -119,10 +108,13 @@ public class UserController extends BaseController {
 	@RequestMapping(value="/goAddU")
 	public ModelAndView goAddU()throws Exception{
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("ROLE_ID", "1");
+		pd.put("COMPANY_ID",user.getCompanyId());
 		List<Role> roleList = roleService.listAllRolesByPId(pd);//列出所有系统用户角色
 		mv.setViewName("system/user/user_edit");
 		mv.addObject("msg", "saveU");

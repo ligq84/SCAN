@@ -82,20 +82,21 @@
 	
 	<!-- 判断用户名和密码 -->
 	<select id="getUserInfo" parameterType="pd" resultType="pd">
-		select a.*,b.company_id as COMPANYID FROM (
-		select <include refid="Field"></include>,COMPANY_CODE from
-		<include refid="tableName"></include>
-		where 1=1
+		select a.USER_ID,a.USERNAME,a.PASSWORD,a.NAME,a.RIGHTS,a.ROLE_ID,a.LAST_LOGIN,a.IP,a.STATUS,a.BZ,a.SKIN,a.EMAIL,a.NUMBER,a.PHONE,a.COMPANY_CODE
+		,a.company_id as COMPANYID
+		from SYS_USER a
+		LEFT JOIN  OA_COMPANY B ON  a.company_id = b.company_id
+		where  deleted=0
 		<if test="USERNAME!=null and PASSWORD!=null">
-		and USERNAME = #{USERNAME} and PASSWORD=#{PASSWORD}
+			and a.USERNAME = #{USERNAME} and a.PASSWORD=#{PASSWORD}
 		</if>
 		<if test="COMPANYCODE!=null and COMPANYCODE!=''">
-			and COMPANY_CODE = #{COMPANYCODE}
+			and b.CODE = #{COMPANYCODE}
 		</if>
 		<if test="USER_ID!=null and USER_ID>0">
-		and USER_ID = #{USER_ID}
+			and USER_ID = #{USER_ID}
 		</if>
-		) a LEFT JOIN  OA_COMPANY B ON  a.COMPANY_CODE = b.code
+
 	</select>
 	
 	<!-- 更新登录时间 -->
@@ -174,7 +175,7 @@
 		from <include refid="tableName"></include> u, <include refid="roleTableName"></include> r 
 		where u.ROLE_ID = r.ROLE_ID 
 		and u.USERNAME != 'admin'
-		and r.PARENT_ID = '1'
+		and r.PARENT_ID = '1' and u.deleted = 0 and u.company_id =#{COMPANY_ID}
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(

@@ -9,7 +9,9 @@ import com.fh.service.fhoa.datajur.DatajurManager;
 import com.fh.service.fhoa.department.DepartmentManager;
 import com.fh.service.fhoa.staff.StaffManager;
 import com.fh.service.system.dictionaries.DictionariesManager;
+import com.fh.service.system.fhlog.FHlogManager;
 import com.fh.service.system.role.RoleManager;
+import com.fh.service.system.user.UserManager;
 import com.fh.util.*;
 import net.sf.json.JSONArray;
 import org.apache.shiro.session.Session;
@@ -47,6 +49,11 @@ public class StaffController extends BaseController {
 	private DictionariesManager dictionariesService;
 	@Resource(name="roleService")
 	private RoleManager roleService;
+	@Resource(name="userService")
+	private UserManager userService;
+	@Resource(name="fhlogService")
+	private FHlogManager FHLOG;
+
 	/**保存
 	 * @param
 	 * @throws Exception
@@ -58,21 +65,50 @@ public class StaffController extends BaseController {
 
 		logBefore(logger, Jurisdiction.getUsername()+"新增Staff");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){ return ResultData.init(ResultData.FAIL,"没有权限",null);} //校验权限
-		Session session = Jurisdiction.getSession();
-		User user = (User)session.getAttribute(Const.SESSION_USER);
-		//ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
-		pd.put("STAFF_ID", this.get32UUID());	//主键
-		pd.put("USER_ID", "");
-		pd.put("COMPANY_ID",user.getCompanyId());
-		//绑定账号ID
-		staffService.save(pd);					//保存员工信息到员工表
-		String DEPARTMENT_IDS = departmentService.getDEPARTMENT_IDS(pd.getString("DEPARTMENT_ID"));//获取某个部门所有下级部门ID
-		pd.put("DATAJUR_ID", pd.getString("STAFF_ID")); //主键
-		pd.put("DEPARTMENT_IDS", DEPARTMENT_IDS);		//部门ID集
-		datajurService.save(pd);						//把此员工默认部门及以下部门ID保存到组织数据权限表
-		return ResultData.init(ResultData.SUCCESS,"添加成功",null);
+		try {
+			Session session = Jurisdiction.getSession();
+			User user = (User)session.getAttribute(Const.SESSION_USER);
+
+			PageData pd = new PageData();
+			pd = this.getPageData();
+			//增加登录用户
+			PageData uspd = new PageData();
+			uspd.put("USER_ID", this.get32UUID());	//ID 主键
+			uspd.put("LAST_LOGIN", "");				//最后登录时间
+			uspd.put("IP", "");						//IP
+			uspd.put("STATUS", "0");					//状态
+			uspd.put("SKIN", "default");
+			uspd.put("RIGHTS", "");
+			uspd.put("PASSWORD", pd.get("PASSWORD"));	//密码加密
+			uspd.put("ROLE_ID", pd.get("ROLE_ID"));
+			uspd.put("USERNAME",pd.get("USERNAME"));
+			uspd.put("NUMBER", Math.random()*1000+1);
+			uspd.put("NAME",pd.get("NAME"));
+			uspd.put("PHONE", pd.get("TEL"));
+			uspd.put("EMAIL",pd.get("EMAIL"));
+			uspd.put("BZ", "");
+			uspd.put("COMPANY_ID",user.getCompanyId());
+			if(null == userService.findByUsername(uspd)){	//判断用户名是否存在
+                userService.saveU(uspd); 					//执行保存
+                FHLOG.save(Jurisdiction.getUsername(), "新增系统用户："+pd.getString("USERNAME"));
+            }
+
+			//员工信息添加
+			pd.put("STAFF_ID", this.get32UUID());	//主键
+			pd.put("USER_ID", uspd.get("USER_ID"));
+			pd.put("COMPANY_ID",user.getCompanyId());
+			staffService.save(pd);					//保存员工信息到员工表
+			FHLOG.save(Jurisdiction.getUsername(), "新增员工："+pd.getString("USERNAME"));
+			String DEPARTMENT_IDS = departmentService.getDEPARTMENT_IDS(pd.getString("DEPARTMENT_ID"));//获取某个部门所有下级部门ID
+			pd.put("DATAJUR_ID", pd.getString("STAFF_ID")); //主键
+			pd.put("DEPARTMENT_IDS", DEPARTMENT_IDS);		//部门ID集
+			datajurService.save(pd);						//把此员工默认部门及以下部门ID保存到组织数据权限表
+			return ResultData.init(ResultData.SUCCESS,"添加成功",null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultData.init(ResultData.FAIL,"添加异常","");
+		}
+
 	}
 	
 	/**删除
@@ -118,10 +154,13 @@ public class StaffController extends BaseController {
 	@RequestMapping(value="/list")
 	public ModelAndView list(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表Staff");
-		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		ModelAndView mv = this.getModelAndView();
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		pd.put("COMPANY_ID",user.getCompanyId());
 		String keywords = pd.getString("keywords");							//关键词检索条件
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
@@ -167,7 +206,7 @@ public class StaffController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-
+		pd.put("COMPANY_ID",user.getCompanyId());
 		List<Dictionaries>	provinceList = dictionariesService.listSubDictByParentId("1"); //用传过来的ID获取此ID下的子列表数据
 		List<PageData> pnList = new ArrayList<PageData>();
 		for(Dictionaries d :provinceList){
@@ -219,8 +258,46 @@ public class StaffController extends BaseController {
 	@RequestMapping(value="/goEdit")
 	public ModelAndView goEdit()throws Exception{
 		ModelAndView mv = this.getModelAndView();
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		pd.put("COMPANY_ID",user.getCompanyId());
+		List<Dictionaries>	provinceList = dictionariesService.listSubDictByParentId("1"); //用传过来的ID获取此ID下的子列表数据
+		List<PageData> pnList = new ArrayList<PageData>();
+		for(Dictionaries d :provinceList){
+			PageData pdf = new PageData();
+			pdf.put("DICTIONARIES_ID", d.getDICTIONARIES_ID());
+			pdf.put("NAME", d.getNAME());
+			pnList.add(pdf);
+		}
+		mv.addObject("PROVINCEList",pnList);
+
+		if(null!=pd.get("CITY")){
+			List<Dictionaries>	varList = dictionariesService.listSubDictByParentId(pd.get("PROVINCE").toString()); //用传过来的ID获取此ID下的子列表数据
+			List<PageData> pdList = new ArrayList<PageData>();
+			for(Dictionaries d :varList){
+				PageData pdf = new PageData();
+				pdf.put("DICTIONARIES_ID", d.getDICTIONARIES_ID());
+				pdf.put("NAME", d.getNAME());
+				pdList.add(pdf);
+			}
+			mv.addObject("CITYList",pdList);
+		}
+		if(null!=pd.get("AREA")){
+			List<Dictionaries>	varList = dictionariesService.listSubDictByParentId(pd.get("CITY").toString()); //用传过来的ID获取此ID下的子列表数据
+			List<PageData> pdList = new ArrayList<PageData>();
+			for(Dictionaries d :varList){
+				PageData pdf = new PageData();
+				pdf.put("DICTIONARIES_ID", d.getDICTIONARIES_ID());
+				pdf.put("NAME", d.getNAME());
+				pdList.add(pdf);
+			}
+			mv.addObject("AREAList",pdList);
+		}
+		List<Role> roleList = roleService.listAllRolesByPId(pd);//列出会员组角色
+		mv.addObject("roleList", roleList);
+
 		List<PageData> zdepartmentPdList = new ArrayList<PageData>();
 		JSONArray arr = JSONArray.fromObject(departmentService.listAllDepartmentToSelect(Jurisdiction.getDEPARTMENT_ID(),zdepartmentPdList));
 		mv.addObject("zTreeNodes", (null == arr ?"":arr.toString()));

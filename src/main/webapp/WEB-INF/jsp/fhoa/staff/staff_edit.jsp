@@ -185,15 +185,15 @@
 						</div>
 						<div class="row" style="margin-left: 15px;">
 							<div class="form-group" style="margin-top: 10px">
-								<label for="USERNAME" class="col-sm-1 control-label">系统账号:</label>
+								<label for="USERNAME" class="col-sm-1 control-label"><span style="color: red">*</span>系统账号:</label>
 								<div class="col-sm-2">
 									<input type="text" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="30" placeholder="这里输入系统账号" title="系统账号" style="width:98%;"/>
 								</div>
-								<label for="PASSWORD" class="col-sm-1 control-label">登录密码:</label>
+								<label for="PASSWORD" class="col-sm-1 control-label"><span style="color: red">*</span>登录密码:</label>
 								<div class="col-sm-2">
 									<input type="text" name="PASSWORD" id="PASSWORD" value="${pd.PASSWORD}" maxlength="30" placeholder="这里输入登录密码" title="登录密码" style="width:98%;"/>
 								</div>
-								<label for="role_id" class="col-sm-1 control-label">系统角色:</label>
+								<label for="role_id" class="col-sm-1 control-label"><span style="color: red">*</span>系统角色:</label>
 								<div class="col-sm-2">
 									<select class="chosen-select form-control" name="ROLE_ID" id="role_id" data-placeholder="这里输入系统角色" style="vertical-align:top;"  title="系统角色" style="width:98%;" >
 										<option value=""></option>

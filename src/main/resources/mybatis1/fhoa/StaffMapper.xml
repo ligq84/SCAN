@@ -101,13 +101,17 @@
 	</insert>
 	
 	<!-- 删除-->
-	<delete id="delete" parameterType="pd">
-		delete from
-		<include refid="tableName"></include>
-		where 
-			STAFF_ID = #{STAFF_ID}
-	</delete>
-	
+	<!--<delete id="delete" parameterType="pd">-->
+		<!--delete from-->
+		<!--<include refid="tableName"></include>-->
+		<!--where -->
+			<!--STAFF_ID = #{STAFF_ID}-->
+	<!--</delete>-->
+	<update id="delete" parameterType="pd">
+		delete <include refid="tableName"></include>
+			set deleted=1
+		where STAFF_ID = #{STAFF_ID}
+	</update>
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
 		update
@@ -172,7 +176,7 @@
 		from 
 		<include refid="tableName"></include> a LEFT JOIN oa_department b
 		on a.DEPARTMENT_ID = b.DEPARTMENT_ID
-		where 1=1
+		where a.COMPANY_ID =#{pd.COMPANY_ID}
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(

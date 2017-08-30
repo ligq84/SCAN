@@ -111,8 +111,8 @@ public class LoginController extends BaseController {
 				pd.put("USERNAME", USERNAME);
 				pd.put("COMPANYCODE",COMPANYCODE);
 				if(Tools.notEmpty(sessionCode) && sessionCode.equalsIgnoreCase(code)){		//判断登录验证码
-					String passwd = new SimpleHash("SHA-1", USERNAME, PASSWORD).toString();	//密码加密
-					pd.put("PASSWORD", passwd);
+					//String passwd = new SimpleHash("SHA-1", USERNAME, PASSWORD).toString();	//密码加密
+					pd.put("PASSWORD", PASSWORD);
 					pd = userService.getUserByNameAndPwd(pd);	//根据用户名和密码去读取用户信息
 					if(pd != null){
 						this.removeSession(USERNAME);//请缓存
