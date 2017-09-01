@@ -185,7 +185,7 @@ public class LoginController extends BaseController {
 				String roleRights = role!=null ? role.getRIGHTS() : "";						//角色权限(菜单权限)
 				session.setAttribute(USERNAME + Const.SESSION_ROLE_RIGHTS, roleRights); 	//将角色权限存入session
 				session.setAttribute(Const.SESSION_USERNAME, USERNAME);						//放入用户名到session
-				this.setAttributeToAllDEPARTMENT_ID(session, USERNAME);						//把用户的组织机构权限放到session里面
+				this.setAttributeToAllDEPARTMENT_ID(session, USERNAME,user.getUSER_ID());						//把用户的组织机构权限放到session里面
 				List<Menu> allmenuList = new ArrayList<Menu>();
 				allmenuList = this.getAttributeMenu(session, USERNAME, roleRights);			//菜单缓存
 				List<Menu> menuList = new ArrayList<Menu>();
@@ -293,10 +293,10 @@ public class LoginController extends BaseController {
 	 * @return
 	 * @throws Exception 
 	 */
-	public void setAttributeToAllDEPARTMENT_ID(Session session, String USERNAME) throws Exception{
+	public void setAttributeToAllDEPARTMENT_ID(Session session, String USERNAME,String USEER_ID) throws Exception{
 		String DEPARTMENT_IDS = "0",DEPARTMENT_ID = "0";
 		if(!"admin".equals(USERNAME)){
-			PageData pd = datajurService.getDEPARTMENT_IDS(USERNAME);
+			PageData pd = datajurService.getDEPARTMENT_IDS(USEER_ID);
 			DEPARTMENT_IDS = null == pd?"无权":pd.getString("DEPARTMENT_IDS");
 			DEPARTMENT_ID = null == pd?"无权":pd.getString("DEPARTMENT_ID");
 		}

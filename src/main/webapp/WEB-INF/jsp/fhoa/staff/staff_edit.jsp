@@ -120,7 +120,7 @@
 								</div>
 								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>毕业时间:</label>
 								<div class="col-sm-2">
-									<input class="span10 date-picker" name="BIRTHDAY" id="graduate" value="${pd.GRADUATE}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="毕业时间" title="毕业时间" style="width:98%;"/>
+									<input class="span10 date-picker" name="GRADUATE" id="graduate" value="${pd.GRADUATE}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="毕业时间" title="毕业时间" style="width:98%;"/>
 								</div>
 							</div>
 						</div>
@@ -187,7 +187,7 @@
 							<div class="form-group" style="margin-top: 10px">
 								<label for="USERNAME" class="col-sm-1 control-label"><span style="color: red">*</span>系统账号:</label>
 								<div class="col-sm-2">
-									<input type="text" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="30" placeholder="这里输入系统账号" title="系统账号" style="width:98%;"/>
+									<input type="text" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="30" placeholder="这里输入系统账号" title="系统账号" style="width:98%;"  <c:if test="${msg =='edit'}">readonly</c:if> />
 								</div>
 								<label for="PASSWORD" class="col-sm-1 control-label"><span style="color: red">*</span>登录密码:</label>
 								<div class="col-sm-2">

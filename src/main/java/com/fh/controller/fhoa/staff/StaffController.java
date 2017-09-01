@@ -95,7 +95,9 @@ public class StaffController extends BaseController {
 
 			//员工信息添加
 			pd.put("STAFF_ID", this.get32UUID());	//主键
-			pd.put("USER_ID", uspd.get("USERNAME"));
+			//pd.put("USER_ID", uspd.get("USERNAME"));
+			pd.put("USER_ID", uspd.get("USER_ID"));
+
 			pd.put("COMPANY_ID",user.getCompanyId());
 			staffService.save(pd);					//保存员工信息到员工表
 			FHLOG.save(Jurisdiction.getUsername(), "新增员工："+pd.getString("USERNAME"));
@@ -267,6 +269,7 @@ public class StaffController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/goEdit")
+	@SuppressWarnings("all")
 	public ModelAndView goEdit()throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		Session session = Jurisdiction.getSession();
@@ -274,6 +277,8 @@ public class StaffController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("COMPANY_ID",user.getCompanyId());
+		pd = staffService.findById(pd);	//根据ID读取
+
 		List<Dictionaries>	provinceList = dictionariesService.listSubDictByParentId("1"); //用传过来的ID获取此ID下的子列表数据
 		List<PageData> pnList = new ArrayList<PageData>();
 		for(Dictionaries d :provinceList){
@@ -322,7 +327,7 @@ public class StaffController extends BaseController {
 		}
 		mv.addObject("depname", ZDEPARTMENT_ID);
 
-		pd = staffService.findById(pd);	//根据ID读取
+
 		mv.setViewName("fhoa/staff/staff_edit");
 		mv.addObject("depname", departmentService.findById(pd).getString("NAME"));
 		mv.addObject("msg", "edit");

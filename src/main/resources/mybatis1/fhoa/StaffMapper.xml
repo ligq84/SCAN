@@ -153,12 +153,52 @@
 	
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
-		select 
-		<include refid="Field"></include>
-		from 
-		<include refid="tableName"></include>
-		where 
-			STAFF_ID = #{STAFF_ID}
+		select	b.USERNAME,
+		b.`PASSWORD`,
+		c.ROLE_NAME,
+		c.ROLE_ID,
+		a.NAME,
+		a.NAME_EN,
+		a.BIANMA,
+		a.DEPARTMENT_ID,
+		a.FUNCTIONS,
+		a.TEL,
+		a.EMAIL,
+		a.SEX,
+		a.BIRTHDAY,
+		a.NATION,
+		a.JOBTYPE,
+		a.JOBJOINTIME,
+		a.FADDRESS,
+		a.POLITICAL,
+		a.PJOINTIME,
+		a.SFID,
+		a.MARITAL,
+		a.DJOINTIME,
+		a.POST,
+		a.POJOINTIME,
+		a.EDUCATION,
+		a.SCHOOL,
+		a.MAJOR,
+		a.FTITLE,
+		a.CERTIFICATE,
+		a.CONTRACTLENGTH,
+		a.CSTARTTIME,
+		a.CENDTIME,
+		a.ADDRESS,
+		a.USER_ID,
+		a.BZ,
+		a.STAFF_ID,
+		a.COMPANY_ID,
+		a.STATUS,
+		a.PROVINCE,
+		a.CITY,
+		a.AREA
+		from OA_STAFF a
+		LEFT JOIN sys_user b ON a.USER_ID = b.USER_ID
+		LEFT JOIN sys_role c ON b.ROLE_ID = c.ROLE_ID
+		where
+		a.STAFF_ID = #{STAFF_ID}
 	</select>
 	
 	<!-- 列表 -->
