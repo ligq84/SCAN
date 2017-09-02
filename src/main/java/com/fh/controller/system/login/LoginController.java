@@ -191,7 +191,7 @@ public class LoginController extends BaseController {
 				List<Menu> menuList = new ArrayList<Menu>();
 				menuList = this.changeMenuF(allmenuList, session, USERNAME, changeMenu);	//切换菜单
 				if(null == session.getAttribute(USERNAME + Const.SESSION_QX)){
-					session.setAttribute(USERNAME + Const.SESSION_QX, this.getUQX(USERNAME));//按钮权限放到session中
+					session.setAttribute(USERNAME + Const.SESSION_QX, this.getUQX(USERNAME,user.getCompanyId()));//按钮权限放到session中
 				}
 				this.getRemortIP(USERNAME);	//更新登录IP
 				mv.setViewName("system/index/main");
@@ -399,11 +399,12 @@ public class LoginController extends BaseController {
 	 * @param session
 	 * @return
 	 */
-	public Map<String, String> getUQX(String USERNAME){
+	public Map<String, String> getUQX(String USERNAME,String companyId){
 		PageData pd = new PageData();
 		Map<String, String> map = new HashMap<String, String>();
 		try {
 			pd.put(Const.SESSION_USERNAME, USERNAME);
+			pd.put("COMPANY_ID",companyId);
 			pd.put("ROLE_ID", userService.findByUsername(pd).get("ROLE_ID").toString());//获取角色ID
 			pd = roleService.findObjectById(pd);										//获取角色信息														
 			map.put("adds", pd.getString("ADD_QX"));	//增

@@ -54,4 +54,18 @@ public class Const {
 	public static final String COMPANY_BASIC_SEQUENCE = "sequence";
 	public static final String COMPANY_BASIC_MAJOR = "major";
 	public static final String COMPANY_BASIC_LEVE = "level";
+	public static final String COMPANY_BASIC_STAFFPOST = "staffPost";
+	public static final String COMPANY_BASIC_MACHINETYPE = "machineType";
+	public static final String COMPANY_BASIC_CARTYPE = "carType";
+	public static final String COMPANY_BASIC_MACHINERULE = "machineRule";
+	public static final String COMPANY_BASIC_MAINTENANCEPROJECT = "maintenanceProject";
+	public static final String COMPANY_BASIC_MACHINECYCLE = "machineCycle";
+	public static final String COMPANY_BASIC_RULEPOSITION = "rulePosition";
+
+
+
+
+
+
+
 }

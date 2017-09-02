@@ -45,7 +45,8 @@
 		STATUS,
 		PROVINCE,
 		CITY,
-		AREA
+		AREA,
+		GRADUATE
 	</sql>
 	
 	<!-- 字段值 -->
@@ -86,7 +87,8 @@
 		#{STATUS},
 		#{PROVINCE},
 		#{CITY},
-		#{AREA}
+		#{AREA},
+		#{GRADUATE}
 	</sql>
 	
 	<!-- 新增-->
@@ -108,7 +110,7 @@
 			<!--STAFF_ID = #{STAFF_ID}-->
 	<!--</delete>-->
 	<update id="delete" parameterType="pd">
-		delete <include refid="tableName"></include>
+		UPDATE <include refid="tableName"></include>
 			set deleted=1
 		where STAFF_ID = #{STAFF_ID}
 	</update>
@@ -146,7 +148,12 @@
 			CSTARTTIME = #{CSTARTTIME},
 			CENDTIME = #{CENDTIME},
 			ADDRESS = #{ADDRESS},
-			BZ = #{BZ}
+			BZ = #{BZ},
+			STATUS = #{STATUS},
+			PROVINCE = #{PROVINCE},
+			CITY = #{CITY},
+			AREA = #{AREA},
+			GRADUATE = #{GRADUATE}
 		where 
 			STAFF_ID = #{STAFF_ID}
 	</update>
@@ -193,7 +200,8 @@
 		a.STATUS,
 		a.PROVINCE,
 		a.CITY,
-		a.AREA
+		a.AREA,
+		GRADUATE
 		from OA_STAFF a
 		LEFT JOIN sys_user b ON a.USER_ID = b.USER_ID
 		LEFT JOIN sys_role c ON b.ROLE_ID = c.ROLE_ID
@@ -204,32 +212,78 @@
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
-			a.STAFF_ID,
-			a.NAME,
-			a.NAME_EN,
-			a.BIANMA,	
-			a.DEPARTMENT_ID,	
-			a.TEL,	
-			a.SEX,
-			a.USER_ID,	
-			b.NAME as departmentName
+		a.NAME,
+		a.NAME_EN,
+		a.BIANMA,
+		a.DEPARTMENT_ID,
+		a.FUNCTIONS,
+		a.TEL,
+		a.EMAIL,
+		a.SEX,
+		a.BIRTHDAY,
+		a.NATION,
+		a.JOBTYPE,
+		a.JOBJOINTIME,
+		a.FADDRESS,
+		a.POLITICAL,
+		a.PJOINTIME,
+		a.SFID,
+		a.MARITAL,
+		a.DJOINTIME,
+		a.POST,
+		a.POJOINTIME,
+		a.EDUCATION,
+		a.SCHOOL,
+		a.MAJOR,
+		a.FTITLE,
+		a.CERTIFICATE,
+		a.CONTRACTLENGTH,
+		a.CSTARTTIME,
+		a.CENDTIME,
+		a.ADDRESS,
+		a.USER_ID,
+		a.BZ,
+		a.STAFF_ID,
+		a.COMPANY_ID,
+		a.STATUS,
+		a.PROVINCE,
+		a.CITY,
+		a.AREA,
+		a.GRADUATE,
+		b.NAME as departmentName,
+		c.USERNAME,
+		d.name as postName
 		from 
-		<include refid="tableName"></include> a LEFT JOIN oa_department b
-		on a.DEPARTMENT_ID = b.DEPARTMENT_ID
-		where a.COMPANY_ID =#{pd.COMPANY_ID}
-		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
-			and
-				(
-					a.NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-					or 
-					a.NAME_EN LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-					or 
-					a.BIANMA LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
-				)
+		<include refid="tableName"></include> a
+		LEFT JOIN oa_department b on a.DEPARTMENT_ID = b.DEPARTMENT_ID
+		LEFT JOIN SYS_USER c ON  a.USER_ID = c.USER_ID
+		LEFT JOIN oa_company_basic d ON  d.ocbid = a.POST
+		where a.deleted = 0 and  a.COMPANY_ID =#{pd.COMPANY_ID}
+		<if test="pd.NAME!= null and pd.NAME != ''">
+			and a.NAME LIKE CONCAT(CONCAT('%', #{pd.NAME}),'%')
+		</if>
+		<if test="pd.TEL!= null and pd.TEL != ''">
+			and a.TEL LIKE CONCAT(CONCAT('%', #{pd.TEL}),'%')
+		</if>
+		<if test="pd.POST!= null and pd.POST != ''">
+			and a.POST= #{pd.POST}
 		</if>
 		<if test="pd.DEPARTMENT_ID!=null and pd.DEPARTMENT_ID!=''"><!-- 部门检索 -->
 			and a.DEPARTMENT_ID in ${pd.item}
 		</if>
+		<if test="pd.USERNAME!= null and pd.USERNAME != ''">
+			and c.USERNAME LIKE CONCAT(CONCAT('%', #{pd.USERNAME}),'%')
+		</if>
+		<if test="pd.STATUS!= null and pd.STATUS != ''">
+			and a.STATUS= #{pd.STATUS}
+		</if>
+		<if test="pd.DJOINTIMESTART!= null and pd.DJOINTIMESTART != ''">
+			and a.DJOINTIME >= #{pd.DJOINTIMESTART}
+		</if>
+		<if test="pd.DJOINTIMEEND!= null and pd.DJOINTIMEEND != ''">
+			and  #{pd.DJOINTIMEEND} >=a.DJOINTIME
+		</if>
+
 	</select>
 	
 	<!-- 列表(全部) -->
@@ -241,16 +295,25 @@
 	</select>
 	
 	<!-- 批量删除 -->
-	<delete id="deleteAll" parameterType="String">
-		delete from
-		<include refid="tableName"></include>
-		where 
-			STAFF_ID in
+	<!--<delete id="deleteAll" parameterType="String">-->
+		<!--delete from-->
+		<!--<include refid="tableName"></include>-->
+		<!--where -->
+			<!--STAFF_ID in-->
+		<!--<foreach item="item" index="index" collection="array" open="(" separator="," close=")">-->
+                 <!--#{item}-->
+		<!--</foreach>-->
+	<!--</delete>-->
+	<update id="deleteAll">
+		UPDATE <include refid="tableName"></include>
+		set deleted=1
+		where
+		STAFF_ID in
 		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
-                 #{item}
+			#{item}
 		</foreach>
-	</delete>
-	
+	</update>
+
 	<!-- 绑定用户 -->
 	<update id="userBinding" parameterType="pd">
 		update

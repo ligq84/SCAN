@@ -1,12 +1,13 @@
 package com.fh.service.fhoa.staff.impl;
 
-import java.util.List;
-import javax.annotation.Resource;
-import org.springframework.stereotype.Service;
 import com.fh.dao.DaoSupport;
 import com.fh.entity.Page;
-import com.fh.util.PageData;
 import com.fh.service.fhoa.staff.StaffManager;
+import com.fh.util.PageData;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /** 
  * 说明： 员工管理
@@ -33,7 +34,7 @@ public class StaffService implements StaffManager{
 	 * @throws Exception
 	 */
 	public void delete(PageData pd)throws Exception{
-		dao.delete("StaffMapper.delete", pd);
+		dao.update("StaffMapper.delete", pd);
 	}
 	
 	/**修改
@@ -75,7 +76,7 @@ public class StaffService implements StaffManager{
 	 * @throws Exception
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
-		dao.delete("StaffMapper.deleteAll", ArrayDATA_IDS);
+		dao.update("StaffMapper.deleteAll", ArrayDATA_IDS);
 	}
 	
 	/**绑定用户

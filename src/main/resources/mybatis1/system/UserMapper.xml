@@ -137,8 +137,8 @@
 			<include refid="Field"></include>
 		from 
 			<include refid="tableName"></include>
-		where 
-			USERNAME = #{USERNAME}
+		where deleted = 0 and
+			USERNAME = #{USERNAME} AND COMPANY_ID=#{COMPANY_ID}
 	</select>
 	
 	<!-- 存入IP -->

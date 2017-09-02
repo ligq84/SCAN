@@ -33,7 +33,7 @@
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">行业名称:</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">名称:</td>
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="行业名称" title="行业名称" style="width:98%;"/></td>
 							</tr>
 							<tr>

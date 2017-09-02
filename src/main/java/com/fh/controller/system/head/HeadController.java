@@ -1,31 +1,24 @@
 package com.fh.controller.system.head;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
+import com.fh.controller.base.BaseController;
+import com.fh.entity.system.User;
+import com.fh.service.system.appuser.AppuserManager;
+import com.fh.service.system.fhsms.FhsmsManager;
+import com.fh.service.system.user.UserManager;
+import com.fh.service.system.userphoto.UserPhotoManager;
+import com.fh.util.*;
+import com.fh.util.mail.SimpleMailSender;
 import org.apache.shiro.session.Session;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fh.controller.base.BaseController;
-import com.fh.service.system.appuser.AppuserManager;
-import com.fh.service.system.fhsms.FhsmsManager;
-import com.fh.service.system.user.UserManager;
-import com.fh.service.system.userphoto.UserPhotoManager;
-import com.fh.util.AppUtil;
-import com.fh.util.Const;
-import com.fh.util.Jurisdiction;
-import com.fh.util.PageData;
-import com.fh.util.SmsUtil;
-import com.fh.util.Tools;
-import com.fh.util.Watermark;
-import com.fh.util.mail.SimpleMailSender;
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /** 
  * 类名称：HeadController
@@ -76,6 +69,8 @@ public class HeadController extends BaseController {
 			pds = (PageData)session.getAttribute(Const.SESSION_userpds);
 			if(null == pds){
 				pd.put("USERNAME", Jurisdiction.getUsername());//当前登录者用户名
+				User user = (User)session.getAttribute(Const.SESSION_USER);
+				pd.put("COMPANY_ID",user.getCompanyId());
 				pds = userService.findByUsername(pd);
 				session.setAttribute(Const.SESSION_userpds, pds);
 			}

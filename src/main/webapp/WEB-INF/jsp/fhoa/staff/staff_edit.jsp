@@ -157,7 +157,12 @@
 							<div class="form-group" style="margin-top: 10px">
 								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>所在岗位:</label>
 								<div class="col-sm-2">
-									<input type="text" name="POST" id="POST" value="${pd.POST}" maxlength="30" placeholder="这里输入现岗位" title="现岗位" style="width:98%;"/>
+									<select class="chosen-select form-control" name="POST" id="POST" data-placeholder="这里输入现岗位" style="vertical-align:top;"  title="现岗位" style="width:98%;" >
+										<option value=""></option>
+										<c:forEach items="${staffPostList}" var="staffPost">
+											<option value="${staffPost.OCBID }" <c:if test="${staffPost.OCBID == pd.POST }">selected</c:if> >${staffPost.NAME}</option>
+									</c:forEach>
+									</select>
 								</div>
 								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>在职状态:</label>
 								<div class="col-sm-2">

@@ -44,10 +44,10 @@
 									</div>
 								</td>
 								<td style="vertical-align:top;padding-left:2px;">
-								 	<select class="chosen-select form-control" name="STATUS" id="id" data-placeholder="启用状态" style="vertical-align:top;width: 120px;">
-									<option value=""></option>
-									<option value="1">已启用</option>
-									<option value="0">未启用</option>
+								 	<select class="nav-search-input" name="STATUS" id="STATUS" >
+									<option disabled selected>启用状态</option>
+									<option value="1"  <c:if test="${pd.STATUS == 1}">selected</c:if>>已启用</option>
+									<option value="0"  <c:if test="${pd.STATUS == 0}">selected</c:if>>未启用</option>
 								  	</select>
 								</td>
 								<c:if test="${QX.cha == 1 }">
@@ -65,7 +65,7 @@
 									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
 									</th>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">行业名称</th>
+									<th class="center">名称</th>
 									<th class="center">启用状态</th>
 									<th class="center">排序号</th>
 									<th class="center">描述</th>
@@ -85,7 +85,10 @@
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
-											<td class='center'>${var.STATUS}</td>
+											<td class='center'>
+													<c:if test="${var.STATUS == 1}">已启用</c:if>
+													<c:if test="${var.STATUS == 0}">未启用</c:if>
+											</td>
 											<td class='center'>${var.OCB_ORDER}</td>
 											<td class='center'>${var.OCB_DESC}</td>
 											<td class="center">

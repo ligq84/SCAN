@@ -32,7 +32,14 @@ public class CompanyBasicController extends BaseController {
 	String menuUrlField = "companybasic/fieldList.do"; //资质行业配置
 	String menuUrlSequence = "companybasic/sequenceList.do"; //资质序列major
 	String menuUrlMajor = "companybasic/majorList.do"; //资质专业major
-		String menuUrlLevel = "companybasic/levelList.do"; //资质等级配置
+	String menuUrlLevel = "companybasic/levelList.do"; //资质等级配置
+	String menuUrlStaffPost = "companybasic/staffPostList.do"; //人员岗位配置
+	String menuUrlMachineType = "companybasic/machineTypeList.do"; //机器类型配置
+	String menuUrlCarType = "companybasic/carTypeList.do"; //小推车类型配置
+	String menuUrlMachineRule = "companybasic/machineRuleList.do"; //机器规格
+	String menuUrlMaintenanceProject = "companybasic/maintenanceProjectList.do"; //维修项目
+	String menuUrlMachineCycle = "companybasic/machineCycleList.do"; //机器保养周期
+	String menuUrlRulePosition = "companybasic/rulePositionList.do"; //规格更改部位
 
 	@Resource(name="companybasicService")
 	private CompanyBasicManager companybasicService;
@@ -59,6 +66,18 @@ public class CompanyBasicController extends BaseController {
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMajor, "add")){return null;} //校验权限
 		}else if(type.equals(Const.COMPANY_BASIC_LEVE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlLevel, "add")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MACHINETYPE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineType, "add")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_CARTYPE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlCarType, "add")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MACHINERULE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineRule, "add")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MAINTENANCEPROJECT)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMaintenanceProject, "add")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MACHINECYCLE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineCycle, "add")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_RULEPOSITION)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlRulePosition, "add")){return null;} //校验权限
 		}
 		pd.put("COMPANY_ID",user.getCompanyId());
 		companybasicService.save(pd);
@@ -85,6 +104,20 @@ public class CompanyBasicController extends BaseController {
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMajor, "del")){return;} //校验权限
 		}else if(type.equals(Const.COMPANY_BASIC_LEVE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlLevel, "del")){return;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_STAFFPOST)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlStaffPost, "del")){return;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MACHINETYPE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineType, "del")){return;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_CARTYPE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlCarType, "del")){return;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MACHINERULE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineRule, "del")){return;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MAINTENANCEPROJECT)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMaintenanceProject, "del")){return;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MACHINECYCLE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineCycle, "del")){return;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_RULEPOSITION)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlRulePosition, "del")){return;} //校验权限
 		}
 		companybasicService.delete(pd);
 		out.write("success");
@@ -110,6 +143,20 @@ public class CompanyBasicController extends BaseController {
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMajor, "edit")){return null;} //校验权限
 		}else if(type.equals(Const.COMPANY_BASIC_LEVE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlLevel, "edit")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_STAFFPOST)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlStaffPost, "edit")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MACHINETYPE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineType, "edit")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_CARTYPE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlCarType, "edit")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MACHINERULE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineRule, "edit")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MAINTENANCEPROJECT)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMaintenanceProject, "edit")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MACHINECYCLE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineCycle, "edit")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_RULEPOSITION)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlRulePosition, "edit")){return null;} //校验权限
 		}
 		Session session = Jurisdiction.getSession();
 		User user = (User)session.getAttribute(Const.SESSION_USER);
@@ -142,12 +189,105 @@ public class CompanyBasicController extends BaseController {
 		if(!Jurisdiction.buttonJurisdiction(menuUrlMajor, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_MAJOR);
 	}
+
 	@RequestMapping(value="/levelList")
 	public ModelAndView levelList(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表CompanyBasic");
 		if(!Jurisdiction.buttonJurisdiction(menuUrlLevel, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_LEVE);
 	}
+
+	/**
+	 * 人员岗位配置
+	 * @param page
+	 * @return
+	 * @throws Exception
+     */
+	@RequestMapping(value="/staffPostList")
+	public ModelAndView staffPost(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表 staffPost");
+		if(!Jurisdiction.buttonJurisdiction(menuUrlStaffPost, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		return  allList(page,Const.COMPANY_BASIC_STAFFPOST);
+	}
+
+	/**
+	 * 机器类型配置
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/machineTypeList")
+	public ModelAndView machineType (Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表 machineType");
+		if(!Jurisdiction.buttonJurisdiction(menuUrlMachineType, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		return  allList(page,Const.COMPANY_BASIC_MACHINETYPE);
+	}
+
+	/**
+	 * 小推车配置
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/carTypeList")
+	public ModelAndView carType(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表 carType");
+		if(!Jurisdiction.buttonJurisdiction(menuUrlCarType, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		return  allList(page,Const.COMPANY_BASIC_CARTYPE);
+	}
+
+	/**
+	 * 机器规格配置
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/machineRuleList")
+	public ModelAndView machineRule(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表 machineRule");
+		if(!Jurisdiction.buttonJurisdiction(menuUrlMachineRule, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		return  allList(page,Const.COMPANY_BASIC_MACHINERULE);
+	}
+
+	/**
+	 * 维修项目配置
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/maintenanceProjectList")
+	public ModelAndView maintenanceProject(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表 maintenanceProject");
+		if(!Jurisdiction.buttonJurisdiction(menuUrlMaintenanceProject, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		return  allList(page,Const.COMPANY_BASIC_MAINTENANCEPROJECT);
+	}
+
+	/**
+	 * 保养周期配置
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/machineCycleList")
+	public ModelAndView machineCycle(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表 machineCycle");
+		if(!Jurisdiction.buttonJurisdiction(menuUrlMachineCycle, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		return  allList(page,Const.COMPANY_BASIC_MACHINECYCLE);
+	}
+
+	/**
+	 * 规格更改部位	配置
+	 * @param page
+	 * @return
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/rulePositionList")
+	public ModelAndView rulePosition(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表staffPost");
+		if(!Jurisdiction.buttonJurisdiction(menuUrlRulePosition, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		return  allList(page,Const.COMPANY_BASIC_RULEPOSITION);
+	}
+
 	public ModelAndView allList(Page page,String type)throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
@@ -223,6 +363,20 @@ public class CompanyBasicController extends BaseController {
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMajor, "del")){return null;} //校验权限
 		}else if(type.equals(Const.COMPANY_BASIC_LEVE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlLevel, "del")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_STAFFPOST)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlStaffPost, "del")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MACHINETYPE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineType, "del")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_CARTYPE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlCarType, "del")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MACHINERULE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineRule, "del")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MAINTENANCEPROJECT)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMaintenanceProject, "del")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_MACHINECYCLE)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineCycle, "del")){return null;} //校验权限
+		}else if(type.equals(Const.COMPANY_BASIC_RULEPOSITION)){
+			if(!Jurisdiction.buttonJurisdiction(menuUrlRulePosition, "del")){return null;} //校验权限
 		}
 		List<PageData> pdList = new ArrayList<PageData>();
 		String DATA_IDS = pd.getString("DATA_IDS");

@@ -15,6 +15,8 @@
 <script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
 <!-- jsp文件头和头部 -->
 <%@ include file="../../system/index/top.jsp"%>
+	<!-- 日期框 -->
+	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
 <!-- 树形下拉框start -->
 <script type="text/javascript" src="plugins/selectZtree/selectTree.js"></script>
 <script type="text/javascript" src="plugins/selectZtree/framework.js"></script>
@@ -40,21 +42,63 @@
 						<input name="DEPARTMENT_ID" id="DEPARTMENT_ID" type="hidden" value="${pd.DEPARTMENT_ID }" />
 						<table style="margin-top:5px;">
 							<tr>
-								<td>
+								<td style="padding-left:10px">
 									<div class="nav-search">
-										<span class="input-icon">
-											<input type="text" placeholder="这里输入关键词" class="nav-search-input" id="nav-search-input" autocomplete="off" name="keywords" value="${pd.keywords }" placeholder="这里输入关键词"/>
-											<i class="ace-icon fa fa-search nav-search-icon"></i>
-										</span>
+										<input type="text" class="nav-search-input" name="NAME" value="${pd.NAME}"  placeholder="这里输入姓名"/>
 									</div>
 								</td>
-								<td  style="padding-left:5px">
-								<div class="selectTree" id="selectTree"></div>
+								<td  style="padding-left:10px">
+									<div class="nav-search">
+										<input type="text" class="nav-search-input"  name="TEL" value="${pd.TEL}" placeholder="这里输入联系电话"/>
+									</div>
+								</td>
+								<td  style="padding-left:10px">
+									<div class="nav-search">
+										<select class="nav-search-input" name="POST" id="POST" style="vertical-align:top;"  title="人员岗位" style="width:98%;" >
+											<option disabled selected>人员岗位</option>
+											<c:forEach items="${staffPostList}" var="staffPost">
+												<option value="${staffPost.OCBID }" <c:if test="${staffPost.OCBID == pd.POST }">selected</c:if> >${staffPost.NAME}</option>
+											</c:forEach>
+										</select>
+									</div>
+								</td>
+								<td  style="padding-left:10px">
+									<div class="nav-search">
+										<div class="selectTree" id="selectTree"></div>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td  style="padding-left:10px">
+									<div class="nav-search">
+										<input type="text" class="nav-search-input" name="USERNAME" value="${pd.USERNAME}"  placeholder="这里输入系统账号"/>
+									</div>
+								</td>
+								<td  style="padding-left:10px">
+									<div class="nav-search">
+										<select name="STATUS" id="STATUS" class="nav-search-input">
+											<option disabled selected>在职状态</option>
+											<option value="0" <c:if test="${pd.STATUS == 0}">selected</c:if>>在职</option>
+											<option value="1" <c:if test="${pd.STATUS == 1}">selected</c:if>>离职</option>
+										</select>
+									</div>
+								</td>
+								<td  style="padding-left:10px">
+									<div class="nav-search">
+										<input class="span10 date-picker nav-search-input" name="DJOINTIMESTART" value="${pd.DJOINTIMESTART}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="入职时间"  />
+											---
+									</div>
+								</td>
+								<td  style="padding-left:10px">
+									<div class="nav-search">
+										<input class="span10 date-picker nav-search-input" name="DJOINTIMEEND" value="${pd.DJOINTIMEEND}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="入职时间"  />
+									</div>
 								</td>
 								<c:if test="${QX.cha == 1 }">
-								<td style="vertical-align:top;padding-left:5px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
+									<td style="vertical-align:top;padding-left:5px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
 								</c:if>
 								<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>
+
 							</tr>
 						</table>
 						<!-- 检索  -->
@@ -67,11 +111,14 @@
 									</th>
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">姓名</th>
-									<th class="center">编码</th>
-									<th class="center">部门</th>
-									<th class="center">电话</th>
-									<th class="center">性别</th>
-									<th class="center">绑定用户</th>
+									<th class="center">联系电话</th>
+									<th class="center">身份证号码</th>
+									<th class="center">所属部门</th>
+									<th class="center">人员岗位</th>
+									<th class="center">学历</th>
+									<th class="center">毕业院校</th>
+									<th class="center">入职时间</th>
+									<th class="center">系统账号</th>
 									<th class="center" style="width:130px;" id="fhadmincz">操作</th>
 								</tr>
 							</thead>
@@ -88,11 +135,14 @@
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
-											<td class='center'>${var.BIANMA}</td>
-											<td class='center'>${var.DNAME}</td>
 											<td class='center'>${var.TEL}</td>
-											<td class='center'>${var.SEX}</td>
-											<td class='center'>${var.USER_ID==''?'未绑定':var.USER_ID}</td>
+											<td class='center'>${var.SFID}</td>
+											<td class='center'>${var.departmentName}</td>
+											<td class='center'>${var.postName}</td>
+											<td class='center'>${var.EDUCATION}</td>
+											<td class='center'>${var.SCHOOL}</td>
+											<td class='center'>${var.DJOINTIME}</td>
+											<td class='center'>${var.USERNAME}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
@@ -222,6 +272,8 @@
 	<!-- basic scripts -->
 	<!-- 页面底部js¨ -->
 	<%@ include file="../../system/index/foot.jsp"%>
+	<!-- 日期框 -->
+	<script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
 	<!-- 删除时确认窗口 -->
 	<script src="static/ace/js/bootbox.js"></script>
 	<!-- ace scripts -->
@@ -416,6 +468,11 @@
 		function toExcel(){
 			window.location.href='<%=basePath%>staff/excel.do';
 		}
+
+		$(function() {
+			//日期框
+			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
+		});
 	</script>
 
 

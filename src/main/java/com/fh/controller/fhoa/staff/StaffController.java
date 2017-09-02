@@ -5,6 +5,7 @@ import com.fh.entity.Page;
 import com.fh.entity.system.Dictionaries;
 import com.fh.entity.system.Role;
 import com.fh.entity.system.User;
+import com.fh.service.fhoa.companybasic.CompanyBasicManager;
 import com.fh.service.fhoa.datajur.DatajurManager;
 import com.fh.service.fhoa.department.DepartmentManager;
 import com.fh.service.fhoa.staff.StaffManager;
@@ -53,6 +54,8 @@ public class StaffController extends BaseController {
 	private UserManager userService;
 	@Resource(name="fhlogService")
 	private FHlogManager FHLOG;
+	@Resource(name="companybasicService")
+	private CompanyBasicManager companybasicService;
 
 	/**保存
 	 * @param
@@ -95,7 +98,6 @@ public class StaffController extends BaseController {
 
 			//员工信息添加
 			pd.put("STAFF_ID", this.get32UUID());	//主键
-			//pd.put("USER_ID", uspd.get("USERNAME"));
 			pd.put("USER_ID", uspd.get("USER_ID"));
 
 			pd.put("COMPANY_ID",user.getCompanyId());
@@ -134,20 +136,36 @@ public class StaffController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/edit")
-	public ModelAndView edit() throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"修改Staff");
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
-		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
-		staffService.edit(pd);
-		String DEPARTMENT_IDS = departmentService.getDEPARTMENT_IDS(pd.getString("DEPARTMENT_ID"));//获取某个部门所有下级部门ID
-		pd.put("DATAJUR_ID", pd.getString("STAFF_ID")); //主键
-		pd.put("DEPARTMENT_IDS", DEPARTMENT_IDS);		//部门ID集
-		datajurService.edit(pd);						//把此员工默认部门及以下部门ID保存到组织数据权限表
-		mv.addObject("msg","success");
-		mv.setViewName("save_result");
-		return mv;
+	@ResponseBody
+	public ResultData edit() throws Exception{
+
+		try {
+			logBefore(logger, Jurisdiction.getUsername()+"修改Staff");
+			if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+			Session session = Jurisdiction.getSession();
+			User user = (User)session.getAttribute(Const.SESSION_USER);
+			ModelAndView mv = this.getModelAndView();
+			PageData pd = new PageData();
+			pd = this.getPageData();
+			pd.put("COMPANY_ID",user.getCompanyId());
+
+			PageData opd = userService.findByUsername(pd);
+			if(null != opd){
+                opd.put("PASSWORD",pd.get("PASSWORD"));
+                opd.put("ROLE_ID",pd.get("ROLE_ID"));
+                userService.editU(opd);
+            }
+			staffService.edit(pd);
+			String DEPARTMENT_IDS = departmentService.getDEPARTMENT_IDS(pd.getString("DEPARTMENT_ID"));//获取某个部门所有下级部门ID
+			pd.put("DATAJUR_ID", pd.getString("STAFF_ID")); //主键
+			pd.put("DEPARTMENT_IDS", DEPARTMENT_IDS);		//部门ID集
+			datajurService.edit(pd);						//把此员工默认部门及以下部门ID保存到组织数据权限表
+			return ResultData.init(ResultData.SUCCESS,"添加成功","");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultData.init(ResultData.FAIL,"添加异常","");
+		}
+
 	}
 	
 	/**列表(检索条件中的部门，只列出此操作用户最高部门权限以下所有部门的员工)
@@ -164,10 +182,7 @@ public class StaffController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("COMPANY_ID",user.getCompanyId());
-		String keywords = pd.getString("keywords");							//关键词检索条件
-		if(null != keywords && !"".equals(keywords)){
-			pd.put("keywords", keywords.trim());
-		}
+
 		String DEPARTMENT_ID = pd.getString("DEPARTMENT_ID");
 		pd.put("DEPARTMENT_ID", null == DEPARTMENT_ID?Jurisdiction.getDEPARTMENT_ID():DEPARTMENT_ID);	//只有检索条件穿过值时，才不为null,否则读取缓存
 		pd.put("item", (null == pd.getString("DEPARTMENT_ID")?Jurisdiction.getDEPARTMENT_IDS():departmentService.getDEPARTMENT_IDS(pd.getString("DEPARTMENT_ID"))));	//部门检索条件,列出此部门下级所属部门的员工
@@ -178,7 +193,17 @@ public class StaffController extends BaseController {
 		}
 		
 		page.setPd(pd);
-		List<PageData>	varList = staffService.list(page);					//列出Staff列表
+		List<PageData>	varList = staffService.list(page);
+
+		//人员岗位下拉列表
+		String status = pd.getString("STATUS");
+		pd.put("TYPE","staffPost");
+		pd.put("STATUS",1);
+		List<PageData>	staffPostList = companybasicService.list(page);
+		mv.addObject("staffPostList",staffPostList);
+		pd.put("STATUS",status);
+
+		//列出Staff列表
 		//列表页面树形下拉框用(保持下拉树里面的数据不变)
 		String ZDEPARTMENT_ID = pd.getString("ZDEPARTMENT_ID");
 		ZDEPARTMENT_ID = Tools.notEmpty(ZDEPARTMENT_ID)?ZDEPARTMENT_ID:Jurisdiction.getDEPARTMENT_ID();
@@ -190,6 +215,7 @@ public class StaffController extends BaseController {
 		if(null != dpd){
 			ZDEPARTMENT_ID = dpd.getString("NAME");
 		}
+
 		mv.addObject("depname", ZDEPARTMENT_ID);
 		mv.setViewName("fhoa/staff/staff_list");
 		mv.addObject("varList", varList);
@@ -242,6 +268,16 @@ public class StaffController extends BaseController {
 			}
 			mv.addObject("AREAList",pdList);
 		}
+		//人员岗位下拉列表
+		String status = pd.getString("STATUS");
+		pd.put("TYPE","staffPost");
+		pd.put("STATUS",1);
+		Page page = new Page();
+		page.setPd(pd);
+		List<PageData>	staffPostList = companybasicService.list(page);
+		mv.addObject("staffPostList",staffPostList);
+		pd.put("STATUS",status);
+
 		pd.put("ROLE_ID","1");
 		List<Role> roleList = roleService.listAllRolesByPId(pd);//列出会员组角色
 		mv.addObject("roleList", roleList);
@@ -277,8 +313,10 @@ public class StaffController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("COMPANY_ID",user.getCompanyId());
+		pd.put("ROLE_ID","1");
+		List<Role> roleList = roleService.listAllRolesByPId(pd);//列出会员组角色
+		mv.addObject("roleList", roleList);
 		pd = staffService.findById(pd);	//根据ID读取
-
 		List<Dictionaries>	provinceList = dictionariesService.listSubDictByParentId("1"); //用传过来的ID获取此ID下的子列表数据
 		List<PageData> pnList = new ArrayList<PageData>();
 		for(Dictionaries d :provinceList){
@@ -311,9 +349,16 @@ public class StaffController extends BaseController {
 			}
 			mv.addObject("AREAList",pdList);
 		}
-		pd.put("ROLE_ID","1");
-		List<Role> roleList = roleService.listAllRolesByPId(pd);//列出会员组角色
-		mv.addObject("roleList", roleList);
+		//人员岗位下拉列表
+		String status = pd.getString("STATUS");
+		pd.put("TYPE","staffPost");
+		pd.put("STATUS",1);
+		Page page = new Page();
+		page.setPd(pd);
+		List<PageData>	staffPostList = companybasicService.list(page);
+		mv.addObject("staffPostList",staffPostList);
+		pd.put("STATUS",status);
+
 	//列表页面树形下拉框用(保持下拉树里面的数据不变)
 		String ZDEPARTMENT_ID = pd.getString("ZDEPARTMENT_ID");
 		ZDEPARTMENT_ID = Tools.notEmpty(ZDEPARTMENT_ID)?ZDEPARTMENT_ID:Jurisdiction.getDEPARTMENT_ID();

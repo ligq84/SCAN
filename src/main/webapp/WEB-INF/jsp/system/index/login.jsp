@@ -44,7 +44,7 @@
 		function showfh(){
 			fhi = 1;
 			//关闭提示晃动屏幕，注释掉这句话即可
-			timer = setInterval(xzfh2, 10); 
+//			timer = setInterval(xzfh2, 10);
 		};
 		var current = 0;
 		function xzfh(){
@@ -72,9 +72,9 @@
 <body>
 
 	<c:if test="${pd.isMusic == 'yes' }">
-	<div style="display: none">
-	    <audio src="static/login/music/fh1.mp3" autoplay=""></audio>
-	</div>	
+	<%--<div style="display: none">--%>
+	    <%--<audio src="static/login/music/fh1.mp3" autoplay=""></audio>--%>
+	<%--</div>	--%>
 	</c:if>
 	<canvas class="cavs"></canvas>
 	<div style="width:100%;text-align: center;margin: 0 auto;position: absolute;">
