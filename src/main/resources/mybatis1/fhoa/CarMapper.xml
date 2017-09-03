@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CarMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		OA_CAR
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		NAME,
+		TYPE,
+		PURCHASEDATE,	
+		BARCODE,	
+		BARCODEURL,	
+		COMPANY_ID,	
+		DELETED,
+		BZ
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{NAME},
+		#{TYPE},
+		#{PURCHASEDATE},	
+		#{BARCODE},	
+		#{BARCODEURL},	
+		#{COMPANY_ID},
+		#{DELETED},
+		#{BZ}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+		NAME,
+		TYPE,
+		PURCHASEDATE,
+		BARCODE,
+		BARCODEURL,
+		COMPANY_ID,
+		BZ
+		) values (
+		#{NAME},
+		#{TYPE},
+		#{PURCHASEDATE},
+		#{BARCODE},
+		#{BARCODEURL},
+		#{COMPANY_ID},
+		#{BZ}
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<update id="delete" parameterType="pd">
+		UPDATE
+		<include refid="tableName"></include>
+		SET  deleted = 1
+		where 
+			CAR_ID = #{CAR_ID}
+	</update>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			NAME = #{NAME},
+			TYPE = #{TYPE},
+			PURCHASEDATE = #{PURCHASEDATE},
+			BARCODEURL = #{BARCODEURL},
+			BZ = #{BZ}
+		where
+		CAR_ID = #{CAR_ID}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+		CAR_ID,
+		NAME,
+		TYPE,
+		PURCHASEDATE,
+		BARCODE,
+		BARCODEURL,
+		COMPANY_ID,
+		DELETED,
+		BZ
+		from  <include refid="tableName"></include>
+		where DELETED = 0 AND
+			CAR_ID = #{CAR_ID}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+			CAR_ID,
+			a.NAME,
+			a.TYPE,
+			a.PURCHASEDATE,
+			a.BARCODE,
+			a.BARCODEURL,
+			a.COMPANY_ID,
+			a.DELETED,
+			a.BZ,
+			d.`name`  as typeName
+		from 
+		<include refid="tableName"></include> a
+		LEFT JOIN oa_company_basic d ON  d.ocbid = a.type
+		where a.DELETED=0 and a.COMPANY_ID = #{pd.COMPANY_ID}
+		<if test="pd.NAME!= null and pd.NAME != ''"><!-- 关键词检索 -->
+			and a.NAME LIKE CONCAT(CONCAT('%', #{pd.NAME}),'%')
+		</if>
+		<if test="pd.CARTYPE!= null and pd.CARTYPE != ''"><!-- 关键词检索 -->
+			and a.TYPE = #{pd.CARTYPE}
+		</if>
+		<if test="pd.lastStart!= null and pd.lastStart != ''">
+			and a.PurchaseDate >= #{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!= null and pd.lastEnd != ''">
+			and  #{pd.lastEnd} >=a.PurchaseDate
+		</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+	<!-- 批量删除 -->
+	<update id="deleteAll" parameterType="String">
+		UPDATE
+		<include refid="tableName"></include>
+		SET  deleted = 1
+		where 
+			CAR_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</update>
+	
+	<!-- fh313596790qq(青苔) -->
+</mapper>

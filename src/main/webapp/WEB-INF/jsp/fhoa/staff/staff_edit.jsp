@@ -161,7 +161,7 @@
 										<option value=""></option>
 										<c:forEach items="${staffPostList}" var="staffPost">
 											<option value="${staffPost.OCBID }" <c:if test="${staffPost.OCBID == pd.POST }">selected</c:if> >${staffPost.NAME}</option>
-									</c:forEach>
+										</c:forEach>
 									</select>
 								</div>
 								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>在职状态:</label>
