@@ -293,6 +293,18 @@
 		from 
 		<include refid="tableName"></include>
 	</select>
+
+	<select id="listSelect" parameterType="page" resultType="pd">
+		select
+		a.STAFF_ID,
+		a.NAME,
+		a.TEL,
+		b.NAME as departmentName
+		from
+		<include refid="tableName"></include> a
+		LEFT JOIN oa_department b on a.DEPARTMENT_ID = b.DEPARTMENT_ID
+		where a.deleted = 0 and  a.COMPANY_ID =#{pd.COMPANY_ID}
+	</select>
 	
 	<!-- 批量删除 -->
 	<!--<delete id="deleteAll" parameterType="String">-->

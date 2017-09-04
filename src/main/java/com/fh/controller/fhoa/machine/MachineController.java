@@ -1,10 +1,11 @@
-package com.fh.controller.fhoa.car;
+package com.fh.controller.fhoa.machine;
 
 import com.fh.controller.base.BaseController;
 import com.fh.entity.Page;
 import com.fh.entity.system.User;
-import com.fh.service.fhoa.car.CarManager;
 import com.fh.service.fhoa.companybasic.CompanyBasicManager;
+import com.fh.service.fhoa.machine.MachineManager;
+import com.fh.service.fhoa.staff.StaffManager;
 import com.fh.util.*;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -22,17 +23,19 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /** 
- * 说明：小推车信息
+ * 说明：机器信息
  * 创建人：FH Q313596790
- * 创建时间：2017-09-03
+ * 创建时间：2017-09-04
  */
 @Controller
-@RequestMapping(value="/car")
-public class CarController extends BaseController {
+@RequestMapping(value="/machine")
+public class MachineController extends BaseController {
 	
-	String menuUrl = "car/list.do"; //菜单地址(权限用)
-	@Resource(name="carService")
-	private CarManager carService;
+	String menuUrl = "machine/list.do"; //菜单地址(权限用)
+	@Resource(name="machineService")
+	private MachineManager machineService;
+	@Resource(name="staffService")
+	private StaffManager staffService;
 	@Resource(name="companybasicService")
 	private CompanyBasicManager companybasicService;
 	
@@ -42,16 +45,13 @@ public class CarController extends BaseController {
 	 */
 	@RequestMapping(value="/save")
 	public ModelAndView save() throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"新增Car");
+		logBefore(logger, Jurisdiction.getUsername()+"新增Machine");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
-		Session session = Jurisdiction.getSession();
-		User user = (User)session.getAttribute(Const.SESSION_USER);
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		//pd.put("CAR_ID", this.get32UUID());	//主键
-		pd.put("COMPANY_ID",user.getCompanyId());
-		carService.save(pd);
+		pd.put("MACHINE_ID", this.get32UUID());	//主键
+		machineService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -63,11 +63,11 @@ public class CarController extends BaseController {
 	 */
 	@RequestMapping(value="/delete")
 	public void delete(PrintWriter out) throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"删除Car");
+		logBefore(logger, Jurisdiction.getUsername()+"删除Machine");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		carService.delete(pd);
+		machineService.delete(pd);
 		out.write("success");
 		out.close();
 	}
@@ -78,12 +78,12 @@ public class CarController extends BaseController {
 	 */
 	@RequestMapping(value="/edit")
 	public ModelAndView edit() throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"修改Car");
+		logBefore(logger, Jurisdiction.getUsername()+"修改Machine");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		carService.edit(pd);
+		machineService.edit(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -95,31 +95,18 @@ public class CarController extends BaseController {
 	 */
 	@RequestMapping(value="/list")
 	public ModelAndView list(Page page) throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"列表Car");
-		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
-		Session session = Jurisdiction.getSession();
-		User user = (User)session.getAttribute(Const.SESSION_USER);
+		logBefore(logger, Jurisdiction.getUsername()+"列表Machine");
+		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("COMPANY_ID",user.getCompanyId());
 		String keywords = pd.getString("keywords");				//关键词检索条件
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
 		page.setPd(pd);
-		List<PageData>	varList = carService.list(page);	//列出Car列表
-
-		//获取小推车类型
-		pd.put("TYPE","carType");
-		pd.put("STATUS",1);
-		pd.put("COMPANY_ID",user.getCompanyId());
-		List<PageData>	carTypeList = companybasicService.list(page);
-		pd.put("TYPE",null);
-		mv.addObject("carTypeList",carTypeList);
-
-
-		mv.setViewName("fhoa/car/car_list");
+		List<PageData>	varList = machineService.list(page);	//列出Machine列表
+		mv.setViewName("fhoa/machine/machine_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
@@ -133,25 +120,43 @@ public class CarController extends BaseController {
 	@RequestMapping(value="/goAdd")
 	public ModelAndView goAdd()throws Exception{
 		ModelAndView mv = this.getModelAndView();
-		Session session = Jurisdiction.getSession();
-		User user = (User)session.getAttribute(Const.SESSION_USER);
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		//编码生成规则 qg+公司id +时间戳
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		//机器编码生成
 		String BARCODE= "qgc"+user.getCompanyId()+new Date().getTime();
 		pd.put("BARCODE",BARCODE);
-
-		//获取小推车类型
-		pd.put("TYPE","carType");
-		pd.put("STATUS",1);
+		//人员选择下拉列表
 		pd.put("COMPANY_ID",user.getCompanyId());
+		List<PageData> staffList = staffService.listAll(pd);
+		mv.addObject("staffList", staffList);
+		//机器类型下拉列表
+		//人员岗位下拉列表
+		String status = pd.getString("STATUS");
+		String TYPE = pd.getString("TYPE");
+		pd.put("TYPE","machineType");
+		pd.put("STATUS",1);
 		Page page = new Page();
 		page.setPd(pd);
-		List<PageData>	carTypeList = companybasicService.list(page);
-		pd.put("TYPE",null);
-		mv.addObject("carTypeList",carTypeList);
+		List<PageData>	staffPostList = companybasicService.list(page);
+		mv.addObject("machineTypeList",staffPostList);
+		pd.put("STATUS",status);
+		pd.put("TYPE",TYPE);
+		//保养周期
+		String status2 = pd.getString("STATUS");
+		String TYPE2 = pd.getString("TYPE");
+		pd.put("TYPE","machineCycle");
+		pd.put("STATUS",1);
+		Page page2 = new Page();
+		page2.setPd(pd);
+		List<PageData>	machineCycleList = companybasicService.list(page2);
+		mv.addObject("machineCycleList",machineCycleList);
+		pd.put("STATUS",status2);
+		pd.put("TYPE",TYPE2);
 
-		mv.setViewName("fhoa/car/car_edit");
+
+		mv.setViewName("fhoa/machine/machine_edit");
 		mv.addObject("msg", "save");
 		mv.addObject("pd", pd);
 		return mv;
@@ -164,24 +169,10 @@ public class CarController extends BaseController {
 	@RequestMapping(value="/goEdit")
 	public ModelAndView goEdit()throws Exception{
 		ModelAndView mv = this.getModelAndView();
-		Session session = Jurisdiction.getSession();
-		User user = (User)session.getAttribute(Const.SESSION_USER);
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("COMPANY_ID",user.getCompanyId());
-		//获取小推车类型
-		pd.put("TYPE","carType");
-		pd.put("STATUS",1);
-		pd.put("COMPANY_ID",user.getCompanyId());
-		Page page = new Page();
-		page.setPd(pd);
-		List<PageData>	carTypeList = companybasicService.list(page);
-		pd.put("TYPE",null);
-		mv.addObject("carTypeList",carTypeList);
-
-		pd = carService.findById(pd);	//根据ID读取
-
-		mv.setViewName("fhoa/car/car_edit");
+		pd = machineService.findById(pd);	//根据ID读取
+		mv.setViewName("fhoa/machine/machine_edit");
 		mv.addObject("msg", "edit");
 		mv.addObject("pd", pd);
 		return mv;
@@ -194,7 +185,7 @@ public class CarController extends BaseController {
 	@RequestMapping(value="/deleteAll")
 	@ResponseBody
 	public Object deleteAll() throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"批量删除Car");
+		logBefore(logger, Jurisdiction.getUsername()+"批量删除Machine");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return null;} //校验权限
 		PageData pd = new PageData();		
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -203,7 +194,7 @@ public class CarController extends BaseController {
 		String DATA_IDS = pd.getString("DATA_IDS");
 		if(null != DATA_IDS && !"".equals(DATA_IDS)){
 			String ArrayDATA_IDS[] = DATA_IDS.split(",");
-			carService.deleteAll(ArrayDATA_IDS);
+			machineService.deleteAll(ArrayDATA_IDS);
 			pd.put("msg", "ok");
 		}else{
 			pd.put("msg", "no");
@@ -219,7 +210,7 @@ public class CarController extends BaseController {
 	 */
 	@RequestMapping(value="/excel")
 	public ModelAndView exportExcel() throws Exception{
-		logBefore(logger, Jurisdiction.getUsername()+"导出Car到excel");
+		logBefore(logger, Jurisdiction.getUsername()+"导出Machine到excel");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;}
 		ModelAndView mv = new ModelAndView();
 		PageData pd = new PageData();
@@ -227,30 +218,38 @@ public class CarController extends BaseController {
 		Map<String,Object> dataMap = new HashMap<String,Object>();
 		List<String> titles = new ArrayList<String>();
 		titles.add("备注1");	//1
-		titles.add("备注2");	//2
-		titles.add("备注3");	//3
-		titles.add("备注4");	//4
-		titles.add("备注5");	//5
-		titles.add("备注6");	//6
-		titles.add("备注7");	//7
-		titles.add("备注8");	//8
-		titles.add("备注9");	//9
-		titles.add("备注10");	//10
+		titles.add("机器名称");	//2
+		titles.add("类型");	//3
+		titles.add("型号");	//4
+		titles.add("功率");	//5
+		titles.add("机器负责人");	//6
+		titles.add("白班维修员");	//7
+		titles.add("Night_Repairman");	//8
+		titles.add("机器编码");	//9
+		titles.add("条码图片路径");	//10
+		titles.add("公司id");	//11
+		titles.add("备注12");	//12
+		titles.add("备注13");	//13
+		titles.add("更改规格");	//14
 		dataMap.put("titles", titles);
-		List<PageData> varOList = carService.listAll(pd);
+		List<PageData> varOList = machineService.listAll(pd);
 		List<PageData> varList = new ArrayList<PageData>();
 		for(int i=0;i<varOList.size();i++){
 			PageData vpd = new PageData();
-			vpd.put("var1", varOList.get(i).get("CAR_ID").toString());	//1
+			vpd.put("var1", varOList.get(i).get("MHID").toString());	//1
 			vpd.put("var2", varOList.get(i).getString("NAME"));	    //2
-			vpd.put("var3", varOList.get(i).getString("BIANHAO"));	    //3
-			vpd.put("var4", varOList.get(i).getString("TYPE"));	    //4
-			vpd.put("var5", varOList.get(i).getString("PURCHASEDATE"));	    //5
-			vpd.put("var6", varOList.get(i).getString("BARCODE"));	    //6
-			vpd.put("var7", varOList.get(i).getString("BARCODEURL"));	    //7
-			vpd.put("var8", varOList.get(i).get("COMPANY_ID").toString());	//8
-			vpd.put("var9", varOList.get(i).get("DELETED").toString());	//9
-			vpd.put("var10", varOList.get(i).getString("BZ"));	    //10
+			vpd.put("var3", varOList.get(i).getString("TYPE"));	    //3
+			vpd.put("var4", varOList.get(i).getString("MODEL"));	    //4
+			vpd.put("var5", varOList.get(i).getString("POWER"));	    //5
+			vpd.put("var6", varOList.get(i).getString("CHARGE"));	    //6
+			vpd.put("var7", varOList.get(i).getString("DAY_REPAIRMAN"));	    //7
+			vpd.put("var8", varOList.get(i).getString("NIGHT_REPAIRMAN"));	    //8
+			vpd.put("var9", varOList.get(i).getString("BARCODE"));	    //9
+			vpd.put("var10", varOList.get(i).getString("BARCODEURL"));	    //10
+			vpd.put("var11", varOList.get(i).get("COMPANY_ID").toString());	//11
+			vpd.put("var12", varOList.get(i).get("DELETED").toString());	//12
+			vpd.put("var13", varOList.get(i).getString("BZ"));	    //13
+			vpd.put("var14", varOList.get(i).get("CHANGE_RULE").toString());	//14
 			varList.add(vpd);
 		}
 		dataMap.put("varList", varList);

@@ -1,17 +1,16 @@
-package com.fh.service.fhoa.staff;
+package com.fh.service.fhoa.machine;
 
+import java.util.List;
 import com.fh.entity.Page;
 import com.fh.util.PageData;
 
-import java.util.List;
-
 /** 
- * 说明： 员工管理接口
+ * 说明： 机器信息接口
  * 创建人：FH Q313596790
- * 创建时间：2016-04-23
+ * 创建时间：2017-09-04
  * @version
  */
-public interface StaffManager{
+public interface MachineManager{
 
 	/**新增
 	 * @param pd
@@ -36,13 +35,7 @@ public interface StaffManager{
 	 * @throws Exception
 	 */
 	public List<PageData> list(Page page)throws Exception;
-	/**
-	 * 下拉框查询列表
-	 * @param page
-	 * @return
-	 * @throws Exception
-	 */
-	List<PageData> listSelect(Page page)throws Exception;
+	
 	/**列表(全部)
 	 * @param pd
 	 * @throws Exception
@@ -60,12 +53,6 @@ public interface StaffManager{
 	 * @throws Exception
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
-	
-	/**绑定用户
-	 * @param pd
-	 * @throws Exception
-	 */
-	public void userBinding(PageData pd)throws Exception;
 	
 }
 
