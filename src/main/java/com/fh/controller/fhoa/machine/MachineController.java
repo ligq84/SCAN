@@ -131,37 +131,43 @@ public class MachineController extends BaseController {
 		pd.put("COMPANY_ID",user.getCompanyId());
 		List<PageData> staffList = staffService.listAll(pd);
 		mv.addObject("staffList", staffList);
-		//机器类型下拉列表
-		//人员岗位下拉列表
-		String status = pd.getString("STATUS");
-		String TYPE = pd.getString("TYPE");
-		pd.put("TYPE","machineType");
-		pd.put("STATUS",1);
-		Page page = new Page();
-		page.setPd(pd);
-		List<PageData>	staffPostList = companybasicService.list(page);
-		mv.addObject("machineTypeList",staffPostList);
-		pd.put("STATUS",status);
-		pd.put("TYPE",TYPE);
-		//保养周期
-		String status2 = pd.getString("STATUS");
-		String TYPE2 = pd.getString("TYPE");
-		pd.put("TYPE","machineCycle");
-		pd.put("STATUS",1);
-		Page page2 = new Page();
-		page2.setPd(pd);
-		List<PageData>	machineCycleList = companybasicService.list(page2);
-		mv.addObject("machineCycleList",machineCycleList);
-		pd.put("STATUS",status2);
-		pd.put("TYPE",TYPE2);
 
+		//机器类型下拉列表
+		List<PageData>	staffPostList =  getBasicData(Const.COMPANY_BASIC_MACHINETYPE,1,user.getCompanyId());
+		mv.addObject("machineTypeList",staffPostList);
+
+		//保养周期
+		List<PageData>	machineCycleList =  getBasicData(Const.COMPANY_BASIC_MACHINECYCLE,1,user.getCompanyId());
+		mv.addObject("machineCycleList",machineCycleList);
+
+		//维修项目
+		List<PageData>	mpList = getBasicData(Const.COMPANY_BASIC_MAINTENANCEPROJECT,1,user.getCompanyId());
+		mv.addObject("mpList",mpList);
+
+		//机器规格
+		List<PageData>	ruleList = getBasicData(Const.COMPANY_BASIC_MACHINERULE,1,user.getCompanyId());
+		mv.addObject("ruleList",ruleList);
+
+		///规格更改部位
+		List<PageData>	rulePosttionList = getBasicData(Const.COMPANY_BASIC_RULEPOSITION,1,user.getCompanyId());
+		mv.addObject("rulePosttionList",rulePosttionList);
 
 		mv.setViewName("fhoa/machine/machine_edit");
 		mv.addObject("msg", "save");
 		mv.addObject("pd", pd);
 		return mv;
 	}	
-	
+	public List<PageData> getBasicData(String type,int status,String companyid) throws Exception {
+		PageData pd = new PageData();
+		pd.put("TYPE",type);
+		pd.put("STATUS",status);
+		pd.put("COMPANY_ID",companyid);
+		Page page = new Page();
+		page.setPd(pd);
+		List<PageData>	mpList = companybasicService.list(page);
+		return  mpList;
+
+	}
 	 /**去修改页面
 	 * @param
 	 * @throws Exception

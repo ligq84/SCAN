@@ -86,7 +86,7 @@
 											</c:forEach>
 										</select>
 									</div>
-									<label for="POWER" class="col-sm-1 control-label"><span style="color: red">*</span>晚班维修人员:</label>
+									<label for="POWER" class="col-sm-2 control-label"><span style="color: red">*</span>晚班维修人员:</label>
 									<div class="col-sm-2">
 										<select id="NIGHT_REPAIRMAN" name="NIGHT_REPAIRMAN" class="chosen-select form-control" data-placeholder="这里输入晚班维修人员" style="vertical-align:top;">
 											<option value=""></option>
@@ -106,17 +106,102 @@
 									<div class="col-sm-10">
 										<c:forEach items="${machineCycleList}" var="var" varStatus="vs">
 											<label style="float:left;padding-left: 8px;padding-top:7px;">
-												<input name="checkbox1" type="checkbox" class="ace" value="${var.OCBID}"><span class="lbl">${var.NAME}</span>
+												<input name="checkbox1" type="checkbox" class="ace" value="${var.OCBID}"><span class="lbl" onclick="">${var.NAME}</span>
 											</label>
 										</c:forEach>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12" >
+								<div class="form-group" style="margin-top: 10px">
+									<label class="col-sm-1 control-label no-padding-right">保养方式：</label>
+									<div class="col-sm-2">
+										<textarea rows="5" cols="30"></textarea>
+									</div>
+									<label class="col-sm-1 control-label no-padding-right">保养方式：</label>
+									<div class="col-sm-2">
+										<textarea rows="5" cols="30"></textarea>
+									</div>
+									<label class="col-sm-1 control-label no-padding-right">保养方式：</label>
+									<div class="col-sm-2">
+										<textarea rows="5" cols="30"></textarea>
+									</div>
 
+								</div>
+							</div>
+							<div class="col-sm-12 widget-header widget-header-blue widget-header-flat wi1dget-header-large" style="padding: 0px;margin: 0px;">
+								<h4 class="lighter">机器维修信息 <a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-left: 20px;" >添加</a></h4>
+							</div>
+							<div class="col-sm-12" >
+								<div class="form-group" style="margin-top: 10px" id="mplist">
+									<div id="mpvalue1">
+									<label class="col-sm-1 control-label no-padding-right">维修项目1：</label>
+									<div class="col-sm-2">
+										<select class="chosen-select form-control" name="mp1" id="mp1" data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >
+											<option value=""></option>
+											<c:forEach items="${mpList}" var="mp">
+												<%--<option value="${mp.OCBID }" <c:if test="${machineType.OCBID == pd.TYPE}">selected</c:if> >${mp.NAME}</option>--%>
+												<option value="${mp.OCBID }">${mp.NAME}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="col-sm-1">
+										<a class="btn btn-mini btn-danger" style="margin-top: 2px">删除</a>
+									</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="col-sm-12 widget-header widget-header-blue widget-header-flat wi1dget-header-large" style="padding: 0px;margin: 0px;">
+								<h4 class="lighter">机器更改规格  <a class="btn btn-mini btn-primary" onclick="" style="margin-left: 20px;">添加</a></h4>
+							</div>
+							<div class="col-sm-12" >
+								<div class="form-group" style="margin-top: 10px">
+									<label class="col-sm-1 control-label no-padding-right">更改规格:</label>
+									<div class="col-sm-2">
+										<label style="float:left;padding-left: 20px;padding-top:7px;">
+											<input name="CHANGE_RULE" type="radio" class="ace" <c:if test="${pd.CHANGE_RULE == 0}">checked</c:if> ><span class="lbl">支持</span>
+										</label>
+										<label style="float:left;padding-left:35px;padding-top:7px;">
+											<input name="CHANGE_RULE" type="radio" class="ace"  <c:if test="${pd.CHANGE_RULE == 1}">checked</c:if>  ><span class="lbl">不支持</span>
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12" >
+								<div class="form-group" >
+									<label class="col-sm-1 control-label no-padding-right">支持规格:</label>
+									<div class="col-sm-2">
+										<c:forEach items="${ruleList}" var="var" varStatus="vs">
+											<label style="float:left;padding-left: 8px;padding-top:7px;">
+												<input name="checkbox1" type="checkbox" class="ace" value="${var.OCBID}"><span class="lbl" onclick="">${var.NAME}</span>
+											</label>
+										</c:forEach>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12" >
+								<div class="form-group" >
+									<label class="col-sm-1 control-label no-padding-right">更改规格1:</label>
+									<div class="col-sm-2">
+										<select class="chosen-select form-control" name="rp" id="rp" data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
+											<option value=""></option>
+											<c:forEach items="${rulePosttionList}" var="rp">
+												<%--<option value="${mp.OCBID }" <c:if test="${machineType.OCBID == pd.TYPE}">selected</c:if> >${mp.NAME}</option>--%>
+												<option value="${rp.OCBID }">${rp.NAME}</option>
+											</c:forEach>
+										</select>
+
+									</div>
+									<div class="col-sm-1">
+										<a class="btn btn-mini btn-danger" style="margin-top: 2px">删除</a>
 									</div>
 								</div>
 							</div>
 						<%--<table id="table_report" class="table table-striped table-bordered table-hover">--%>
 							<%--<tr>--%>
 								<%--<td style="width:75px;text-align: right;padding-top: 13px;">更改规格:</td>--%>
-								<%--<td><input type="number" name="CHANGE_RULE" id="CHANGE_RULE" value="${pd.CHANGE_RULE}" maxlength="32" placeholder="这里输入更改规格" title="更改规格" style="width:98%;"/></td>--%>
+								<%--<td><input type="number" name="CHANGE_RULE" id="CHANGE_RULE" value="" maxlength="32" placeholder="这里输入更改规格" title="更改规格" style="width:98%;"/></td>--%>
 							<%--</tr>--%>
 							<%--<tr>--%>
 								<%--<td style="text-align: center;" colspan="10">--%>
@@ -151,6 +236,23 @@
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 		<script type="text/javascript">
 		$(top.hangge());
+		function addMP(){
+			var mplist = $("#mplist");
+			mplist.append('<div id="mpvalue${mp.OCBID }">'+
+							'<label class="col-sm-1 control-label no-padding-right">维修项目1：</label>'+
+							'<div class="col-sm-2">'+
+							'		<select class="chosen-select form-control" name="mpv1"  data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >'+
+							'				<option value=""></option>'+
+											<c:forEach items="${mpList}" var="mp">
+													'<option value="${mp.OCBID }">${mp.NAME}</option>'+
+											</c:forEach>
+							'		</select>'+
+							'</div>'+
+							'<div class="col-sm-1">'+
+							'		<a class="btn btn-mini btn-danger" style="margin-top: 2px">删除</a>'+
+							'</div>'+
+							'<div>');
+		}
 		//保存
 		function save(){
 			if($("#MHID").val()==""){
