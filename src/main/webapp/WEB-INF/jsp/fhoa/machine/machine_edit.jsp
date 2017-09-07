@@ -102,30 +102,19 @@
 							</div>
 							<div class="col-sm-12" >
 								<div class="form-group" style="margin-top: 10px">
-									<label class="col-sm-1 control-label no-padding-right">保养方式：</label>
+									<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>保养方式：</label>
 									<div class="col-sm-10">
 										<c:forEach items="${machineCycleList}" var="var" varStatus="vs">
-											<label style="float:left;padding-left: 8px;padding-top:7px;">
-												<input name="checkbox1" type="checkbox" class="ace" value="${var.OCBID}"><span class="lbl" onclick="">${var.NAME}</span>
+											<label style="float:left;padding-left: 8px;padding-top:7px;" >
+												<input id="cycle${var.OCBID}" name="cycleName" type="checkbox" class="ace" value="${var.OCBID}"
+													   onclick="cycleChange('cycle${var.OCBID}','${var.OCBID}','${var.NAME}')"><span class="lbl" >${var.NAME}</span>
 											</label>
 										</c:forEach>
 									</div>
 								</div>
 							</div>
 							<div class="col-sm-12" >
-								<div class="form-group" style="margin-top: 10px">
-									<label class="col-sm-1 control-label no-padding-right">保养方式：</label>
-									<div class="col-sm-2">
-										<textarea rows="5" cols="30"></textarea>
-									</div>
-									<label class="col-sm-1 control-label no-padding-right">保养方式：</label>
-									<div class="col-sm-2">
-										<textarea rows="5" cols="30"></textarea>
-									</div>
-									<label class="col-sm-1 control-label no-padding-right">保养方式：</label>
-									<div class="col-sm-2">
-										<textarea rows="5" cols="30"></textarea>
-									</div>
+								<div class="form-group" style="margin-top: 10px" id="cycleDes">
 
 								</div>
 							</div>
@@ -134,30 +123,30 @@
 							</div>
 							<div class="col-sm-12" >
 								<div class="form-group" style="margin-top: 10px" id="mplist">
-									<div id="mpvalue1">
-									<label class="col-sm-1 control-label no-padding-right">维修项目1：</label>
-									<div class="col-sm-2">
-										<select class="chosen-select form-control" name="mp1" id="mp1" data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >
-											<option value=""></option>
-											<c:forEach items="${mpList}" var="mp">
-												<%--<option value="${mp.OCBID }" <c:if test="${machineType.OCBID == pd.TYPE}">selected</c:if> >${mp.NAME}</option>--%>
-												<option value="${mp.OCBID }">${mp.NAME}</option>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-sm-1">
-										<a class="btn btn-mini btn-danger" style="margin-top: 2px">删除</a>
-									</div>
-									</div>
+									<%--<div id="mpvalue1" style="margin-top: 5px;">--%>
+									<%--<label class="col-sm-1 control-label no-padding-right">维修项目1：</label>--%>
+									<%--<div class="col-sm-2">--%>
+										<%--<select class="chosen-select form-control" name="mp1" id="mp1" data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >--%>
+											<%--<option value=""></option>--%>
+											<%--<c:forEach items="${mpList}" var="mp">--%>
+												<%--&lt;%&ndash;<option value="${mp.OCBID }" <c:if test="${machineType.OCBID == pd.TYPE}">selected</c:if> >${mp.NAME}</option>&ndash;%&gt;--%>
+												<%--<option value="${mp.OCBID }">${mp.NAME}</option>--%>
+											<%--</c:forEach>--%>
+										<%--</select>--%>
+									<%--</div>--%>
+									<%--<div class="col-sm-1">--%>
+										<%--<a class="btn btn-mini btn-danger" style="margin-top: 2px" onclick="deleteSelect('mpvalue1')">删除</a>--%>
+									<%--</div>--%>
+									<%--</div>--%>
 								</div>
 
 							</div>
 							<div class="col-sm-12 widget-header widget-header-blue widget-header-flat wi1dget-header-large" style="padding: 0px;margin: 0px;">
-								<h4 class="lighter">机器更改规格  <a class="btn btn-mini btn-primary" onclick="" style="margin-left: 20px;">添加</a></h4>
+								<h4 class="lighter">机器更改规格  <a class="btn btn-mini btn-primary" onclick="addRulePost()" style="margin-left: 20px;">添加更改规格</a></h4>
 							</div>
 							<div class="col-sm-12" >
 								<div class="form-group" style="margin-top: 10px">
-									<label class="col-sm-1 control-label no-padding-right">更改规格:</label>
+									<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格:</label>
 									<div class="col-sm-2">
 										<label style="float:left;padding-left: 20px;padding-top:7px;">
 											<input name="CHANGE_RULE" type="radio" class="ace" <c:if test="${pd.CHANGE_RULE == 0}">checked</c:if> ><span class="lbl">支持</span>
@@ -170,7 +159,7 @@
 							</div>
 							<div class="col-sm-12" >
 								<div class="form-group" >
-									<label class="col-sm-1 control-label no-padding-right">支持规格:</label>
+									<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>支持规格:</label>
 									<div class="col-sm-2">
 										<c:forEach items="${ruleList}" var="var" varStatus="vs">
 											<label style="float:left;padding-left: 8px;padding-top:7px;">
@@ -181,37 +170,33 @@
 								</div>
 							</div>
 							<div class="col-sm-12" >
-								<div class="form-group" >
-									<label class="col-sm-1 control-label no-padding-right">更改规格1:</label>
-									<div class="col-sm-2">
-										<select class="chosen-select form-control" name="rp" id="rp" data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
-											<option value=""></option>
-											<c:forEach items="${rulePosttionList}" var="rp">
-												<%--<option value="${mp.OCBID }" <c:if test="${machineType.OCBID == pd.TYPE}">selected</c:if> >${mp.NAME}</option>--%>
-												<option value="${rp.OCBID }">${rp.NAME}</option>
-											</c:forEach>
-										</select>
+								<div class="form-group" id="rulePost">
+									<%--<div id="rulePost1" style="margin-top: 5px;">--%>
+										<%--<label class="col-sm-1 control-label no-padding-right">更改规格1:</label>--%>
+										<%--<div class="col-sm-2">--%>
+											<%--<select class="chosen-select form-control" name="rp" id="rp" data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >--%>
+												<%--<option value=""></option>--%>
+												<%--<c:forEach items="${rulePosttionList}" var="rp">--%>
+													<%--&lt;%&ndash;<option value="${mp.OCBID }" <c:if test="${machineType.OCBID == pd.TYPE}">selected</c:if> >${mp.NAME}</option>&ndash;%&gt;--%>
+													<%--<option value="${rp.OCBID }">${rp.NAME}</option>--%>
+												<%--</c:forEach>--%>
+											<%--</select>--%>
 
-									</div>
-									<div class="col-sm-1">
-										<a class="btn btn-mini btn-danger" style="margin-top: 2px">删除</a>
-									</div>
+										<%--</div>--%>
+										<%--<div class="col-sm-1">--%>
+											<%--<a class="btn btn-mini btn-danger" style="margin-top: 2px">删除</a>--%>
+										<%--</div>--%>
+									<%--</div>--%>
 								</div>
 							</div>
-						<%--<table id="table_report" class="table table-striped table-bordered table-hover">--%>
-							<%--<tr>--%>
-								<%--<td style="width:75px;text-align: right;padding-top: 13px;">更改规格:</td>--%>
-								<%--<td><input type="number" name="CHANGE_RULE" id="CHANGE_RULE" value="" maxlength="32" placeholder="这里输入更改规格" title="更改规格" style="width:98%;"/></td>--%>
-							<%--</tr>--%>
-							<%--<tr>--%>
-								<%--<td style="text-align: center;" colspan="10">--%>
-									<%--<a class="btn btn-mini btn-primary" onclick="save();">保存</a>--%>
-									<%--<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>--%>
-								<%--</td>--%>
-							<%--</tr>--%>
-						<%--</table>--%>
+							<div class="col-sm-12" >
+								<div class="form-group" style="margin-top: 10px;text-align: center">
+									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
+									<a class="btn btn-mini btn-danger" onclick="back();">返回</a>
+								</div>
+							</div>
 						</div>
-						<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/><br/><img src="static/images/jiazai.gif" /><br/><h4 class="lighter block green">提交中...</h4></div>
+						<div id="zhongxin2" class="center" style="display:none;" ><br/><br/><br/><br/><br/><img src="static/images/jiazai.gif" /><br/><h4 class="lighter block green">提交中...</h4></div>
 					</form>
 					</div>
 					<!-- /.col -->
@@ -236,165 +221,146 @@
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 		<script type="text/javascript">
 		$(top.hangge());
+		function back(){
+			var form = $('<form action="<%=basePath%>machine/list.do" method="get"></form>');
+			$(document.body).append(form);
+			form.submit()
+		}
+
+		function addRulePost(){
+			var rulePost = $("#rulePost");
+			var rpdiv = $("#rulePost>div");
+			var lent = rpdiv.length;
+			var netx=lent+1;
+			console.log(netx);
+			if((lent+1)%3 == 0){
+				rulePost.append(getRPSelect(netx)+'<div><div class="row"></div>');
+			}else{
+				rulePost.append(getRPSelect(netx));
+			}
+			$('.chosen-select').chosen({allow_single_deselect:true,search_contains:true});
+		}
+		function getRPSelect(len){
+			return '<div id="rpvvalue'+len+'" style="margin-top: 5px;">'+
+					'<label class="col-sm-1 control-label no-padding-right">更改规格'+len+'：</label>'+
+					'<div class="col-sm-2">'+
+					'		<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:98%;" >'+
+					'				<option value=""></option>'+
+					<c:forEach items="${rulePosttionList}" var="rp">
+									'<option value="${rp.OCBID }">${rp.NAME}</option>'+
+					</c:forEach>
+					'		</select>'+
+					'</div>'+
+					'<div class="col-sm-1">'+
+					'		<a class="btn btn-mini btn-danger" style="margin-top: 2px" onclick="deleteRPSelect(\'rpvvalue'+len+'\')">删除</a>'+
+					'</div>'+
+					'<div>';
+		}
+		function deleteRPSelect(id){
+			$("#"+id).remove();
+		}
+		function cycleChange(id,v,n){
+			if($("#"+id).is(":checked")){
+				$("#cycleDes").append('<div id="desc'+v+'">'+
+										'	<label class="col-sm-1 control-label no-padding-right">'+n+':</label>'+
+										'<div class="col-sm-2">'+
+										'	<textarea rows="5" cols="30" name="cd"+v></textarea>'+
+										'	</div>'+
+										'</div>');
+			}else{
+				$("#desc"+v).remove();
+			}
+		}
 		function addMP(){
 			var mplist = $("#mplist");
-			mplist.append('<div id="mpvalue${mp.OCBID }">'+
-							'<label class="col-sm-1 control-label no-padding-right">维修项目1：</label>'+
-							'<div class="col-sm-2">'+
-							'		<select class="chosen-select form-control" name="mpv1"  data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >'+
-							'				<option value=""></option>'+
-											<c:forEach items="${mpList}" var="mp">
-													'<option value="${mp.OCBID }">${mp.NAME}</option>'+
-											</c:forEach>
-							'		</select>'+
-							'</div>'+
-							'<div class="col-sm-1">'+
-							'		<a class="btn btn-mini btn-danger" style="margin-top: 2px">删除</a>'+
-							'</div>'+
-							'<div>');
+			var mpdiv = $("#mplist>div");
+			var len = mpdiv.length;
+			if((len+1)%3 == 0){
+				mplist.append(getMPSelect(len)+'<div><div class="row"></div>');
+			}else{
+				mplist.append(getMPSelect(len));
+			}
+			$('.chosen-select').chosen({allow_single_deselect:true,search_contains:true});
+		}
+		function getMPSelect(len){
+			return '<div id="mpvalue'+(len+1)+'" style="margin-top: 5px;">'+
+			'<label class="col-sm-1 control-label no-padding-right">维修项目'+(len+1)+'：</label>'+
+			'<div class="col-sm-2">'+
+//			'		<select class="chosen-select form-control" name="mpv'+(len+1)+'"  data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >'+
+			'		<select class="chosen-select form-control" name="mpv"  data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >'+
+			'				<option value=""></option>'+
+			<c:forEach items="${mpList}" var="mp">
+			'<option value="${mp.OCBID }">${mp.NAME}</option>'+
+			</c:forEach>
+			'		</select>'+
+			'</div>'+
+			'<div class="col-sm-1">'+
+			'		<a class="btn btn-mini btn-danger" style="margin-top: 2px" onclick="deleteSelect(\'mpvalue'+(len+1)+'\')">删除</a>'+
+			'</div>'+
+			'<div>';
+		}
+		function deleteSelect(id){
+			$("#"+id).remove();
 		}
 		//保存
 		function save(){
-			if($("#MHID").val()==""){
-				$("#MHID").tips({
-					side:3,
-		            msg:'请输入备注1',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#MHID").focus();
-			return false;
-			}
+			//机器维修信息
+			var mpvs="";
+			$("select[name=mpv]").each(function(){
+				if($(this).val()){
+					mpvs+=$(this).val()+',';
+				}
+			});
+			//更改规格信息
+			var rpv="";
+			$("select[name=rpv]").each(function(){
+				if($(this).val()){
+					rpv+=$(this).val()+',';
+				}
+			});
+
+
 			if($("#NAME").val()==""){
-				$("#NAME").tips({
-					side:3,
-		            msg:'请输入机器名称',
-		            bg:'#AE81FF',
-		            time:2
-		        });
+				$("#NAME").tips({side:3, msg:'请输入机器名称', bg:'#AE81FF', time:2});
 				$("#NAME").focus();
-			return false;
+				return false;
 			}
-			if($("#TYPE").val()==""){
-				$("#TYPE").tips({
-					side:3,
-		            msg:'请输入类型',
-		            bg:'#AE81FF',
-		            time:2
-		        });
+			if($("#TYPE").val()==""){$("#TYPE").tips({side:3, msg:'请输入类型', bg:'#AE81FF', time:2});
 				$("#TYPE").focus();
-			return false;
+				return false;
 			}
 			if($("#MODEL").val()==""){
-				$("#MODEL").tips({
-					side:3,
-		            msg:'请输入型号',
-		            bg:'#AE81FF',
-		            time:2
-		        });
+				$("#MODEL").tips({side:3, msg:'请输入型号', bg:'#AE81FF', time:2});
 				$("#MODEL").focus();
-			return false;
+				return false;
 			}
 			if($("#POWER").val()==""){
-				$("#POWER").tips({
-					side:3,
-		            msg:'请输入功率',
-		            bg:'#AE81FF',
-		            time:2
-		        });
+				$("#POWER").tips({side:3, msg:'请输入功率', bg:'#AE81FF', time:2});
 				$("#POWER").focus();
-			return false;
+				return false;
 			}
 			if($("#CHARGE").val()==""){
-				$("#CHARGE").tips({
-					side:3,
-		            msg:'请输入机器负责人',
-		            bg:'#AE81FF',
-		            time:2
-		        });
+				$("#CHARGE").tips({side:3, msg:'请输入机器负责人', bg:'#AE81FF', time:2});
 				$("#CHARGE").focus();
 			return false;
 			}
 			if($("#DAY_REPAIRMAN").val()==""){
-				$("#DAY_REPAIRMAN").tips({
-					side:3,
-		            msg:'请输入白班维修员',
-		            bg:'#AE81FF',
-		            time:2
-		        });
+				$("#DAY_REPAIRMAN").tips({side:3,msg:'请输入白班维修员',bg:'#AE81FF',time:2 });
 				$("#DAY_REPAIRMAN").focus();
 			return false;
 			}
 			if($("#NIGHT_REPAIRMAN").val()==""){
-				$("#NIGHT_REPAIRMAN").tips({
-					side:3,
-		            msg:'请输入Night_Repairman',
-		            bg:'#AE81FF',
-		            time:2
-		        });
+				$("#NIGHT_REPAIRMAN").tips({side:3,msg:'请输入晚班维修员',bg:'#AE81FF',time:2});
 				$("#NIGHT_REPAIRMAN").focus();
 			return false;
 			}
-			if($("#BARCODE").val()==""){
-				$("#BARCODE").tips({
-					side:3,
-		            msg:'请输入机器编码',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#BARCODE").focus();
-			return false;
-			}
-			if($("#BARCODEURL").val()==""){
-				$("#BARCODEURL").tips({
-					side:3,
-		            msg:'请输入条码图片路径',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#BARCODEURL").focus();
-			return false;
-			}
-			if($("#COMPANY_ID").val()==""){
-				$("#COMPANY_ID").tips({
-					side:3,
-		            msg:'请输入公司id',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#COMPANY_ID").focus();
-			return false;
-			}
-			if($("#DELETED").val()==""){
-				$("#DELETED").tips({
-					side:3,
-		            msg:'请输入备注12',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#DELETED").focus();
-			return false;
-			}
-			if($("#BZ").val()==""){
-				$("#BZ").tips({
-					side:3,
-		            msg:'请输入备注13',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#BZ").focus();
-			return false;
-			}
+
 			if($("#CHANGE_RULE").val()==""){
-				$("#CHANGE_RULE").tips({
-					side:3,
-		            msg:'请输入更改规格',
-		            bg:'#AE81FF',
-		            time:2
-		        });
+				$("#CHANGE_RULE").tips({side:3, msg:'请输入更改规格', bg:'#AE81FF',time:2});
 				$("#CHANGE_RULE").focus();
 			return false;
 			}
+
 			$("#Form").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();
