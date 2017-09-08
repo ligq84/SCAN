@@ -163,7 +163,7 @@
 									<div class="col-sm-2">
 										<c:forEach items="${ruleList}" var="var" varStatus="vs">
 											<label style="float:left;padding-left: 8px;padding-top:7px;">
-												<input name="checkbox1" type="checkbox" class="ace" value="${var.OCBID}"><span class="lbl" onclick="">${var.NAME}</span>
+												<input name="ruleId" type="checkbox" class="ace" value="${var.OCBID}"><span class="lbl" onclick="">${var.NAME}</span>
 											</label>
 										</c:forEach>
 									</div>
@@ -221,6 +221,21 @@
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 		<script type="text/javascript">
 		$(top.hangge());
+		$.fn.serializeObject = function() {
+			var o = {};
+			var a = this.serializeArray();
+			$.each(a, function() {
+				if (o[this.name]) {
+					if (!o[this.name].push) {
+						o[this.name] = [ o[this.name] ];
+					}
+					o[this.name].push(this.value || '');
+				} else {
+					o[this.name] = this.value || '';
+				}
+			});
+			return o;
+		};
 		function back(){
 			var form = $('<form action="<%=basePath%>machine/list.do" method="get"></form>');
 			$(document.body).append(form);
@@ -264,7 +279,7 @@
 				$("#cycleDes").append('<div id="desc'+v+'">'+
 										'	<label class="col-sm-1 control-label no-padding-right">'+n+':</label>'+
 										'<div class="col-sm-2">'+
-										'	<textarea rows="5" cols="30" name="cd"+v></textarea>'+
+										'	<textarea rows="5" cols="30" name="cdesc'+v+'"></textarea>'+
 										'	</div>'+
 										'</div>');
 			}else{
@@ -319,7 +334,6 @@
 				}
 			});
 
-
 			if($("#NAME").val()==""){
 				$("#NAME").tips({side:3, msg:'请输入机器名称', bg:'#AE81FF', time:2});
 				$("#NAME").focus();
@@ -361,9 +375,32 @@
 			return false;
 			}
 
-			$("#Form").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();
+			var from = $("#Form").serializeObject();
+
+
+			$.ajax({
+				type: "POST",
+				url: '<%=basePath%>machine/${msg}.do',
+				data: from,
+				dataType:'json',
+				cache: false,
+				success: function(data){
+					if(data.result == "success"){
+						alert(data.mesg);
+						var form = $('<form action="<%=basePath%>machine/list.do" method="get"></form>');
+						$(document.body).append(form);
+						form.submit()
+					}else if(data.result == "fail"){
+						alert(data.mesg);
+					}else {
+						alert("添加异常");
+						$("#zhongxin").show();
+						$("#zhongxin2").hide();
+					}
+				}
+			});
 		}
 		
 		$(function() {

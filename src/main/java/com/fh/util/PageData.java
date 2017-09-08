@@ -1,12 +1,7 @@
 package com.fh.util;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
-
 import javax.servlet.http.HttpServletRequest;
+import java.util.*;
 /** 
  * 说明：参数封装Map
  * 创建人：FH Q313596790
@@ -29,20 +24,21 @@ public class PageData extends HashMap implements Map{
 		String value = "";  
 		while (entries.hasNext()) {
 			entry = (Map.Entry) entries.next(); 
-			name = (String) entry.getKey(); 
+			name = (String) entry.getKey();
 			Object valueObj = entry.getValue(); 
 			if(null == valueObj){ 
 				value = ""; 
 			}else if(valueObj instanceof String[]){ 
 				String[] values = (String[])valueObj;
+				value="";
 				for(int i=0;i<values.length;i++){ 
-					 value = values[i] + ",";
+					 value += values[i] + ",";
 				}
 				value = value.substring(0, value.length()-1); 
 			}else{
 				value = valueObj.toString(); 
 			}
-			returnMap.put(name, value); 
+			returnMap.put(name.replace("[","").replace("]",""), value);
 		}
 		map = returnMap;
 	}

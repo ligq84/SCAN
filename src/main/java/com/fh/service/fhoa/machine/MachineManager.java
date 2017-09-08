@@ -1,8 +1,9 @@
 package com.fh.service.fhoa.machine;
 
-import java.util.List;
 import com.fh.entity.Page;
 import com.fh.util.PageData;
+
+import java.util.List;
 
 /** 
  * 说明： 机器信息接口
@@ -16,7 +17,7 @@ public interface MachineManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	public void save(PageData pd)throws Exception;
+	public String save(PageData pd)throws Exception;
 	
 	/**删除
 	 * @param pd

@@ -44,13 +44,37 @@
 	</sql>
 	
 	<!-- 新增-->
-	<insert id="save" parameterType="pd">
+	<insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="MHID">
 		insert into 
 	<include refid="tableName"></include>
 		(
-	<include refid="Field"></include>
+		NAME,
+		TYPE,
+		MODEL,
+		POWER,
+		CHARGE,
+		DAY_REPAIRMAN,
+		NIGHT_REPAIRMAN,
+		BARCODE,
+		BARCODEURL,
+		COMPANY_ID,
+		DELETED,
+		BZ,
+		CHANGE_RULE
 		) values (
-	<include refid="FieldValue"></include>
+		#{NAME},
+		#{TYPE},
+		#{MODEL},
+		#{POWER},
+		#{CHARGE},
+		#{DAY_REPAIRMAN},
+		#{NIGHT_REPAIRMAN},
+		#{BARCODE},
+		#{BARCODEURL},
+		#{COMPANY_ID},
+		#{DELETED},
+		#{BZ},
+		#{CHANGE_RULE}
 		)
 	</insert>
 	

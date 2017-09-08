@@ -25,8 +25,8 @@ public class MachineService implements MachineManager{
 	 * @param pd
 	 * @throws Exception
 	 */
-	public void save(PageData pd)throws Exception{
-		dao.save("MachineMapper.save", pd);
+	public String save(PageData pd)throws Exception{
+		return dao.save("MachineMapper.save", pd).toString();
 	}
 	
 	/**删除

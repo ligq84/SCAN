@@ -50,8 +50,17 @@ public class MachineController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("MACHINE_ID", this.get32UUID());	//主键
-		machineService.save(pd);
+		String MHID =  machineService.save(pd); //保存机器主体信息
+
+		//机器保养信息  cdesc 描述
+		String[] cycle=pd.get("cycleName").toString().split(",");
+		//机器维修信息
+		String[] mpv=pd.get("mpv").toString().split(",");
+		//支持规格
+		String[] ruleId=pd.get("ruleId").toString().split(",");
+		//更改规格
+		String[] rpv=pd.get("ruleId").toString().split(",");
+
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -175,9 +184,36 @@ public class MachineController extends BaseController {
 	@RequestMapping(value="/goEdit")
 	public ModelAndView goEdit()throws Exception{
 		ModelAndView mv = this.getModelAndView();
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd = machineService.findById(pd);	//根据ID读取
+
+		//人员选择下拉列表
+		pd.put("COMPANY_ID",user.getCompanyId());
+		List<PageData> staffList = staffService.listAll(pd);
+		mv.addObject("staffList", staffList);
+
+		//机器类型下拉列表
+		List<PageData>	staffPostList =  getBasicData(Const.COMPANY_BASIC_MACHINETYPE,1,user.getCompanyId());
+		mv.addObject("machineTypeList",staffPostList);
+
+		//保养周期
+		List<PageData>	machineCycleList =  getBasicData(Const.COMPANY_BASIC_MACHINECYCLE,1,user.getCompanyId());
+		mv.addObject("machineCycleList",machineCycleList);
+
+		//维修项目
+		List<PageData>	mpList = getBasicData(Const.COMPANY_BASIC_MAINTENANCEPROJECT,1,user.getCompanyId());
+		mv.addObject("mpList",mpList);
+
+		//机器规格
+		List<PageData>	ruleList = getBasicData(Const.COMPANY_BASIC_MACHINERULE,1,user.getCompanyId());
+		mv.addObject("ruleList",ruleList);
+
+		///规格更改部位
+		List<PageData>	rulePosttionList = getBasicData(Const.COMPANY_BASIC_RULEPOSITION,1,user.getCompanyId());
+
 		mv.setViewName("fhoa/machine/machine_edit");
 		mv.addObject("msg", "edit");
 		mv.addObject("pd", pd);
