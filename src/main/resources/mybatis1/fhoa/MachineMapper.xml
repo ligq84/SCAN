@@ -58,7 +58,6 @@
 		BARCODE,
 		BARCODEURL,
 		COMPANY_ID,
-		DELETED,
 		BZ,
 		CHANGE_RULE
 		) values (
@@ -72,7 +71,6 @@
 		#{BARCODE},
 		#{BARCODEURL},
 		#{COMPANY_ID},
-		#{DELETED},
 		#{BZ},
 		#{CHANGE_RULE}
 		)
@@ -155,5 +153,11 @@
                  #{item}
 		</foreach>
 	</delete>
-	
+	<insert id="saveMachineCycle" parameterType="pd">
+		INSERT into oa_machine_cycle(mhid,cycleid,BZ) VALUES(#{mhid},#{cycleid},#{BZ})
+	</insert>
+	<insert id="saveMachineProject" parameterType="pd">
+		INSERT into oa_machine_projec(mhid,projectid) VALUES(#{mhid},#{cycleid})
+	</insert>
+
 </mapper>

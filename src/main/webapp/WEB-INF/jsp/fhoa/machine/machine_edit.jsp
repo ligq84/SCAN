@@ -119,30 +119,30 @@
 								</div>
 							</div>
 							<div class="col-sm-12 widget-header widget-header-blue widget-header-flat wi1dget-header-large" style="padding: 0px;margin: 0px;">
-								<h4 class="lighter">机器维修信息 <a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-left: 20px;" >添加</a></h4>
+								<h4 class="lighter">机器维修信息</h4>
 							</div>
 							<div class="col-sm-12" >
 								<div class="form-group" style="margin-top: 10px" id="mplist">
-									<%--<div id="mpvalue1" style="margin-top: 5px;">--%>
-									<%--<label class="col-sm-1 control-label no-padding-right">维修项目1：</label>--%>
-									<%--<div class="col-sm-2">--%>
-										<%--<select class="chosen-select form-control" name="mp1" id="mp1" data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >--%>
-											<%--<option value=""></option>--%>
-											<%--<c:forEach items="${mpList}" var="mp">--%>
-												<%--&lt;%&ndash;<option value="${mp.OCBID }" <c:if test="${machineType.OCBID == pd.TYPE}">selected</c:if> >${mp.NAME}</option>&ndash;%&gt;--%>
-												<%--<option value="${mp.OCBID }">${mp.NAME}</option>--%>
-											<%--</c:forEach>--%>
-										<%--</select>--%>
-									<%--</div>--%>
-									<%--<div class="col-sm-1">--%>
-										<%--<a class="btn btn-mini btn-danger" style="margin-top: 2px" onclick="deleteSelect('mpvalue1')">删除</a>--%>
-									<%--</div>--%>
-									<%--</div>--%>
+									<div id="mpvalue1" style="margin-top: 5px;">
+									<label class="col-sm-1 control-label no-padding-right">维修项目1：</label>
+									<div class="col-sm-2">
+										<select class="chosen-select form-control" name="mpv" id="mp1" data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >
+											<option value=""></option>
+											<c:forEach items="${mpList}" var="mp">
+												<option value="${mp.OCBID }">${mp.NAME}</option>
+											</c:forEach>
+										</select>
+									</div>
+									<div class="col-sm-1">
+										<a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-top: 5px;" >添加</a>
+										<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;" onclick="deleteSelect('mpvalue1')">删除</a>
+									</div>
+									</div>
 								</div>
 
 							</div>
 							<div class="col-sm-12 widget-header widget-header-blue widget-header-flat wi1dget-header-large" style="padding: 0px;margin: 0px;">
-								<h4 class="lighter">机器更改规格  <a class="btn btn-mini btn-primary" onclick="addRulePost()" style="margin-left: 20px;">添加更改规格</a></h4>
+								<h4 class="lighter">机器更改规格 </h4>
 							</div>
 							<div class="col-sm-12" >
 								<div class="form-group" style="margin-top: 10px">
@@ -171,22 +171,23 @@
 							</div>
 							<div class="col-sm-12" >
 								<div class="form-group" id="rulePost">
-									<%--<div id="rulePost1" style="margin-top: 5px;">--%>
-										<%--<label class="col-sm-1 control-label no-padding-right">更改规格1:</label>--%>
-										<%--<div class="col-sm-2">--%>
-											<%--<select class="chosen-select form-control" name="rp" id="rp" data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >--%>
-												<%--<option value=""></option>--%>
-												<%--<c:forEach items="${rulePosttionList}" var="rp">--%>
-													<%--&lt;%&ndash;<option value="${mp.OCBID }" <c:if test="${machineType.OCBID == pd.TYPE}">selected</c:if> >${mp.NAME}</option>&ndash;%&gt;--%>
-													<%--<option value="${rp.OCBID }">${rp.NAME}</option>--%>
-												<%--</c:forEach>--%>
-											<%--</select>--%>
+									<div id="rulePost1" style="margin-top: 5px;">
+										<label class="col-sm-1 control-label no-padding-right">更改规格1:</label>
+										<div class="col-sm-2">
+											<select class="chosen-select form-control" name="rpv" id="rp" data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
+												<option value=""></option>
+												<c:forEach items="${rulePosttionList}" var="rp">
+													<option value="${rp.OCBID }">${rp.NAME}</option>
+												</c:forEach>
+											</select>
 
-										<%--</div>--%>
-										<%--<div class="col-sm-1">--%>
-											<%--<a class="btn btn-mini btn-danger" style="margin-top: 2px">删除</a>--%>
-										<%--</div>--%>
-									<%--</div>--%>
+										</div>
+
+										<div class="col-sm-1">
+											<a class="btn btn-mini btn-primary"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
+											<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;">删除</a>
+										</div>
+									</div>
 								</div>
 							</div>
 							<div class="col-sm-12" >
@@ -267,6 +268,7 @@
 					'		</select>'+
 					'</div>'+
 					'<div class="col-sm-1">'+
+					'		<a class="btn btn-mini btn-primary"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>'+
 					'		<a class="btn btn-mini btn-danger" style="margin-top: 2px" onclick="deleteRPSelect(\'rpvvalue'+len+'\')">删除</a>'+
 					'</div>'+
 					'<div>';
@@ -310,6 +312,7 @@
 			'		</select>'+
 			'</div>'+
 			'<div class="col-sm-1">'+
+			'<a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-top: 5px;" >添加</a>'+
 			'		<a class="btn btn-mini btn-danger" style="margin-top: 2px" onclick="deleteSelect(\'mpvalue'+(len+1)+'\')">删除</a>'+
 			'</div>'+
 			'<div>';

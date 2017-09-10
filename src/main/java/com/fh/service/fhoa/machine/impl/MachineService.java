@@ -78,6 +78,23 @@ public class MachineService implements MachineManager{
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.delete("MachineMapper.deleteAll", ArrayDATA_IDS);
 	}
-	
+
+	/**
+	 * 保存机器维护周期
+	 * @param pd
+	 * @throws Exception
+     */
+	public void saveMachineCycle(PageData pd)throws Exception{
+		 dao.save("MachineMapper.saveMachineCycle", pd).toString();
+	}
+
+	/**
+	 * 保存机器维修项目
+	 * @param pd
+	 * @throws Exception
+     */
+	public void saveMachineProject(PageData pd)throws Exception{
+		dao.save("MachineMapper.saveMachineProject", pd).toString();
+	}
 }
 

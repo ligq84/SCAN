@@ -54,6 +54,19 @@ public interface MachineManager{
 	 * @throws Exception
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
-	
+
+	/**
+	 * 保存机器维护周期
+	 * @param pd
+	 * @throws Exception
+	 */
+	void saveMachineCycle(PageData pd)throws Exception;
+
+	/**
+	 * 保存机器维修项目
+	 * @param pd
+	 * @throws Exception
+	 */
+	void saveMachineProject(PageData pd)throws Exception;
 }
 

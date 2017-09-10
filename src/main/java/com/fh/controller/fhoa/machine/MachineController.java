@@ -47,19 +47,55 @@ public class MachineController extends BaseController {
 	public ModelAndView save() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"新增Machine");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		pd.put("COMPANY_ID",user.getCompanyId());
+
 		String MHID =  machineService.save(pd); //保存机器主体信息
 
 		//机器保养信息  cdesc 描述
-		String[] cycle=pd.get("cycleName").toString().split(",");
+		String[] cycle;
+		if(null!=pd.get("cycleName")){
+			cycle = pd.get("cycleName").toString().split(",");
+			for(String c:cycle){
+				PageData cyclePD = new PageData();
+				cyclePD.put("mhid",MHID);
+				cyclePD.put("cycleid",c);
+				cyclePD.put("BZ",pd.get("cdesc"+c));
+				machineService.saveMachineCycle(cyclePD);
+			}
+
+		}
+
 		//机器维修信息
-		String[] mpv=pd.get("mpv").toString().split(",");
+		String[] mpv;
+		if(null!=pd.get("mpv")){
+			mpv=pd.get("mpv").toString().split(",");
+			for(String mp:mpv){
+				PageData mpvPD = new PageData();
+				mpvPD.put("mhid",MHID);
+				mpvPD.put("projectid",mp);
+				machineService.saveMachineProject(mpvPD);
+			}
+		}
+
+
 		//支持规格
-		String[] ruleId=pd.get("ruleId").toString().split(",");
+		String[] ruleId;
+		if(null!=pd.get("ruleId")){
+			ruleId=pd.get("ruleId").toString().split(",");
+		}
+
+
 		//更改规格
-		String[] rpv=pd.get("ruleId").toString().split(",");
+		String[] rpv;
+		if(null!=pd.get("rpv")){
+			rpv=pd.get("rpv").toString().split(",");
+		}
+
 
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
