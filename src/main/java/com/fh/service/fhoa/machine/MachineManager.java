@@ -68,5 +68,26 @@ public interface MachineManager{
 	 * @throws Exception
 	 */
 	void saveMachineProject(PageData pd)throws Exception;
+
+	/**
+	 * 报错机器支持规格
+	 * @param pd
+	 * @throws Exception
+	 */
+	void saveMachineRule(PageData pd)throws Exception;
+
+	/**
+	 * 保存机器规格更改
+	 * @param pd
+	 * @throws Exception
+	 */
+	void saveMachineParts(PageData pd)throws Exception;
+	/**
+	 * 获取该设备的保养周期
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	List<PageData> getMachineCycle(PageData pd)throws Exception;
 }
 

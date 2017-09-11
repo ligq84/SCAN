@@ -157,7 +157,17 @@
 		INSERT into oa_machine_cycle(mhid,cycleid,BZ) VALUES(#{mhid},#{cycleid},#{BZ})
 	</insert>
 	<insert id="saveMachineProject" parameterType="pd">
-		INSERT into oa_machine_projec(mhid,projectid) VALUES(#{mhid},#{cycleid})
+		INSERT into oa_machine_projec(mhid,projectid) VALUES(#{mhid},#{projectid})
 	</insert>
+	<insert id="saveMachineRule" parameterType="pd">
+		INSERT into oa_machine_rule(mhid,ruleId) VALUES(#{mhid},#{ruleId})
+	</insert>
+	<insert id="saveMachineParts" parameterType="pd">
+		INSERT into oa_machine_parts(mhid,partsId) VALUES(#{mhid},#{partsId})
+	</insert>
+
+	<select id="getMachineCycle" parameterType="pd" resultType="pd">
+		select MCID,MHID,CYCLEID,BZ from oa_machine_cycle WHERE mhid=#{mhid}
+	</select>
 
 </mapper>

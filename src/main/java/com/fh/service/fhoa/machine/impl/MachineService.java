@@ -96,5 +96,34 @@ public class MachineService implements MachineManager{
 	public void saveMachineProject(PageData pd)throws Exception{
 		dao.save("MachineMapper.saveMachineProject", pd).toString();
 	}
+
+	/**
+	 * 保存机器支持规格
+	 * @param pd
+	 * @throws Exception
+     */
+	public void saveMachineRule(PageData pd)throws Exception{
+		dao.save("MachineMapper.saveMachineRule", pd).toString();
+	}
+
+	/**
+	 * 保存机器规格更改
+	 * @param pd
+	 * @throws Exception
+     */
+	public void saveMachineParts(PageData pd)throws Exception{
+		dao.save("MachineMapper.saveMachineParts", pd).toString();
+	}
+
+	/**
+	 * 获取该设备的保养周期
+	 * @param pd
+	 * @return
+	 * @throws Exception
+     */
+	public List<PageData> getMachineCycle(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("MachineMapper.getMachineCycle", pd);
+	}
+
 }
 

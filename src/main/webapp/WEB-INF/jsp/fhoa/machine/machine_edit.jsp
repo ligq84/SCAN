@@ -124,7 +124,7 @@
 							<div class="col-sm-12" >
 								<div class="form-group" style="margin-top: 10px" id="mplist">
 									<div id="mpvalue1" style="margin-top: 5px;">
-									<label class="col-sm-1 control-label no-padding-right">维修项目1：</label>
+									<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>维修项目1：</label>
 									<div class="col-sm-2">
 										<select class="chosen-select form-control" name="mpv" id="mp1" data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >
 											<option value=""></option>
@@ -149,10 +149,10 @@
 									<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格:</label>
 									<div class="col-sm-2">
 										<label style="float:left;padding-left: 20px;padding-top:7px;">
-											<input name="CHANGE_RULE" type="radio" class="ace" <c:if test="${pd.CHANGE_RULE == 0}">checked</c:if> ><span class="lbl">支持</span>
+											<input name="CHANGE_RULE" type="radio" value="0" class="ace" <c:if test="${pd.CHANGE_RULE == 0}">checked</c:if> ><span class="lbl">支持</span>
 										</label>
 										<label style="float:left;padding-left:35px;padding-top:7px;">
-											<input name="CHANGE_RULE" type="radio" class="ace"  <c:if test="${pd.CHANGE_RULE == 1}">checked</c:if>  ><span class="lbl">不支持</span>
+											<input name="CHANGE_RULE" type="radio" value="1" class="ace"  <c:if test="${pd.CHANGE_RULE == 1}">checked</c:if>  ><span class="lbl">不支持</span>
 										</label>
 									</div>
 								</div>
@@ -172,7 +172,7 @@
 							<div class="col-sm-12" >
 								<div class="form-group" id="rulePost">
 									<div id="rulePost1" style="margin-top: 5px;">
-										<label class="col-sm-1 control-label no-padding-right">更改规格1:</label>
+										<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格1:</label>
 										<div class="col-sm-2">
 											<select class="chosen-select form-control" name="rpv" id="rp" data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
 												<option value=""></option>
@@ -258,7 +258,7 @@
 		}
 		function getRPSelect(len){
 			return '<div id="rpvvalue'+len+'" style="margin-top: 5px;">'+
-					'<label class="col-sm-1 control-label no-padding-right">更改规格'+len+'：</label>'+
+					'<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格'+len+'：</label>'+
 					'<div class="col-sm-2">'+
 					'		<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:98%;" >'+
 					'				<option value=""></option>'+
@@ -301,7 +301,7 @@
 		}
 		function getMPSelect(len){
 			return '<div id="mpvalue'+(len+1)+'" style="margin-top: 5px;">'+
-			'<label class="col-sm-1 control-label no-padding-right">维修项目'+(len+1)+'：</label>'+
+			'<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>维修项目'+(len+1)+'：</label>'+
 			'<div class="col-sm-2">'+
 //			'		<select class="chosen-select form-control" name="mpv'+(len+1)+'"  data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >'+
 			'		<select class="chosen-select form-control" name="mpv"  data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >'+
@@ -322,27 +322,17 @@
 		}
 		//保存
 		function save(){
+
 			//机器维修信息
-			var mpvs="";
-			$("select[name=mpv]").each(function(){
-				if($(this).val()){
-					mpvs+=$(this).val()+',';
-				}
-			});
+
 			//更改规格信息
-			var rpv="";
-			$("select[name=rpv]").each(function(){
-				if($(this).val()){
-					rpv+=$(this).val()+',';
-				}
-			});
 
 			if($("#NAME").val()==""){
 				$("#NAME").tips({side:3, msg:'请输入机器名称', bg:'#AE81FF', time:2});
 				$("#NAME").focus();
 				return false;
 			}
-			if($("#TYPE").val()==""){$("#TYPE").tips({side:3, msg:'请输入类型', bg:'#AE81FF', time:2});
+			if($("#TYPE").val()==""){$("#TYPE").next('.chosen-container').tips({side:3, msg:'请输入类型', bg:'#AE81FF', time:2});
 				$("#TYPE").focus();
 				return false;
 			}
@@ -357,25 +347,75 @@
 				return false;
 			}
 			if($("#CHARGE").val()==""){
-				$("#CHARGE").tips({side:3, msg:'请输入机器负责人', bg:'#AE81FF', time:2});
+				$("#CHARGE").next('.chosen-container').tips({side:3, msg:'请输入机器负责人', bg:'#AE81FF', time:2});
 				$("#CHARGE").focus();
 			return false;
 			}
 			if($("#DAY_REPAIRMAN").val()==""){
-				$("#DAY_REPAIRMAN").tips({side:3,msg:'请输入白班维修员',bg:'#AE81FF',time:2 });
+				$("#DAY_REPAIRMAN").next('.chosen-container').tips({side:3,msg:'请输入白班维修员',bg:'#AE81FF',time:2 });
 				$("#DAY_REPAIRMAN").focus();
 			return false;
 			}
 			if($("#NIGHT_REPAIRMAN").val()==""){
-				$("#NIGHT_REPAIRMAN").tips({side:3,msg:'请输入晚班维修员',bg:'#AE81FF',time:2});
+				$("#NIGHT_REPAIRMAN").next('.chosen-container').tips({side:3,msg:'请输入晚班维修员',bg:'#AE81FF',time:2});
 				$("#NIGHT_REPAIRMAN").focus();
 			return false;
 			}
 
-			if($("#CHANGE_RULE").val()==""){
-				$("#CHANGE_RULE").tips({side:3, msg:'请输入更改规格', bg:'#AE81FF',time:2});
-				$("#CHANGE_RULE").focus();
-			return false;
+			//机器保养信息
+			var cycleName="";
+			$("input[name=cycleName]").each(function(){
+				if($(this).is(':checked')){
+					cycleName+=$(this).val()+',';
+				}
+			});
+			if(cycleName == ""){
+				$("input[name=cycleName]").eq(0).tips({side:3, msg:'请选择机器保养信息', bg:'#AE81FF', time:2});
+				return false
+			}
+			var bl=false;
+			$("select[name=mpv]").each(function(){
+				if(!$(this).val()){
+					$(this).next('.chosen-container').tips({side:3, msg:'请输入维修项目', bg:'#AE81FF', time:2});
+					bl=true;
+					return false;
+				}
+			});
+			if(bl){
+				return false;
+			}
+
+			var CHANGE_RULE="";
+			$("input[name=CHANGE_RULE]").each(function(){
+				if($(this).is(':checked')){
+					CHANGE_RULE+=$(this).val()+',';
+				}
+			});
+			if(CHANGE_RULE == ""){
+				$("input[name=CHANGE_RULE]").eq(0).tips({side:3, msg:'请选择是否支持更改规格', bg:'#AE81FF', time:2});
+				return false
+			}
+
+			var ruleId="";
+			$("input[name=ruleId]").each(function(){
+				if($(this).is(':checked')){
+					ruleId+=$(this).val()+',';
+				}
+			});
+			if(ruleId == ""){
+				$("input[name=ruleId]").eq(0).tips({side:3, msg:'请选择支持规格', bg:'#AE81FF', time:2});
+				return false
+			}
+			var bool=false;
+			$("select[name=rpv]").each(function(){
+				if(!$(this).val()){
+					$(this).next('.chosen-container').tips({side:3, msg:'请输入更改规格', bg:'#AE81FF', time:2});
+					bool=true;
+					return false;
+				}
+			});
+			if(bool){
+				return false;
 			}
 
 			$("#zhongxin").hide();

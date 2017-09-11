@@ -286,23 +286,9 @@
 		
 		//修改
 		function edit(Id){
-			 top.jzts();
-			 var diag = new top.Dialog();
-			 diag.Drag=true;
-			 diag.Title ="编辑";
-			 diag.URL = '<%=basePath%>machine/goEdit.do?MACHINE_ID='+Id;
-			 diag.Width = 450;
-			 diag.Height = 355;
-			 diag.Modal = true;				//有无遮罩窗口
-			 diag. ShowMaxButton = true;	//最大化按钮
-		     diag.ShowMinButton = true;		//最小化按钮 
-			 diag.CancelEvent = function(){ //关闭事件
-				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
-					 tosearch();
-				}
-				diag.close();
-			 };
-			 diag.show();
+			var form = $('<form action="<%=basePath%>machine/goEdit.do" method="get"><input type="text" name="MACHINE_ID" value="'+Id+'"/></form>');
+			$(document.body).append(form);
+			form.submit()
 		}
 		
 		//批量操作
