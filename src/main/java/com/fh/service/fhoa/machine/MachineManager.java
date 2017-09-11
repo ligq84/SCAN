@@ -89,5 +89,13 @@ public interface MachineManager{
 	 * @throws Exception
 	 */
 	List<PageData> getMachineCycle(PageData pd)throws Exception;
+
+	/**
+	 * 获取设备的维护项目
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	List<PageData> getMachineProjec(PageData pd)throws Exception;
 }
 

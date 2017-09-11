@@ -55,8 +55,9 @@ public class MachineController extends BaseController {
 			PageData pd = new PageData();
 			pd = this.getPageData();
 			pd.put("COMPANY_ID",user.getCompanyId());
-
-			String MHID =  machineService.save(pd); //保存机器主体信息
+			String MHID =  this.get32UUID();
+			pd.put("MHID",MHID);
+			machineService.save(pd); //保存机器主体信息
 
 			//机器保养信息  cdesc 描述
 			String[] cycle;
@@ -153,10 +154,14 @@ public class MachineController extends BaseController {
 	@RequestMapping(value="/list")
 	public ModelAndView list(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表Machine");
-		//if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		pd.put("COMPANY_ID",user.getCompanyId());
+
 		String keywords = pd.getString("keywords");				//关键词检索条件
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
@@ -248,19 +253,20 @@ public class MachineController extends BaseController {
 		List<PageData>	staffPostList =  getBasicData(Const.COMPANY_BASIC_MACHINETYPE,1,user.getCompanyId());
 		mv.addObject("machineTypeList",staffPostList);
 
-
-
 		//保养周期
 		List<PageData>	machineCycleList =  getBasicData(Const.COMPANY_BASIC_MACHINECYCLE,1,user.getCompanyId());
 		mv.addObject("machineCycleList",machineCycleList);
-
-		List cycleList  = machineService.getMachineCycle((PageData) new PageData().put("mhid",pd.get("MACHINE_ID")));
+		//机器保养周期
+		PageData cyclePD = new PageData();
+		cyclePD.put("mhid",pd.get("MHID"));
+		List<PageData> cycleList  = machineService.getMachineCycle(cyclePD);
 		mv.addObject("cycleList",cycleList);
 
 		//维修项目
 		List<PageData>	mpList = getBasicData(Const.COMPANY_BASIC_MAINTENANCEPROJECT,1,user.getCompanyId());
 		mv.addObject("mpList",mpList);
-
+		List<PageData> projecList = machineService.getMachineProjec(cyclePD);
+		mv.addObject("projecList",projecList);
 		//机器规格
 		List<PageData>	ruleList = getBasicData(Const.COMPANY_BASIC_MACHINERULE,1,user.getCompanyId());
 		mv.addObject("ruleList",ruleList);

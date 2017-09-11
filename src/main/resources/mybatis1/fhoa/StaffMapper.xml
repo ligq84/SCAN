@@ -292,6 +292,7 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
+		WHERE COMPANY_ID =#{COMPANY_ID}
 	</select>
 
 	<select id="listSelect" parameterType="page" resultType="pd">

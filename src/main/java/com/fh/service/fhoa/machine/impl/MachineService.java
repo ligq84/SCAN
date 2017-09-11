@@ -125,5 +125,15 @@ public class MachineService implements MachineManager{
 		return (List<PageData>)dao.findForList("MachineMapper.getMachineCycle", pd);
 	}
 
+	/**
+	 * 获取设备的维护项目
+	 * @param pd
+	 * @return
+	 * @throws Exception
+     */
+	public List<PageData> getMachineProjec(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("MachineMapper.getMachineProjec", pd);
+	}
+
 }
 

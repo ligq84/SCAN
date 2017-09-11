@@ -44,10 +44,11 @@
 	</sql>
 	
 	<!-- 新增-->
-	<insert id="save" parameterType="pd" useGeneratedKeys="true" keyProperty="MHID">
-		insert into 
+	<insert id="save" parameterType="pd" >
+		insert into
 	<include refid="tableName"></include>
 		(
+		MHID,
 		NAME,
 		TYPE,
 		MODEL,
@@ -61,6 +62,7 @@
 		BZ,
 		CHANGE_RULE
 		) values (
+		#{MHID},
 		#{NAME},
 		#{TYPE},
 		#{MODEL},
@@ -122,7 +124,7 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where 1=1
+		where COMPANY_ID = #{pd.COMPANY_ID}
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
@@ -167,7 +169,14 @@
 	</insert>
 
 	<select id="getMachineCycle" parameterType="pd" resultType="pd">
-		select MCID,MHID,CYCLEID,BZ from oa_machine_cycle WHERE mhid=#{mhid}
+		select a.MCID,a.MHID,a.CYCLEID,a.BZ,b.NAME
+		from oa_machine_cycle a
+		LEFT JOIN oa_company_basic b ON  b.ocbid = a.CYCLEID
+		WHERE a.mhid=#{mhid}
 	</select>
-
+	<select id="getMachineProjec" parameterType="pd" resultType="pd">
+		select a.MPID,a.MHID,a.PROJECTID
+		from oa_machine_projec a
+		WHERE a.mhid=#{mhid}
+	</select>
 </mapper>

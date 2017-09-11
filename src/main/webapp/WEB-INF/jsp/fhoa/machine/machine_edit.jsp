@@ -107,7 +107,11 @@
 										<c:forEach items="${machineCycleList}" var="var" varStatus="vs">
 											<label style="float:left;padding-left: 8px;padding-top:7px;" >
 												<input id="cycle${var.OCBID}" name="cycleName" type="checkbox" class="ace" value="${var.OCBID}"
-													   onclick="cycleChange('cycle${var.OCBID}','${var.OCBID}','${var.NAME}')"><span class="lbl" >${var.NAME}</span>
+													   onclick="cycleChange('cycle${var.OCBID}','${var.OCBID}','${var.NAME}')"
+												<c:forEach items="${cycleList}" var="cl" varStatus="ts">
+													   <c:if test="${cl.CYCLEID == var.OCBID}">checked</c:if>
+												</c:forEach>
+												><span class="lbl" >${var.NAME}</span>
 											</label>
 										</c:forEach>
 									</div>
@@ -115,7 +119,14 @@
 							</div>
 							<div class="col-sm-12" >
 								<div class="form-group" style="margin-top: 10px" id="cycleDes">
-
+									<c:forEach items="${cycleList}" var="cl" varStatus="ts">
+										<div id="desc${cl.CYCLEID}">
+											<label class="col-sm-1 control-label no-padding-right">${cl.NAME}:</label>
+											<div class="col-sm-2">
+												<textarea rows="5" cols="30" name="cdesc${cl.CYCLEID}">${cl.BZ}</textarea>
+													</div>
+											</div>
+									</c:forEach>
 								</div>
 							</div>
 							<div class="col-sm-12 widget-header widget-header-blue widget-header-flat wi1dget-header-large" style="padding: 0px;margin: 0px;">
@@ -123,21 +134,63 @@
 							</div>
 							<div class="col-sm-12" >
 								<div class="form-group" style="margin-top: 10px" id="mplist">
-									<div id="mpvalue1" style="margin-top: 5px;">
-									<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>维修项目1：</label>
-									<div class="col-sm-2">
-										<select class="chosen-select form-control" name="mpv" id="mp1" data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >
-											<option value=""></option>
-											<c:forEach items="${mpList}" var="mp">
-												<option value="${mp.OCBID }">${mp.NAME}</option>
-											</c:forEach>
-										</select>
-									</div>
-									<div class="col-sm-1">
-										<a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-top: 5px;" >添加</a>
-										<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;" onclick="deleteSelect('mpvalue1')">删除</a>
-									</div>
-									</div>
+									<c:if test="${projecList== null || fn:length(projecList) == 0}">
+										<div id="mpvalue1" style="margin-top: 5px;">
+											<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>维修项目1：</label>
+											<div class="col-sm-2">
+												<select class="chosen-select form-control" name="mpv" data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >
+													<option value=""></option>
+													<c:forEach items="${mpList}" var="mp">
+														<option value="${mp.OCBID }">${mp.NAME}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="col-sm-1">
+												<a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-top: 5px;" >添加</a>
+												<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;" onclick="deleteSelect('mpvalue1')">删除</a>
+											</div>
+										</div>
+									</c:if>
+									<c:if test="${projecList!= null || fn:length(projecList) > 0}">
+										<c:forEach items="${projecList}" var="project"  varStatus="pj">
+											<c:if test="${(pj.index+1)%3 != 0}">
+												<div id="mpvalue${pj.index+1}" style="margin-top: 5px;">
+													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>维修项目${pj.index+1}：</label>
+													<div class="col-sm-2">
+														<select class="chosen-select form-control" name="mpv" data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >
+															<option value=""></option>
+															<c:forEach items="${mpList}" var="mp">
+																<option value="${mp.OCBID }" <c:if test="${mp.OCBID == project.PROJECTID }">selected</c:if> >${mp.NAME}</option>
+															</c:forEach>
+														</select>
+													</div>
+													<div class="col-sm-1">
+														<a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-top: 5px;" >添加</a>
+														<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;" onclick="deleteSelect('mpvalue${pj.index+1}')">删除</a>
+													</div>
+												</div>
+											</c:if>
+											<c:if test="${(pj.index+1)%3 == 0}">
+												<div id="mpvalue${pj.index+1}" style="margin-top: 5px;">
+													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>维修项目${pj.index+1}：</label>
+													<div class="col-sm-2">
+														<select class="chosen-select form-control" name="mpv"  data-placeholder="请选择维修项目" style="vertical-align:top;"  style="width:98%;" >
+															<option value=""></option>
+															<c:forEach items="${mpList}" var="mp">
+																<option value="${mp.OCBID }"  <c:if test="${mp.OCBID == project.PROJECTID }">selected</c:if> >${mp.NAME}</option>
+															</c:forEach>
+														</select>
+													</div>
+													<div class="col-sm-1">
+														<a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-top: 5px;" >添加</a>
+														<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;" onclick="deleteSelect('mpvalue${pj.index+1}')">删除</a>
+													</div>
+												</div>
+												<div class="row"></div>
+											</c:if>
+										</c:forEach>
+									</c:if>
+
 								</div>
 
 							</div>
@@ -191,7 +244,7 @@
 								</div>
 							</div>
 							<div class="col-sm-12" >
-								<div class="form-group" style="margin-top: 10px;text-align: center">
+								<div class="form-group" style="margin-top:50px;text-align: center">
 									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
 									<a class="btn btn-mini btn-danger" onclick="back();">返回</a>
 								</div>
@@ -250,7 +303,7 @@
 			var netx=lent+1;
 			console.log(netx);
 			if((lent+1)%3 == 0){
-				rulePost.append(getRPSelect(netx)+'<div><div class="row"></div>');
+				rulePost.append(getRPSelect(netx)+'<div class="row"></div>');
 			}else{
 				rulePost.append(getRPSelect(netx));
 			}
@@ -293,7 +346,7 @@
 			var mpdiv = $("#mplist>div");
 			var len = mpdiv.length;
 			if((len+1)%3 == 0){
-				mplist.append(getMPSelect(len)+'<div><div class="row"></div>');
+				mplist.append(getMPSelect(len)+'<div class="row"></div>');
 			}else{
 				mplist.append(getMPSelect(len));
 			}

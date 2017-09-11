@@ -106,12 +106,12 @@
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
 													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.MACHINE_ID}');">
+													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.MHID}');">
 														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 													</a>
 													</c:if>
 													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="del('${var.MACHINE_ID}');">
+													<a class="btn btn-xs btn-danger" onclick="del('${var.MHID}');">
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 													</a>
 													</c:if>
@@ -125,7 +125,7 @@
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
 															<c:if test="${QX.edit == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="edit('${var.MACHINE_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
+																<a style="cursor:pointer;" onclick="edit('${var.MHID}');" class="tooltip-success" data-rel="tooltip" title="修改">
 																	<span class="green">
 																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																	</span>
@@ -134,7 +134,7 @@
 															</c:if>
 															<c:if test="${QX.del == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="del('${var.MACHINE_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
+																<a style="cursor:pointer;" onclick="del('${var.MHID}');" class="tooltip-error" data-rel="tooltip" title="删除">
 																	<span class="red">
 																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
 																	</span>
@@ -286,7 +286,7 @@
 		
 		//修改
 		function edit(Id){
-			var form = $('<form action="<%=basePath%>machine/goEdit.do" method="get"><input type="text" name="MACHINE_ID" value="'+Id+'"/></form>');
+			var form = $('<form action="<%=basePath%>machine/goEdit.do" method="get"><input type="text" name="MHID" value="'+Id+'"/></form>');
 			$(document.body).append(form);
 			form.submit()
 		}
