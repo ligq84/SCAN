@@ -216,11 +216,11 @@
 									<div class="col-sm-2">
 										<c:forEach items="${ruleList}" var="var" varStatus="vs">
 											<label style="float:left;padding-left: 8px;padding-top:7px;">
-												<input name="ruleId" type="checkbox" class="ace" value="${var.OCBID}"><span class="lbl"
-													<c:forEach items="${machineruleList}" var="mr" varStatus="ts">
-														<c:if test="${mr.RULEID == var.OCBID}">checked</c:if>
-													</c:forEach>
-											>${var.NAME}</span>
+												<input name="ruleId" type="checkbox" class="ace" value="${var.OCBID}"
+												<c:forEach items="${machineruleList}" var="mr" varStatus="ts">
+													   <c:if test="${mr.RULEID == var.OCBID}">checked</c:if>
+												</c:forEach>
+												><span class="lbl">${var.NAME}</span>
 											</label>
 										</c:forEach>
 									</div>
@@ -235,7 +235,7 @@
 												<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
 													<option value=""></option>
 													<c:forEach items="${rulePosttionList}" var="rp">
-														<option value="${rp.OCBID }">${rp.NAME}</option>
+														<option value="${rp.OCBID }" >${rp.NAME}</option>
 													</c:forEach>
 												</select>
 											</div>

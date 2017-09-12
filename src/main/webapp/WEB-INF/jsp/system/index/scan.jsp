@@ -93,7 +93,7 @@
 						<div class="main_input_box">
 							<span class="add-on bg_lg">
 							<i><img height="37" src="static/login/user.png" /></i>
-							</span><input type="text" name="MACHINECODE" id="MACHINECODE"value="" placeholder="请扫描机器编码" />
+							</span><input type="text" name="MACHINECODE" id="MACHINECODE" value="qgc11505140716358" placeholder="请扫描机器编码" />
 						</div>
 					</div>
 				</div>
@@ -181,7 +181,7 @@
 				var code = ""+loginname+",fh,"+password+""+",fh,"+$("#code").val()+",fh,"+$("#MACHINECODE").val();
 				$.ajax({
 					type: "POST",
-					url: 'scanLogin',
+					url: 'scan_login',
 			    	data: {KEYDATA:code,tm:new Date().getTime()},
 					dataType:'json',
 					cache: false,

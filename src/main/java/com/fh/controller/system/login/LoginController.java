@@ -177,7 +177,7 @@ public class LoginController extends BaseController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/scanLogin" ,produces="application/json;charset=UTF-8")
+	@RequestMapping(value="/scan_login" ,produces="application/json;charset=UTF-8")
 	@ResponseBody
 	@SuppressWarnings("all")
 	public Object scanLogin()throws Exception{
@@ -201,6 +201,7 @@ public class LoginController extends BaseController {
 				if(Tools.notEmpty(sessionCode) && sessionCode.equalsIgnoreCase(code)){		//判断登录验证码
 					//String passwd = new SimpleHash("SHA-1", USERNAME, PASSWORD).toString();	//密码加密
 					pd.put("PASSWORD", PASSWORD);
+
 					pd = userService.getUserByNameAndPwd(pd);	//根据用户名和密码去读取用户信息
 					if(pd != null){
 						this.removeSession(USERNAME);//请缓存
