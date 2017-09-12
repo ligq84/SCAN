@@ -89,6 +89,15 @@ public class MachineService implements MachineManager{
 	}
 
 	/**
+	 * 删除机器维护周期
+	 * @param MHID
+	 * @throws Exception
+     */
+	public void deleteMachineCycle(String MHID)throws Exception{
+		dao.update("MachineMapper.deleteMachineCycle", MHID);
+	}
+
+	/**
 	 * 保存机器维修项目
 	 * @param pd
 	 * @throws Exception
@@ -97,6 +106,14 @@ public class MachineService implements MachineManager{
 		dao.save("MachineMapper.saveMachineProject", pd).toString();
 	}
 
+	/**
+	 * 删除机器维修项目
+	 * @param MHID
+	 * @throws Exception
+     */
+	public void deleteMachineProject(String MHID)throws Exception{
+		dao.update("MachineMapper.deleteMachineProject", MHID);
+	}
 	/**
 	 * 保存机器支持规格
 	 * @param pd
@@ -107,12 +124,30 @@ public class MachineService implements MachineManager{
 	}
 
 	/**
+	 * 删除机器支持规格
+	 * @param MHID
+	 * @throws Exception
+     */
+	public void deleteMachineRule(String MHID)throws Exception{
+		dao.update("MachineMapper.deleteMachineRule", MHID);
+	}
+
+	/**
 	 * 保存机器规格更改
 	 * @param pd
 	 * @throws Exception
      */
 	public void saveMachineParts(PageData pd)throws Exception{
 		dao.save("MachineMapper.saveMachineParts", pd).toString();
+	}
+
+	/**
+	 * 删除机器规格更改
+	 * @param MHID
+	 * @throws Exception
+     */
+	public void deleteMachineParts(String MHID)throws Exception{
+		dao.update("MachineMapper.deleteMachineParts", MHID);
 	}
 
 	/**
@@ -133,6 +168,26 @@ public class MachineService implements MachineManager{
      */
 	public List<PageData> getMachineProjec(PageData pd)throws Exception{
 		return (List<PageData>)dao.findForList("MachineMapper.getMachineProjec", pd);
+	}
+
+	/**
+	 * 获取设备的规格
+	 * @param pd
+	 * @return
+	 * @throws Exception
+     */
+	public List<PageData> getMachineRule(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("MachineMapper.getMachineRule", pd);
+	}
+
+	/**
+	 * 获取设备更改规格
+	 * @param pd
+	 * @return
+	 * @throws Exception
+     */
+	public List<PageData> getMachineParts(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("MachineMapper.getMachineParts", pd);
 	}
 
 }

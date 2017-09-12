@@ -63,11 +63,25 @@ public interface MachineManager{
 	void saveMachineCycle(PageData pd)throws Exception;
 
 	/**
+	 * 删除机器维护周期
+	 * @param MHID
+	 * @throws Exception
+	 */
+	void deleteMachineCycle(String MHID)throws Exception;
+
+	/**
 	 * 保存机器维修项目
 	 * @param pd
 	 * @throws Exception
 	 */
 	void saveMachineProject(PageData pd)throws Exception;
+
+	/**
+	 * 删除机器维修项目
+	 * @param MHID
+	 * @throws Exception
+	 */
+	void deleteMachineProject(String MHID)throws Exception;
 
 	/**
 	 * 报错机器支持规格
@@ -77,11 +91,26 @@ public interface MachineManager{
 	void saveMachineRule(PageData pd)throws Exception;
 
 	/**
+	 * 删除机器支持规格
+	 * @param MHID
+	 * @throws Exception
+	 */
+	void deleteMachineRule(String MHID)throws Exception;
+
+	/**
 	 * 保存机器规格更改
 	 * @param pd
 	 * @throws Exception
 	 */
 	void saveMachineParts(PageData pd)throws Exception;
+
+	/**
+	 * 删除机器规格更改
+	 * @param MHID
+	 * @throws Exception
+	 */
+	void deleteMachineParts(String MHID)throws Exception;
+
 	/**
 	 * 获取该设备的保养周期
 	 * @param pd
@@ -97,5 +126,20 @@ public interface MachineManager{
 	 * @throws Exception
 	 */
 	List<PageData> getMachineProjec(PageData pd)throws Exception;
+
+	/**
+	 * 获取设备的规格
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	List<PageData> getMachineRule(PageData pd)throws Exception;
+	/**
+	 * 获取设备更改规格
+	 * @param pd
+	 * @return
+	 * @throws Exception
+	 */
+	List<PageData> getMachineParts(PageData pd)throws Exception;
 }
 

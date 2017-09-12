@@ -172,11 +172,37 @@
 		select a.MCID,a.MHID,a.CYCLEID,a.BZ,b.NAME
 		from oa_machine_cycle a
 		LEFT JOIN oa_company_basic b ON  b.ocbid = a.CYCLEID
-		WHERE a.mhid=#{mhid}
+		WHERE a.mhid=#{mhid} and deleted=0
 	</select>
+	<update id="deleteMachineCycle">
+		UPDATE  oa_machine_cycle SET  deleted=1 where mhid=#{MHID}
+	</update>
+
 	<select id="getMachineProjec" parameterType="pd" resultType="pd">
 		select a.MPID,a.MHID,a.PROJECTID
 		from oa_machine_projec a
-		WHERE a.mhid=#{mhid}
+		WHERE a.mhid=#{mhid} and deleted=0
 	</select>
+	<update id="deleteMachineProject">
+		UPDATE  oa_machine_projec SET  deleted=1 where mhid=#{MHID}
+	</update>
+
+	<select id="getMachineRule" parameterType="pd" resultType="pd">
+		select a.MRID,a.MHID,a.RULEID
+		from oa_machine_rule a
+		WHERE a.mhid=#{mhid} and deleted=0
+	</select>
+	<update id="deleteMachineRule">
+		UPDATE  oa_machine_rule SET  deleted=1 where mhid=#{MHID}
+	</update>
+
+	<select id="getMachineParts" parameterType="pd" resultType="pd">
+		select a.MRID,a.MHID,a.PARTSID
+		from oa_machine_parts a
+		WHERE a.mhid=#{mhid} and deleted=0
+	</select>
+	<update id="deleteMachineParts">
+		UPDATE  oa_machine_parts SET  deleted=1 where mhid=#{MHID}
+	</update>
+
 </mapper>

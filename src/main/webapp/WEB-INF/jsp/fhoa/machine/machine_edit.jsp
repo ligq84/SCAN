@@ -28,7 +28,7 @@
 				<div class="row">
 					<div class="col-xs-12">
 					<form action="machine/${msg}.do" name="Form" id="Form" method="post" class="form-horizontal">
-						<input type="hidden" name="MHID" id="MACHINE_ID" value="${pd.MHID}"/>
+						<input type="hidden" name="MHID"  value="${pd.MHID}"/>
 						<div id="zhongxin" style="padding-top: 13px;">
 							<div class="widget-header widget-header-blue widget-header-flat wi1dget-header-large">
 								<h4 class="lighter">机器基础信息</h4>
@@ -147,7 +147,7 @@
 											</div>
 											<div class="col-sm-1">
 												<a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-top: 5px;" >添加</a>
-												<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;" onclick="deleteSelect('mpvalue1')">删除</a>
+												<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;" >删除</a>
 											</div>
 										</div>
 									</c:if>
@@ -216,7 +216,11 @@
 									<div class="col-sm-2">
 										<c:forEach items="${ruleList}" var="var" varStatus="vs">
 											<label style="float:left;padding-left: 8px;padding-top:7px;">
-												<input name="ruleId" type="checkbox" class="ace" value="${var.OCBID}"><span class="lbl" onclick="">${var.NAME}</span>
+												<input name="ruleId" type="checkbox" class="ace" value="${var.OCBID}"><span class="lbl"
+													<c:forEach items="${machineruleList}" var="mr" varStatus="ts">
+														<c:if test="${mr.RULEID == var.OCBID}">checked</c:if>
+													</c:forEach>
+											>${var.NAME}</span>
 											</label>
 										</c:forEach>
 									</div>
@@ -224,23 +228,64 @@
 							</div>
 							<div class="col-sm-12" >
 								<div class="form-group" id="rulePost">
-									<div id="rulePost1" style="margin-top: 5px;">
-										<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格1:</label>
-										<div class="col-sm-2">
-											<select class="chosen-select form-control" name="rpv" id="rp" data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
-												<option value=""></option>
-												<c:forEach items="${rulePosttionList}" var="rp">
-													<option value="${rp.OCBID }">${rp.NAME}</option>
-												</c:forEach>
-											</select>
-
+									<c:if test="${partsList== null || fn:length(partsList) == 0}">
+										<div id="rulePost1" style="margin-top: 5px;">
+											<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格1:</label>
+											<div class="col-sm-2">
+												<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
+													<option value=""></option>
+													<c:forEach items="${rulePosttionList}" var="rp">
+														<option value="${rp.OCBID }">${rp.NAME}</option>
+													</c:forEach>
+												</select>
+											</div>
+											<div class="col-sm-1">
+												<a class="btn btn-mini btn-primary"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
+												<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;"  >删除</a>
+											</div>
 										</div>
+									</c:if>
+									<c:if test="${partsList!= null || fn:length(partsList) > 0}">
+										<c:forEach items="${partsList}" var="parts"  varStatus="pt">
+											<c:if test="${(pt.index+1)%3 != 0}">
+												<div id="rulePost1" style="margin-top: 5px;">
+													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格1:</label>
+													<div class="col-sm-2">
+														<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
+															<option value=""></option>
+															<c:forEach items="${rulePosttionList}" var="rp">
+																<option value="${rp.OCBID }" <c:if test="${rp.OCBID == parts.PARTSID }">selected</c:if> >${rp.NAME}</option>
+															</c:forEach>
+														</select>
+													</div>
+													<div class="col-sm-1">
+														<a class="btn btn-mini btn-primary"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
+														<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;"  >删除</a>
+													</div>
+												</div>
+											</c:if>
+											<c:if test="${(pt.index+1)%3 == 0}">
+												<div id="rulePost1" style="margin-top: 5px;">
+													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格1:</label>
+													<div class="col-sm-2">
+														<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
+															<option value=""></option>
+															<c:forEach items="${rulePosttionList}" var="rp">
+																<option value="${rp.OCBID }" <c:if test="${rp.OCBID == parts.PARTSID }">selected</c:if> >${rp.NAME}</option>
+															</c:forEach>
+														</select>
+													</div>
+													<div class="col-sm-1">
+														<a class="btn btn-mini btn-primary"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
+														<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;"  >删除</a>
+													</div>
+												</div>
+												<div class="row"></div>
+											</c:if>
+										</c:forEach>
+									</c:if>
 
-										<div class="col-sm-1">
-											<a class="btn btn-mini btn-primary"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
-											<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;">删除</a>
-										</div>
-									</div>
+
 								</div>
 							</div>
 							<div class="col-sm-12" >

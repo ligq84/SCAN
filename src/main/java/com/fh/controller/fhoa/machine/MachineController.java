@@ -142,6 +142,59 @@ public class MachineController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		machineService.edit(pd);
+		//机器保养信息  cdesc 描述
+		String MHID = pd.get("MHID").toString();
+		String[] cycle;
+		if(null!=pd.get("cycleName")){
+			machineService.deleteMachineCycle(MHID);
+			cycle = pd.get("cycleName").toString().split(",");
+			for(String c:cycle){
+				PageData cyclePD = new PageData();
+				cyclePD.put("mhid",MHID);
+				cyclePD.put("cycleid",c);
+				cyclePD.put("BZ",pd.get("cdesc"+c));
+				machineService.saveMachineCycle(cyclePD);
+			}
+
+		}
+		//机器维修信息
+		String[] mpv;
+		if(null!=pd.get("mpv")){
+			machineService.deleteMachineProject(MHID);
+			mpv=pd.get("mpv").toString().split(",");
+			for(String mp:mpv){
+				PageData mpvPD = new PageData();
+				mpvPD.put("mhid",MHID);
+				mpvPD.put("projectid",mp);
+				machineService.saveMachineProject(mpvPD);
+			}
+		}
+		//支持规格
+		String[] ruleId;
+		if(null!=pd.get("ruleId")){
+			machineService.deleteMachineRule(MHID);
+			ruleId=pd.get("ruleId").toString().split(",");
+			for(String rId:ruleId){
+				PageData mrulePD = new PageData();
+				mrulePD.put("mhid",MHID);
+				mrulePD.put("ruleId",rId);
+				machineService.saveMachineRule(mrulePD);
+			}
+		}
+
+		//更改规格
+		String[] rpv;
+		if(null!=pd.get("rpv")){
+			machineService.deleteMachineParts(MHID);
+			rpv=pd.get("rpv").toString().split(",");
+			for(String rp:rpv){
+				PageData rpPD = new PageData();
+				rpPD.put("mhid",MHID);
+				rpPD.put("partsId",rp);
+				machineService.saveMachineParts(rpPD);
+			}
+		}
+
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
 		return mv;
@@ -267,12 +320,17 @@ public class MachineController extends BaseController {
 		mv.addObject("mpList",mpList);
 		List<PageData> projecList = machineService.getMachineProjec(cyclePD);
 		mv.addObject("projecList",projecList);
+
 		//机器规格
 		List<PageData>	ruleList = getBasicData(Const.COMPANY_BASIC_MACHINERULE,1,user.getCompanyId());
 		mv.addObject("ruleList",ruleList);
+		List<PageData> machineruleList = machineService.getMachineRule(cyclePD);
+		mv.addObject("machineruleList",machineruleList);
 
 		///规格更改部位
 		List<PageData>	rulePosttionList = getBasicData(Const.COMPANY_BASIC_RULEPOSITION,1,user.getCompanyId());
+		List<PageData> partsList = machineService.getMachineParts(cyclePD);
+		mv.addObject("partsList",partsList);
 
 		mv.setViewName("fhoa/machine/machine_edit");
 		mv.addObject("msg", "edit");
