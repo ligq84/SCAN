@@ -124,5 +124,7 @@ public interface UserManager {
 	 * @throws Exception
 	 */
 	public PageData getUserCount(String value)throws Exception;
+
+	public PageData getCodeByMachineCode(String barcode)throws Exception;
 	
 }

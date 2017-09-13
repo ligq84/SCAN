@@ -197,9 +197,14 @@ public class LoginController extends BaseController {
 				String PASSWORD  = KEYDATA[1];	//登录过来的密码
 				String MACHINECODE = KEYDATA[3];//机器编码
 				pd.put("USERNAME", USERNAME);
-				pd.put("MACHINECODE",MACHINECODE);
 				if(Tools.notEmpty(sessionCode) && sessionCode.equalsIgnoreCase(code)){		//判断登录验证码
 					//String passwd = new SimpleHash("SHA-1", USERNAME, PASSWORD).toString();	//密码加密
+					PageData pdm = userService.getCodeByMachineCode(MACHINECODE);
+					if(null == pdm || null == pdm.get("MCODE")){
+						errInfo = "没有这个机器！";
+					}else{
+						pd.put("COMPANYCODE",pdm.get("MCODE"));
+					}
 					pd.put("PASSWORD", PASSWORD);
 
 					pd = userService.getUserByNameAndPwd(pd);	//根据用户名和密码去读取用户信息
@@ -218,6 +223,7 @@ public class LoginController extends BaseController {
 						user.setIP(pd.getString("IP"));
 						user.setSTATUS(pd.getString("STATUS"));
 						user.setCompanyId(pd.get("COMPANY_ID").toString());
+						session.setAttribute(Const.MACHINECODE,MACHINECODE);
 						session.setAttribute(Const.SESSION_USER, user);			//把用户信息放session中
 						session.removeAttribute(Const.SESSION_SECURITY_CODE);	//清除登录验证码的session
 						//shiro加入身份验证
@@ -254,6 +260,7 @@ public class LoginController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value="/main/{changeMenu}")
+	@SuppressWarnings("all")
 	public ModelAndView login_index(@PathVariable("changeMenu") String changeMenu){
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
@@ -285,6 +292,12 @@ public class LoginController extends BaseController {
 				this.getRemortIP(USERNAME);	//更新登录IP
 				mv.setViewName("system/index/main");
 				mv.addObject("user", user);
+				if(changeMenu.equals("scan")){
+					mv.addObject("scanUrl", "scanTab.do");
+				}else{
+					mv.addObject("scanUrl", "tab.do");
+				}
+
 				mv.addObject("menuList", menuList);
 			}else {
 				mv.setViewName("system/index/login");//session失效后跳转登录页面
@@ -298,53 +311,6 @@ public class LoginController extends BaseController {
 		return mv;
 	}
 
-	@RequestMapping(value="/mainScan")
-	@SuppressWarnings("all")
-	public ModelAndView login_index(){
-		String changeMenu = "scan";
-		ModelAndView mv = this.getModelAndView();
-		PageData pd = new PageData();
-		pd = this.getPageData();
-		try{
-			Session session = Jurisdiction.getSession();
-			User user = (User)session.getAttribute(Const.SESSION_USER);						//读取session中的用户信息(单独用户信息)
-			if (user != null) {
-				User userr = (User)session.getAttribute(Const.SESSION_USERROL);				//读取session中的用户信息(含角色信息)
-				if(null == userr){
-					user = userService.getUserAndRoleById(user.getUSER_ID());				//通过用户ID读取用户信息和角色信息
-					session.setAttribute(Const.SESSION_USERROL, user);						//存入session
-				}else{
-					user = userr;
-				}
-				String USERNAME = user.getUSERNAME();
-				Role role = user.getRole();													//获取用户角色
-				String roleRights = role!=null ? role.getRIGHTS() : "";						//角色权限(菜单权限)
-				session.setAttribute(USERNAME + Const.SESSION_ROLE_RIGHTS, roleRights); 	//将角色权限存入session
-				session.setAttribute(Const.SESSION_USERNAME, USERNAME);						//放入用户名到session
-				this.setAttributeToAllDEPARTMENT_ID(session, USERNAME,user.getUSER_ID());						//把用户的组织机构权限放到session里面
-				List<Menu> allmenuList = new ArrayList<Menu>();
-				allmenuList = this.getAttributeMenu(session, USERNAME, roleRights);			//菜单缓存
-				List<Menu> menuList = new ArrayList<Menu>();
-				menuList = this.changeMenuF(allmenuList, session, USERNAME, changeMenu);	//切换菜单
-				if(null == session.getAttribute(USERNAME + Const.SESSION_QX)){
-					session.setAttribute(USERNAME + Const.SESSION_QX, this.getUQX(USERNAME,user.getCompanyId()));//按钮权限放到session中
-				}
-				this.getRemortIP(USERNAME);	//更新登录IP
-				mv.setViewName("system/index/main");
-				mv.addObject("user", user);
-				mv.addObject("menuList", menuList);
-			}else {
-				mv.setViewName("system/index/login");//session失效后跳转登录页面
-			}
-		} catch(Exception e){
-			mv.setViewName("system/index/login");
-			logger.error(e.getMessage(), e);
-		}
-		pd.put("SYSNAME", Tools.readTxtFile(Const.SYSNAME)); //读取系统名称
-		mv.addObject("pd",pd);
-		return mv;
-	}
-	
 	/**菜单缓存
 	 * @param session
 	 * @param USERNAME
@@ -360,8 +326,6 @@ public class LoginController extends BaseController {
 			if(Tools.notEmpty(roleRights)){
 				allmenuList = this.readMenu(allmenuList, roleRights);				//根据角色权限获取本权限的菜单列表
 			}
-
-
 			session.setAttribute(USERNAME + Const.SESSION_allmenuList, allmenuList);//菜单权限放入session中
 		}else{
 			allmenuList = (List<Menu>)session.getAttribute(USERNAME + Const.SESSION_allmenuList);
@@ -448,6 +412,11 @@ public class LoginController extends BaseController {
 	public String tab(){
 		return "system/index/tab";
 	}
+
+	@RequestMapping(value="/scanTab")
+	public String scanTab(){
+		return "fhoa/scan/tab";
+	}
 	
 	/**
 	 * 进入首页后的默认页面
@@ -455,6 +424,7 @@ public class LoginController extends BaseController {
 	 * @throws Exception 
 	 */
 	@RequestMapping(value="/login_default")
+	@SuppressWarnings("all")
 	public ModelAndView defaultPage() throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
@@ -462,6 +432,18 @@ public class LoginController extends BaseController {
 		pd.put("appUserCount", Integer.parseInt(appuserService.getAppUserCount("").get("appUserCount").toString()));	//会员数
 		mv.addObject("pd",pd);
 		mv.setViewName("system/index/default");
+		return mv;
+	}
+
+	@RequestMapping(value="/login_default_scan")
+	@SuppressWarnings("all")
+	public ModelAndView defaultScanPage() throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd.put("userCount", Integer.parseInt(userService.getUserCount("").get("userCount").toString())-1);				//系统用户数
+		pd.put("appUserCount", Integer.parseInt(appuserService.getAppUserCount("").get("appUserCount").toString()));	//会员数
+		mv.addObject("pd",pd);
+		mv.setViewName("system/index/repairman_san");
 		return mv;
 	}
 	

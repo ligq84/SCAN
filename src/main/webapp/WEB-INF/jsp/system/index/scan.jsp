@@ -188,7 +188,7 @@
 					success: function(data){
 						if("success" == data.result){
 							saveCookie();
-							window.location.href="mainScan";
+							window.location.href="main/scan";
 						}else if("usererror" == data.result){
 							$("#loginname").tips({
 								side : 1,

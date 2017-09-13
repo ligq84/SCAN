@@ -117,7 +117,7 @@
 						</div>
 						</div>
 						<div>
-							<iframe name="mainFrame" id="mainFrame" frameborder="0" src="tab.do" style="margin:0 auto;width:100%;height:100%;"></iframe>
+							<iframe name="mainFrame" id="mainFrame" frameborder="0" src="${scanUrl}" style="margin:0 auto;width:100%;height:100%;"></iframe>
 						</div>
 						</div><!-- /.row -->	
 					</div><!-- /.page-content -->

@@ -380,6 +380,11 @@
 		from 
 		<include refid="tableName"></include>
 	</select>
-	
-	<!-- fh313596790qq(青苔) -->
+
+	<select id="getCodeByMachineCode" parameterType="String" resultType="pd">
+		SELECT b.`code` AS MCODE FROM oa_machine a
+		LEFT JOIN oa_company b ON a.company_id = a.company_id
+		WHERE a.barcode=#{barcode}
+	</select>
+
 </mapper>
