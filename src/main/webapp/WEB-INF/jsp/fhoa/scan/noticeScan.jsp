@@ -126,10 +126,12 @@ setTimeout("top.hangge()",500);
 					success: function(data){
 						if(data.result == "success"){
 							var machine = data.data;
-							$("#NAME").val(machine.name);
-							$("#type").val(machine.typeName);
-							$("#code").val(machine.barcode);
-							$("#USERNAME").val(machine.chargeName+';'+machine.Day_Repairman+';'+machine.Night_Repairman)
+							if(null!=machine && ""!=machine){
+								$("#NAME").val(machine.name);
+								$("#type").val(machine.typeName);
+								$("#code").val(machine.barcode);
+								$("#USERNAME").val(machine.chargeName+';'+machine.Day_Repairman+';'+machine.Night_Repairman)
+							}
 						}
 					}
 				});

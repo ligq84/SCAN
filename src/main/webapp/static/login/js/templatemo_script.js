@@ -6,7 +6,7 @@ jQuery(function()
     $('#templatemo_banner_slide > div').camera({
         height: 'auto',
         loader: 'bar',
-        playPause: false,
+        playPause: true,
         pagination: false,
         thumbnails: false,
         hover: false,

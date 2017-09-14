@@ -154,20 +154,23 @@
 	<div id="templatemo_banner_slide" class="container_wapper">
 		<div class="camera_wrap camera_emboss" id="camera_slide">
 			<!-- 背景图片 -->
-			<c:choose>
-				<c:when test="${not empty pd.listImg}">
-					<c:forEach items="${pd.listImg}" var="var" varStatus="vs">
-						<div data-src="static/login/images/${var.FILEPATH }"></div>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<div data-src="static/login/images/banner_slide_01.jpg"></div>
-					<div data-src="static/login/images/banner_slide_02.jpg"></div>
-					<div data-src="static/login/images/banner_slide_03.jpg"></div>
-					<div data-src="static/login/images/banner_slide_04.jpg"></div>
-					<div data-src="static/login/images/banner_slide_05.jpg"></div>
-				</c:otherwise>
-			</c:choose>
+			<div data-src="static/login/images/logo_bg.png"></div>
+			<div data-src="static/login/images/logo_bg.png"></div>
+			<div data-src="static/login/images/logo_bg.png"></div>
+			<%--<c:choose>--%>
+				<%--<c:when test="${not empty pd.listImg}">--%>
+					<%--<c:forEach items="${pd.listImg}" var="var" varStatus="vs">--%>
+						<%--<div data-src="static/login/images/${var.FILEPATH }"></div>--%>
+					<%--</c:forEach>--%>
+				<%--</c:when>--%>
+				<%--<c:otherwise>--%>
+					<%--<div data-src="static/login/images/banner_slide_01.jpg"></div>--%>
+					<%--<div data-src="static/login/images/banner_slide_02.jpg"></div>--%>
+					<%--<div data-src="static/login/images/banner_slide_03.jpg"></div>--%>
+					<%--<div data-src="static/login/images/banner_slide_04.jpg"></div>--%>
+					<%--<div data-src="static/login/images/banner_slide_05.jpg"></div>--%>
+				<%--</c:otherwise>--%>
+			<%--</c:choose>--%>
 		</div>
 		<!-- #camera_wrap_3 -->
 	</div>

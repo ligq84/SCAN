@@ -19,7 +19,10 @@
 				<div class="navbar-header pull-left">
 					<!-- #section:basics/navbar.layout.brand -->
 					<a class="navbar-brand">
-						<small> <i class="fa fa-leaf"></i> ${pd.SYSNAME} </small>
+						<small>
+							<%--<i class="fa fa-leaf"></i> ${pd.SYSNAME}--%>
+							<img style="height: 26px;" src="static/images/logo.png" alt="logo">
+						</small>
 					</a>
 
 					<!-- /section:basics/navbar.layout.brand -->
