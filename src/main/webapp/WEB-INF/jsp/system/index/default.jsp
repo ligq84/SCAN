@@ -38,7 +38,7 @@ setTimeout("top.hangge()",500);
 									<i class="ace-icon fa fa-times"></i>
 								</button>
 								<i class="ace-icon fa fa-check green"></i>
-								欢迎使用 FH Admin 系统&nbsp;&nbsp;
+								欢迎使用 趣逛科技 系统&nbsp;&nbsp;
 								<strong class="green">
 									&nbsp;QQ:313596790
 									<a href="http://www.fhadmin.org" target="_blank"><small>(&nbsp;www.fhadmin.org&nbsp;)</small></a>
@@ -54,7 +54,7 @@ setTimeout("top.hangge()",500);
 						        // 指定图表的配置项和数据
 								var option = {
 						            title: {
-						                text: 'FH Admin用户统计'
+						                text: '趣逛科技用户统计'
 						            },
 						            tooltip: {},
 						            xAxis: {

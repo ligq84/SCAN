@@ -141,5 +141,7 @@ public interface MachineManager{
 	 * @throws Exception
 	 */
 	List<PageData> getMachineParts(PageData pd)throws Exception;
+
+	PageData findByBarcode(PageData pd)throws Exception;
 }
 

@@ -16,7 +16,9 @@
 		SEND_TIME,	
 		STATUS,	
 		FHSMS_ID,
-		SANME_ID
+		SANME_ID,
+		COMPANY_ID,
+		SMS_TYPE
 	</sql>
 	
 	<!-- 字段值 -->
@@ -28,7 +30,9 @@
 		#{SEND_TIME},	
 		#{STATUS},	
 		#{FHSMS_ID},
-		#{SANME_ID}
+		#{SANME_ID},
+		#{COMPANY_ID},
+		#{SMS_TYPE}
 	</sql>
 	
 	<!-- 新增-->
@@ -79,7 +83,7 @@
 		where
 			FROM_USERNAME = #{pd.FROM_USERNAME}
 		and
-			TYPE = #{pd.TYPE}
+			TYPE = #{pd.TYPE} AND  COMPANY_ID = #{pd.COMPANY_ID}
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
