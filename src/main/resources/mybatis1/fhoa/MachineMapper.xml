@@ -204,7 +204,7 @@
 	</update>
 
 	<select id="findByBarcode" parameterType="pd" resultType="pd">
-		SELECT a.name,b.name  as typeName,a.barcode,
+		SELECT a.name,b.name  as typeName,a.barcode,a.mhid,
 		 (SELECT d.USERNAME from oa_staff c LEFT JOIN  sys_user d ON c.USER_ID = d.USER_ID where c.STAFF_ID = a.charge) as chargeName,
 		(SELECT d.USERNAME from oa_staff c LEFT JOIN  sys_user d ON c.USER_ID = d.USER_ID where c.STAFF_ID = a.Day_Repairman) as Day_Repairman,
 		(SELECT d.USERNAME from oa_staff c LEFT JOIN  sys_user d ON c.USER_ID = d.USER_ID where c.STAFF_ID = a.Night_Repairman) as Night_Repairman

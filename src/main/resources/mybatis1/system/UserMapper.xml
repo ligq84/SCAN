@@ -381,8 +381,8 @@
 		<include refid="tableName"></include>
 	</select>
 
-	<select id="getCodeByMachineCode" parameterType="String" resultType="pd">
-		SELECT b.`code` AS MCODE FROM oa_machine a
+	<select id="getCodeByCarCode" parameterType="String" resultType="pd">
+		SELECT b.`code` AS MCODE,a.CAR_ID FROM oa_car a
 		LEFT JOIN oa_company b ON a.company_id = a.company_id
 		WHERE a.barcode=#{barcode}
 	</select>

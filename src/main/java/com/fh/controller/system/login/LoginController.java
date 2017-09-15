@@ -199,46 +199,48 @@ public class LoginController extends BaseController {
 				pd.put("USERNAME", USERNAME);
 				if(Tools.notEmpty(sessionCode) && sessionCode.equalsIgnoreCase(code)){		//判断登录验证码
 					//String passwd = new SimpleHash("SHA-1", USERNAME, PASSWORD).toString();	//密码加密
-					PageData pdm = userService.getCodeByMachineCode(MACHINECODE);
+					PageData pdm = userService.getCodeByCarCode(MACHINECODE);
 					if(null == pdm || null == pdm.get("MCODE")){
-						errInfo = "没有这个机器！";
+						errInfo = "carerror";
 					}else{
 						pd.put("COMPANYCODE",pdm.get("MCODE"));
-					}
-					pd.put("PASSWORD", PASSWORD);
+						pd.put("PASSWORD", PASSWORD);
 
-					pd = userService.getUserByNameAndPwd(pd);	//根据用户名和密码去读取用户信息
-					if(pd != null){
-						this.removeSession(USERNAME);//请缓存
-						pd.put("LAST_LOGIN",DateUtil.getTime().toString());
-						userService.updateLastLogin(pd);
-						User user = new User();
-						user.setUSER_ID(pd.getString("USER_ID"));
-						user.setUSERNAME(pd.getString("USERNAME"));
-						user.setPASSWORD(pd.getString("PASSWORD"));
-						user.setNAME(pd.getString("NAME"));
-						user.setRIGHTS(pd.getString("RIGHTS"));
-						user.setROLE_ID(pd.getString("ROLE_ID"));
-						user.setLAST_LOGIN(pd.getString("LAST_LOGIN"));
-						user.setIP(pd.getString("IP"));
-						user.setSTATUS(pd.getString("STATUS"));
-						user.setCompanyId(pd.get("COMPANY_ID").toString());
-						session.setAttribute(Const.MACHINECODE,MACHINECODE);
-						session.setAttribute(Const.SESSION_USER, user);			//把用户信息放session中
-						session.removeAttribute(Const.SESSION_SECURITY_CODE);	//清除登录验证码的session
-						//shiro加入身份验证
-						Subject subject = SecurityUtils.getSubject();
-						UsernamePasswordToken token = new UsernamePasswordToken(USERNAME, PASSWORD);
-						try {
-							subject.login(token);
-						} catch (AuthenticationException e) {
-							errInfo = "身份验证失败！";
+						pd = userService.getUserByNameAndPwd(pd);	//根据用户名和密码去读取用户信息
+						if(pd != null){
+							this.removeSession(USERNAME);//请缓存
+							pd.put("LAST_LOGIN",DateUtil.getTime().toString());
+							userService.updateLastLogin(pd);
+							User user = new User();
+							user.setUSER_ID(pd.getString("USER_ID"));
+							user.setUSERNAME(pd.getString("USERNAME"));
+							user.setPASSWORD(pd.getString("PASSWORD"));
+							user.setNAME(pd.getString("NAME"));
+							user.setRIGHTS(pd.getString("RIGHTS"));
+							user.setROLE_ID(pd.getString("ROLE_ID"));
+							user.setLAST_LOGIN(pd.getString("LAST_LOGIN"));
+							user.setIP(pd.getString("IP"));
+							user.setSTATUS(pd.getString("STATUS"));
+							user.setCompanyId(pd.get("COMPANY_ID").toString());
+							session.setAttribute(Const.CARCODE,MACHINECODE);
+							session.setAttribute(Const.CARID,pdm.get("CAR_ID"));
+							session.setAttribute(Const.SESSION_USER, user);			//把用户信息放session中
+							session.removeAttribute(Const.SESSION_SECURITY_CODE);	//清除登录验证码的session
+							//shiro加入身份验证
+							Subject subject = SecurityUtils.getSubject();
+							UsernamePasswordToken token = new UsernamePasswordToken(USERNAME, PASSWORD);
+							try {
+								subject.login(token);
+							} catch (AuthenticationException e) {
+								errInfo = "身份验证失败！";
+							}
+						}else{
+							errInfo = "usererror"; 				//用户名或密码有误
+							logBefore(logger, USERNAME+"登录系统密码或用户名错误");
+							FHLOG.save(USERNAME, "登录系统密码或用户名错误");
 						}
-					}else{
-						errInfo = "usererror"; 				//用户名或密码有误
-						logBefore(logger, USERNAME+"登录系统密码或用户名错误");
-						FHLOG.save(USERNAME, "登录系统密码或用户名错误");
 					}
+
 				}else{
 					errInfo = "codeerror";				 	//验证码输入有误
 				}

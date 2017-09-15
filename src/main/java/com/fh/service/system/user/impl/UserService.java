@@ -173,8 +173,8 @@ public class UserService implements UserManager{
 		return (PageData)dao.findForObject("UserMapper.getUserCount", value);
 	}
 
-	public PageData getCodeByMachineCode(String barcode)throws Exception{
-		return (PageData)dao.findForObject("UserMapper.getCodeByMachineCode", barcode);
+	public PageData getCodeByCarCode(String barcode)throws Exception{
+		return (PageData)dao.findForObject("UserMapper.getCodeByCarCode", barcode);
 	}
 	
 }

@@ -125,6 +125,6 @@ public interface UserManager {
 	 */
 	public PageData getUserCount(String value)throws Exception;
 
-	public PageData getCodeByMachineCode(String barcode)throws Exception;
+	public PageData getCodeByCarCode(String barcode)throws Exception;
 	
 }

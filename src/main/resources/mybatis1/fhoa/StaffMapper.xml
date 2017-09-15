@@ -336,6 +336,48 @@
 		where 
 			STAFF_ID = #{STAFF_ID}
 	</update>
-	
-	<!-- fh313596790qq(青苔) -->
+	<select id="findByUserId" parameterType="pd" resultType="pd">
+		select
+		a.staff_id,
+		a.NAME,
+		a.BIANMA,
+		a.DEPARTMENT_ID,
+		a.FUNCTIONS,
+		a.TEL,
+		a.EMAIL,
+		a.SEX,
+		a.BIRTHDAY,
+		a.NATION,
+		a.JOBTYPE,
+		a.JOBJOINTIME,
+		a.FADDRESS,
+		a.POLITICAL,
+		a.PJOINTIME,
+		a.SFID,
+		a.MARITAL,
+		a.DJOINTIME,
+		a.POST,
+		a.POJOINTIME,
+		a.EDUCATION,
+		a.SCHOOL,
+		a.MAJOR,
+		a.FTITLE,
+		a.CERTIFICATE,
+		a.CONTRACTLENGTH,
+		a.CSTARTTIME,
+		a.CENDTIME,
+		a.ADDRESS,
+		a.USER_ID,
+		a.BZ,
+		a.STAFF_ID,
+		a.COMPANY_ID,
+		a.STATUS,
+		a.PROVINCE,
+		a.CITY,
+		a.AREA,
+		GRADUATE
+		from OA_STAFF a
+		where
+		a.USER_ID = #{userId}
+	</select>
 </mapper>

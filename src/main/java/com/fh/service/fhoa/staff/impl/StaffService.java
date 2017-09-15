@@ -97,6 +97,11 @@ public class StaffService implements StaffManager{
 	public void userBinding(PageData pd)throws Exception{
 		dao.update("StaffMapper.userBinding", pd);
 	}
+
+	public PageData findByUserId(String userId)throws Exception{
+		return (PageData)dao.findForObject("StaffMapper.findByUserId", userId);
+	}
+
 	
 }
 

@@ -12,26 +12,21 @@
 <html lang="en">
 <head>
 	<base href="<%=basePath%>">
-
+	<script type="text/javascript" src="static/js/jquery-1.7.2.js"></script>
 	<!-- jsp文件头和头部 -->
 	<%@ include file="../../system/index/top.jsp"%>
-	<!-- 百度echarts -->
-	<script src="plugins/echarts/echarts.min.js"></script>
-	<script type="text/javascript">
-		setTimeout("top.hangge()",500);
-	</script>
-	<style type="text/css">
-		.sbtn{
-			border: 1px solid grey;
-			text-align: center !important;
-			padding: 0px;
-			font-size: 18px;
-			margin-left: 30px;cursor: pointer;
-		}
-		.sbtn:hover{
-			background-color: #4c718a;
-		}
-	</style>
+	<!-- 下拉框 -->
+	<link rel="stylesheet" href="static/ace/css/chosen.css" />
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+	<!-- 日期框 -->
+	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+	<!-- 树形下拉框start -->
+	<script type="text/javascript" src="plugins/selectZtree/selectTree.js"></script>
+	<script type="text/javascript" src="plugins/selectZtree/framework.js"></script>
+	<link rel="stylesheet" type="text/css" href="plugins/selectZtree/import_fh.css"/>
+	<script type="text/javascript" src="plugins/selectZtree/ztree/ztree.js"></script>
+	<link type="text/css" rel="stylesheet" href="plugins/selectZtree/ztree/ztree.css"></link>
+	<!-- 树形下拉框end -->
 </head>
 <body class="no-skin">
 
@@ -64,7 +59,7 @@
 								<div class="row" style="margin-left: 15px;">
 									<label for="NAME" class="col-sm-2 control-label">机器名称:</label>
 									<div class="col-sm-2">
-										<input type="text" name="NAME" id="NAME"  maxlength="50"  class="form-control" style="border: 0px"/>
+										<input type="text" name="name" id="name"  maxlength="50"  class="form-control" style="border: 0px"/>
 									</div>
 									<label for="type" class="col-sm-1 control-label">机器类型:</label>
 									<div class="col-sm-2">
@@ -76,6 +71,8 @@
 									</div>
 									<input type="hidden" id="USERNAME" name="USERNAME" />
 									<input type="hidden" id="CONTENT" name="CONTENT" />
+									<input type="hidden" id="mhid" name="mhid" />
+
 								</div>
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
@@ -85,10 +82,13 @@
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
 										<label class="col-sm-2 control-label"></label>
-										<button type="button" class="btn btn-primary btn-lg">巡视扫描</button>
-										<button type="button" class="btn btn-primary btn-lg"  style="margin-left: 5em;">维修扫描</button>
-										<button type="button" class="btn btn-primary btn-lg"  style="margin-left: 5em;">保养扫描</button>
-										<button type="button" class="btn btn-primary btn-lg"  style="margin-left: 5em;">改规格扫描</button>
+										<%--<button type="button" class="btn btn-primary btn-lg"  onclick="ScanRecord('xs')">巡视扫描</button>--%>
+										<button type="button" class="btn btn-primary btn-lg" data-toggle="modal"  id="xsModal" onclick="machineCodeCheck('xsModal')">
+											巡视扫描
+										</button>
+										<button type="button" class="btn btn-primary btn-lg"  onclick="ScanRecord('wx')" style="margin-left: 5em;">维修扫描</button>
+										<button type="button" class="btn btn-primary btn-lg"  onclick="ScanRecord('by')" style="margin-left: 5em;">保养扫描</button>
+										<button type="button" class="btn btn-primary btn-lg"  onclick="ScanRecord('ggg')" style="margin-left: 5em;">改规格扫描</button>
 									</div>
 								</div>
 								<%--<div class="row" style="margin-left:50px;text-align: center;">--%>
@@ -114,87 +114,50 @@
 	</a>
 
 </div>
+<div class="modal fade" id="xsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-footer" style="text-align: center">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭窗口</button>
+				<button type="button" class="btn btn-primary" onclick="xsbtn()">确定操作</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+			</div>
+			<div class="modal-body">
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				<button type="button" class="btn btn-primary">确定操作</button>
+			</div>
+		</div>
+	</div>
+</div>
 <!-- /.main-container -->
 
 <!-- basic scripts -->
 <!-- 页面底部js¨ -->
 <%@ include file="../../system/index/foot.jsp"%>
 <!-- ace scripts -->
-<script src="static/ace/js/ace/ace.js"></script>
-<!-- inline scripts related to this page -->
+<!-- 日期框 -->
+<script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
+<!-- 下拉框 -->
+<script src="static/ace/js/chosen.jquery.js"></script>
+<!--提示框-->
+<script type="text/javascript" src="static/js/jquery.tips.js"></script>
+
 <script type="text/javascript">
-	$(top.hangge());
-	$(function() {
-		$.fn.serializeObject = function() {
-			var o = {};
-			var a = this.serializeArray();
-			$.each(a, function() {
-				if (o[this.name]) {
-					if (!o[this.name].push) {
-						o[this.name] = [ o[this.name] ];
-					}
-					o[this.name].push(this.value || '');
-				} else {
-					o[this.name] = this.value || '';
-				}
-			});
-			return o;
-		};
-
-		$("#machineCode").focus();
-		$("#machineCode")[0].oninput =function(){
-			$.ajax({
-				type: "POST",
-				url: '<%=basePath%>scan/findByBarcode.do',
-				data: $("#Form").serializeObject(),
-				dataType:'json',
-				cache: false,
-				success: function(data){
-					if(data.result == "success"){
-						var machine = data.data;
-						if(null!=machine && ""!=machine){
-							$("#NAME").val(machine.name);
-							$("#type").val(machine.typeName);
-							$("#code").val(machine.barcode);
-							$("#USERNAME").val(machine.chargeName+';'+machine.Day_Repairman+';'+machine.Night_Repairman)
-						}
-
-					}
-				}
-			});
-		};
-	});
-
-	<%--function sendSms(){--%>
-		<%--if($("#machineCode").val()==""){--%>
-			<%--$("#machineCode").tips({side:3,msg:'请扫描机器号',bg:'#AE81FF',time:2});--%>
-			<%--$("#machineCode").focus();--%>
-			<%--return false;--%>
-		<%--}--%>
-		<%--var USERNAME=$("#USERNAME").val();--%>
-		<%--var CONTENT="请维修机器："+$("#NAME").val();;--%>
-		<%--$.ajax({--%>
-			<%--type: "POST",--%>
-			<%--url:'<%=basePath%>fhsms/sendSMS.do?tm='+new Date().getTime(),--%>
-			<%--data: {USERNAME:USERNAME,CONTENT:CONTENT,SMS_TYPE:2},--%>
-			<%--dataType:'json',--%>
-			<%--//beforeSend: validateData,--%>
-			<%--cache: false,--%>
-			<%--success: function(data){--%>
-				<%--$.each(data.list, function(i, list){--%>
-					<%--if(list.msg == 'ok'){--%>
-						<%--var count = list.count;--%>
-						<%--var ecount = list.ecount;--%>
-						<%--alert('成功发出'+count+'条,失败'+ecount+'条');--%>
-					<%--}else{--%>
-						<%--alert('发送失败');--%>
-					<%--}--%>
-				<%--});--%>
-			<%--}--%>
-		<%--});--%>
-
-	<%--}--%>
+	var scanUrl = "<%=basePath%>";
 </script>
-<script type="text/javascript" src="static/ace/js/jquery.js"></script>
+<!-- inline scripts related to this page -->
+<script src="static/js/myjs/scan.js"></script>
 </body>
 </html>

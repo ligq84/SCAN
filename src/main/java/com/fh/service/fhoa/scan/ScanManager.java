@@ -1,4 +1,4 @@
-package com.fh.service.fhoa.staff;
+package com.fh.service.fhoa.scan;
 
 import com.fh.entity.Page;
 import com.fh.util.PageData;
@@ -11,19 +11,14 @@ import java.util.List;
  * 创建时间：2016-04-23
  * @version
  */
-public interface StaffManager{
+public interface ScanManager {
 
 	/**新增
 	 * @param pd
 	 * @throws Exception
 	 */
 	public void save(PageData pd)throws Exception;
-	
-	/**删除
-	 * @param pd
-	 * @throws Exception
-	 */
-	public void delete(PageData pd)throws Exception;
+
 	
 	/**修改
 	 * @param pd
@@ -36,13 +31,7 @@ public interface StaffManager{
 	 * @throws Exception
 	 */
 	public List<PageData> list(Page page)throws Exception;
-	/**
-	 * 下拉框查询列表
-	 * @param page
-	 * @return
-	 * @throws Exception
-	 */
-	List<PageData> listSelect(Page page)throws Exception;
+
 	/**列表(全部)
 	 * @param pd
 	 * @throws Exception
@@ -55,19 +44,7 @@ public interface StaffManager{
 	 */
 	public PageData findById(PageData pd)throws Exception;
 	
-	/**批量删除
-	 * @param ArrayDATA_IDS
-	 * @throws Exception
-	 */
-	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
-	
-	/**绑定用户
-	 * @param pd
-	 * @throws Exception
-	 */
-	public void userBinding(PageData pd)throws Exception;
 
-	PageData findByUserId(String userId)throws Exception;
 	
 }
 

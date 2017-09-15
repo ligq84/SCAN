@@ -93,7 +93,7 @@
 						<div class="main_input_box">
 							<span class="add-on bg_lg">
 							<i><img height="37" src="static/login/user.png" /></i>
-							</span><input type="text" name="MACHINECODE" id="MACHINECODE" value="qgc11505140716358" placeholder="请扫描机器编码" />
+							</span><input type="text" name="MACHINECODE" id="MACHINECODE" value="qg11504442814079" placeholder="请扫描机器编码" />
 						</div>
 					</div>
 				</div>
@@ -210,6 +210,15 @@
 							});
 							showfh();
 							$("#code").focus();
+						}else if("carerror" == data.result){
+							$("#MACHINECODE").tips({
+								side : 1,
+								msg : "没有这个小推车",
+								bg : '#FF5080',
+								time : 15
+							});
+							showfh();
+							$("#MACHINECODE").focus();
 						}else{
 							$("#loginname").tips({
 								side : 1,
