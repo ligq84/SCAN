@@ -31,8 +31,7 @@
 						<div class="col-xs-12">
 							
 						<!-- 检索  -->
-						<form action="fhsms/list.do" method="post" name="Form" id="Form">
-						<input type="hidden" name="TYPE" value="${pd.TYPE}" />
+						<form action="machinerecord/list.do" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
 								<td>
@@ -43,20 +42,20 @@
 										</span>
 									</div>
 								</td>
-								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginStart" id="lastLoginStart"  value="${pd.lastLoginStart}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期" title="开始日期"/></td>
-								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginEnd" name="lastLoginEnd"  value="${pd.lastLoginEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期" title="结束日期"/></td>
+								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastStart" id="lastStart"  value="" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期" title="开始日期"/></td>
+								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastEnd" name="lastEnd"  value="" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期" title="结束日期"/></td>
 								<td style="vertical-align:top;padding-left:2px;">
-								 	<select class="chosen-select form-control" name="STATUS" id="id" data-placeholder="状态" style="vertical-align:top;width: 68px;">
+								 	<select class="chosen-select form-control" name="name" id="id" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
+									<option value=""></option>
 									<option value="">全部</option>
-									<option value="1" <c:if test="${pd.STATUS == '1' }">selected</c:if>>已读</option>
-									<option value="2" <c:if test="${pd.STATUS == '2' }">selected</c:if>>未读</option>
+									<option value="">1</option>
+									<option value="">2</option>
 								  	</select>
 								</td>
 								<c:if test="${QX.cha == 1 }">
 								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
 								</c:if>
-								<td style="padding-left:20px;"><a href="fhsms/list.do?TYPE=1"><span class="label label-<c:if test="${pd.TYPE != '2' }">success</c:if> arrowed-right arrowed-in">收信箱</span></a></td>
-								<td><a href="fhsms/list.do?TYPE=2"><span class="label label-<c:if test="${pd.TYPE == '2' }">info</c:if> arrowed-right arrowed-in">发信箱</span></a></td>
+								<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>
 							</tr>
 						</table>
 						<!-- 检索  -->
@@ -68,14 +67,18 @@
 									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
 									</th>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">通知标题</th>
-									<th class="center">机器名称</th>
-									<th class="center">通知类型</th>
-									<th class="center">接收人群</th>
-									<th class="center">发信人</th>
-									<th class="center">收信人</th>
-									<th class="center">发信时间</th>
-									<th class="center">状态</th>
+									<th class="center">备注1</th>
+									<th class="center">机器id</th>
+									<th class="center">员工id</th>
+									<th class="center">小车id</th>
+									<th class="center">扫描了类型</th>
+									<th class="center">操作类型</th>
+									<th class="center">维修部位</th>
+									<th class="center">目标规格</th>
+									<th class="center">更改部位</th>
+									<th class="center">维修开始时间</th>
+									<th class="center">维修结束时间</th>
+									<th class="center">公司id</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -88,37 +91,36 @@
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
 											<td class='center'>
-												<label class="pos-rel"><input type='checkbox' name='ids' id="${var.TO_USERNAME}" value="${var.FHSMS_ID}" class="ace" /><span class="lbl"></span></label>
+												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.MACHINERECORD_ID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'>${var.TITLE}</td>
-											<td class='center'>${var.machine_name}</td>
-											<td class='center'>${var.SMS_TYPE}</td>
-											<td class='center'>${var.to_staff}</td>
-											<c:if test="${pd.TYPE != '2' }">
-											<td class='center'${var.TO_USERNAME}</td>
-											<td class='center'>${var.FROM_USERNAME}</td>
-											</c:if>
-											<c:if test="${pd.TYPE == '2' }">
-											<td class='center'>${var.FROM_USERNAME}</td>
-											<td class='center'>${var.TO_USERNAME}</td>
-											</c:if>
-											<td class='center'>${var.SEND_TIME}</td>
-											<td class='center' id="STATUS${vs.index+1}"><c:if test="${var.STATUS == '2' }"><span class="label label-important arrowed-in">未读</span></c:if><c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">已读</span></c:if></td>
+											<td class='center'>${var.MRID}</td>
+											<td class='center'>${var.MHID}</td>
+											<td class='center'>${var.STAFF_ID}</td>
+											<td class='center'>${var.CAR_ID}</td>
+											<td class='center'>${var.SCAN_TYPE}</td>
+											<td class='center'>${var.OPERATION_TYPE}</td>
+											<td class='center'>${var.REPAIR_POSITION}</td>
+											<td class='center'>${var.TARGET_RULE}</td>
+											<td class='center'>${var.CHANGE_POSITION}</td>
+											<td class='center'>${var.START_DATE}</td>
+											<td class='center'>${var.String,END_DATE}</td>
+											<td class='center'>${var.String,COMPANY_ID}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="hidden-sm hidden-xs btn-group">
-													<a class="btn btn-xs btn-success" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUS}','${pd.TYPE == '2'?'2':'1' }','${var.FHSMS_ID}','${var.SANME_ID}');">
-														<i class="ace-icon fa fa-search nav-search-icon"></i>
-													</a>
-													<c:if test="${QX.FHSMS == 1 }">
-													<a class="btn btn-xs btn-info" title='发送站内信' onclick="sendFhsms('${var.TO_USERNAME}');">
-														<i class="ace-icon fa fa-envelope-o bigger-120" title="发送站内信"></i>
+													<c:if test="${QX.edit == 1 }">
+													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.MACHINERECORD_ID}');">
+														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
 													</a>
 													</c:if>
-
+													<c:if test="${QX.del == 1 }">
+													<a class="btn btn-xs btn-danger" onclick="del('${var.MACHINERECORD_ID}');">
+														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
+													</a>
+													</c:if>
 												</div>
 												<div class="hidden-md hidden-lg">
 													<div class="inline pos-rel">
@@ -127,23 +129,24 @@
 														</button>
 			
 														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
+															<c:if test="${QX.edit == 1 }">
 															<li>
-																<a style="cursor:pointer;" onclick="viewx('STATUS${vs.index+1}','${var.STATUS}','${pd.TYPE == '2'?'2':'1' }','${var.FHSMS_ID}','${var.SANME_ID}');" class="tooltip-success" data-rel="tooltip" title="查看">
+																<a style="cursor:pointer;" onclick="edit('${var.MACHINERECORD_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
 																	<span class="green">
-																		<i class="ace-icon fa fa-search nav-search-icon"></i>
-																	</span>
-																</a>
-															</li>
-															<c:if test="${QX.FHSMS == 1 }">
-															<li>
-																<a style="cursor:pointer;" onclick="sendFhsms('${var.TO_USERNAME}');" class="tooltip-info" data-rel="tooltip" title="发送站内信">
-																	<span class="blue">
-																		<i class="ace-icon fa fa-envelope bigger-120"></i>
+																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
 																	</span>
 																</a>
 															</li>
 															</c:if>
-
+															<c:if test="${QX.del == 1 }">
+															<li>
+																<a style="cursor:pointer;" onclick="del('${var.MACHINERECORD_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
+																	<span class="red">
+																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
+																	</span>
+																</a>
+															</li>
+															</c:if>
 														</ul>
 													</div>
 												</div>
@@ -170,7 +173,12 @@
 						<table style="width:100%;">
 							<tr>
 								<td style="vertical-align:top;">
-									<c:if test="${QX.FHSMS == 1 }"><a title="批量发送站内信" class="btn btn-mini btn-info" onclick="makeAll('确定要给选中的用户发送站内信吗?');"><i class="ace-icon fa fa-envelope-o bigger-120"></i></a></c:if>
+									<c:if test="${QX.add == 1 }">
+									<a class="btn btn-mini btn-success" onclick="add();">新增</a>
+									</c:if>
+									<c:if test="${QX.del == 1 }">
+									<a class="btn btn-mini btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
+									</c:if>
 								</td>
 								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 							</tr>
@@ -263,53 +271,60 @@
 			});
 		});
 		
-		//发站内信
-		function sendFhsms(username){
+		//新增
+		function add(){
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
-			 diag.Title ="站内信";
-			 diag.URL = '<%=basePath%>fhsms/goAdd.do?username='+username;
-			 diag.Width = 660;
-			 diag.Height = 444;
+			 diag.Title ="新增";
+			 diag.URL = '<%=basePath%>machinerecord/goAdd.do';
+			 diag.Width = 450;
+			 diag.Height = 355;
+			 diag.Modal = true;				//有无遮罩窗口
+			 diag. ShowMaxButton = true;	//最大化按钮
+		     diag.ShowMinButton = true;		//最小化按钮
 			 diag.CancelEvent = function(){ //关闭事件
-				 top.jzts();
-				 setTimeout("self.location=self.location",100);
+				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+					 if('${page.currentPage}' == '0'){
+						 tosearch();
+					 }else{
+						 tosearch();
+					 }
+				}
 				diag.close();
 			 };
 			 diag.show();
 		}
 		
 		//删除
-		function del(ztid,STATUS,type,Id,SANME_ID){
+		function del(Id){
 			bootbox.confirm("确定要删除吗?", function(result) {
-				if(type == "1" && STATUS == '2' && $("#"+ztid).html() == '<span class="label label-important arrowed-in">未读</span>'){
-					top.readFhsms();//读取站内信时减少未读总数  <!-- readFhsms()函数在 WebRoot\static\js\myjs\head.js中 -->
-				}
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>fhsms/delete.do?FHSMS_ID="+Id+"&tm="+new Date().getTime();
+					var url = "<%=basePath%>machinerecord/delete.do?MACHINERECORD_ID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
-						nextPage(${page.currentPage});
+						tosearch();
 					});
 				}
 			});
 		}
 		
-		//查看信件
-		function viewx(ztid,STATUS,type,Id,SANME_ID){
-			if(type == "1" && STATUS == '2' && $("#"+ztid).html() == '<span class="label label-important arrowed-in">未读</span>'){
-				$("#"+ztid).html('<span class="label label-success arrowed">已读</span>');
-				top.readFhsms();//读取站内信时减少未读总数  <!-- readFhsms()函数在 WebRoot\static\js\myjs\head.js中 -->
-			}
+		//修改
+		function edit(Id){
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
-			 diag.Title ="站内信";
-			 diag.URL = '<%=basePath%>fhsms/goView.do?FHSMS_ID='+Id+'&TYPE='+type+'&SANME_ID='+SANME_ID+'&STATUS='+STATUS;
-			 diag.Width = 600;
-			 diag.Height = 460;
+			 diag.Title ="编辑";
+			 diag.URL = '<%=basePath%>machinerecord/goEdit.do?MACHINERECORD_ID='+Id;
+			 diag.Width = 450;
+			 diag.Height = 355;
+			 diag.Modal = true;				//有无遮罩窗口
+			 diag. ShowMaxButton = true;	//最大化按钮
+		     diag.ShowMinButton = true;		//最小化按钮 
 			 diag.CancelEvent = function(){ //关闭事件
+				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
+					 tosearch();
+				}
 				diag.close();
 			 };
 			 diag.show();
@@ -320,14 +335,10 @@
 			bootbox.confirm(msg, function(result) {
 				if(result) {
 					var str = '';
-					var username = '';
 					for(var i=0;i < document.getElementsByName('ids').length;i++){
 					  if(document.getElementsByName('ids')[i].checked){
 					  	if(str=='') str += document.getElementsByName('ids')[i].value;
 					  	else str += ',' + document.getElementsByName('ids')[i].value;
-					  	
-					  	if(username=='') username += document.getElementsByName('ids')[i].id;
-					  	else username += ';' + document.getElementsByName('ids')[i].id;
 					  }
 					}
 					if(str==''){
@@ -348,49 +359,29 @@
 							top.jzts();
 							$.ajax({
 								type: "POST",
-								url: '<%=basePath%>fhsms/deleteAll.do?tm='+new Date().getTime(),
+								url: '<%=basePath%>machinerecord/deleteAll.do?tm='+new Date().getTime(),
 						    	data: {DATA_IDS:str},
 								dataType:'json',
 								//beforeSend: validateData,
 								cache: false,
 								success: function(data){
 									 $.each(data.list, function(i, list){
-											nextPage(${page.currentPage});//刷新当前页面
-											top.getFhsmsCount();//更新未读站内信
+											tosearch();
 									 });
 								}
 							});
-						}else if(msg == '确定要给选中的用户发送站内信吗?'){
-							sendFhsms(username);
 						}
 					}
 				}
 			});
 		};
 		
-		//查看用户
-		function viewUser(USERNAME){
-			if('admin' == USERNAME){
-				bootbox.dialog({
-					message: "<span class='bigger-110'>不能查看admin用户!</span>",
-					buttons: 			
-					{ "button":{ "label":"确定", "className":"btn-sm btn-success"}}
-				});
-				return;
-			}
-			 top.jzts();
-			 var diag = new top.Dialog();
-			 diag.Drag=true;
-			 diag.Title ="资料";
-			 diag.URL = '<%=basePath%>user/view.do?USERNAME='+USERNAME;
-			 diag.Width = 469;
-			 diag.Height = 380;
-			 diag.CancelEvent = function(){ //关闭事件
-				diag.close();
-			 };
-			 diag.show();
+		//导出excel
+		function toExcel(){
+			window.location.href='<%=basePath%>machinerecord/excel.do';
 		}
 	</script>
+
 
 </body>
 </html>

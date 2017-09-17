@@ -2,11 +2,15 @@ package com.fh.service.fhoa.scan.impl;
 
 import com.fh.dao.DaoSupport;
 import com.fh.entity.Page;
+import com.fh.entity.system.User;
 import com.fh.service.fhoa.scan.ScanManager;
 import com.fh.util.PageData;
+import com.fh.util.ResultData;
+import com.fh.util.UuidUtil;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /** 
@@ -65,6 +69,34 @@ public class ScanService implements ScanManager {
 		return (PageData)dao.findForObject("ScanMapper.findById", pd);
 	}
 	
-
+	public ResultData scanoperation(PageData pd, User user){
+		try {
+			//保存巡视记录
+			PageData mrecord  = (PageData)dao.findForObject("MachineRecordMapper.findByMhid", pd);
+			if(null!= mrecord && (mrecord.get("scan_type").equals("2") ||mrecord.get("scan_type").equals("4"))){
+				PageData staff = (PageData)dao.findForObject("StaffMapper.findByUserId", user.getUSER_ID());
+				if(!staff.getString("staff_id").equals(mrecord.getString("staff_Id"))){
+					return ResultData.init(ResultData.SUCCESS,"当前部位正在由其他维修员处理，\n 操作失败！","");
+				}
+				pd.put("end_date",new Date());
+				pd.put("mrid",mrecord.get("mrid"));
+				dao.update("MachineRecordMapper.edit", pd);
+			}else{
+				pd.put("mrid", UuidUtil.get32UUID());
+				pd.put("start_date",new Date());
+				dao.save("MachineRecordMapper.save", pd);
+			}
+			//保存扫描记录
+			pd.put("repair_position",pd.get("repair_position_scan"));
+			pd.put("target_rule",pd.get("target_rule_scan"));
+			pd.put("change_position",pd.get("change_position_scan"));
+			pd.put("cycle_type",pd.get("cycle_type_scan"));
+			save(pd);
+			return ResultData.init(ResultData.SUCCESS,"操作成功","");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultData.init(ResultData.FAIL,"操作失败",null);
+		}
+	}
 }
 

@@ -143,5 +143,7 @@ public interface MachineManager{
 	List<PageData> getMachineParts(PageData pd)throws Exception;
 
 	PageData findByBarcode(PageData pd)throws Exception;
+
+	public PageData getMachineCycleById(PageData pd)throws Exception;
 }
 

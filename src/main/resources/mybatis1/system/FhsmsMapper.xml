@@ -9,6 +9,7 @@
 	
 	<!-- 字段 -->
 	<sql id="Field">
+		TITLE,
 		CONTENT,	
 		TYPE,	
 		TO_USERNAME,	
@@ -18,13 +19,19 @@
 		FHSMS_ID,
 		SANME_ID,
 		COMPANY_ID,
-		SMS_TYPE
+		SMS_TYPE,
+		machine_name,
+		to_staff,
+		rule,
+		parts
+
 	</sql>
 	
 	<!-- 字段值 -->
 	<sql id="FieldValue">
-		#{CONTENT},	
-		#{TYPE},	
+		#{TITLE},
+		#{CONTENT},
+		#{TYPE},
 		#{TO_USERNAME},	
 		#{FROM_USERNAME},	
 		#{SEND_TIME},	
@@ -32,7 +39,11 @@
 		#{FHSMS_ID},
 		#{SANME_ID},
 		#{COMPANY_ID},
-		#{SMS_TYPE}
+		#{SMS_TYPE},
+		#{machine_name},
+		#{to_staff},
+		#{rule},
+		#{parts}
 	</sql>
 	
 	<!-- 新增-->
@@ -66,8 +77,24 @@
 	
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
-		select 
-		<include refid="Field"></include>
+		select
+		TITLE,
+		CONTENT,
+		TYPE,
+		TO_USERNAME,
+		FROM_USERNAME,
+		SEND_TIME,
+		STATUS,
+		FHSMS_ID,
+		SANME_ID,
+		COMPANY_ID,
+		CASE WHEN SMS_TYPE ='3' THEN '更改规格通知'
+		WHEN SMS_TYPE ='2' THEN '维修扫描通知'
+		ELSE '' end as SMS_TYPE,
+		machine_name,
+		to_staff,
+		rule,
+		parts
 		from 
 		<include refid="tableName"></include>
 		where 
@@ -77,22 +104,42 @@
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
-		<include refid="Field"></include>
+		TITLE,
+		CONTENT,
+		TYPE,
+		TO_USERNAME,
+		FROM_USERNAME,
+		SEND_TIME,
+		STATUS,
+		FHSMS_ID,
+		SANME_ID,
+		COMPANY_ID,
+		CASE WHEN SMS_TYPE ='3' THEN '更改规格通知'
+		WHEN SMS_TYPE ='2' THEN '维修扫描通知'
+		ELSE '' end as SMS_TYPE,
+		machine_name,
+		to_staff,
+		rule,
+		parts
 		from 
 		<include refid="tableName"></include>
 		where
-			FROM_USERNAME = #{pd.FROM_USERNAME}
-		and
+
 			TYPE = #{pd.TYPE} AND  COMPANY_ID = #{pd.COMPANY_ID}
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
-					FROM_USERNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-					 or 
-					TO_USERNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-					 or 
-					CONTENT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+					title LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or
+					machine_name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
 				)
+		</if>
+
+		<if test="pd.SMS_TYPE != null and pd.SMS_TYPE != ''">
+			and SMS_TYPE = #{pd.SMS_TYPE}
+		</if>
+		<if test="pd.FROM_USERNAME != null and pd.FROM_USERNAME != ''">
+			and FROM_USERNAME = #{pd.FROM_USERNAME}
 		</if>
 		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''"><!-- 开始时间检索 -->
 			and SEND_TIME &gt;= #{pd.lastLoginStart} 
@@ -103,7 +150,7 @@
 		<if test="pd.STATUS != null and pd.STATUS != ''"><!-- 状态检索 -->
 			and STATUS = #{pd.STATUS} 
 		</if>
-		order by STATUS desc
+		order by STATUS desc,SEND_TIME DESC
 	</select>
 	
 	<!-- 列表(全部) -->

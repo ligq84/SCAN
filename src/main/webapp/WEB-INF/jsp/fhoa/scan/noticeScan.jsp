@@ -50,9 +50,9 @@ setTimeout("top.hangge()",500);
 									</div>
 								</div>
 								<div class="row" style="margin-left: 15px;">
-									<label for="NAME" class="col-sm-2 control-label">机器名称:</label>
+									<label for="machine_name" class="col-sm-2 control-label">机器名称:</label>
 									<div class="col-sm-2">
-										<input type="text" name="NAME" id="NAME"  maxlength="50"  class="form-control" style="border: 0px"/>
+										<input type="text" name="machine_name" id="machine_name"  maxlength="50"  class="form-control" style="border: 0px"/>
 									</div>
 									<label for="type" class="col-sm-1 control-label">机器类型:</label>
 									<div class="col-sm-2">
@@ -62,8 +62,10 @@ setTimeout("top.hangge()",500);
 									<div class="col-sm-2">
 										<input type="text" name="code" id="code"  maxlength="50" class="form-control" style="border: 0px"/>
 									</div>
-									<input type="hidden" id="USERNAME" name="USERNAME" />
+									<input type="hidden" id="to_staff" name="to_staff" />
 									<input type="hidden" id="CONTENT" name="CONTENT" />
+									<input type="hidden" id="USERNAME" name="USERNAME" />
+
 								</div>
 								<div class="row" style="margin-left:50px;text-align: center;">
 									<div class="form-group" style="margin-top: 100px">
@@ -127,9 +129,10 @@ setTimeout("top.hangge()",500);
 						if(data.result == "success"){
 							var machine = data.data;
 							if(null!=machine && ""!=machine){
-								$("#NAME").val(machine.name);
+								$("#machine_name").val(machine.name);
 								$("#type").val(machine.typeName);
 								$("#code").val(machine.barcode);
+								$("#to_staff").val('机器负责人：'+machine.chargeN+'、白班维修员：'+machine.Day_R+'、晚班维修员'+machine.Night_R)
 								$("#USERNAME").val(machine.chargeName+';'+machine.Day_Repairman+';'+machine.Night_Repairman)
 							}
 						}
@@ -145,11 +148,12 @@ setTimeout("top.hangge()",500);
 				return false;
 				}
 			var USERNAME=$("#USERNAME").val();
-			var CONTENT="请维修机器："+$("#NAME").val();;
+			var CONTENT="请维修机器："+$("#machine_name").val();;
 			$.ajax({
 				type: "POST",
 				url:'<%=basePath%>fhsms/sendSMS.do?tm='+new Date().getTime(),
-				data: {USERNAME:USERNAME,CONTENT:CONTENT,SMS_TYPE:2},
+				data: {USERNAME:USERNAME,CONTENT:CONTENT,SMS_TYPE:2,"to_staff":$("#to_staff").val(),"TITLE":"关于"+$("#machine_name").val()+"维修通知"
+					,machine_name:$("#machine_name").val()},
 				dataType:'json',
 				//beforeSend: validateData,
 				cache: false,

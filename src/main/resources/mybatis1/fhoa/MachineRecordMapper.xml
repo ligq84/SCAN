@@ -17,10 +17,10 @@
 		operation_type,
 		repair_position,
 		target_rule,
-		scan_date,
 		change_position,
 		start_date,
 		end_date,
+		cycle_type,
 		company_id
 	</sql>
 	
@@ -29,17 +29,15 @@
 		#{mrid},
 		#{mhid},
 		#{staff_Id},
-		#{staff_name},
 		#{car_id},
-		#{car_code},
 		#{scan_type},
 		#{operation_type},
 		#{repair_position},
 		#{target_rule},
-		#{scan_date},
 		#{change_position},
 		#{start_date},
 		#{end_date},
+		#{cycle_type},
 		#{company_id}
 	</sql>
 	
@@ -65,7 +63,10 @@
 		scan_type  	= #{scan_type},
 		operation_type   = #{operation_type},
 		repair_position  = #{repair_position},
-		target_rule  	 = #{target_rule}
+		target_rule  	 = #{target_rule},
+		change_position = #{change_position},
+		end_date = #{end_date},
+		cycle_type = #{cycle_type}
 		where
 		mrid = #{mrid}
 	</update>
@@ -95,5 +96,9 @@
 		<include refid="tableName"></include>
 		WHERE COMPANY_ID =#{COMPANY_ID}
 	</select>
-
+	<select id="findByMhid" parameterType="pd"   resultType="pd">
+		select <include refid="Field"></include>
+		from <include refid="tableName"></include>
+		where operation_type = 0 and mhid = #{mhid} and scan_type =#{scan_type}
+	</select>
 </mapper>

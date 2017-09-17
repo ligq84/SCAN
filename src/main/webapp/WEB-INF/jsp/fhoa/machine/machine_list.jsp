@@ -115,6 +115,9 @@
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 													</a>
 													</c:if>
+													<a class="btn btn-xs btn-success" title="打印预览" onclick="print('${var.BARCODE}','${var.MHID}');">
+														<i class="menu-icon fa fa-hdd-o " title="打印预览"></i>
+													</a>
 												</div>
 												<div class="hidden-md hidden-lg">
 													<div class="inline pos-rel">
@@ -290,6 +293,11 @@
 			$(document.body).append(form);
 			form.submit()
 		}
+		function print(BARCODE,MHID){
+			window.open("<%=basePath%>/machine/printPage.do?BARCODE="+BARCODE+"&MHID="+MHID, "",
+					'left=250,top=150,width=750,height=500,toolbar=no,menubar=no,status=no,scrollbars=yes,resizable=yes,location=no');
+		}
+
 		
 		//批量操作
 		function makeAll(msg){

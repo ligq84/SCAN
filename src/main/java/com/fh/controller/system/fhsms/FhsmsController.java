@@ -3,6 +3,8 @@ package com.fh.controller.system.fhsms;
 import com.fh.controller.base.BaseController;
 import com.fh.entity.Page;
 import com.fh.entity.system.User;
+import com.fh.service.fhoa.companybasic.CompanyBasicManager;
+import com.fh.service.fhoa.staff.StaffManager;
 import com.fh.service.system.fhsms.FhsmsManager;
 import com.fh.util.*;
 import org.apache.shiro.session.Session;
@@ -32,7 +34,43 @@ public class FhsmsController extends BaseController {
 	String menuUrl = "fhsms/list.do"; //菜单地址(权限用)
 	@Resource(name="fhsmsService")
 	private FhsmsManager fhsmsService;
-	
+	@Resource(name="companybasicService")
+	private CompanyBasicManager companybasicService;
+	@Resource(name="staffService")
+	private StaffManager staffService;
+
+	@RequestMapping(value="/toSendMesg")
+	@SuppressWarnings("all")
+	public ModelAndView toSendMesg()throws Exception{
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+
+		//机器规格
+		List<PageData>	ruleList = getBasicData(Const.COMPANY_BASIC_MACHINERULE,1,user.getCompanyId());
+		mv.addObject("ruleList",ruleList);
+		//规格更改部位
+		List<PageData>	rulePosttionList = getBasicData(Const.COMPANY_BASIC_RULEPOSITION,1,user.getCompanyId());
+		mv.addObject("rulePosttionList",rulePosttionList);
+
+		mv.addObject("msg", "save");
+		mv.addObject("pd", pd);
+		mv.setViewName("system/fhsms/sendMesg");
+		return mv;
+	}
+	public List<PageData> getBasicData(String type,int status,String companyid) throws Exception {
+		PageData pd = new PageData();
+		pd.put("TYPE",type);
+		pd.put("STATUS",status);
+		pd.put("COMPANY_ID",companyid);
+		Page page = new Page();
+		page.setPd(pd);
+		List<PageData>	mpList = companybasicService.list(page);
+		return  mpList;
+
+	}
 	/**发送站内信
 	 * @param
 	 * @throws Exception
@@ -164,6 +202,7 @@ public class FhsmsController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/list")
+	@SuppressWarnings("all")
 	public ModelAndView list(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表Fhsms");
 		Session session = Jurisdiction.getSession();
@@ -192,6 +231,42 @@ public class FhsmsController extends BaseController {
 		List<PageData>	varList = fhsmsService.list(page);		//列出Fhsms列表
 		mv.setViewName("system/fhsms/fhsms_list");
 		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());				//按钮权限
+		return mv;
+	}
+	@RequestMapping(value="/adminList")
+	@SuppressWarnings("all")
+	public ModelAndView adminList(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表Fhsms");
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		pd.put("COMPANY_ID",user.getCompanyId());
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		String lastLoginStart = pd.getString("lastLoginStart");	//开始时间
+		String lastLoginEnd = pd.getString("lastLoginEnd");		//结束时间
+		if(lastLoginStart != null && !"".equals(lastLoginStart)){
+			pd.put("lastLoginStart", lastLoginStart+" 00:00:00");
+		}
+		if(lastLoginEnd != null && !"".equals(lastLoginEnd)){
+			pd.put("lastLoginEnd", lastLoginEnd+" 00:00:00");
+		}
+		if(!"2".equals(pd.getString("TYPE"))){					//1：收信箱 2：发信箱
+			pd.put("TYPE", 1);
+		}
+		//pd.put("FROM_USERNAME", Jurisdiction.getUsername()); 	//当前用户名
+		page.setPd(pd);
+		List<PageData>	varList = fhsmsService.list(page);		//列出Fhsms列表
+		mv.setViewName("system/fhsms/fhsms_adminlist");
+		mv.addObject("varList", varList);
+		List<PageData> staffList =  staffService.listSelect(page);
+		mv.addObject("staffList", staffList);
 		mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());				//按钮权限
 		return mv;

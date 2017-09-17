@@ -72,7 +72,23 @@
 									<input type="hidden" id="USERNAME" name="USERNAME" />
 									<input type="hidden" id="CONTENT" name="CONTENT" />
 									<input type="hidden" id="mhid" name="mhid" />
-
+									<input type="hidden" id="rule" name="rule" />
+									<%--扫描类型--%>
+									<input type="hidden" id="scan_type" name="scan_type" />
+									<%--保养类型--%>
+									<input type="hidden" id="cycle_type" name="cycle_type" />
+									<input type="hidden" id="cycle_type_scan" name="cycle_type_scan" />
+									<%--操作类型--%>
+									<input type="hidden" id="operation_type" name="operation_type" />
+									<%--维修部位--%>
+									<input type="hidden" id="repair_position_scan" name="repair_position_scan" />
+									<input type="hidden" id="repair_position" name="repair_position" />
+									<%--目标规格--%>
+									<input type="hidden" id="target_rule" name="target_rule" />
+									<input type="hidden" id="target_rule_scan" name="target_rule_scan" />
+									<%--更改部位--%>
+									<input type="hidden" id="change_position" name="change_position" />
+									<input type="hidden" id="change_position_scan" name="change_position_scan" />
 								</div>
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
@@ -83,12 +99,12 @@
 									<div class="form-group" style="margin-top: 10px">
 										<label class="col-sm-2 control-label"></label>
 										<%--<button type="button" class="btn btn-primary btn-lg"  onclick="ScanRecord('xs')">巡视扫描</button>--%>
-										<button type="button" class="btn btn-primary btn-lg" data-toggle="modal"  id="xsModal" onclick="machineCodeCheck('xsModal')">
+										<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" onclick="machineCodeCheck('xsModal')">
 											巡视扫描
 										</button>
-										<button type="button" class="btn btn-primary btn-lg"  onclick="ScanRecord('wx')" style="margin-left: 5em;">维修扫描</button>
-										<button type="button" class="btn btn-primary btn-lg"  onclick="ScanRecord('by')" style="margin-left: 5em;">保养扫描</button>
-										<button type="button" class="btn btn-primary btn-lg"  onclick="ScanRecord('ggg')" style="margin-left: 5em;">改规格扫描</button>
+										<button type="button" class="btn btn-primary btn-lg"  onclick="machineCodeCheck('wxModal')" style="margin-left: 5em;">维修扫描</button>
+										<button type="button" class="btn btn-primary btn-lg"  onclick="machineCodeCheck('byModal')" style="margin-left: 5em;">保养扫描</button>
+										<button type="button" class="btn btn-primary btn-lg"  onclick="machineCodeCheck('gggModal')" style="margin-left: 5em;">改规格扫描</button>
 									</div>
 								</div>
 								<%--<div class="row" style="margin-left:50px;text-align: center;">--%>
@@ -114,7 +130,7 @@
 	</a>
 
 </div>
-<div class="modal fade" id="xsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="xsModal" tabindex="-1" role="dialog" aria-labelledby="xsModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-footer" style="text-align: center">
@@ -124,19 +140,68 @@
 		</div>
 	</div>
 </div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="wxModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Modal title</h4>
-			</div>
 			<div class="modal-body">
-
+				<h4 class="modal-title">维修类型:</h4>
+				<div class="row">
+					<input type="button" class="btn btn-default" value="开始维修" name="repairType" style="margin-left: 2em;" dvalue="0">
+					<input type="button" class="btn btn-default" value="结束维修" name="repairType" style="margin-left: 2em;" dvalue="1">
+				</div>
+				<h4 class="modal-title" >请选择维修项目:</h4>
+				<div class="row" id="repairProject">
+				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				<button type="button" class="btn btn-primary">确定操作</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭窗口</button>
+				<button type="button" class="btn btn-primary" onclick="xsbtn()">确定操作</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="byModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h4 class="modal-title">保养类型:(单选)</h4>
+				<div class="row" id="cycleType">
+
+				</div>
+				<h4 class="modal-title" style="margin-top: 10px;">保养说明:</h4>
+				<div class="row">
+					<textarea id="cycleDesc" style="margin-left: 2em;margin-top: 10px;" rows="8" cols="45">
+					</textarea>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭窗口</button>
+				<button type="button" class="btn btn-primary" onclick="xsbtn()">确定操作</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="gggModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-body">
+				<h4 class="modal-title">更改类型:(单选)</h4>
+				<div class="row">
+					<input type="button" class="btn btn-default" value="开始更改" name="partsType" style="margin-left: 2em;" dvalue="0">
+					<input type="button" class="btn btn-default" value="结束更改" name="partsType" style="margin-left: 2em;" dvalue="1">
+				</div>
+				<h4 class="modal-title" style="margin-top: 10px;">目标规格:(单选)</h4>
+				<div class="row" id="partsRule">
+
+				</div>
+				<h4 class="modal-title" style="margin-top: 10px;">更改部位:(多选)</h4>
+				<div class="row" id="partsId">
+
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭窗口</button>
+				<button type="button" class="btn btn-primary" onclick="xsbtn()">确定操作</button>
 			</div>
 		</div>
 	</div>
@@ -147,13 +212,14 @@
 <!-- 页面底部js¨ -->
 <%@ include file="../../system/index/foot.jsp"%>
 <!-- ace scripts -->
+<script type="text/javascript" src="plugins/selectZtree/ztree/ztree.js"></script>
 <!-- 日期框 -->
 <script src="static/ace/js/date-time/bootstrap-datepicker.js"></script>
 <!-- 下拉框 -->
 <script src="static/ace/js/chosen.jquery.js"></script>
 <!--提示框-->
 <script type="text/javascript" src="static/js/jquery.tips.js"></script>
-
+<script src="static/login/js/bootstrap.min.js"></script>
 <script type="text/javascript">
 	var scanUrl = "<%=basePath%>";
 </script>

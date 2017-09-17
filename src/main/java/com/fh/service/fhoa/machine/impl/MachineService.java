@@ -194,6 +194,9 @@ public class MachineService implements MachineManager{
 		return (PageData)dao.findForObject("MachineMapper.findByBarcode", pd);
 	}
 
+	public PageData getMachineCycleById(PageData pd)throws Exception{
+		return (PageData)dao.findForObject("MachineMapper.getMachineCycleById", pd);
+	}
 
 }
 

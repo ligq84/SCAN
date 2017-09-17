@@ -1,7 +1,9 @@
 package com.fh.service.fhoa.scan;
 
 import com.fh.entity.Page;
+import com.fh.entity.system.User;
 import com.fh.util.PageData;
+import com.fh.util.ResultData;
 
 import java.util.List;
 
@@ -43,8 +45,8 @@ public interface ScanManager {
 	 * @throws Exception
 	 */
 	public PageData findById(PageData pd)throws Exception;
-	
 
+	public ResultData scanoperation(PageData pd,User user);
 	
 }
 

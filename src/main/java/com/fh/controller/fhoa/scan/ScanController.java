@@ -1,9 +1,10 @@
 package com.fh.controller.fhoa.scan;
 
 import com.fh.controller.base.BaseController;
+import com.fh.entity.Page;
 import com.fh.entity.system.User;
 import com.fh.service.fhoa.machine.MachineManager;
-import com.fh.service.fhoa.record.MachineRecordManager;
+import com.fh.service.fhoa.machine.MachineRecordManager;
 import com.fh.service.fhoa.scan.ScanManager;
 import com.fh.service.fhoa.staff.StaffManager;
 import com.fh.util.Const;
@@ -23,6 +24,7 @@ import javax.annotation.Resource;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 /** 
  * 说明：公司信息
@@ -33,15 +35,15 @@ import java.util.Date;
 @RequestMapping(value="/scan")
 public class ScanController extends BaseController {
 	
-	String menuUrl = "scan/noticeScan.do"; //菜单地址(权限用)
+		String menuUrl = "scan/list.do"; //菜单地址(权限用)
 	@Resource(name="machineService")
 	private MachineManager machineService;
 	@Resource(name="staffService")
 	private StaffManager staffService;
 	@Resource(name="scanService")
 	private ScanManager scanService;
-	@Resource(name="machineRecordService")
-	private MachineRecordManager machineRecordService;
+	@Resource(name="machinerecordService")
+	private MachineRecordManager machinerecordService;
 
 	/**
 	 * 通知扫描
@@ -102,18 +104,45 @@ public class ScanController extends BaseController {
 			return ResultData.init(ResultData.FAIL,"查询异常",null);
 		}
 	}
-
-	@RequestMapping(value="/xsScan")
+	@RequestMapping(value="/list")
 	@SuppressWarnings("all")
-	public ResultData xsScan() throws Exception {
-		try {
+	public ModelAndView list(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		ModelAndView mv = this.getModelAndView();
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		pd.put("COMPANY_ID",user.getCompanyId());
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		page.setPd(pd);
+		List<PageData> varList = scanService.list(page);	//列出Company列表
+		mv.setViewName("fhoa/scan/scan_list");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
+	/**
+	 * 巡视扫描
+	 * @return
+	 * @throws Exception
+     */
+	@RequestMapping(value="/scanoperation")
+	@ResponseBody
+	@SuppressWarnings("all")
+	public ResultData scanoperation() throws Exception {
 			Session session = Jurisdiction.getSession();
 			User user = (User)session.getAttribute(Const.SESSION_USER);
 			ModelAndView mv = this.getModelAndView();
 			PageData pd = new PageData();
 			pd = this.getPageData();
 			//保存扫描记录
-			pd.put("company_Id",user.getCompanyId());
+			pd.put("company_id",user.getCompanyId());
 			pd.put("srid",this.get32UUID());//主键
 			PageData staffPD = staffService.findByUserId(user.getUSER_ID().toString());
 			pd.put("staff_Id",staffPD.get("staff_id"));
@@ -121,17 +150,7 @@ public class ScanController extends BaseController {
 			pd.put("car_code",session.getAttribute(Const.CARCODE));
 			pd.put("car_id",session.getAttribute(Const.CARID));
 			pd.put("scan_date",new Date());
-			pd.put("scan_type","1");//扫描类型 1.巡视 2.维修 3.保养 4改规格
-			scanService.save(pd);
-			//保存巡视记录
-			pd.put("srid",this.get32UUID());
-			pd.put("start_date",new Date());
-			machineRecordService.save(pd);
-			return ResultData.init(ResultData.SUCCESS,"巡视扫描成功","");
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResultData.init(ResultData.FAIL,"巡视扫描失败",null);
-		}
+		return  scanService.scanoperation(pd,user);
 	}
 
 	@InitBinder

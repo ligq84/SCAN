@@ -28,9 +28,9 @@
 		insert into 
 	<include refid="tableName"></include>
 		(
-	<include refid="Field"></include>
+	<include refid="Field"></include>,COMPANY_ID
 		) values (
-	<include refid="FieldValue"></include>
+	<include refid="FieldValue"></include>,#{COMPANY_ID}
 		)
 	</insert>
 	

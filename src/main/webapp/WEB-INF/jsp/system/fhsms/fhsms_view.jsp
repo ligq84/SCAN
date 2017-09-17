@@ -31,18 +31,46 @@
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
 								<td style="padding-top: 13px;">
-								<c:if test="${pd.TYPE != '2' }">
-								发信人：${pd.TO_USERNAME}&nbsp;&nbsp;
-								收信人：${pd.FROM_USERNAME}&nbsp;&nbsp;
-								</c:if>
-								<c:if test="${pd.TYPE == '2' }">
-								发信人：${pd.FROM_USERNAME}&nbsp;&nbsp;
-								收信人：${pd.TO_USERNAME}&nbsp;&nbsp;
-								</c:if>
-								发信时间：${pd.SEND_TIME}
-							</tr>
-							<tr>
-								<td>${pd.CONTENT}</td>
+									<label class="col-sm-1 control-label">通知名称:</label>
+									<div class="col-sm-2 control-label" style="display: inline;">
+										${pd.TITLE}
+									</div>
+									<br/>
+									<label class="col-sm-1 control-label">机器名称:</label>
+									<div class="col-sm-2 control-label" style="display: inline;">
+										${pd.machine_name}
+									</div>
+									<br/>
+									<label class="col-sm-1 control-label">通知人群:</label>
+									<div class="col-sm-2 control-label" style="display: inline;">
+										${pd.to_staff}
+									</div>
+									<br/>
+									<label class="col-sm-1 control-label">通知类型:</label>
+									<div class="col-sm-2 control-label" style="display: inline;">
+										${pd.SMS_TYPE}
+									</div>
+									<br/>
+									<label class="col-sm-1 control-label">目标规格:</label>
+									<div class="col-sm-2 control-label" style="display: inline;">
+										${pd.rule}
+									</div>
+									<br/>
+									<label class="col-sm-1 control-label">更改部位:</label>
+									<div class="col-sm-2 control-label" style="display: inline;">
+										${pd.parts}
+									</div>
+									<br/>
+									<label class="col-sm-1 control-label">发送人:</label>
+									<div class="col-sm-2 control-label" style="display: inline;">
+										${pd.TO_USERNAME}
+									</div>
+									<br/>
+									<label class="col-sm-1 control-label">发送时间:</label>
+									<div class="col-sm-2 control-label" style="display: inline;">
+										${pd.SEND_TIME}
+									</div>
+									<br/>
 							</tr>
 						</table>
 						</div>

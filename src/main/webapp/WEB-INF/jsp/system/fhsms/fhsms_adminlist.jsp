@@ -31,21 +31,37 @@
 						<div class="col-xs-12">
 							
 						<!-- 检索  -->
-						<form action="fhsms/list.do" method="post" name="Form" id="Form">
+						<form action="fhsms/adminList.do" method="post" name="Form" id="Form">
 						<input type="hidden" name="TYPE" value="${pd.TYPE}" />
 						<table style="margin-top:5px;">
 							<tr>
 								<td>
 									<div class="nav-search">
 										<span class="input-icon">
-											<input type="text" placeholder="这里输入关键词" class="nav-search-input" id="nav-search-input" autocomplete="off" name="keywords" value="${pd.keywords }" placeholder="这里输入关键词"/>
+											<input type="text" placeholder="这里输入通知标题或者机器名称" class="nav-search-input" id="nav-search-input" autocomplete="off" name="keywords" value="${pd.keywords }"
+											style="width: 18em;"/>
 											<i class="ace-icon fa fa-search nav-search-icon"></i>
 										</span>
 									</div>
 								</td>
-								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginStart" id="lastLoginStart"  value="${pd.lastLoginStart}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期" title="开始日期"/></td>
-								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastLoginEnd" name="lastLoginEnd"  value="${pd.lastLoginEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期" title="结束日期"/></td>
-								<td style="vertical-align:top;padding-left:2px;">
+								<td style="padding-left:5px;">
+									<select class="chosen-select form-control" name="SMS_TYPE" id="SMS_TYPE" data-placeholder="通知类型" style="vertical-align:top;"   style="width: 12em;" >
+										<option value=""></option>
+										<option value="2" <c:if test="${pd.SMS_TYPE == '2'}">selected</c:if> >维修通知</option>
+										<option value="3" <c:if test="${pd.SMS_TYPE == '3'}">selected</c:if> >改规格通知</option>
+									</select>
+								</td>
+								<td style="padding-left:5px;">
+									<select class="chosen-select form-control" name="FROM_USERNAME" id="FROM_USERNAME" data-placeholder="发送人" style="vertical-align:top;"   style="width: 12em;" >
+										<option value=""></option>
+										<c:forEach items="${staffList}" var="staff">
+											<option value="${staff.USERNAME }" <c:if test="${staff.USERNAME == pd.FROM_USERNAME}">selected</c:if> >${staff.NAME}</option>
+										</c:forEach>
+									</select>
+								</td>
+								<td style="padding-left:5px;"><input class="span10 date-picker" name="lastLoginStart" id="lastLoginStart"  value="${pd.lastLoginStart}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期" title="开始日期"/></td>
+								<td style="padding-left:5px;"><input class="span10 date-picker" name="lastLoginEnd" name="lastLoginEnd"  value="${pd.lastLoginEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期" title="结束日期"/></td>
+								<td style="vertical-align:top;padding-left:5px;">
 								 	<select class="chosen-select form-control" name="STATUS" id="id" data-placeholder="状态" style="vertical-align:top;width: 68px;">
 									<option value="">全部</option>
 									<option value="1" <c:if test="${pd.STATUS == '1' }">selected</c:if>>已读</option>
@@ -55,8 +71,8 @@
 								<c:if test="${QX.cha == 1 }">
 								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
 								</c:if>
-								<td style="padding-left:20px;"><a href="fhsms/list.do?TYPE=1"><span class="label label-<c:if test="${pd.TYPE != '2' }">success</c:if> arrowed-right arrowed-in">收信箱</span></a></td>
-								<td><a href="fhsms/list.do?TYPE=2"><span class="label label-<c:if test="${pd.TYPE == '2' }">info</c:if> arrowed-right arrowed-in">发信箱</span></a></td>
+								<td style="padding-left:20px;"><a href="fhsms/adminList.do?TYPE=1"><span class="label label-<c:if test="${pd.TYPE != '2' }">success</c:if> arrowed-right arrowed-in">收信箱</span></a></td>
+								<td><a href="fhsms/adminList.do?TYPE=2"><span class="label label-<c:if test="${pd.TYPE == '2' }">info</c:if> arrowed-right arrowed-in">发信箱</span></a></td>
 							</tr>
 						</table>
 						<!-- 检索  -->
@@ -95,14 +111,8 @@
 											<td class='center'>${var.machine_name}</td>
 											<td class='center'>${var.SMS_TYPE}</td>
 											<td class='center'>${var.to_staff}</td>
-											<c:if test="${pd.TYPE != '2' }">
-											<td class='center'${var.TO_USERNAME}</td>
-											<td class='center'>${var.FROM_USERNAME}</td>
-											</c:if>
-											<c:if test="${pd.TYPE == '2' }">
 											<td class='center'>${var.FROM_USERNAME}</td>
 											<td class='center'>${var.TO_USERNAME}</td>
-											</c:if>
 											<td class='center'>${var.SEND_TIME}</td>
 											<td class='center' id="STATUS${vs.index+1}"><c:if test="${var.STATUS == '2' }"><span class="label label-important arrowed-in">未读</span></c:if><c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">已读</span></c:if></td>
 											<td class="center">

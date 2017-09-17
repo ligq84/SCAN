@@ -300,10 +300,12 @@
 		a.STAFF_ID,
 		a.NAME,
 		a.TEL,
-		b.NAME as departmentName
+		b.NAME as departmentName,
+		c.USERNAME
 		from
 		<include refid="tableName"></include> a
 		LEFT JOIN oa_department b on a.DEPARTMENT_ID = b.DEPARTMENT_ID
+		LEFT JOIN  sys_user c ON c.USER_ID = a.USER_ID
 		where a.deleted = 0 and  a.COMPANY_ID =#{pd.COMPANY_ID}
 	</select>
 	

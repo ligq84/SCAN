@@ -19,7 +19,9 @@
 		operation_type,
 		repair_position,
 		target_rule,
+		change_position,
 		scan_date,
+		cycle_type,
 		company_id
 	</sql>
 	
@@ -35,7 +37,9 @@
 		#{operation_type},
 		#{repair_position},
 		#{target_rule},
+		#{change_position},
 		#{scan_date},
+		#{cycle_type},
 		#{company_id}
 	</sql>
 	
@@ -78,11 +82,29 @@
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
-		<include refid="Field"></include>
-		from 
-		<include refid="tableName"></include>
-		where COMPANY_ID =#{pd.COMPANY_ID}
-
+		a.srid,
+		a.mhid,
+		a.staff_Id,
+		a.staff_name,
+		a.car_id,
+		a.car_code,
+		CASE WHEN a.scan_type = 1 THEN '巡视扫描'
+			 WHEN  a.scan_type = 2 THEN '维修扫描'
+			 WHEN  a.scan_type = 3 THEN '保养扫描'
+			 WHEN  a.scan_type = 4 THEN '改规格扫描' END  as scan_type,
+		CASE WHEN a.operation_type = '0' THEN '开始操作'
+			WHEN  a.operation_type = '1' THEN '结束操作'
+			ELSE  '' END  as operation_type,
+		a.repair_position,
+		a.target_rule,
+		a.scan_date,
+		b.name as mname,
+		b.barcode as mcode
+		from
+		<include refid="tableName"></include> a
+		LEFT  JOIN oa_machine b ON  a.mhid = b.mhid
+		where a.COMPANY_ID =#{pd.COMPANY_ID}
+		ORDER BY scan_date DESC
 	</select>
 	
 	<!-- 列表(全部) -->

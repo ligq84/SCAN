@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -369,8 +371,92 @@ public class MachineController extends BaseController {
 		map.put("list", pdList);
 		return AppUtil.returnObject(pd, map);
 	}
-	
-	 /**导出到excel
+
+	@RequestMapping(value="/getMachineProject")
+	@ResponseBody
+	public ResultData getMachineRepairProject(){
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		PageData pd = new PageData();
+		pd = this.getPageData();
+
+		try {
+			String type = pd.getString("scan_type");
+			List<PageData> result = new ArrayList<>();
+			if(type.equals("3")){
+                result  = machineService.getMachineCycle(pd);
+            }else if(type.equals("2")){
+                //维修项目
+                result = machineService.getMachineProjec(pd);
+            }else if(type.equals("4")){
+				if(null!= pd.get("rule") && !"".equals(pd.get("rule").toString())){
+					//机器规格
+					result = machineService.getMachineRule(pd);
+				}else{
+					///规格更改部位
+					result = machineService.getMachineParts(pd);
+				}
+
+            }
+			return ResultData.init(ResultData.SUCCESS,"添加成功",result);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultData.init(ResultData.SUCCESS,"添加成功",null);
+		}
+
+	}
+	@RequestMapping(value="/getMachineCycleById")
+	@ResponseBody
+	public ResultData getMachineCycleById(){
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		try {
+			pd  = machineService.getMachineCycleById(pd);
+			return ResultData.init(ResultData.SUCCESS,"添加成功",pd);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultData.init(ResultData.SUCCESS,"添加成功",null);
+		}
+
+	}
+
+	/**
+	 * 打印条码
+	 * @return
+	 * @throws Exception
+     */
+	@RequestMapping(value="/printPage")
+	@SuppressWarnings("all")
+	public ModelAndView printPage(HttpServletRequest request) throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		pd = machineService.findById(pd);
+		if(null == pd.get("BARCODEURL") || "".equals(pd.getString("BARCODEURL"))){
+			String filePath = PathUtil.getClasspath();
+
+			String fileName = pd.get("BARCODE").toString()+".jpg";
+			String systemPath = "/uploadFiles/barcode/";
+			File fileppath = new File(filePath+systemPath);
+			if (!fileppath .exists()  && !fileppath .isDirectory())
+			{
+				fileppath .mkdir();
+			}
+
+			File file = new File(filePath+systemPath+fileName);
+			if(!file.exists()){
+				file.createNewFile();
+			}
+			OneDimensionCode.getBarcodeWriteFile(pd.get("BARCODE").toString(), null,null, file);
+			String BARCODEURL ="http://" + request.getServerName()+":" +request.getServerPort()+systemPath+fileName;
+			pd.put("BARCODEURL",BARCODEURL);
+			machineService.edit(pd);
+		}
+		mv.setViewName("fhoa/machine/printPage");
+		mv.addObject("pd", pd);
+		return mv;
+	}
+	/**导出到excel
 	 * @param
 	 * @throws Exception
 	 */

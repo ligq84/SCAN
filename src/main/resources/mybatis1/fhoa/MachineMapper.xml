@@ -177,8 +177,9 @@
 	</update>
 
 	<select id="getMachineProjec" parameterType="pd" resultType="pd">
-		select a.MPID,a.MHID,a.PROJECTID
+		select a.MPID,a.MHID,a.PROJECTID,b.`name` as repairName
 		from oa_machine_projec a
+		LEFT JOIN oa_company_basic b ON a.projectid = b.ocbid
 		WHERE a.mhid=#{mhid} and a.deleted=0
 	</select>
 	<update id="deleteMachineProject">
@@ -186,8 +187,9 @@
 	</update>
 
 	<select id="getMachineRule" parameterType="pd" resultType="pd">
-		select a.MRID,a.MHID,a.RULEID
+		select a.MRID,a.MHID,a.RULEID,b.name as ruleName
 		from oa_machine_rule a
+		LEFT JOIN oa_company_basic b ON a.ruleid = b.ocbid
 		WHERE a.mhid=#{mhid} and a.deleted=0
 	</select>
 	<update id="deleteMachineRule">
@@ -195,8 +197,9 @@
 	</update>
 
 	<select id="getMachineParts" parameterType="pd" resultType="pd">
-		select a.MPID,a.MHID,a.PARTSID
+		select a.MPID,a.MHID,a.PARTSID,b.name as partsName
 		from oa_machine_parts a
+		LEFT JOIN oa_company_basic b ON a.partsid = b.ocbid
 		WHERE a.mhid=#{mhid} and a.deleted=0
 	</select>
 	<update id="deleteMachineParts">
@@ -207,9 +210,27 @@
 		SELECT a.name,b.name  as typeName,a.barcode,a.mhid,
 		 (SELECT d.USERNAME from oa_staff c LEFT JOIN  sys_user d ON c.USER_ID = d.USER_ID where c.STAFF_ID = a.charge) as chargeName,
 		(SELECT d.USERNAME from oa_staff c LEFT JOIN  sys_user d ON c.USER_ID = d.USER_ID where c.STAFF_ID = a.Day_Repairman) as Day_Repairman,
-		(SELECT d.USERNAME from oa_staff c LEFT JOIN  sys_user d ON c.USER_ID = d.USER_ID where c.STAFF_ID = a.Night_Repairman) as Night_Repairman
+		(SELECT d.USERNAME from oa_staff c LEFT JOIN  sys_user d ON c.USER_ID = d.USER_ID where c.STAFF_ID = a.Night_Repairman) as Night_Repairman,
+		(SELECT c.NAME from oa_staff c where c.STAFF_ID = a.charge) as chargeN,
+		(SELECT c.NAME from oa_staff c where c.STAFF_ID = a.Day_Repairman) as Day_R,
+		(SELECT c.NAME from oa_staff c where c.STAFF_ID = a.Night_Repairman) as Night_R
 		from OA_MACHINE  a
 		LEFT JOIN oa_company_basic b ON a.type = b.ocbid
-		where a.barcode = #{machineCode} AND a.company_id = #{company_id}
+		where  a.company_id = #{company_id}
+		<if test="machineCode!= null and machineCode != ''">
+			and a.barcode = #{machineCode}
+		</if>
+		<if test="name!= null and name != ''">
+			and a.name = #{name}
+		</if>
 	</select>
+
+	<select id="getMachineCycleById" parameterType="pd" resultType="pd">
+		select a.MCID,a.MHID,a.CYCLEID,a.BZ,b.NAME
+		from oa_machine_cycle a
+		LEFT JOIN oa_company_basic b ON  b.ocbid = a.CYCLEID
+		WHERE a.MCID=#{MCID} AND a.deleted=0
+	</select>
+
+
 </mapper>

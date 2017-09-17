@@ -1,14 +1,15 @@
 package com.fh.controller.system.buttonrights;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-
+import com.fh.controller.base.BaseController;
+import com.fh.entity.system.Role;
+import com.fh.service.system.buttonrights.ButtonrightsManager;
+import com.fh.service.system.fhbutton.FhbuttonManager;
+import com.fh.service.system.fhlog.FHlogManager;
+import com.fh.service.system.role.RoleManager;
+import com.fh.util.AppUtil;
+import com.fh.util.Jurisdiction;
+import com.fh.util.PageData;
+import com.fh.util.Tools;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -17,16 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fh.controller.base.BaseController;
-import com.fh.entity.system.Role;
-import com.fh.util.AppUtil;
-import com.fh.util.PageData;
-import com.fh.util.Jurisdiction;
-import com.fh.util.Tools;
-import com.fh.service.system.buttonrights.ButtonrightsManager;
-import com.fh.service.system.fhbutton.FhbuttonManager;
-import com.fh.service.system.fhlog.FHlogManager;
-import com.fh.service.system.role.RoleManager;
+import javax.annotation.Resource;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /** 
  * 说明：按钮权限
@@ -59,7 +57,7 @@ public class ButtonrightsController extends BaseController {
 		String type = pd.getString("type");
 		type = Tools.isEmpty(type)?"0":type;
 		if(pd.getString("ROLE_ID") == null || "".equals(pd.getString("ROLE_ID").trim())){
-			pd.put("ROLE_ID", "1");										//默认列出第一组角色(初始设计系统用户和会员组不能删除)
+			pd.put("ROLE_ID", "0");										//默认列出第一组角色(初始设计系统用户和会员组不能删除)
 		}
 		PageData fpd = new PageData();
 		fpd.put("ROLE_ID", "0");

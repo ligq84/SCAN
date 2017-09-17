@@ -111,6 +111,9 @@
 														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
 													</a>
 													</c:if>
+													<a class="btn btn-xs btn-success" title="打印预览" onclick="print('${var.BARCODE}','${var.CAR_ID}');">
+														<i class="menu-icon fa fa-hdd-o " title="打印预览"></i>
+													</a>
 												</div>
 												<div class="hidden-md hidden-lg">
 													<div class="inline pos-rel">
@@ -247,8 +250,8 @@
 					 else $('#form-field-select-4').removeClass('tag-input-style');
 				});
 			}
-			
-			
+
+
 			//复选框全选控制
 			var active_class = 'active';
 			$('#simple-table > thead > tr > th input[type=checkbox]').eq(0).on('click', function(){
@@ -260,7 +263,10 @@
 				});
 			});
 		});
-		
+		function print(BARCODE,CAR_ID){
+			window.open("<%=basePath%>/car/printPage.do?BARCODE="+BARCODE+"&CAR_ID="+CAR_ID, "",
+					'left=250,top=150,width=750,height=500,toolbar=no,menubar=no,scrollbars=yes,resizable=yes,location=no,status=no');
+		}
 		//新增
 		function add(){
 			 top.jzts();

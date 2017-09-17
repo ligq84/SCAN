@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -212,7 +214,38 @@ public class CarController extends BaseController {
 		map.put("list", pdList);
 		return AppUtil.returnObject(pd, map);
 	}
-	
+
+	@RequestMapping(value="/printPage")
+	@SuppressWarnings("all")
+	public ModelAndView printPage(HttpServletRequest request) throws Exception{
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		pd = carService.findById(pd);
+		if(null == pd.get("BARCODEURL") || "".equals(pd.getString("BARCODEURL"))){
+			String filePath = PathUtil.getClasspath();
+
+			String fileName = pd.get("BARCODE").toString()+".jpg";
+			String systemPath = "/uploadFiles/barcode/";
+			File fileppath = new File(filePath+systemPath);
+			if (!fileppath .exists()  && !fileppath .isDirectory())
+			{
+				fileppath .mkdir();
+			}
+
+			File file = new File(filePath+systemPath+fileName);
+			if(!file.exists()){
+				file.createNewFile();
+			}
+			OneDimensionCode.getBarcodeWriteFile(pd.get("BARCODE").toString(), null,null, file);
+			String BARCODEURL ="http://" + request.getServerName()+":" +request.getServerPort()+systemPath+fileName;
+			pd.put("BARCODEURL",BARCODEURL);
+			carService.edit(pd);
+		}
+		mv.setViewName("fhoa/car/printPage");
+		mv.addObject("pd", pd);
+		return mv;
+	}
 	 /**导出到excel
 	 * @param
 	 * @throws Exception
