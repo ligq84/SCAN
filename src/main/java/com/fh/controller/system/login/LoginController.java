@@ -43,7 +43,6 @@ import com.fh.util.RightsHelper;
 import com.fh.util.Tools;
 /**
  * 总入口
- * @author fh QQ 3 1 3 5 9 6 7 9 0[青苔]
  * 修改日期：2015/11/2
  */
 /**
@@ -285,7 +284,12 @@ public class LoginController extends BaseController {
 				session.setAttribute(Const.SESSION_USERNAME, USERNAME);						//放入用户名到session
 				this.setAttributeToAllDEPARTMENT_ID(session, USERNAME,user.getUSER_ID());						//把用户的组织机构权限放到session里面
 				List<Menu> allmenuList = new ArrayList<Menu>();
-				allmenuList = this.getAttributeMenu(session, USERNAME, roleRights);			//菜单缓存
+				if(changeMenu.equals("scan")){
+					allmenuList = this.getAttributeMenu(session, USERNAME, roleRights,"2");			//菜单缓存
+				}else {
+					allmenuList = this.getAttributeMenu(session, USERNAME, roleRights,"1");			//菜单缓存
+				}
+
 				List<Menu> menuList = new ArrayList<Menu>();
 				menuList = this.changeMenuF(allmenuList, session, USERNAME, changeMenu);	//切换菜单
 				if(null == session.getAttribute(USERNAME + Const.SESSION_QX)){
@@ -325,6 +329,20 @@ public class LoginController extends BaseController {
 		List<Menu> allmenuList = new ArrayList<Menu>();
 		if(null == session.getAttribute(USERNAME + Const.SESSION_allmenuList)){	
 			allmenuList = menuService.listAllMenuQx("0");							//获取所有菜单
+			if(Tools.notEmpty(roleRights)){
+				allmenuList = this.readMenu(allmenuList, roleRights);				//根据角色权限获取本权限的菜单列表
+			}
+			session.setAttribute(USERNAME + Const.SESSION_allmenuList, allmenuList);//菜单权限放入session中
+		}else{
+			allmenuList = (List<Menu>)session.getAttribute(USERNAME + Const.SESSION_allmenuList);
+		}
+		return allmenuList;
+	}
+	@SuppressWarnings("unchecked")
+	public List<Menu> getAttributeMenu(Session session, String USERNAME, String roleRights,String SYSTEM_TYPE) throws Exception{
+		List<Menu> allmenuList = new ArrayList<Menu>();
+		if(null == session.getAttribute(USERNAME + Const.SESSION_allmenuList)){
+			allmenuList = menuService.listAllMenuQx("0",SYSTEM_TYPE);							//获取所有菜单
 			if(Tools.notEmpty(roleRights)){
 				allmenuList = this.readMenu(allmenuList, roleRights);				//根据角色权限获取本权限的菜单列表
 			}
@@ -461,6 +479,7 @@ public class LoginController extends BaseController {
 		logBefore(logger, USERNAME+"退出系统");
 		FHLOG.save(USERNAME, "退出");
 		ModelAndView mv = this.getModelAndView();
+		Object carId = Jurisdiction.getSession().getAttribute(Const.CARID);
 		PageData pd = new PageData();
 		this.removeSession(USERNAME);//请缓存
 		//shiro销毁登录
@@ -469,7 +488,12 @@ public class LoginController extends BaseController {
 		pd = this.getPageData();
 		pd.put("msg", pd.getString("msg"));
 		pd = this.setLoginPd(pd);	//设置登录页面的配置参数
-		mv.setViewName("system/index/login");
+		if(null!=carId){
+			mv.setViewName("system/index/scan");
+		}else{
+			mv.setViewName("system/index/login");
+		}
+
 		mv.addObject("pd",pd);
 		return mv;
 	}

@@ -39,7 +39,8 @@
  		MENU_ICON,
  		MENU_ORDER,
  		MENU_STATE,
- 		MENU_TYPE
+ 		MENU_TYPE,
+ 		SYSTEM_TYPE
 	</sql>
 	
 	<!-- 字段值 -->
@@ -51,18 +52,27 @@
  		#{MENU_ICON},
  		#{MENU_ORDER},
  		#{MENU_STATE},
- 		#{MENU_TYPE}
+ 		#{MENU_TYPE},
+ 		#{SYSTEM_TYPE}
+
 	</sql>
 	
 	<!--通过ID获取其子一级菜单 -->
 	<select id="listSubMenuByParentId" parameterType="String" resultMap="menuResultMap">
-		select  
+		select
 			<include refid="Field"></include>
-		from 
+		from
 			<include refid="tableName"></include>
-		where PARENT_ID = #{parentId} order by (MENU_ORDER+0) 
+		where PARENT_ID = #{parentId} order by (MENU_ORDER+0)
 	</select>
-	
+	<select id="listSubMenuByParentIdTwo" parameterType="pd" resultMap="menuResultMap">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where PARENT_ID = #{parentId} and SYSTEM_TYPE = #{SYSTEM_TYPE} order by (MENU_ORDER+0)
+	</select>
+
 	<!--通过菜单ID获取数据 -->
 	<select id="getMenuById" parameterType="pd" resultType="pd">
 		select  

@@ -21,11 +21,18 @@ public class Menu {
 	private String MENU_ICON;	//图标
 	private String MENU_TYPE;	//类型
 	private String MENU_STATE;	//菜单状态
+	private String SYSTEM_TYPE; //系统类型
 	private String target;
 	private Menu parentMenu;
 	private List<Menu> subMenu;
 	private boolean hasMenu = false;
-	
+
+	public String getSYSTEM_TYPE() {
+		return SYSTEM_TYPE;
+	}
+	public void setSYSTEM_TYPE(String SYSTEM_TYPE) {
+		this.SYSTEM_TYPE = SYSTEM_TYPE;
+	}
 	public String getMENU_ID() {
 		return MENU_ID;
 	}

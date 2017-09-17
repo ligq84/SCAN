@@ -1,15 +1,13 @@
 package com.fh.service.system.menu.impl;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.springframework.stereotype.Service;
-
 import com.fh.dao.DaoSupport;
 import com.fh.entity.system.Menu;
 import com.fh.service.system.menu.MenuManager;
 import com.fh.util.PageData;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /** 
  * 类名称：MenuService 菜单处理
@@ -32,6 +30,12 @@ public class MenuService implements MenuManager{
 	@SuppressWarnings("unchecked")
 	public List<Menu> listSubMenuByParentId(String parentId) throws Exception {
 		return (List<Menu>) dao.findForList("MenuMapper.listSubMenuByParentId", parentId);
+	}
+	public List<Menu> listSubMenuByParentIdTwo(String parentId,String SYSTEM_TYPE) throws Exception {
+		PageData pd = new PageData();
+		pd.put("parentId",parentId);
+		pd.put("SYSTEM_TYPE",SYSTEM_TYPE);
+		return (List<Menu>) dao.findForList("MenuMapper.listSubMenuByParentIdTwo", pd);
 	}
 	
 	/**
@@ -122,5 +126,14 @@ public class MenuService implements MenuManager{
 		}
 		return menuList;
 	}
-	
+	public List<Menu> listAllMenuQx(String MENU_ID,String SYSTEM_TYPE) throws Exception {
+		List<Menu> menuList = this.listSubMenuByParentIdTwo(MENU_ID,SYSTEM_TYPE);
+		for(Menu menu : menuList){
+			menu.setSubMenu(this.listAllMenuQx(menu.getMENU_ID()));
+			menu.setTarget("treeFrame");
+		}
+		return menuList;
+	}
+
+
 }

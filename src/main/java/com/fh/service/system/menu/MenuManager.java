@@ -1,9 +1,9 @@
 package com.fh.service.system.menu;
 
-import java.util.List;
-
 import com.fh.entity.system.Menu;
 import com.fh.util.PageData;
+
+import java.util.List;
 
 
 /**说明：MenuService 菜单处理接口
@@ -70,4 +70,5 @@ public interface MenuManager {
 	 * @throws Exception
 	 */
 	public List<Menu> listAllMenuQx(String MENU_ID) throws Exception;
+	List<Menu> listAllMenuQx(String MENU_ID,String SYSTEM_TYPE) throws Exception;
 }
