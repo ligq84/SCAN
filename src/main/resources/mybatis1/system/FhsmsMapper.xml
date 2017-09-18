@@ -23,8 +23,9 @@
 		machine_name,
 		to_staff,
 		rule,
-		parts
-
+		parts,
+		response_status,
+		mhid
 	</sql>
 	
 	<!-- 字段值 -->
@@ -43,7 +44,9 @@
 		#{machine_name},
 		#{to_staff},
 		#{rule},
-		#{parts}
+		#{parts},
+		#{response_status},
+		#{mhid}
 	</sql>
 	
 	<!-- 新增-->

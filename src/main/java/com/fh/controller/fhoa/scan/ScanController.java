@@ -128,7 +128,7 @@ public class ScanController extends BaseController {
 		return mv;
 	}
 	/**
-	 * 巡视扫描
+	 * 扫描操作
 	 * @return
 	 * @throws Exception
      */

@@ -61,6 +61,7 @@
 									<input type="hidden" id="USERNAME" name="USERNAME" />
 									<input type="hidden" id="CONTENT" name="CONTENT" />
 									<input type="hidden" id="to_staff" name="to_staff" />
+									<input type="hidden" id="mhid" name="mhid" />
 								</div>
 								<div class="row" style="margin-top:25px;">
 									<label class="col-sm-2 control-label no-padding-right" ><span style="color: red">*</span>通知类型：</label>
@@ -176,6 +177,7 @@
 								$("#Night_R").val(machine.Night_R);
 								$("#to_staff").val('机器负责人：'+machine.chargeN+'、白班维修员：'+machine.Day_R+'、晚班维修员'+machine.Night_R)
 								$("#USERNAME").val(machine.chargeName+';'+machine.Day_Repairman+';'+machine.Night_Repairman)
+								$("#mhid").val(machine.mhid);
 							}
 						}
 					}
@@ -260,7 +262,7 @@
 				type: "POST",
 				url:'<%=basePath%>fhsms/sendSMS.do?tm='+new Date().getTime(),
 				data: {USERNAME:USERNAME,CONTENT:CONTENT,SMS_TYPE:$("input[name=mesgType]:checked ").val(),"to_staff":$("#to_staff").val(),
-					"TITLE":$("#mesg_title").val(),"rule":$("#rule").val(),"parts":parts.join(","),machine_name:$("#machineName").val()},
+					"TITLE":$("#mesg_title").val(),"rule":$("#rule").val(),"parts":parts.join(","),machine_name:$("#machineName").val(),mhid:$("#mhid").val()},
 				dataType:'json',
 				cache: false,
 				success: function(data){

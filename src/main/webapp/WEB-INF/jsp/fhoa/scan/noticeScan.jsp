@@ -65,7 +65,7 @@ setTimeout("top.hangge()",500);
 									<input type="hidden" id="to_staff" name="to_staff" />
 									<input type="hidden" id="CONTENT" name="CONTENT" />
 									<input type="hidden" id="USERNAME" name="USERNAME" />
-
+									<input type="hidden" id="mhid" name="mhid" />
 								</div>
 								<div class="row" style="margin-left:50px;text-align: center;">
 									<div class="form-group" style="margin-top: 100px">
@@ -132,8 +132,10 @@ setTimeout("top.hangge()",500);
 								$("#machine_name").val(machine.name);
 								$("#type").val(machine.typeName);
 								$("#code").val(machine.barcode);
-								$("#to_staff").val('机器负责人：'+machine.chargeN+'、白班维修员：'+machine.Day_R+'、晚班维修员'+machine.Night_R)
-								$("#USERNAME").val(machine.chargeName+';'+machine.Day_Repairman+';'+machine.Night_Repairman)
+								$("#to_staff").val('机器负责人：'+machine.chargeN+'、白班维修员：'+machine.Day_R+'、晚班维修员'+machine.Night_R);
+								$("#USERNAME").val(machine.chargeName+';'+machine.Day_Repairman+';'+machine.Night_Repairman);
+								$("#mhid").val(machine.mhid);
+
 							}
 						}
 					}
@@ -153,7 +155,7 @@ setTimeout("top.hangge()",500);
 				type: "POST",
 				url:'<%=basePath%>fhsms/sendSMS.do?tm='+new Date().getTime(),
 				data: {USERNAME:USERNAME,CONTENT:CONTENT,SMS_TYPE:2,"to_staff":$("#to_staff").val(),"TITLE":"关于"+$("#machine_name").val()+"维修通知"
-					,machine_name:$("#machine_name").val()},
+					,machine_name:$("#machine_name").val(),mhid:$("#mhid").val()},
 				dataType:'json',
 				//beforeSend: validateData,
 				cache: false,

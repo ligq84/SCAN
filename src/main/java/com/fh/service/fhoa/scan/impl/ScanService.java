@@ -82,6 +82,9 @@ public class ScanService implements ScanManager {
 				pd.put("mrid",mrecord.get("mrid"));
 				dao.update("MachineRecordMapper.edit", pd);
 			}else{
+				if(pd.get("scan_type").equals("2") ||pd.get("scan_type").equals("4")){
+					pd.get("mhid");//机器id
+				}
 				pd.put("mrid", UuidUtil.get32UUID());
 				pd.put("start_date",new Date());
 				dao.save("MachineRecordMapper.save", pd);
