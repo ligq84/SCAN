@@ -37,6 +37,9 @@
     	margin-left: 20px;
     	margin-right: 20px;
     }
+	input:focus{
+		box-shadow:none !important;
+	}
   </style>
   <script>
   		//window.setTimeout(showfh,3000); 
@@ -81,18 +84,16 @@
 		<%--<input type="hidden" name="COMPANYCODE" id="COMPANYCODE" value="TEST" placeholder="COMPANYCODE" />--%>
 		<!-- 登录 -->
 		<div id="windows1">
+		<div id="logoimage" >
+			<img src="static/images/logo.png">
+		</div>
 		<div id="loginbox" >
 			<form action="" method="post" name="loginForm" id="loginForm">
-				<div class="control-group normal_text">
-					<h3>
-						<img src="static/login/logo.png" alt="Logo" />
-					</h3>
-				</div>
 				<div class="control-group">
 					<div class="controls">
 						<div class="main_input_box">
-							<span class="add-on bg_lg">
-							<i><img height="37" src="static/login/user.png" /></i>
+							<span class="add-on">
+							<i><img height="37" src="static/login/images/company_code1.png" /></i>
 							</span><input type="text" name="COMPANYCODE" id="COMPANYCODE"value="TEST" placeholder="请输入企业编码" />
 						</div>
 					</div>
@@ -100,8 +101,8 @@
 				<div class="control-group">
 					<div class="controls">
 						<div class="main_input_box">
-							<span class="add-on bg_lg">
-							<i><img height="37" src="static/login/user.png" /></i>
+							<span class="add-on">
+							<i><img height="37" src="static/login/images/user1.png" /></i>
 							</span><input type="text" name="loginname" id="loginname" value="" placeholder="请输入用户名" />
 						</div>
 					</div>
@@ -109,46 +110,26 @@
 				<div class="control-group">
 					<div class="controls">
 						<div class="main_input_box">
-							<span class="add-on bg_ly">
-							<i><img height="37" src="static/login/suo.png" /></i>
+							<span class="add-on">
+							<i><img height="37" src="static/login/images/password1.png" /></i>
 							</span><input type="password" name="password" id="password" placeholder="请输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/>
 						</div>
 					</div>
 				</div>
-				<div style="float:right;padding-right:10%;">
-					<div style="float: left;margin-top:3px;margin-right:2px;">
-						<font color="white">记住密码</font>
-					</div>
-					<div style="float: left;">
-						<input name="form-field-checkbox" id="saveid" type="checkbox"
-							onclick="savePaw();" style="padding-top:0px;" />
-					</div>
-				</div>
-				<div class="form-actions">
-					<div style="width:86%;padding-left:8%;">
+				<div class="control-group">
+					<div class="controls" style="text-align: left;">
+						<input type="text" name="code" id="code" class="login_code"  style="height:30px;width: 15em;border: 1px solid  #A8A8A8;border-radius:5px;margin-left: 0px;" />
+						<img style="height:30px;border: 1px solid  #A8A8A8;" id="codeImg" alt="点击更换" title="点击更换" src="" />
 
-						<div style="float: left;padding-top:2px;">
-							<i><img src="static/login/yan.png" /></i>
-						</div>
-						<div style="float: left;" class="codediv">
-							<input type="text" name="code" id="code" class="login_code"
-								style="height:16px; padding-top:4px;" />
-						</div>
-						<div style="float: left;">
-							<i><img style="height:22px;" id="codeImg" alt="点击更换" title="点击更换" src="" /></i>
-						</div>
-						<c:if test="${pd.isZhuce == 'yes' }">
-						<span class="pull-right" style="padding-right:3%;"><a href="javascript:changepage(1);" class="btn btn-success">注册</a></span>
-						</c:if>
-						<span class="pull-right"><a onclick="severCheck();" class="flip-link btn btn-info" id="to-recover">登录</a></span>
 					</div>
 				</div>
-			</form>
-			<div class="controls">
-				<div class="main_input_box">
-					<font color="white"><span id="nameerr">Copyright © FHqq313596790 2100</span></font>
+				<div class="control-group">
+					<div class="controls">
+						<img  src="static/login/submit.png" onclick="severCheck();" id="submit"/>
+					</div>
 				</div>
-			</div>
+
+			</form>
 		</div>
 		</div>
 		<!-- 注册 -->
@@ -314,7 +295,7 @@
 
 		$(document).keyup(function(event) {
 			if (event.keyCode == 13) {
-				$("#to-recover").trigger("click");
+				$("#submit").trigger("click");
 			}
 		});
 
@@ -593,8 +574,8 @@
 	<script type="text/javascript" src="static/js/jquery.cookie.js"></script>
 	
 	<!-- 软键盘控件start -->
-	<script type="text/javascript" src="static/login/keypad/js/form/keypad.js"></script>
-	<script type="text/javascript" src="static/login/keypad/js/framework.js"></script>
+	<%--<script type="text/javascript" src="static/login/keypad/js/form/keypad.js"></script>--%>
+	<%--<script type="text/javascript" src="static/login/keypad/js/framework.js"></script>--%>
 	<!-- 软键盘控件end -->
 </body>
 
