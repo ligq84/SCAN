@@ -74,6 +74,7 @@
 		<include refid="tableName"></include>
 		set 
 			STATUS = '1'
+
 		where 
 		SANME_ID = #{SANME_ID}
 	</update>
@@ -91,7 +92,7 @@
 		FHSMS_ID,
 		SANME_ID,
 		COMPANY_ID,
-		CASE WHEN SMS_TYPE ='3' THEN '更改规格通知'
+		CASE WHEN SMS_TYPE ='4' THEN '更改规格通知'
 		WHEN SMS_TYPE ='2' THEN '维修扫描通知'
 		ELSE '' end as SMS_TYPE,
 		machine_name,
@@ -117,7 +118,7 @@
 		FHSMS_ID,
 		SANME_ID,
 		COMPANY_ID,
-		CASE WHEN SMS_TYPE ='3' THEN '更改规格通知'
+		CASE WHEN SMS_TYPE ='4' THEN '更改规格通知'
 		WHEN SMS_TYPE ='2' THEN '维修扫描通知'
 		ELSE '' end as SMS_TYPE,
 		machine_name,
@@ -188,6 +189,40 @@
                  #{item}
 		</foreach>
 	</delete>
-	
-	<!-- fh313596790qq(青苔) -->
+	<select id="findByMhId" parameterType="pd" resultType="pd">
+		select
+		TITLE,
+		CONTENT,
+		TYPE,
+		TO_USERNAME,
+		FROM_USERNAME,
+		SEND_TIME,
+		STATUS,
+		FHSMS_ID,
+		SANME_ID,
+		COMPANY_ID,
+		CASE WHEN SMS_TYPE ='4' THEN '更改规格通知'
+		WHEN SMS_TYPE ='2' THEN '维修扫描通知'
+		ELSE '' end as SMS_TYPE,
+		machine_name,
+		to_staff,
+		rule,
+		parts,
+		mhid
+		from
+		<include refid="tableName"></include>
+		where
+		mhid = #{mhid} and response_status = '0' and SMS_TYPE=#{scan_type}
+		ORDER BY SEND_TIME
+	</select>
+
+	<update id="editResponseStatus" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set
+		response_status = #{response_status}
+		where
+		FHSMS_ID = #{FHSMS_ID}
+	</update>
+
 </mapper>

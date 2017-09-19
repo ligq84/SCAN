@@ -135,7 +135,7 @@
 		<div class="modal-content">
 			<div class="modal-footer" style="text-align: center">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭窗口</button>
-				<button type="button" class="btn btn-primary" onclick="xsbtn()">确定操作</button>
+				<button type="button" class="btn btn-primary" onclick="xsbtn(this)">确定操作</button>
 			</div>
 		</div>
 	</div>
@@ -155,7 +155,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭窗口</button>
-				<button type="button" class="btn btn-primary" onclick="xsbtn()">确定操作</button>
+				<button type="button" class="btn btn-primary" onclick="xsbtn(this)">确定操作</button>
 			</div>
 		</div>
 	</div>
@@ -176,7 +176,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭窗口</button>
-				<button type="button" class="btn btn-primary" onclick="xsbtn()">确定操作</button>
+				<button type="button" class="btn btn-primary" onclick="xsbtn(this)">确定操作</button>
 			</div>
 		</div>
 	</div>
@@ -201,7 +201,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">关闭窗口</button>
-				<button type="button" class="btn btn-primary" onclick="xsbtn()">确定操作</button>
+				<button type="button" class="btn btn-primary" onclick="xsbtn(this)">确定操作</button>
 			</div>
 		</div>
 	</div>

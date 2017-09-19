@@ -71,7 +71,7 @@
 											<span class="lbl">维修通知</span>
 										</label>
 										<label style="float:left;padding-left: 5px;padding-top:7px;">
-											<input name="mesgType" type="radio" class="ace" value="3">
+											<input name="mesgType" type="radio" class="ace" value="4">
 											<span class="lbl">该规格通知</span>
 										</label>
 									</div>

@@ -420,6 +420,7 @@ function machineCodeCheck(model){
 
 }
 function xsbtn(){
+    console.log(this);
     var scan_type = $("#scan_type").val();
     if(scan_type == "1"){
         $("#operation_type").val("");

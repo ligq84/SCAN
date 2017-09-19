@@ -78,12 +78,21 @@ public class ScanService implements ScanManager {
 				if(!staff.getString("staff_id").equals(mrecord.getString("staff_Id"))){
 					return ResultData.init(ResultData.SUCCESS,"当前部位正在由其他维修员处理，\n 操作失败！","");
 				}
+
 				pd.put("end_date",new Date());
 				pd.put("mrid",mrecord.get("mrid"));
 				dao.update("MachineRecordMapper.edit", pd);
 			}else{
 				if(pd.get("scan_type").equals("2") ||pd.get("scan_type").equals("4")){
-					pd.get("mhid");//机器id
+					//获取通知发送时间 同时标记通知为已处理
+					List<PageData> mhList = (List<PageData>)dao.findForList("FhsmsMapper.listAll", pd);
+					if(null!= mhList && mhList.size()>0){
+						pd.put("notice_date",mhList.get(0).get("SEND_TIME"));
+						for(PageData smspd:mhList){
+							smspd.put("response_status","1");
+							dao.update("FhsmsMapper.editResponseStatus", smspd);
+						}
+					}
 				}
 				pd.put("mrid", UuidUtil.get32UUID());
 				pd.put("start_date",new Date());
