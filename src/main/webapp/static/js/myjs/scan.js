@@ -168,6 +168,9 @@ function machineCodeCheck(model){
                                     $("#repairProject").append("<br/>");
                                 }
                             }
+                            if(null !=mrepain){
+                                $("#repair_position").val(mrepain.repair_position);//设置默认值
+                            }
                             //赋予按钮点击变色
                             $("input[name=repairProject]").click(function(){
                                 if($(this).hasClass("btn-primary")){

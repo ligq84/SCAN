@@ -21,7 +21,8 @@
 		start_date,
 		end_date,
 		cycle_type,
-		company_id
+		company_id,
+		notice_date
 	</sql>
 	
 	<!-- 字段值 -->
@@ -38,7 +39,8 @@
 		#{start_date},
 		#{end_date},
 		#{cycle_type},
-		#{company_id}
+		#{company_id},
+		#{notice_date}
 	</sql>
 	
 	<!-- 新增-->

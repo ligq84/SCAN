@@ -85,6 +85,7 @@ public class ScanService implements ScanManager {
 			}else{
 				if(pd.get("scan_type").equals("2") ||pd.get("scan_type").equals("4")){
 					//获取通知发送时间 同时标记通知为已处理
+					pd.put("SMS_TYPE",pd.get("scan_type"));
 					List<PageData> mhList = (List<PageData>)dao.findForList("FhsmsMapper.listAll", pd);
 					if(null!= mhList && mhList.size()>0){
 						pd.put("notice_date",mhList.get(0).get("SEND_TIME"));

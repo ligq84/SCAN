@@ -163,6 +163,10 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
+		where 1=1
+		<if test="SMS_TYPE != null and SMS_TYPE != ''"><!-- 状态检索 -->
+			and SMS_TYPE = #{SMS_TYPE} and response_status='0'
+		</if>
 	</select>
 	
 	<!-- 获取未读总数 -->
