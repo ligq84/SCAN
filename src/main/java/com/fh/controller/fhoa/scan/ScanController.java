@@ -35,7 +35,7 @@ import java.util.List;
 @RequestMapping(value="/scan")
 public class ScanController extends BaseController {
 	
-		String menuUrl = "scan/list.do"; //菜单地址(权限用)
+	String menuUrl = "scan/list.do"; //菜单地址(权限用)
 	@Resource(name="machineService")
 	private MachineManager machineService;
 	@Resource(name="staffService")

@@ -2906,7 +2906,7 @@ jQuery(function($) {
  $('#ace-settings-add-container').on('click', function(){
 	ace.settings.main_container_fixed(null, this.checked);//@ ace-extra.js
 
-	//if(ace.vars['webkit']) ace.helper.redraw(document.body);
+	//if(ace.vars['webkit']) ace.helper.redraw(document.body);h
  }).each(function(){this.checked = ace.settings.is('main-container', 'fixed')})
 
 

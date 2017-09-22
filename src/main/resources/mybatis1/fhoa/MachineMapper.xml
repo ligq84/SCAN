@@ -119,10 +119,28 @@
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
-		<include refid="Field"></include>
+			a.MHID,
+			a.NAME,
+			a.TYPE,
+		(SELECT d.`name` from oa_company_basic d WHERE a.type= d.ocbid) as typeName,
+			a.MODEL,
+			a.POWER,
+			a.CHARGE,
+			a.DAY_REPAIRMAN,
+			a.NIGHT_REPAIRMAN,
+			(SELECT c.NAME from oa_staff c where c.STAFF_ID = a.charge) as chargeName,
+			(SELECT c.NAME from oa_staff c where c.STAFF_ID = a.Day_Repairman) as DayName,
+			(SELECT c.NAME from oa_staff c where c.STAFF_ID = a.Night_Repairman) as NightName,
+			a.BARCODE,
+			a.BARCODEURL,
+			a.COMPANY_ID,
+			a.DELETED,
+			a.BZ,
+			a.CHANGE_RULE,
+			CASE WHEN CHANGE_RULE = 0 THEN '支持' ELSE '不支持' END as CHANGERULEName
 		from 
-		<include refid="tableName"></include>
-		where COMPANY_ID = #{pd.COMPANY_ID}
+		<include refid="tableName"></include> a
+		where a.COMPANY_ID = #{pd.COMPANY_ID}
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(

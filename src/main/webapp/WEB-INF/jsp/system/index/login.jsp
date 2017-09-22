@@ -40,6 +40,7 @@
 	input:focus{
 		box-shadow:none !important;
 	}
+
   </style>
   <script>
   		//window.setTimeout(showfh,3000); 
@@ -118,7 +119,7 @@
 				</div>
 				<div class="control-group">
 					<div class="controls" style="text-align: left;">
-						<input type="text" name="code" id="code" class="login_code"  style="height:30px;width: 15em;border: 1px solid  #A8A8A8;border-radius:5px;margin-left: 0px;" />
+						<input type="text" name="code" id="code" class="login_code"  style="height:30px;width: 5em;border: 1px solid  #A8A8A8;border-radius:5px;margin-left: 0px;" />
 						<img style="height:30px;border: 1px solid  #A8A8A8;" id="codeImg" alt="点击更换" title="点击更换" src="" />
 
 					</div>

@@ -71,11 +71,10 @@
 									<th class="center">类型</th>
 									<th class="center">型号</th>
 									<th class="center">功率</th>
+									<th class="center">更改规格</th>
 									<th class="center">机器负责人</th>
 									<th class="center">白班维修员</th>
 									<th class="center">晚班维修员</th>
-									<th class="center">机器编码</th>
-									<th class="center">更改规格</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -92,14 +91,13 @@
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
-											<td class='center'>${var.TYPE}</td>
+											<td class='center'>${var.typeName}</td>
 											<td class='center'>${var.MODEL}</td>
 											<td class='center'>${var.POWER}</td>
-											<td class='center'>${var.CHARGE}</td>
-											<td class='center'>${var.DAY_REPAIRMAN}</td>
-											<td class='center'>${var.NIGHT_REPAIRMAN}</td>
-											<td class='center'>${var.BARCODE}</td>
-											<td class='center'>${var.CHANGE_RULE}</td>
+											<td class='center'>${var.CHANGERULEName}</td>
+											<td class='center'>${var.chargeName}</td>
+											<td class='center'>${var.DayName}</td>
+											<td class='center'>${var.NightName}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
@@ -226,7 +224,8 @@
 			//日期框
 			$('.date-picker').datepicker({
 				autoclose: true,
-				todayHighlight: true
+				todayHighlight: true,
+				clearBtn: true
 			});
 			
 			//下拉框

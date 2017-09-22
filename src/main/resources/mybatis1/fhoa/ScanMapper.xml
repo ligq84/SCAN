@@ -104,6 +104,9 @@
 		<include refid="tableName"></include> a
 		LEFT  JOIN oa_machine b ON  a.mhid = b.mhid
 		where a.COMPANY_ID =#{pd.COMPANY_ID}
+		<if test="pd.scan_type!= null and pd.scan_type != ''">
+			and a.scan_type IN (${pd.scan_type})
+		</if>
 		ORDER BY scan_date DESC
 	</select>
 	

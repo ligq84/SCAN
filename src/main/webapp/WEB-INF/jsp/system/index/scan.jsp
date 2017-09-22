@@ -74,12 +74,8 @@
 </head>
 <body>
 
-<c:if test="${pd.isMusic == 'yes' }">
-	<%--<div style="display: none">--%>
-	<%--<audio src="static/login/music/fh1.mp3" autoplay=""></audio>--%>
-	<%--</div>	--%>
-</c:if>
-<canvas class="cavs"></canvas>
+
+<%--<canvas class="cavs"></canvas>--%>
 <div style="width:100%;text-align: center;margin: 0 auto;position: absolute;">
 	<%--<input type="hidden" name="COMPANYCODE" id="COMPANYCODE" value="TEST" placeholder="COMPANYCODE" />--%>
 	<!-- 登录 -->
@@ -118,8 +114,8 @@
 				</div>
 				<div class="control-group">
 					<div class="controls" style="text-align: left;">
-						<input type="text" name="code" id="code" class="login_code"  style="height:30px;width: 15em;border: 1px solid  #A8A8A8;border-radius:5px;margin-left: 0px;" />
-						<img style="height:30px;border: 1px solid  #A8A8A8;" id="codeImg" alt="点击更换" title="点击更换" src="" />
+						<input type="text" name="code" id="code" class="login_code"  style="height:30px;line-height:40px;width: 5em;border: 1px solid  #A8A8A8;border-radius:5px;margin-left: 0px;" />
+						<img style="height:40px;border: 1px solid  #A8A8A8;" id="codeImg" alt="点击更换" title="点击更换" src="" />
 
 					</div>
 				</div>
