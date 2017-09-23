@@ -31,13 +31,15 @@
 					<div class="row">
 						<div class="col-xs-12">
 						<!-- 检索  -->
+							1231321
 						<form action="happuser/listUsers.do" method="post" name="userForm" id="userForm">
 						<table style="margin-top:5px;">
 							<tr>
 								<td>
 									<div class="nav-search">
 									<span class="input-icon">
-										<input class="nav-search-input" autocomplete="off" id="nav-search-input" type="text" name="keywords" value="${pd.keywords }" placeholder="这里输入关键词" />
+										<input class="nav-search-input" autocomplete="off" id="nav-search-input" type="text" name="keywords"
+											   value="${pd.keywords }" placeholder="这里输入关键词" style="width: 145px;" />
 										<i class="ace-icon fa fa-search nav-search-icon"></i>
 									</span>
 									</div>
@@ -249,7 +251,7 @@
 		
 		$(function() {
 			//日期框
-			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
+			$('.date-picker').datepicker({autoclose: true,todayHighlight: true, clearBtn: true});
 			
 			//下拉框
 			if(!ace.vars['touch']) {

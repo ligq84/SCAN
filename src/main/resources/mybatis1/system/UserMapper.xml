@@ -60,7 +60,7 @@
 		EMAIL,
 		NUMBER,
 		PHONE,
-		company_id
+		COMPANY_ID
 	</sql>
 	
 	<!-- 字段值 -->
@@ -178,28 +178,17 @@
 		where u.ROLE_ID = r.ROLE_ID 
 		and u.USERNAME != 'admin'
 		and r.PARENT_ID = '1' and u.deleted = 0 and u.company_id = #{pd.COMPANY_ID}
-		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
-			and
-				(
-					 u.USERNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-					 or 
-					 u.EMAIL LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
-					 or
-					 u.NUMBER LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-					 or
-					 u.NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-					 or
-					 u.PHONE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-				)
-		</if>
+
 		<if test="pd.ROLE_ID != null and pd.ROLE_ID != ''"><!-- 角色检索 -->
 			and u.ROLE_ID=#{pd.ROLE_ID} 
 		</if>
-		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''"><!-- 登录时间检索 -->
-			and u.LAST_LOGIN &gt;= #{pd.lastLoginStart} 
+		<if test="pd.starttime!=null and pd.starttime!=''"><!-- 登录时间检索 -->
+			and u.LAST_LOGIN >= #{pd.starttime}
 		</if>
-		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''"><!-- 登录时间检索 -->
-			and u.LAST_LOGIN &lt;= #{pd.lastLoginEnd} 
+		<if test="pd.endtime!=null and pd.endtime!=''"><!-- 登录时间检索 -->
+			<![CDATA[
+			and u.LAST_LOGIN <= CONCAT(#{pd.endtime},' 23:59:59')
+			]]>
 		</if>
 		order by u.LAST_LOGIN desc
 	</select>
@@ -242,7 +231,7 @@
 			and u.LAST_LOGIN &gt;= #{pd.lastLoginStart} 
 		</if>
 		<if test="pd.lastLoginEnd!=null and pd.lastLoginEnd!=''"><!-- 登录时间检索 -->
-			and u.LAST_LOGIN &lt;= #{pd.lastLoginEnd} 
+			and u.LAST_LOGIN &lt;= #{pd.lastLoginEnd}
 		</if>
 		and u.USERNAME not in (select s.USER_ID from <include refid="staffTableName"></include> s where s.USER_ID !='')
 		order by u.LAST_LOGIN desc
@@ -311,7 +300,8 @@
 	
 	<!-- 删除用户 -->
 	<delete id="deleteU" parameterType="pd" flushCache="false">
-		delete from <include refid="tableName"></include>
+		UPDATE from <include refid="tableName"></include>
+		SET  deleted = 1
 		where 
 			USER_ID = #{USER_ID}
 		and 
@@ -320,7 +310,8 @@
 	
 	<!-- 批量删除用户 -->
 	<delete id="deleteAllU" parameterType="String" >
-		delete from <include refid="tableName"></include>
+		UPDATE from <include refid="tableName"></include>
+		SET  deleted = 1
 		where 
 			USER_ID in
   			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">

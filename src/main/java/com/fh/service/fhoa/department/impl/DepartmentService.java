@@ -66,7 +66,16 @@ public class DepartmentService implements DepartmentManager{
 	public PageData findById(PageData pd)throws Exception{
 		return (PageData)dao.findForObject("DepartmentMapper.findById", pd);
 	}
-	
+
+	public PageData findSelectById(PageData pd)throws Exception{
+		PageData deptpd = (PageData)dao.findForObject("DepartmentMapper.findById", pd);
+		PageData selectpd = new PageData();
+		selectpd.put("id", deptpd.get("DEPARTMENT_ID"));
+		selectpd.put("parentId", deptpd.get("PARENT_ID"));
+		selectpd.put("name", deptpd.get("NAME"));
+		selectpd.put("icon", "static/images/user.gif");
+		return selectpd;
+	}
 	/**通过编码获取数据
 	 * @param pd
 	 * @throws Exception
@@ -144,7 +153,7 @@ public class DepartmentService implements DepartmentManager{
 		}
 		return arrayDep[0];
 	}
-	
+
 	/**下拉ztree用
 	 * @param parentId
 	 * @return

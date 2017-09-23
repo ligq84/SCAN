@@ -228,6 +228,11 @@ public class MachineController extends BaseController {
 		}
 		page.setPd(pd);
 		List<PageData>	varList = machineService.list(page);	//列出Machine列表
+
+		//机器类型下拉列表
+		List<PageData>	staffPostList =  getBasicData(Const.COMPANY_BASIC_MACHINETYPE,1,user.getCompanyId());
+		mv.addObject("machineTypeList",staffPostList);
+
 		mv.setViewName("fhoa/machine/machine_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);

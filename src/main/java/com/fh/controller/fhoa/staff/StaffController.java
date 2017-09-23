@@ -196,12 +196,14 @@ public class StaffController extends BaseController {
 		List<PageData>	varList = staffService.list(page);
 
 		//人员岗位下拉列表
-		String status = pd.getString("STATUS");
-		pd.put("TYPE","staffPost");
-		pd.put("STATUS",1);
-		List<PageData>	staffPostList = companybasicService.list(page);
+		PageData postpd = new PageData();
+		postpd.put("COMPANY_ID",user.getCompanyId());
+		postpd.put("TYPE","staffPost");
+		postpd.put("STATUS",1);
+		Page postpage =new Page();
+		postpage.setPd(postpd);
+		List<PageData>	staffPostList = companybasicService.list(postpage);
 		mv.addObject("staffPostList",staffPostList);
-		pd.put("STATUS",status);
 
 		//列出Staff列表
 		//列表页面树形下拉框用(保持下拉树里面的数据不变)
@@ -209,7 +211,13 @@ public class StaffController extends BaseController {
 		ZDEPARTMENT_ID = Tools.notEmpty(ZDEPARTMENT_ID)?ZDEPARTMENT_ID:Jurisdiction.getDEPARTMENT_ID();
 		pd.put("ZDEPARTMENT_ID", ZDEPARTMENT_ID);
 		List<PageData> zdepartmentPdList = new ArrayList<PageData>();
-		JSONArray arr = JSONArray.fromObject(departmentService.listAllDepartmentToSelect(ZDEPARTMENT_ID,zdepartmentPdList));
+		List<PageData> deptPD = departmentService.listAllDepartmentToSelect(ZDEPARTMENT_ID,zdepartmentPdList);
+		if(null != pd.getString("DEPARTMENT_ID") && !pd.getString("DEPARTMENT_ID").equals("0")){
+			PageData mePd = departmentService.findSelectById(pd);
+			deptPD.add(mePd);
+		}
+
+		JSONArray arr = JSONArray.fromObject(deptPD);
 		mv.addObject("zTreeNodes", arr.toString());
 		PageData dpd = departmentService.findById(pd);
 		if(null != dpd){
@@ -269,7 +277,7 @@ public class StaffController extends BaseController {
 			mv.addObject("AREAList",pdList);
 		}
 		//人员岗位下拉列表
-		String status = pd.getString("STATUS");
+		String status = pd.get("STATUS")+"";
 		pd.put("TYPE","staffPost");
 		pd.put("STATUS",1);
 		Page page = new Page();
@@ -350,7 +358,7 @@ public class StaffController extends BaseController {
 			mv.addObject("AREAList",pdList);
 		}
 		//人员岗位下拉列表
-		String status = pd.getString("STATUS");
+		String status = pd.get("STATUS")+"";
 		pd.put("TYPE","staffPost");
 		pd.put("STATUS",1);
 		Page page = new Page();

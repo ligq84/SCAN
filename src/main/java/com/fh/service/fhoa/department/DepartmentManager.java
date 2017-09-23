@@ -43,7 +43,7 @@ public interface DepartmentManager{
 	 * @throws Exception
 	 */
 	public PageData findById(PageData pd)throws Exception;
-
+	public PageData findSelectById(PageData pd)throws Exception;
 	/**通过编码获取数据
 	 * @param pd
 	 * @throws Exception
@@ -87,7 +87,7 @@ public interface DepartmentManager{
 	 * @throws Exception
 	 */
 	public List<PageData> listAllDepartmentToSelect(String parentId, List<PageData> zdepartmentPdList) throws Exception;
-	
+
 	/**获取某个部门所有下级部门ID(返回拼接字符串 in的形式)
 	 * @param DEPARTMENT_ID
 	 * @return

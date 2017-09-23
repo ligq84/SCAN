@@ -34,22 +34,37 @@
 						<form action="machine/list.do" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
-								<td>
+								<td style="padding-left:5px;text-align: right">机器名称:</td>
+								<td style="padding-left:5px;">
 									<div class="nav-search">
-										<span class="input-icon">
-											<input type="text" placeholder="这里输入关键词" class="nav-search-input" id="nav-search-input" autocomplete="off" name="keywords" value="${pd.keywords }" placeholder="这里输入关键词"/>
-											<i class="ace-icon fa fa-search nav-search-icon"></i>
-										</span>
+										<input type="text"  class="nav-search-input" id="Name" autocomplete="off" name="Name" value="${pd.Name }" style="width: 145px;"/>
+
 									</div>
 								</td>
-								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastStart" id="lastStart"  value="" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="开始日期" title="开始日期"/></td>
-								<td style="padding-left:2px;"><input class="span10 date-picker" name="lastEnd" name="lastEnd"  value="" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:88px;" placeholder="结束日期" title="结束日期"/></td>
+								<td style="padding-left:5px;text-align: right">机器类型:</td>
+								<td style="padding-left:2px;">
+									<div class="nav-search">
+										<select class="nav-search-input" name="TYPE" id="TYPE"  style="vertical-align:top;width: 145px;"  title="现岗位"  >
+											<option value="">全部</option>
+											<c:forEach items="${machineTypeList}" var="machineType">
+												<option value="${machineType.OCBID }" <c:if test="${machineType.OCBID == pd.TYPE}">selected</c:if> >${machineType.NAME}</option>
+											</c:forEach>
+										</select>
+									</div>
+								</td>
+								<td style="padding-left:5px;text-align: right">负责人:</td>
+								<td style="padding-left:2px;">
+									<div class="nav-search">
+										<input type="text"  class="nav-search-input" id="Repairman" autocomplete="off" name="Repairman" value="${pd.Repairman }"
+											   style="width: 145px;"/>
+									</div>
+								</td>
+								<td style="padding-left:5px;text-align: right">更改规格:</td>
 								<td style="vertical-align:top;padding-left:2px;">
-								 	<select class="chosen-select form-control" name="name" id="id" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
-									<option value=""></option>
+								 	<select class="chosen-select form-control" name="CHANGE_RULE" id="id" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
 									<option value="">全部</option>
-									<option value="">1</option>
-									<option value="">2</option>
+									<option value="0" <c:if test="${pd.CHANGE_RULE == '0'}">selected</c:if>>支持</option>
+									<option value="1" <c:if test="${pd.CHANGE_RULE == '1'}">selected</c:if> >不支持</option>
 								  	</select>
 								</td>
 								<c:if test="${QX.cha == 1 }">
@@ -87,7 +102,7 @@
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
 											<td class='center'>
-												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.MACHINE_ID}" class="ace" /><span class="lbl"></span></label>
+												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.MHID}" class="ace" /><span class="lbl"></span></label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
@@ -278,7 +293,7 @@
 			bootbox.confirm("确定要删除吗?", function(result) {
 				if(result) {
 					top.jzts();
-					var url = "<%=basePath%>machine/delete.do?MACHINE_ID="+Id+"&tm="+new Date().getTime();
+					var url = "<%=basePath%>machine/delete.do?MHID="+Id+"&tm="+new Date().getTime();
 					$.get(url,function(data){
 						tosearch();
 					});

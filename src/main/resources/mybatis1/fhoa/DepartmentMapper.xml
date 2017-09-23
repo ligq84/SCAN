@@ -128,7 +128,7 @@
 		from 
 		<include refid="tableName"></include>
 		where 
-			PARENT_ID = #{parentId} order by NAME 
+			PARENT_ID = #{parentId} order by NAME
 	</select>
 
 	<select id="listSubDepartmentByCompanyId" parameterType="String" resultMap="departmentResultMap">

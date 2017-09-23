@@ -18,7 +18,8 @@
 		ADD_QX,
 		DEL_QX,
 		EDIT_QX,
-		CHA_QX
+		CHA_QX,
+		COMPANY_ID
 	</sql>
 	
 	<!-- 字段值 -->
@@ -30,7 +31,8 @@
 		#{ADD_QX},
 		#{DEL_QX},
 		#{EDIT_QX},
-		#{CHA_QX}
+		#{CHA_QX},
+		#{COMPANY_ID}
 	</sql>
 	
 	<!--表名 -->

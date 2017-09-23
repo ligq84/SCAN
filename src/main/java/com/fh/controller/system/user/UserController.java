@@ -60,23 +60,22 @@ public class UserController extends BaseController {
 		User user = (User)session.getAttribute(Const.SESSION_USER);
 		PageData pd = new PageData();
 		pd = this.getPageData();
+
 		pd.put("COMPANY_ID",user.getCompanyId());
 		String keywords = pd.getString("keywords");				//关键词检索条件
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
-		String lastLoginStart = pd.getString("lastLoginStart");	//开始时间
-		String lastLoginEnd = pd.getString("lastLoginEnd");		//结束时间
-		if(lastLoginStart != null && !"".equals(lastLoginStart)){
-			pd.put("lastLoginStart", lastLoginStart+" 00:00:00");
-		}
-		if(lastLoginEnd != null && !"".equals(lastLoginEnd)){
-			pd.put("lastLoginEnd", lastLoginEnd+" 00:00:00");
-		} 
+
+
 		page.setPd(pd);
 		List<PageData>	userList = userService.listUsers(page);	//列出用户列表
+
+		String roid = pd.getString("ROLE_ID");
 		pd.put("ROLE_ID", "1");
 		List<Role> roleList = roleService.listAllRolesByPId(pd);//列出所有系统用户角色
+		pd.put("ROLE_ID",roid);
+
 		mv.setViewName("system/user/user_list");
 		mv.addObject("userList", userList);
 		mv.addObject("roleList", roleList);
@@ -133,13 +132,16 @@ public class UserController extends BaseController {
 		logBefore(logger, Jurisdiction.getUsername()+"新增user");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		pd = this.getPageData();
 		pd.put("USER_ID", this.get32UUID());	//ID 主键
 		pd.put("LAST_LOGIN", "");				//最后登录时间
 		pd.put("IP", "");						//IP
 		pd.put("STATUS", "0");					//状态
 		pd.put("SKIN", "default");
-		pd.put("RIGHTS", "");		
+		pd.put("RIGHTS", "");
+		pd.put("COMPANY_ID",user.getCompanyId());
 		pd.put("PASSWORD", new SimpleHash("SHA-1", pd.getString("USERNAME"), pd.getString("PASSWORD")).toString());	//密码加密
 		if(null == userService.findByUsername(pd)){	//判断用户名是否存在
 			userService.saveU(pd); 					//执行保存
@@ -223,9 +225,12 @@ public class UserController extends BaseController {
 	public ModelAndView goEditU() throws Exception{
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
 		ModelAndView mv = this.getModelAndView();
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		if("1".equals(pd.getString("USER_ID"))){return null;}		//不能修改admin用户
+		pd.put("COMPANY_ID",user.getCompanyId());
 		pd.put("ROLE_ID", "1");
 		List<Role> roleList = roleService.listAllRolesByPId(pd);	//列出所有系统用户角色
 		mv.addObject("fx", "user");
@@ -306,6 +311,8 @@ public class UserController extends BaseController {
 	public ModelAndView editU() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"修改ser");
 		ModelAndView mv = this.getModelAndView();
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		if(!Jurisdiction.getUsername().equals(pd.getString("USERNAME"))){		//如果当前登录用户修改用户资料提交的用户名非本人
@@ -318,6 +325,7 @@ public class UserController extends BaseController {
 		if(pd.getString("PASSWORD") != null && !"".equals(pd.getString("PASSWORD"))){
 			pd.put("PASSWORD", new SimpleHash("SHA-1", pd.getString("USERNAME"), pd.getString("PASSWORD")).toString());
 		}
+		pd.put("COMPANY_ID",user.getCompanyId());
 		userService.editU(pd);	//执行修改
 		FHLOG.save(Jurisdiction.getUsername(), "修改系统用户："+pd.getString("USERNAME"));
 		mv.addObject("msg","success");

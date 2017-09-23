@@ -34,7 +34,7 @@ public class MachineService implements MachineManager{
 	 * @throws Exception
 	 */
 	public void delete(PageData pd)throws Exception{
-		dao.delete("MachineMapper.delete", pd);
+		dao.update("MachineMapper.delete", pd);
 	}
 	
 	/**修改
@@ -76,7 +76,7 @@ public class MachineService implements MachineManager{
 	 * @throws Exception
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
-		dao.delete("MachineMapper.deleteAll", ArrayDATA_IDS);
+		dao.update("MachineMapper.deleteAll", ArrayDATA_IDS);
 	}
 
 	/**

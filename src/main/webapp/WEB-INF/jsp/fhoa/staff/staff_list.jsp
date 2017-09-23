@@ -42,60 +42,82 @@
 						<input name="DEPARTMENT_ID" id="DEPARTMENT_ID" type="hidden" value="${pd.DEPARTMENT_ID }" />
 						<table style="margin-top:5px;">
 							<tr>
+								<td style="padding-left:10px;text-align: right">
+									<label>姓名:</label>
+								</td>
 								<td style="padding-left:10px">
 									<div class="nav-search">
-										<input type="text" class="nav-search-input" name="NAME" value="${pd.NAME}"  placeholder="这里输入姓名"/>
+										<input type="text" class="nav-search-input" name="NAME" value="${pd.NAME}"  placeholder="这里输入姓名" style="width: 145px;"/>
 									</div>
 								</td>
+								<td  style="padding-left:10px;text-align: right"><label>联系电话:</label></td>
 								<td  style="padding-left:10px">
 									<div class="nav-search">
-										<input type="text" class="nav-search-input"  name="TEL" value="${pd.TEL}" placeholder="这里输入联系电话"/>
+										<input type="text" class="nav-search-input"  name="TEL" value="${pd.TEL}" placeholder="这里输入联系电话" style="width: 145px;"/>
 									</div>
 								</td>
+								<td  style="padding-left:10px;text-align: right"><label>所属部门:</label></td>
 								<td  style="padding-left:10px">
 									<div class="nav-search">
-										<select class="nav-search-input" name="POST" id="POST" style="vertical-align:top;"  title="人员岗位" style="width:98%;" >
-											<option disabled selected>人员岗位</option>
+										<div class="selectTree" id="selectTree"></div>
+									</div>
+								</td>
+
+							</tr>
+							<tr>
+								<td  style="padding-left:10px;text-align: right"><label>人员岗位:</label></td>
+								<td  style="padding-left:10px">
+									<div class="nav-search">
+										<select class="nav-search-input" name="POST" id="POST" style="vertical-align:top;width: 145px;"  title="人员岗位"  >
+											<option value="">全选</option>
 											<c:forEach items="${staffPostList}" var="staffPost">
 												<option value="${staffPost.OCBID }" <c:if test="${staffPost.OCBID == pd.POST }">selected</c:if> >${staffPost.NAME}</option>
 											</c:forEach>
 										</select>
 									</div>
 								</td>
+								<td style="padding-left:10px;text-align: right">
+									<label>系统账号:</label>
+								</td>
 								<td  style="padding-left:10px">
 									<div class="nav-search">
-										<div class="selectTree" id="selectTree"></div>
+										<input type="text" class="nav-search-input" name="USERNAME" value="${pd.USERNAME}"  placeholder="这里输入系统账号" style="width: 145px;"/>
+									</div>
+								</td>
+								<td  style="padding-left:10px;text-align: right"><label>在职状态:</label></td>
+								<td  style="padding-left:10px">
+									<div class="nav-search">
+										<select name="STATUS" id="STATUS" class="nav-search-input" style="width: 145px;">
+											<option value="" >全选</option>
+											<option value="0" <c:if test="${pd.STATUS == '0'}">selected</c:if>>在职</option>
+											<option value="1" <c:if test="${pd.STATUS == '1'}">selected</c:if>>离职</option>
+										</select>
 									</div>
 								</td>
 							</tr>
 							<tr>
+
+								<td  style="padding-left:10px;text-align: right"><label>入职时间:</label></td>
 								<td  style="padding-left:10px">
 									<div class="nav-search">
-										<input type="text" class="nav-search-input" name="USERNAME" value="${pd.USERNAME}"  placeholder="这里输入系统账号"/>
+										<input class="span10 date-picker nav-search-input" name="DJOINTIMESTART" value="${pd.DJOINTIMESTART}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly"
+											   placeholder="入职时间"  style="width: 145px;"/>
 									</div>
 								</td>
+								<td style="padding-left:10px;text-align: center"><label>---</label></td>
 								<td  style="padding-left:10px">
 									<div class="nav-search">
-										<select name="STATUS" id="STATUS" class="nav-search-input">
-											<option disabled selected>在职状态</option>
-											<option value="0" <c:if test="${pd.STATUS == 0}">selected</c:if>>在职</option>
-											<option value="1" <c:if test="${pd.STATUS == 1}">selected</c:if>>离职</option>
-										</select>
-									</div>
-								</td>
-								<td  style="padding-left:10px">
-									<div class="nav-search">
-										<input class="span10 date-picker nav-search-input" name="DJOINTIMESTART" value="${pd.DJOINTIMESTART}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="入职时间"  />
-											---
-									</div>
-								</td>
-								<td  style="padding-left:10px">
-									<div class="nav-search">
-										<input class="span10 date-picker nav-search-input" name="DJOINTIMEEND" value="${pd.DJOINTIMEEND}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="入职时间"  />
+										<input class="span10 date-picker nav-search-input" name="DJOINTIMEEND" value="${pd.DJOINTIMEEND}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly"
+											   placeholder="入职时间"  style="width: 145px;"/>
 									</div>
 								</td>
 								<c:if test="${QX.cha == 1 }">
 									<td style="vertical-align:top;padding-left:5px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
+								</c:if>
+								<c:if test="${QX.add == 1 }">
+									<td >
+										<a class="btn btn-mini btn-success" onclick="add();">新增</a>
+									</td>
 								</c:if>
 								<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>
 
@@ -112,7 +134,7 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">姓名</th>
 									<th class="center">联系电话</th>
-									<th class="center">身份证号码</th>
+									<%--<th class="center">身份证号码</th>--%>
 									<th class="center">所属部门</th>
 									<th class="center">人员岗位</th>
 									<th class="center">学历</th>
@@ -136,7 +158,7 @@
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.TEL}</td>
-											<td class='center'>${var.SFID}</td>
+											<%--<td class='center'>${var.SFID}</td>--%>
 											<td class='center'>${var.departmentName}</td>
 											<td class='center'>${var.postName}</td>
 											<td class='center'>${var.EDUCATION}</td>
@@ -238,9 +260,6 @@
 						<table style="width:100%;">
 							<tr>
 								<td style="vertical-align:top;">
-									<c:if test="${QX.add == 1 }">
-									<a class="btn btn-mini btn-success" onclick="add();">新增</a>
-									</c:if>
 									<c:if test="${QX.del == 1 }">
 									<a class="btn btn-mini btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
 									</c:if>
