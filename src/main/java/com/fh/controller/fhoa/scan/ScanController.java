@@ -115,10 +115,7 @@ public class ScanController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("COMPANY_ID",user.getCompanyId());
-		String keywords = pd.getString("keywords");				//关键词检索条件
-		if(null != keywords && !"".equals(keywords)){
-			pd.put("keywords", keywords.trim());
-		}
+
 		page.setPd(pd);
 		List<PageData> varList = scanService.list(page);	//列出Company列表
 		mv.setViewName("fhoa/scan/scan_list");

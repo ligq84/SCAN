@@ -32,24 +32,70 @@
 							
 						<!-- 检索  -->
 						<form action="scan/list.do" method="post" name="Form" id="Form">
+							<input type="hidden" name="scan_type" value="${pd.scan_type}">
 						<table style="margin-top:5px;">
 							<tr>
-								<td>
+								<td style="padding-left:5px;text-align: right"><label>机器名称:</label></td>
+								<td style="padding-left:5px;">
 									<div class="nav-search">
-										<span class="input-icon">
-											<input type="text" placeholder="这里输入关键词" class="nav-search-input" id="nav-search-input" autocomplete="off" name="keywords" value="${pd.keywords }" placeholder="这里输入关键词"/>
-											<i class="ace-icon fa fa-search nav-search-icon"></i>
-										</span>
+										<input type="text" placeholder="机器名称" class="nav-search-input" id="machineName" autocomplete="off"
+												   name="machineName" value="${pd.machineName }" style="width: 145px;"/>
 									</div>
 								</td>
-								<td style="padding-left:2px;">
-									<input class="span10 date-picker" name="lastStart" id="lastStart"  value="${pd.lastStart}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly"
-										   style="width:88px;" placeholder="开始日期" title="开始日期"/></td>
-								<td style="padding-left:2px;">
+								<c:if test="${pd.scan_type =='1,3'}">
+								<td style="padding-left:5px;text-align: right"><label>扫描类型:</label></td>
+								<td style="padding-left:5px;">
+									<div class="nav-search">
+										<select class="nav-search-input" name="selectScanType" id="selectScanType"  style="vertical-align:top;width: 145px;"  title="扫描类型"  >
+											<option value="">全部</option>
+											<option value="1" <c:if test="${pd.selectScanType =='1'}">selected</c:if> >巡视扫描</option>
+											<option value="3" <c:if test="${pd.selectScanType == '3'}">selected</c:if> >保养扫描</option>
+										</select>
+									</div>
+								</td>
+								</c:if>
+								<c:if test="${pd.scan_type =='2' || pd.scan_type =='4'}">
+									<td style="padding-left:5px;text-align: right"><label>更改类型:</label></td>
+									<td style="padding-left:5px;">
+										<div class="nav-search">
+											<select class="nav-search-input" name="changeType" id="changeType"  style="vertical-align:top;width: 145px;"  title="更改类型"  >
+												<option value="">全部</option>
+												<option value="0" <c:if test="${pd.changeType =='1'}">selected</c:if> >开始操作</option>
+												<option value="1" <c:if test="${pd.changeType == '3'}">selected</c:if> >结束操作</option>
+											</select>
+										</div>
+									</td>
+								</c:if>
+
+								<td style="padding-left:5px;text-align: right"><label>小推车名称:</label></td>
+								<td style="padding-left:5px;">
+									<div class="nav-search">
+											<input type="text" placeholder="小推车名称" class="nav-search-input" id="carName" autocomplete="off"
+												   name="carName" value="${pd.carName }" style="width: 145px;"/>
+									</div>
+								</td>
+							</tr>
+							<tr >
+								<td style="padding-left:5px;text-align: right"><label>操作人:</label></td>
+								<td style="padding-left:5px;">
+									<div class="nav-search">
+										<input type="text" placeholder="操作人" class="nav-search-input" id="staffName" autocomplete="off"
+											   name="staffName" value="${pd.staffName}" style="width: 145px;"/>
+									</div>
+								</td>
+								<td style="padding-left:5px;text-align: right"><label>扫描时间:</label></td>
+								<td style="padding-left:5px;">
+									<input class="span10 date-picker" name="lastStart" id="lastStart"  value="${pd.lastStart}" type="text" data-date-format="yyyy-mm-dd"
+										   readonly="readonly" style="width:145px;" placeholder="开始日期"/>
+								</td>
+								<td style="padding-left:5px;">
 									<input class="span10 date-picker" name="lastEnd" name="lastEnd"  value="${pd.lastEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly"
-										   style="width:88px;" placeholder="结束日期" title="结束日期"/></td>
-								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
-								<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>
+										   style="width:145px;" placeholder="结束日期"/>
+								</td>
+								<td style="vertical-align:top;padding-left:5px">
+									<a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a>
+									<a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a>
+								</td>
 							</tr>
 						</table>
 						<!-- 检索  -->
@@ -62,9 +108,16 @@
 									</th>
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">扫描类型</th>
+									<c:if test="${pd.scan_type =='1,3'}">
+									<th class="center">保养类型</th>
+									</c:if>
+									<c:if test="${pd.scan_type =='2' || pd.scan_type =='4'}">
 									<th class="center">操作类型</th>
+									</c:if>
 									<th class="center">机器名称</th>
 									<th class="center">机器编码</th>
+									<th class="center">小推车名称</th>
+									<th class="center">小推车编码</th>
 									<th class="center">操作人</th>
 									<th class="center">操作时间</th>
 								</tr>
@@ -81,9 +134,16 @@
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.scan_type}</td>
+											<c:if test="${pd.scan_type =='1,3'}">
+											<td class='center'>${var.cycle_type}</td>
+											</c:if>
+											<c:if test="${pd.scan_type =='2' || pd.scan_type =='4'}">
 											<td class='center'>${var.operation_type}</td>
+											</c:if>
 											<td class='center'>${var.mname}</td>
 											<td class='center'>${var.mcode}</td>
+											<td class='center'>${var.carName}</td>
+											<td class='center'>${var.carCode}</td>
 											<td class='center'>${var.staff_name}</td>
 											<td class='center'>${var.scan_date}</td>
 										</tr>
@@ -153,7 +213,8 @@
 			//日期框
 			$('.date-picker').datepicker({
 				autoclose: true,
-				todayHighlight: true
+				todayHighlight: true,
+				clearBtn: true
 			});
 			
 			//下拉框

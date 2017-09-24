@@ -76,7 +76,7 @@ public class CarService implements CarManager{
 	 * @throws Exception
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
-		dao.delete("CarMapper.deleteAll", ArrayDATA_IDS);
+		dao.update("CarMapper.deleteAll", ArrayDATA_IDS);
 	}
 	
 }

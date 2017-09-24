@@ -98,15 +98,43 @@
 		a.repair_position,
 		a.target_rule,
 		a.scan_date,
+		a.cycle_type,
 		b.name as mname,
-		b.barcode as mcode
+		b.barcode as mcode,
+		c.name as carName,
+		c.barcode as carCode
 		from
 		<include refid="tableName"></include> a
 		LEFT  JOIN oa_machine b ON  a.mhid = b.mhid
+		LEFT JOIN oa_car c ON  c.car_id = a.car_id
 		where a.COMPANY_ID =#{pd.COMPANY_ID}
 		<if test="pd.scan_type!= null and pd.scan_type != ''">
 			and a.scan_type IN (${pd.scan_type})
 		</if>
+		<if test="pd.machineName!= null and pd.machineName != ''">
+			and b.name  LIKE CONCAT(CONCAT('%', #{pd.machineName}),'%')
+		</if>
+		<if test="pd.selectScanType!= null and pd.selectScanType != ''">
+			and a.scan_type =#{pd.selectScanType}
+		</if>
+		<if test="pd.carName!= null and pd.carName != ''">
+			and c.NAME  LIKE CONCAT(CONCAT('%', #{pd.carName}),'%')
+		</if>
+		<if test="pd.staffName!= null and pd.staffName != ''">
+			and a.staff_name  LIKE CONCAT(CONCAT('%', #{pd.staffName}),'%')
+		</if>
+		<if test="pd.lastStart!= null and pd.lastStart != ''">
+			and a.scan_date >=#{pd.lastStart}
+		</if>
+		<if test="pd.lastEnd!= null and pd.lastEnd != ''">
+			<![CDATA[
+			and a.scan_date <= CONCAT(#{pd.lastEnd},' 23:59:59')
+			]]>
+		</if>
+		<if test="pd.changeType!= null and pd.changeType != ''">
+			and a.operation_type = #{pd.changeType}
+		</if>
+
 		ORDER BY scan_date DESC
 	</select>
 	

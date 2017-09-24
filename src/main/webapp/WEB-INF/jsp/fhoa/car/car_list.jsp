@@ -34,23 +34,29 @@
 						<form action="car/list.do" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
+								<td style="padding-left: 5px;"><label>小推车名称:</label></td>
 								<td>
 									<div class="nav-search">
 										<span class="input-icon">
-											<input type="text" placeholder="小推车名称" class="nav-search-input" id="nav-search-input" autocomplete="off" name="NAME" value="${pd.NAME}" />
-											<i class="ace-icon fa fa-search nav-search-icon"></i>
+											<input type="text" placeholder="小推车名称" class="nav-search-input" id="nav-search-input"
+												   autocomplete="off" name="NAME" value="${pd.NAME}" style="width: 145px;"/>
 										</span>
 									</div>
 								</td>
+								<td style="padding-left: 5px;"><label>采购开始日期:</label></td>
 								<td style="padding-left:10px;">
-									<input class="span10 date-picker" name="lastStart" id="lastStart"  value="${pd.lastStart}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:100px;" placeholder="采购开始日期"/>
+									<input class="span10 date-picker" name="lastStart" id="lastStart"  value="${pd.lastStart}" type="text"
+										   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="采购开始日期"/>
 								</td>
 								<td style="padding-left:10px;">
-									<input class="span10 date-picker" name="lastEnd" name="lastEnd"  value="${pd.lastEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" style="width:100px;" placeholder="采购结束日期"/>
+									<input class="span10 date-picker" name="lastEnd" name="lastEnd"  value="${pd.lastEnd}" type="text"
+										   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="采购结束日期"/>
 								</td>
+								<td style="padding-left: 5px;"><label>小推车类型:</label></td>
 								<td style="vertical-align:top;padding-left:10px;">
-								 	<select class="chosen-select form-control" name="CARTYPE" id="CARTYPE" data-placeholder="小推车类型" style="vertical-align:top;width: 120px;">
-									<option value=""></option>
+								 	<select class="chosen-select form-control" name="CARTYPE" id="CARTYPE" data-placeholder="小推车类型"
+											style="vertical-align:top;width: 145px;">
+									<option value="">全选</option>
 									<c:forEach items="${carTypeList}" var="carType">
 										<option value="${carType.OCBID }" <c:if test="${carType.OCBID == pd.CARTYPE}">selected</c:if> >${carType.NAME}</option>
 									</c:forEach>
@@ -59,7 +65,6 @@
 								<c:if test="${QX.cha == 1 }">
 								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
 								</c:if>
-								<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>
 							</tr>
 						</table>
 						<!-- 检索  -->
@@ -222,7 +227,8 @@
 			//日期框
 			$('.date-picker').datepicker({
 				autoclose: true,
-				todayHighlight: true
+				todayHighlight: true,
+				clearBtn: true
 			});
 			
 			//下拉框

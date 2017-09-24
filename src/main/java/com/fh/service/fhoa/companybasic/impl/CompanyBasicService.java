@@ -34,7 +34,7 @@ public class CompanyBasicService implements CompanyBasicManager{
 	 * @throws Exception
 	 */
 	public void delete(PageData pd)throws Exception{
-		dao.delete("CompanyBasicMapper.delete", pd);
+		dao.update("CompanyBasicMapper.delete", pd);
 	}
 	
 	/**修改
@@ -76,7 +76,7 @@ public class CompanyBasicService implements CompanyBasicManager{
 	 * @throws Exception
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
-		dao.delete("CompanyBasicMapper.deleteAll", ArrayDATA_IDS);
+		dao.update("CompanyBasicMapper.deleteAll", ArrayDATA_IDS);
 	}
 	
 }

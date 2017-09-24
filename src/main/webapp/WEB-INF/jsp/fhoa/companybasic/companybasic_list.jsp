@@ -81,7 +81,9 @@
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
 											<td class='center'>
-												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.OCBID}" class="ace" /><span class="lbl"></span></label>
+												<label class="pos-rel">
+													<input type='checkbox' name='ids' value="${var.OCBID}" class="ace" /><span class="lbl"></span>
+												</label>
 											</td>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
@@ -345,7 +347,7 @@
 							$.ajax({
 								type: "POST",
 								url: '<%=basePath%>companybasic/deleteAll.do?tm='+new Date().getTime(),
-						    	data: {DATA_IDS:str},
+						    	data: {DATA_IDS:str,TYPE:"${pd.TYPE}"},
 								dataType:'json',
 								//beforeSend: validateData,
 								cache: false,

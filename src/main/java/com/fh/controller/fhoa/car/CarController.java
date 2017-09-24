@@ -113,13 +113,14 @@ public class CarController extends BaseController {
 		List<PageData>	varList = carService.list(page);	//列出Car列表
 
 		//获取小推车类型
-		pd.put("TYPE","carType");
-		pd.put("STATUS",1);
-		pd.put("COMPANY_ID",user.getCompanyId());
-		List<PageData>	carTypeList = companybasicService.list(page);
-		pd.put("TYPE",null);
+		PageData carpd = new PageData();
+		carpd.put("TYPE","carType");
+		carpd.put("STATUS",1);
+		carpd.put("COMPANY_ID",user.getCompanyId());
+		Page carpage = new Page();
+		carpage.setPd(carpd);
+		List<PageData>	carTypeList = companybasicService.list(carpage);
 		mv.addObject("carTypeList",carTypeList);
-
 
 		mv.setViewName("fhoa/car/car_list");
 		mv.addObject("varList", varList);
