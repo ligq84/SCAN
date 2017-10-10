@@ -1,4 +1,49 @@
-﻿<div id="sidebar" class="sidebar                  responsive">
+﻿<style type="text/css">
+	.no-skin .sidebar{
+		background-color: #0e77d9;
+	}
+	.no-skin .nav-list > li {
+		border-color: white;
+		/*background-color: #0e77d9 ;*/
+	}
+	.no-skin .nav-list > li > a {
+		background-color: #0e77d9;
+		color: white;
+	}
+	.blue {
+		 color: #0e77d9 !important;
+	}
+
+	.no-skin .nav-list > li:hover > a {
+		background-color: #0e77d9 !important;
+		color: white !important;
+	}
+	.no-skin .nav-list > li.open > a {
+	    background-color: #0e77d9;
+		color: white;
+	}
+	.no-skin .nav-list > li .submenu > li > a {
+		border-top-color: #e4e4e4;
+		background-color: #0e77d9;
+		color: white;
+	}
+	.no-skin .sidebar-toggle {
+		background-color: #0e77d9;
+		border-color: #e0e0e0;
+	}
+	.no-skin .nav-list > li > .submenu li > .submenu > li a {
+		color: white;
+	}
+	.no-skin .nav-list > li > .submenu li.open > a {
+		color: white;
+	}
+	.nav-list > li > .submenu li > .submenu > li {
+		line-height: 18px;
+		background-color: #0e77d9;
+	}
+
+</style>
+<div id="sidebar" class="sidebar                  responsive">
 				<script type="text/javascript">
 					try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
 				</script>

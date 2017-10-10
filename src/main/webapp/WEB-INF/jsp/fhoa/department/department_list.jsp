@@ -45,9 +45,9 @@
 										<option value="" <c:if test="${DEPARTMENT_ID == ''}">selected</c:if>>全部</option>
 									</select>
 								</td>
-								<c:if test="${QX.cha == 1 }">
+								<%--<c:if test="${QX.cha == 1 }">--%>
 								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="gsearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
-								</c:if>
+								<%--</c:if>--%>
 							</tr>
 						</table>
 						<!-- 检索  -->

@@ -1,4 +1,25 @@
-﻿		<div id="navbar" class="navbar navbar-default">
+﻿<style type="text/css">
+	.navbar{
+		background-color: #0e77d9 ;
+	}
+	.ace-nav > li.green > a,.ace-nav > li.green > a:hover {
+		background-color: #0e77d9;
+	}
+	.ace-nav > li.light-blue > a,.ace-nav > li.light-blue > a:hover {
+		background-color: #0e77d9;
+	}
+	.label-success, .label.label-success, .badge.badge-success, .badge-success {
+		background-color: #f01d1d;
+	}
+	.ace-nav > li > a > .badge {
+		position: relative;
+		top: -4px;
+		left: 0px;
+		padding-right: 5px;
+		padding-left: 5px;
+	}
+</style>
+		<div id="navbar" class="navbar navbar-default">
 			<script type="text/javascript">
 				try{ace.settings.check('navbar' , 'fixed');}catch(e){}
 			</script>
