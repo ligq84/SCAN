@@ -237,6 +237,7 @@ public class StaffController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/goAdd")
+	@SuppressWarnings("all")
 	public ModelAndView goAdd()throws Exception{
 		Session session = Jurisdiction.getSession();
 		User user = (User)session.getAttribute(Const.SESSION_USER);
@@ -277,14 +278,14 @@ public class StaffController extends BaseController {
 			mv.addObject("AREAList",pdList);
 		}
 		//人员岗位下拉列表
-		String status = pd.get("STATUS")+"";
-		pd.put("TYPE","staffPost");
-		pd.put("STATUS",1);
+		PageData gwpd = new PageData();
+		gwpd.put("COMPANY_ID",user.getCompanyId());
+		gwpd.put("TYPE","staffPost");
+		gwpd.put("STATUS",1);
 		Page page = new Page();
-		page.setPd(pd);
+		page.setPd(gwpd);
 		List<PageData>	staffPostList = companybasicService.list(page);
 		mv.addObject("staffPostList",staffPostList);
-		pd.put("STATUS",status);
 
 		pd.put("ROLE_ID","1");
 		List<Role> roleList = roleService.listAllRolesByPId(pd);//列出会员组角色

@@ -16,7 +16,28 @@
 <!-- jsp文件头和头部 -->
 <%@ include file="../../system/index/top.jsp"%>
 <!-- 百度echarts -->
-<script src="plugins/echarts/echarts.min.js"></script>
+<%--<script src="plugins/echarts/echarts.min.js"></script>--%>
+<link rel="stylesheet" href="static/css/pagePublic.css" />
+	<style type="text/css">
+		.fontSize{
+			font-size: 20px;
+			font-family: Microsoft YaHei;
+		}
+		textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+			border-radius: 0 !important;
+			color: #858585;
+			background-color: #ffffff;
+			border: 1px solid #d5d5d5;
+			padding: 4px 4px 5px;
+			font-size: 20px;
+			font-family: inherit;
+			-webkit-box-shadow: none !important;
+			box-shadow: none !important;
+			-webkit-transition-duration: 0.1s;
+			transition-duration: 0.1s;
+			margin-top: 5px;
+		}
+	</style>
 <script type="text/javascript">
 setTimeout("top.hangge()",500);
 </script>
@@ -33,43 +54,65 @@ setTimeout("top.hangge()",500);
 					<div class="col-xs-12" >
 						<form name="Form" id="Form" method="post" class="form-horizontal">
 							<div id="zhongxin" style="padding-top: 10px;">
-								<div class="widget-header widget-header-blue widget-header-flat wi1dget-header-large">
-									<h4 class="lighter">维修通知扫描</h4>
+								<div class="row">
+									<h2 class="lighter">维修通知扫描</h2>
 								</div>
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
-										<label for="machineCode" class="col-sm-2 control-label"><h4 >扫描机器号:</h4></label>
-										<div class="col-sm-4 control-label">
-											<input type="text" name="machineCode" id="machineCode" value="" maxlength="50" placeholder="请扫描机器号"  class="form-control" />
+										<label for="machineCode" class="col-sm-5 control-label" style="text-align: left;padding-left:50px;"><h2 >第一步扫描机器号:</h2></label>
+									</div>
+								</div>
+								<div class="row">
+									<div class="form-group" >
+										<div class="col-sm-5 control-label" style="padding-left: 50px;">
+											<input type="text" name="machineCode" id="machineCode" value="" maxlength="50" placeholder="请扫描机器号"  class="form-control"
+											style="height: 50px;"/>
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
-										<label class="col-sm-2 control-label"><h4 >机器信息:</h4></label>
+										<label class="col-sm-2 control-label"><h2 >机器信息:</h2></label>
 									</div>
 								</div>
 								<div class="row" style="margin-left: 15px;">
-									<label for="machine_name" class="col-sm-2 control-label">机器名称:</label>
+									<label for="machine_name" class="col-sm-1 control-label fontSize"  style="width: 130px;">机器名称:</label>
 									<div class="col-sm-2">
-										<input type="text" name="machine_name" id="machine_name"  maxlength="50"  class="form-control" style="border: 0px"/>
+										<input type="text" name="machine_name" id="machine_name"  maxlength="50"  class="form-control" style="border: 0px" readonly/>
 									</div>
-									<label for="type" class="col-sm-1 control-label">机器类型:</label>
-									<div class="col-sm-2">
-										<input type="text" name="type" id="type"  maxlength="50"  class="form-control" style="border: 0px"/>
+									<label for="type" class="col-sm-1 control-label fontSize"  style="width: 130px;">机器类型:</label>
+									<div class="col-sm-1" style="width: 100px;">
+										<input type="text" name="type" id="type"  maxlength="50"  class="form-control" style="border: 0px" readonly/>
 									</div>
-									<label for="code" class="col-sm-1 control-label">机器编号:</label>
-									<div class="col-sm-2">
-										<input type="text" name="code" id="code"  maxlength="50" class="form-control" style="border: 0px"/>
+									<label for="code" class="col-sm-1 control-label fontSize"  style="width: 130px;">机器编号:</label>
+									<div class="col-sm-3">
+										<input type="text" name="code" id="code"  maxlength="50" class="form-control" style="border: 0px" readonly/>
 									</div>
 									<input type="hidden" id="to_staff" name="to_staff" />
 									<input type="hidden" id="CONTENT" name="CONTENT" />
 									<input type="hidden" id="USERNAME" name="USERNAME" />
 									<input type="hidden" id="mhid" name="mhid" />
 								</div>
+								<div class="row" style="margin-left: 15px;">
+									<label for="chargeName" class="col-sm-1 control-label fontSize"  style="width: 130px;">机器负责人:</label>
+									<div class="col-sm-2">
+										<input type="text" name="chargeName" id="chargeName"  maxlength="50"  class="form-control" style="border: 0px" readonly/>
+									</div>
+									<label for="Day_Repairman" class="col-sm-1 control-label fontSize"  style="width: 130px;">白班维修人:</label>
+									<div class="col-sm-1" style="width: 100px;">
+										<input type="text" name="Day_Repairman" id="Day_Repairman"  maxlength="50"  class="form-control" style="border: 0px" readonly/>
+									</div>
+									<label for="Night_Repairman" class="col-sm-1 control-label fontSize"  style="width: 130px;">晚班维修人:</label>
+									<div class="col-sm-3">
+										<input type="text" name="Night_Repairman" id="Night_Repairman"  maxlength="50" class="form-control" style="border: 0px" readonly/>
+									</div>
+								</div>
+								<div class="row" style="margin-left: 15px;margin-top: 20px;">
+									<label style="color: red;font-size: 18px;">确认操作后，通知将发送给机器的负责人及白晚班维修员！</label>
+								</div>
 								<div class="row" style="margin-left:50px;text-align: center;">
-									<div class="form-group" style="margin-top: 100px">
-										<a class="btn btn-mini btn-primary" onclick="sendSms();">发送维修通知</a>
+									<div class="form-group" style="margin-top: 38px">
+										<a class="btn btn-mini btn-primary" onclick="sendSms();">确认操作通知</a>
 									</div>
 								</div>
 							</div>
@@ -135,6 +178,9 @@ setTimeout("top.hangge()",500);
 								$("#to_staff").val('机器负责人：'+machine.chargeN+'、白班维修员：'+machine.Day_R+'、晚班维修员'+machine.Night_R);
 								$("#USERNAME").val(machine.chargeName+';'+machine.Day_Repairman+';'+machine.Night_Repairman);
 								$("#mhid").val(machine.mhid);
+								$("#chargeName").val(machine.chargeName);
+								$("#Day_Repairman").val(machine.Day_Repairman);
+								$("#Night_Repairman").val(machine.Night_Repairman);
 
 							}
 						}

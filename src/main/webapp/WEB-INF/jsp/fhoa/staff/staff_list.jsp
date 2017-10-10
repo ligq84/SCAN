@@ -36,7 +36,7 @@
 		}
 		.nav-search .nav-search-input{
 			color: #282828 !important;
-			font-family: "微软雅黑" !important;
+			font-family: Microsoft YaHei !important;
 		}
 		input[readonly] {
 			color: #939192;
@@ -48,7 +48,7 @@
 		}
 		#selectTree >table >tbody >tr>td:first-of-type > input{
 			color: #282828 !important;
-			font-family: "微软雅黑" !important;
+			font-family: Microsoft YaHei !important;
 			width: 145px !important;
 			border-radius: 4px !important;
 			border: 1px solid #6FB3E0;

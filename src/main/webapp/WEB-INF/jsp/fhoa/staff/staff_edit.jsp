@@ -112,7 +112,8 @@
 							<div class="form-group" style="margin-top: 10px">
 								<label for="NAME" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>最高学历:</label>
 								<div class="col-sm-2">
-									<input type="text" name="EDUCATION" id="EDUCATION" value="${pd.EDUCATION}" maxlength="10" placeholder="这里输入学历" title="学历" style="width:98%;"/>
+									<input type="text" name="EDUCATION" id="EDUCATION" value="${pd.EDUCATION}" maxlength="10" placeholder="这里输入学历" title="学历"
+										   style="width:98%;"/>
 								</div>
 								<label for="NAME" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>毕业学校:</label>
 								<div class="col-sm-2">

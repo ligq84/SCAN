@@ -34,12 +34,12 @@
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">名称:</td>
-								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="行业名称" title="行业名称" style="width:98%;"/></td>
+								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">启用状态:</td>
 								<td>
-									<select id="STATUS" name="STATUS"  class="chosen-select form-control" data-placeholder="请选择经济类型" style="vertical-align:top;">
+									<select id="STATUS" name="STATUS"  class="chosen-select form-control" style="vertical-align:top;">
 										<option value="">请选择</option>
 										<option value="0" <c:if test="${!empty pd.STATUS &&  pd.STATUS == 0 }"> selected</c:if>  >未启用</option>
 										<option value="1"<c:if test="${!empty pd.STATUS &&  pd.STATUS == 1}"> selected</c:if> >已启用</option>
@@ -53,7 +53,7 @@
 							<tr>
 								<td style="width:75px;text-align: right;padding-top: 13px;">描述:</td>
 								<td>
-									<textarea name="OCB_DESC" id="OCB_DESC"  rows="3" class="form-control">
+									<textarea name="OCB_DESC" id="OCB_DESC"  rows="3" cols="40">
 										${pd.OCB_DESC}
 									</textarea>
 								</td>

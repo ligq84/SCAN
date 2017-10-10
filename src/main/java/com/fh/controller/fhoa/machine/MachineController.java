@@ -252,7 +252,7 @@ public class MachineController extends BaseController {
 		Session session = Jurisdiction.getSession();
 		User user = (User)session.getAttribute(Const.SESSION_USER);
 		//机器编码生成
-		String BARCODE= "qgc"+user.getCompanyId()+new Date().getTime();
+		String BARCODE= ""+user.getCompanyId()+new Date().getTime();
 		pd.put("BARCODE",BARCODE);
 		//人员选择下拉列表
 		pd.put("COMPANY_ID",user.getCompanyId());
@@ -437,7 +437,7 @@ public class MachineController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd = machineService.findById(pd);
-		if(null == pd.get("BARCODEURL") || "".equals(pd.getString("BARCODEURL"))){
+		//if(null == pd.get("BARCODEURL") || "".equals(pd.getString("BARCODEURL"))){
 			String filePath = PathUtil.getClasspath();
 
 			String fileName = pd.get("BARCODE").toString()+".jpg";
@@ -451,12 +451,15 @@ public class MachineController extends BaseController {
 			File file = new File(filePath+systemPath+fileName);
 			if(!file.exists()){
 				file.createNewFile();
+			}else{
+				file.delete();
+				file.createNewFile();
 			}
-			OneDimensionCode.getBarcodeWriteFile(pd.get("BARCODE").toString(), null,null, file);
+			OneDimensionCode.getBarcodeWriteFile(pd.get("BARCODE").toString(), 800,200, file);
 			String BARCODEURL ="http://" + request.getServerName()+":" +request.getServerPort()+systemPath+fileName;
 			pd.put("BARCODEURL",BARCODEURL);
 			machineService.edit(pd);
-		}
+		//}
 		mv.setViewName("fhoa/machine/printPage");
 		mv.addObject("pd", pd);
 		return mv;

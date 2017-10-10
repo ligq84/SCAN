@@ -141,7 +141,7 @@ public class CarController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		//编码生成规则 qg+公司id +时间戳
-		String BARCODE= "qgc"+user.getCompanyId()+new Date().getTime();
+		String BARCODE= ""+user.getCompanyId()+new Date().getTime();
 		pd.put("BARCODE",BARCODE);
 
 		//获取小推车类型
@@ -223,7 +223,7 @@ public class CarController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd = carService.findById(pd);
-		if(null == pd.get("BARCODEURL") || "".equals(pd.getString("BARCODEURL"))){
+		//if(null == pd.get("BARCODEURL") || "".equals(pd.getString("BARCODEURL"))){
 			String filePath = PathUtil.getClasspath();
 
 			String fileName = pd.get("BARCODE").toString()+".jpg";
@@ -237,12 +237,15 @@ public class CarController extends BaseController {
 			File file = new File(filePath+systemPath+fileName);
 			if(!file.exists()){
 				file.createNewFile();
+			}else {
+				file.delete();
+				file.createNewFile();
 			}
-			OneDimensionCode.getBarcodeWriteFile(pd.get("BARCODE").toString(), null,null, file);
+			OneDimensionCode.getBarcodeWriteFile(pd.get("BARCODE").toString(), 800,200, file);
 			String BARCODEURL ="http://" + request.getServerName()+":" +request.getServerPort()+systemPath+fileName;
 			pd.put("BARCODEURL",BARCODEURL);
 			carService.edit(pd);
-		}
+		//}
 		mv.setViewName("fhoa/car/printPage");
 		mv.addObject("pd", pd);
 		return mv;

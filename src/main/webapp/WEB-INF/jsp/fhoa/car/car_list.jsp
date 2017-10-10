@@ -18,6 +18,7 @@
 <%@ include file="../../system/index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />
+	<link rel="stylesheet" href="static/css/pagePublic.css" />
 </head>
 <body class="no-skin">
 
@@ -34,47 +35,60 @@
 						<form action="car/list.do" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
-								<td style="padding-left: 5px;"><label>小推车名称:</label></td>
-								<td>
+								<td class="searchTabletd"><label>小推车名称:</label></td>
+								<td class="searchTabletd">
 									<div class="nav-search">
-										<span class="input-icon">
 											<input type="text" placeholder="小推车名称" class="nav-search-input" id="nav-search-input"
 												   autocomplete="off" name="NAME" value="${pd.NAME}" style="width: 145px;"/>
-										</span>
 									</div>
 								</td>
-								<td style="padding-left: 5px;"><label>采购开始日期:</label></td>
-								<td style="padding-left:10px;">
-									<input class="span10 date-picker" name="lastStart" id="lastStart"  value="${pd.lastStart}" type="text"
-										   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="采购开始日期"/>
+								<td class="searchTabletd"><label>采购开始日期:</label></td>
+								<td class="searchTabletd">
+									<div class="nav-search">
+										<input class="span10 date-picker nav-search-input" name="lastStart" id="lastStart"  value="${pd.lastStart}" type="text"
+											   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="采购开始日期"/>
+									</div>
 								</td>
-								<td style="padding-left:10px;">
-									<input class="span10 date-picker" name="lastEnd" name="lastEnd"  value="${pd.lastEnd}" type="text"
+								<td class="searchTabletd">
+									<div class="nav-search">
+									<input class="span10 date-picker nav-search-input" name="lastEnd" name="lastEnd"  value="${pd.lastEnd}" type="text"
 										   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="采购结束日期"/>
+										</div>
 								</td>
-								<td style="padding-left: 5px;"><label>小推车类型:</label></td>
-								<td style="vertical-align:top;padding-left:10px;">
-								 	<select class="chosen-select form-control" name="CARTYPE" id="CARTYPE" data-placeholder="小推车类型"
-											style="vertical-align:top;width: 145px;">
-									<option value="">全选</option>
-									<c:forEach items="${carTypeList}" var="carType">
-										<option value="${carType.OCBID }" <c:if test="${carType.OCBID == pd.CARTYPE}">selected</c:if> >${carType.NAME}</option>
-									</c:forEach>
-								  	</select>
+							</tr>
+							<tr>
+								<td class="searchTabletd"><label>小推车类型:</label></td>
+								<td class="searchTabletd">
+									<div class="nav-search">
+										<select class="nav-search-input" name="CARTYPE" id="CARTYPE" data-placeholder="小推车类型"
+												style="vertical-align:top;width: 145px;">
+											<option value="">全选</option>
+											<c:forEach items="${carTypeList}" var="carType">
+												<option value="${carType.OCBID }" <c:if test="${carType.OCBID == pd.CARTYPE}">selected</c:if> >${carType.NAME}</option>
+											</c:forEach>
+										</select>
+									</div>
 								</td>
 								<c:if test="${QX.cha == 1 }">
-								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
+									<td class="searchTabletd">
+										<a class="btn btn-mini btn-qg" onclick="tosearch();"  >
+											查询
+										</a>
+										<c:if test="${QX.add == 1 }">
+											<a class="btn btn-mini btn-qg" onclick="add();">新增小推车</a>
+										</c:if>
+									</td>
 								</c:if>
 							</tr>
 						</table>
 						<!-- 检索  -->
 					
-						<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:5px;">	
+						<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:20px;">
 							<thead>
 								<tr>
-									<th class="center" style="width:35px;">
-									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
-									</th>
+									<%--<th class="center" style="width:35px;">--%>
+									<%--<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>--%>
+									<%--</th>--%>
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">小推车名称</th>
 									<th class="center">小推车类型</th>
@@ -92,9 +106,9 @@
 									<c:if test="${QX.cha == 1 }">
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
-											<td class='center'>
-												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.CAR_ID}" class="ace" /><span class="lbl"></span></label>
-											</td>
+											<%--<td class='center'>--%>
+												<%--<label class="pos-rel"><input type='checkbox' name='ids' value="${var.CAR_ID}" class="ace" /><span class="lbl"></span></label>--%>
+											<%--</td>--%>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.typeName}</td>
@@ -105,48 +119,21 @@
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
-												<div class="hidden-sm hidden-xs btn-group">
+												<div class="btn-group">
+													<a title="打印条码" onclick="print('${var.BARCODE}','${var.CAR_ID}');">
+														<img src="/static/images/tiaoma.png" />
+													</a>
 													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.CAR_ID}');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
+													<a  title="编辑" onclick="edit('${var.CAR_ID}');">
+														<img src="/static/images/edit.png" />
 													</a>
 													</c:if>
 													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="del('${var.CAR_ID}');">
-														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
+													<a  onclick="del('${var.CAR_ID}');">
+														<img src="/static/images/delete.png" />
 													</a>
 													</c:if>
-													<a class="btn btn-xs btn-success" title="打印预览" onclick="print('${var.BARCODE}','${var.CAR_ID}');">
-														<i class="menu-icon fa fa-hdd-o " title="打印预览"></i>
-													</a>
-												</div>
-												<div class="hidden-md hidden-lg">
-													<div class="inline pos-rel">
-														<button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-															<i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-														</button>
-			
-														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-															<c:if test="${QX.edit == 1 }">
-															<li>
-																<a style="cursor:pointer;" onclick="edit('${var.CAR_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">
-																	<span class="green">
-																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																	</span>
-																</a>
-															</li>
-															</c:if>
-															<c:if test="${QX.del == 1 }">
-															<li>
-																<a style="cursor:pointer;" onclick="del('${var.CAR_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">
-																	<span class="red">
-																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																	</span>
-																</a>
-															</li>
-															</c:if>
-														</ul>
-													</div>
+
 												</div>
 											</td>
 										</tr>
@@ -170,14 +157,6 @@
 						<div class="page-header position-relative">
 						<table style="width:100%;">
 							<tr>
-								<td style="vertical-align:top;">
-									<c:if test="${QX.add == 1 }">
-									<a class="btn btn-mini btn-success" onclick="add();">新增</a>
-									</c:if>
-									<c:if test="${QX.del == 1 }">
-									<a class="btn btn-mini btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
-									</c:if>
-								</td>
 								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 							</tr>
 						</table>

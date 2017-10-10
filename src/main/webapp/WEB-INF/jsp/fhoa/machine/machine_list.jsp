@@ -18,6 +18,7 @@
 <%@ include file="../../system/index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />
+<link rel="stylesheet" href="static/css/pagePublic.css" />
 </head>
 <body class="no-skin">
 
@@ -34,15 +35,16 @@
 						<form action="machine/list.do" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
-								<td style="padding-left:5px;text-align: right">机器名称:</td>
-								<td style="padding-left:5px;">
+								<td class="searchTabletd"  style="text-align: right">机器名称:</td>
+								<td class="searchTabletd">
 									<div class="nav-search">
-										<input type="text"  class="nav-search-input" id="Name" autocomplete="off" name="Name" value="${pd.Name }" style="width: 145px;"/>
+										<input type="text"  class="nav-search-input" id="Name" autocomplete="off" name="Name"
+											   value="${pd.Name}" style="width: 145px;" placeholder="这里输入机器名称"/>
 
 									</div>
 								</td>
-								<td style="padding-left:5px;text-align: right">机器类型:</td>
-								<td style="padding-left:2px;">
+								<td class="searchTabletd" style="text-align: right">机器类型:</td>
+								<td class="searchTabletd">
 									<div class="nav-search">
 										<select class="nav-search-input" name="TYPE" id="TYPE"  style="vertical-align:top;width: 145px;"  title="现岗位"  >
 											<option value="">全部</option>
@@ -52,35 +54,44 @@
 										</select>
 									</div>
 								</td>
-								<td style="padding-left:5px;text-align: right">负责人:</td>
-								<td style="padding-left:2px;">
+								<td class="searchTabletd" style="text-align: right">负责人:</td>
+								<td class="searchTabletd" >
 									<div class="nav-search">
-										<input type="text"  class="nav-search-input" id="Repairman" autocomplete="off" name="Repairman" value="${pd.Repairman }"
-											   style="width: 145px;"/>
+										<input type="text"  class="nav-search-input" id="Repairman" autocomplete="off" name="Repairman"
+											   value="${pd.Repairman }" placeholder="这里输入负责人" style="width: 145px;"/>
 									</div>
 								</td>
-								<td style="padding-left:5px;text-align: right">更改规格:</td>
-								<td style="vertical-align:top;padding-left:2px;">
-								 	<select class="chosen-select form-control" name="CHANGE_RULE" id="id" data-placeholder="请选择" style="vertical-align:top;width: 120px;">
-									<option value="">全部</option>
-									<option value="0" <c:if test="${pd.CHANGE_RULE == '0'}">selected</c:if>>支持</option>
-									<option value="1" <c:if test="${pd.CHANGE_RULE == '1'}">selected</c:if> >不支持</option>
-								  	</select>
+								<%--<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>--%>
+							</tr>
+							<tr>
+								<td class="searchTabletd" style="text-align: right">更改规格:</td>
+								<td class="searchTabletd">
+									<div class="nav-search">
+										<select class="nav-search-input" name="CHANGE_RULE" id="id" data-placeholder="请选择" style="vertical-align:top;width: 145px;">
+											<option value="">全部</option>
+											<option value="0" <c:if test="${pd.CHANGE_RULE == '0'}">selected</c:if>>支持</option>
+											<option value="1" <c:if test="${pd.CHANGE_RULE == '1'}">selected</c:if> >不支持</option>
+										</select>
+									</div>
 								</td>
 								<c:if test="${QX.cha == 1 }">
-								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
+									<td class="searchTabletd" >
+										<a class="btn btn-mini btn-qg" onclick="tosearch();" >查询</a>
+										<c:if test="${QX.add == 1 }">
+											<a class="btn btn-mini btn-qg" onclick="add();">新增机器</a>
+										</c:if>
+									</td>
 								</c:if>
-								<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>
 							</tr>
 						</table>
 						<!-- 检索  -->
 					
-						<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:5px;">	
+						<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:20px;">
 							<thead>
 								<tr>
-									<th class="center" style="width:35px;">
-									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
-									</th>
+									<%--<th class="center" style="width:35px;">--%>
+									<%--<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>--%>
+									<%--</th>--%>
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">机器名称</th>
 									<th class="center">类型</th>
@@ -101,9 +112,9 @@
 									<c:if test="${QX.cha == 1 }">
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
-											<td class='center'>
-												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.MHID}" class="ace" /><span class="lbl"></span></label>
-											</td>
+											<%--<td class='center'>--%>
+												<%--<label class="pos-rel"><input type='checkbox' name='ids' value="${var.MHID}" class="ace" /><span class="lbl"></span></label>--%>
+											<%--</td>--%>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.typeName}</td>
@@ -117,48 +128,21 @@
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
-												<div class="hidden-sm hidden-xs btn-group">
+												<div class=" btn-group">
+													<a class="" title="打印条码" onclick="print('${var.BARCODE}','${var.MHID}');">
+														<img src="/static/images/tiaoma.png" />
+													</a>
 													<c:if test="${QX.edit == 1 }">
-													<a class="btn btn-xs btn-success" title="编辑" onclick="edit('${var.MHID}');">
-														<i class="ace-icon fa fa-pencil-square-o bigger-120" title="编辑"></i>
+													<a class="" title="编辑" onclick="edit('${var.MHID}');">
+														<img src="/static/images/edit.png" />
 													</a>
 													</c:if>
 													<c:if test="${QX.del == 1 }">
-													<a class="btn btn-xs btn-danger" onclick="del('${var.MHID}');">
-														<i class="ace-icon fa fa-trash-o bigger-120" title="删除"></i>
+													<a class="" onclick="del('${var.MHID}');">
+														<img src="/static/images/delete.png" />
 													</a>
 													</c:if>
-													<a class="btn btn-xs btn-success" title="打印预览" onclick="print('${var.BARCODE}','${var.MHID}');">
-														<i class="menu-icon fa fa-hdd-o " title="打印预览"></i>
-													</a>
-												</div>
-												<div class="hidden-md hidden-lg">
-													<div class="inline pos-rel">
-														<button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-															<i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-														</button>
-			
-														<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-															<c:if test="${QX.edit == 1 }">
-															<li>
-																<a style="cursor:pointer;" onclick="edit('${var.MHID}');" class="tooltip-success" data-rel="tooltip" title="修改">
-																	<span class="green">
-																		<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																	</span>
-																</a>
-															</li>
-															</c:if>
-															<c:if test="${QX.del == 1 }">
-															<li>
-																<a style="cursor:pointer;" onclick="del('${var.MHID}');" class="tooltip-error" data-rel="tooltip" title="删除">
-																	<span class="red">
-																		<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																	</span>
-																</a>
-															</li>
-															</c:if>
-														</ul>
-													</div>
+
 												</div>
 											</td>
 										</tr>
@@ -182,14 +166,6 @@
 						<div class="page-header position-relative">
 						<table style="width:100%;">
 							<tr>
-								<td style="vertical-align:top;">
-									<c:if test="${QX.add == 1 }">
-									<a class="btn btn-mini btn-success" onclick="add();">新增</a>
-									</c:if>
-									<c:if test="${QX.del == 1 }">
-									<a class="btn btn-mini btn-danger" onclick="makeAll('确定要删除选中的数据吗?');" title="批量删除" ><i class='ace-icon fa fa-trash-o bigger-120'></i></a>
-									</c:if>
-								</td>
 								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 							</tr>
 						</table>

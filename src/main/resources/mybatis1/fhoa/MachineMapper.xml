@@ -109,12 +109,26 @@
 	
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
-		select 
-		<include refid="Field"></include>
+		select
+		a.MHID,
+		a.NAME,
+		a.TYPE,
+		a.MODEL,
+		a.POWER,
+		a.CHARGE,
+		a.DAY_REPAIRMAN,
+		a.NIGHT_REPAIRMAN,
+		a.BARCODE,
+		a.BARCODEURL,
+		a.COMPANY_ID,
+		a.DELETED,
+		a.BZ,
+		a.CHANGE_RULE
+		,(SELECT d.`name` from oa_company_basic d WHERE a.type= d.ocbid) as typeName
 		from 
-		<include refid="tableName"></include>
+		<include refid="tableName"></include> a
 		where
-			MHID = #{MHID}
+			a.MHID = #{MHID}
 	</select>
 	
 	<!-- 列表 -->

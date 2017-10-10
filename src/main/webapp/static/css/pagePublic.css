@@ -1,0 +1,18 @@
+.btn-qg,.btn-qg:hover{
+    background-color: #0e77d9 !important;color: white !important;
+    border-color: #0e77d9 !important;
+    border-radius:4px;
+}
+.searchTabletd{
+    padding-left:10px;
+    padding-top: 10px;
+}
+*{
+    font-family: Microsoft YaHei;
+    color: #282828;
+}
+input[readonly] {
+    color: #939192;
+    background: none !important;
+    cursor: default;
+}

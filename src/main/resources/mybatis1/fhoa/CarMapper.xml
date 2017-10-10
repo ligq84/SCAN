@@ -80,18 +80,19 @@
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
 		select
-		CAR_ID,
-		NAME,
-		TYPE,
-		PURCHASEDATE,
-		BARCODE,
-		BARCODEURL,
-		COMPANY_ID,
-		DELETED,
-		BZ
-		from  <include refid="tableName"></include>
-		where DELETED = 0 AND
-			CAR_ID = #{CAR_ID}
+		a.CAR_ID,
+		a.NAME,
+		a.TYPE,
+		a.PURCHASEDATE,
+		a.BARCODE,
+		a.BARCODEURL,
+		a.COMPANY_ID,
+		a.DELETED,
+		a.BZ,
+		(SELECT d.`name` from oa_company_basic d WHERE a.type= d.ocbid) as typeName
+		from  <include refid="tableName"></include> a
+		where a.DELETED = 0 AND
+		a.CAR_ID = #{CAR_ID}
 	</select>
 	
 	<!-- 列表 -->
