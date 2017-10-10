@@ -18,6 +18,13 @@
 <%@ include file="../../system/index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />
+	<style type="text/css">
+		.btn-qg,.btn-qg:hover{
+			background-color: #0e77d9 !important;color: white !important;
+			border-color: #0e77d9 !important;
+			border-radius:4px;
+		}
+	</style>
 </head>
 <body class="no-skin">
 
@@ -44,14 +51,18 @@
 									</div>
 								</td>
 								<td style="vertical-align:top;padding-left:2px;">
-								 	<select class="nav-search-input" name="STATUS" id="STATUS" >
-									<option disabled selected>启用状态</option>
-									<option value="1"  <c:if test="${pd.STATUS == 1}">selected</c:if>>已启用</option>
-									<option value="0"  <c:if test="${pd.STATUS == 0}">selected</c:if>>未启用</option>
-								  	</select>
+									<div class="nav-search">
+										<select class="nav-search-input" name="STATUS" id="STATUS" >
+										<option disabled selected>启用状态</option>
+										<option value="1"  <c:if test="${pd.STATUS == 1}">selected</c:if>>已启用</option>
+										<option value="0"  <c:if test="${pd.STATUS == 0}">selected</c:if>>未启用</option>
+										</select>
+									</div>
 								</td>
 								<c:if test="${QX.cha == 1 }">
-								<td style="vertical-align:top;padding-left:2px"><a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a></td>
+								<td style="vertical-align:top;padding-left:2px">
+									<a class="btn btn-mini btn-qg" onclick="tosearch();" >查询</a>
+								</td>
 								</c:if>
 								<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>
 							</tr>

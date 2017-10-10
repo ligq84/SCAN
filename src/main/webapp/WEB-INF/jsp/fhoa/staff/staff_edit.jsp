@@ -54,7 +54,7 @@
 										<option <c:if test="${pd.SEX == '女'}">selected</c:if>>女</option>
 									</select>
 								</div>
-								<label for="BIRTHDAY" class="col-sm-1 control-label"><span style="color: red">*</span>出生日期:</label>
+								<label for="BIRTHDAY" class="col-sm-2 control-label"><span style="color: red">*</span>出生日期:</label>
 								<div class="col-sm-2">
 									<input class="span10 date-picker" name="BIRTHDAY" id="BIRTHDAY" value="${pd.BIRTHDAY}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="出生日期" title="出生日期" class="form-control"/>
 								</div>
@@ -70,7 +70,7 @@
 								<div class="col-sm-2">
 									<input type="text" name="TEL" id="TEL" value="${pd.TEL}" maxlength="20" placeholder="这里输入电话" title="电话" style="width:98%;"/>
 								</div>
-								<label for="BIRTHDAY" class="col-sm-1 control-label"><span style="color: red">*</span>身份证号:</label>
+								<label for="BIRTHDAY" class="col-sm-2 control-label"><span style="color: red">*</span>身份证号:</label>
 								<div class="col-sm-3">
 									<input type="text" name="SFID" id="SFID" value="${pd.SFID}" maxlength="20" placeholder="这里输入身份证号" title="身份证号" style="width:98%;"/>
 								</div>
@@ -78,7 +78,7 @@
 						</div>
 						<div class="row" style="margin-left: 15px;">
 							<div class="form-group" style="margin-top: 10px">
-								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>联系地址:</label>
+								<label for="NAME" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>联系地址:</label>
 								<div class="col-sm-2">
 										<select id="PROVINCE" name="PROVINCE" class="chosen-select form-control" data-placeholder="请选择省份" style="vertical-align:top;">
 										<c:forEach items="${PROVINCEList}" var="province">
@@ -110,15 +110,15 @@
 						</div>
 						<div class="row" style="margin-left: 15px;">
 							<div class="form-group" style="margin-top: 10px">
-								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>最高学历:</label>
+								<label for="NAME" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>最高学历:</label>
 								<div class="col-sm-2">
 									<input type="text" name="EDUCATION" id="EDUCATION" value="${pd.EDUCATION}" maxlength="10" placeholder="这里输入学历" title="学历" style="width:98%;"/>
 								</div>
-								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>毕业学校:</label>
+								<label for="NAME" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>毕业学校:</label>
 								<div class="col-sm-2">
 									<input type="text" name="SCHOOL" id="SCHOOL" value="${pd.SCHOOL}" maxlength="30" placeholder="这里输入毕业学校" title="毕业学校" style="width:98%;"/>
 								</div>
-								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>毕业时间:</label>
+								<label for="NAME" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>毕业时间:</label>
 								<div class="col-sm-2">
 									<input class="span10 date-picker" name="GRADUATE" id="graduate" value="${pd.GRADUATE}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="毕业时间" title="毕业时间" style="width:98%;"/>
 								</div>
@@ -138,15 +138,15 @@
 						</div>
 						<div class="row" style="margin-left: 15px;">
 							<div class="form-group" style="margin-top: 10px">
-								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>参加工作时间:</label>
+								<label for="NAME" class="col-sm-1 control-label" style="width: 125px;"><span style="color: red">*</span>参加工作时间:</label>
 								<div class="col-sm-2">
 									<input class="span10 date-picker" name="JOBJOINTIME" id="JOBJOINTIME" value="${pd.JOBJOINTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="首次参加工作时间" title="参加工作时间" style="width:98%;"/>
 								</div>
-								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>入职时间:</label>
+								<label for="NAME" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>入职时间:</label>
 								<div class="col-sm-2">
 									<input class="span10 date-picker" name="DJOINTIME" id="DJOINTIME" value="${pd.DJOINTIME}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="进本单位时间" title="进本单位时间" style="width:98%;"/>
 								</div>
-								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>所在部门:</label>
+								<label for="NAME" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>所在部门:</label>
 								<div class="col-sm-2">
 									<input type="hidden" name="DEPARTMENT_ID" id="DEPARTMENT_ID" value="${pd.DEPARTMENT_ID}"/>
 									<div class="selectTree" id="selectTree"></div>
@@ -155,7 +155,7 @@
 						</div>
 						<div class="row" style="margin-left: 15px;">
 							<div class="form-group" style="margin-top: 10px">
-								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>所在岗位:</label>
+								<label for="NAME" class="col-sm-1 control-label" style="width: 125px;"><span style="color: red">*</span>所在岗位:</label>
 								<div class="col-sm-2">
 									<select class="chosen-select form-control" name="POST" id="POST" data-placeholder="这里输入现岗位" style="vertical-align:top;"  title="现岗位" style="width:98%;" >
 										<option value=""></option>
@@ -164,14 +164,14 @@
 										</c:forEach>
 									</select>
 								</div>
-								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>在职状态:</label>
+								<label for="NAME" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>在职状态:</label>
 								<div class="col-sm-2">
 									<select name="STATUS" id="STATUS" class="form-control">
 										<option value="0" <c:if test="${pd.STATUS == 0}">selected</c:if>>在职</option>
 										<option value="1" <c:if test="${pd.STATUS == 1}">selected</c:if>>离职</option>
 									</select>
 								</div>
-								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>邮箱:</label>
+								<label for="NAME" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>邮箱:</label>
 								<div class="col-sm-2">
 									<input type="text" name="EMAIL" id="EMAIL" value="${pd.EMAIL}" maxlength="50" placeholder="这里输入邮箱" title="邮箱" style="width:98%;"/>
 								</div>
@@ -179,7 +179,7 @@
 						</div>
 						<div class="row" style="margin-left: 15px;">
 							<div class="form-group" style="margin-top: 10px">
-								<label for="NAME" class="col-sm-1 control-label">人员简介:</label>
+								<label for="NAME" class="col-sm-1 control-label" style="width: 100px;">人员简介:</label>
 								<div class="col-sm-4">
 									<textarea name="FUNCTIONS" id="FUNCTIONS" rows="6" cols="95">${pd.FUNCTIONS}</textarea>
 								</div>
@@ -190,15 +190,15 @@
 						</div>
 						<div class="row" style="margin-left: 15px;">
 							<div class="form-group" style="margin-top: 10px">
-								<label for="USERNAME" class="col-sm-1 control-label"><span style="color: red">*</span>系统账号:</label>
+								<label for="USERNAME" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>系统账号:</label>
 								<div class="col-sm-2">
 									<input type="text" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="30" placeholder="这里输入系统账号" title="系统账号" style="width:98%;"  <c:if test="${msg =='edit'}">readonly</c:if> />
 								</div>
-								<label for="PASSWORD" class="col-sm-1 control-label"><span style="color: red">*</span>登录密码:</label>
+								<label for="PASSWORD" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>登录密码:</label>
 								<div class="col-sm-2">
 									<input type="text" name="PASSWORD" id="PASSWORD" value="${pd.PASSWORD}" maxlength="30" placeholder="这里输入登录密码" title="登录密码" style="width:98%;"/>
 								</div>
-								<label for="role_id" class="col-sm-1 control-label"><span style="color: red">*</span>系统角色:</label>
+								<label for="role_id" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>系统角色:</label>
 								<div class="col-sm-2">
 									<select class="chosen-select form-control" name="ROLE_ID" id="role_id" data-placeholder="这里输入系统角色" style="vertical-align:top;"  title="系统角色" style="width:98%;" >
 										<option value=""></option>
