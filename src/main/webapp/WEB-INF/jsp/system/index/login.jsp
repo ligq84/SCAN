@@ -43,7 +43,7 @@
 
   </style>
   <script>
-  		//window.setTimeout(showfh,3000); 
+  		//window.setTimeout(showfh,3000);
   		var timer;
 		function showfh(){
 			fhi = 1;
@@ -81,7 +81,7 @@
 	<%--</div>	--%>
 	</c:if>
 	<canvas class="cavs"></canvas>
-	<div style="width:100%;text-align: center;margin: 0 auto;position: absolute;">
+	<div style="width:100%;height:100%;text-align: center;margin: 0 auto;position: absolute;">
 		<%--<input type="hidden" name="COMPANYCODE" id="COMPANYCODE" value="TEST" placeholder="COMPANYCODE" />--%>
 		<!-- 登录 -->
 		<div id="windows1">
@@ -90,7 +90,7 @@
 		</div>
 		<div id="loginbox" >
 			<form action="" method="post" name="loginForm" id="loginForm">
-				<div class="control-group">
+				<div class="control-group" style="margin-top: 34px;">
 					<div class="controls">
 						<div class="main_input_box">
 							<span class="add-on">
@@ -132,6 +132,9 @@
 
 			</form>
 		</div>
+		</div>
+		<div id="logobutton" >
+			<span style="font-family: 微软雅黑;color: #fff;">湖南趣逛信息科技有限公司</span>
 		</div>
 		<!-- 注册 -->
 		<div id="windows2" style="display: none;">

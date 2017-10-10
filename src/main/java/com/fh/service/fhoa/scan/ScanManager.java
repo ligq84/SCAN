@@ -34,6 +34,8 @@ public interface ScanManager {
 	 */
 	public List<PageData> list(Page page)throws Exception;
 
+	List<PageData> michineScanReport(Page page)throws Exception;
+
 	/**列表(全部)
 	 * @param pd
 	 * @throws Exception

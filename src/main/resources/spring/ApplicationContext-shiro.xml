@@ -33,6 +33,7 @@
 				/plugins/keypad/** 			= anon
 				/static/js/myjs/** 			= authc
 				/static/js/** 				= anon
+				/static/images/** 			= anon
 				/uploadFiles/uploadImgs/** 	= anon
 	           	/code.do 					= anon
 				/scan 						= anon

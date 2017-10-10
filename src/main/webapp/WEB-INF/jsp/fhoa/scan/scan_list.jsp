@@ -258,7 +258,7 @@
 		
 		//导出excel
 		function toExcel(){
-			window.location.href='<%=basePath%>company/excel.do';
+			window.location.href='<%=basePath%>scan/scanExcel.do';
 		}
 	</script>
 
