@@ -5,6 +5,7 @@ import com.fh.entity.Page;
 import com.fh.entity.system.User;
 import com.fh.service.fhoa.car.CarManager;
 import com.fh.service.fhoa.companybasic.CompanyBasicManager;
+import com.fh.service.system.fhlog.FHlogManager;
 import com.fh.util.*;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -37,7 +38,8 @@ public class CarController extends BaseController {
 	private CarManager carService;
 	@Resource(name="companybasicService")
 	private CompanyBasicManager companybasicService;
-	
+	@Resource(name="fhlogService")
+	private FHlogManager FHLOG;
 	/**保存
 	 * @param
 	 * @throws Exception
@@ -46,6 +48,7 @@ public class CarController extends BaseController {
 	public ModelAndView save() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"新增Car");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
+		FHLOG.save(Jurisdiction.getUsername(), "新增小推车");
 		Session session = Jurisdiction.getSession();
 		User user = (User)session.getAttribute(Const.SESSION_USER);
 		ModelAndView mv = this.getModelAndView();
@@ -67,6 +70,7 @@ public class CarController extends BaseController {
 	public void delete(PrintWriter out) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"删除Car");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
+		FHLOG.save(Jurisdiction.getUsername(), "删除小推车");
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		carService.delete(pd);
@@ -82,6 +86,7 @@ public class CarController extends BaseController {
 	public ModelAndView edit() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"修改Car");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		FHLOG.save(Jurisdiction.getUsername(), "修改小推车");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
@@ -223,6 +228,7 @@ public class CarController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd = carService.findById(pd);
+		FHLOG.save(Jurisdiction.getUsername(), "打印小推车条码");
 		//if(null == pd.get("BARCODEURL") || "".equals(pd.getString("BARCODEURL"))){
 			String filePath = PathUtil.getClasspath();
 
@@ -241,7 +247,7 @@ public class CarController extends BaseController {
 				file.delete();
 				file.createNewFile();
 			}
-			OneDimensionCode.getBarcodeWriteFile(pd.get("BARCODE").toString(), 800,200, file);
+			OneDimensionCode.getBarcodeWriteFile(pd.get("BARCODE").toString(),600,150, file);
 			String BARCODEURL ="http://" + request.getServerName()+":" +request.getServerPort()+systemPath+fileName;
 			pd.put("BARCODEURL",BARCODEURL);
 			carService.edit(pd);

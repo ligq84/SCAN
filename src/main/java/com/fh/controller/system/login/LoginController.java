@@ -477,7 +477,7 @@ public class LoginController extends BaseController {
 	public ModelAndView logout() throws Exception{
 		String USERNAME = Jurisdiction.getUsername();	//当前登录的用户名
 		logBefore(logger, USERNAME+"退出系统");
-		FHLOG.save(USERNAME, "退出");
+		FHLOG.save(USERNAME, "退出登录");
 		ModelAndView mv = this.getModelAndView();
 		Object carId = Jurisdiction.getSession().getAttribute(Const.CARID);
 		PageData pd = new PageData();

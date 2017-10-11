@@ -238,6 +238,14 @@ public class RoleController extends BaseController {
 			String json = arr.toString();
 			json = json.replaceAll("MENU_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("MENU_NAME", "name").replaceAll("subMenu", "nodes").replaceAll("hasMenu", "checked");
 			model.addAttribute("zTreeNodes", json);
+
+			PageData pd = new PageData();
+
+			pd = this.getPageData();
+			pd.put("ROLE_ID", ROLE_ID);
+			pd = roleService.findObjectById(pd);
+			mv.addObject("pd", pd);
+
 			mv.addObject("ROLE_ID",ROLE_ID);
 			mv.setViewName("system/role/menuqx");
 		} catch(Exception e){

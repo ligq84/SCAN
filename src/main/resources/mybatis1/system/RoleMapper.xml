@@ -47,6 +47,9 @@
 		from
 		<include refid="tableName"></include>
 		where deleted= 0 and  PARENT_ID = #{ROLE_ID} and company_id=#{COMPANY_ID}
+		<if test="pd.roleName!= null and pd.roleName != ''">
+			and a.role_Name  LIKE CONCAT(CONCAT('%', #{pd.roleName}),'%')
+		</if>
 		ORDER BY ROLE_ID
 	</select>
 	

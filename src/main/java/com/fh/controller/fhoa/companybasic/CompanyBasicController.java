@@ -4,6 +4,7 @@ import com.fh.controller.base.BaseController;
 import com.fh.entity.Page;
 import com.fh.entity.system.User;
 import com.fh.service.fhoa.companybasic.CompanyBasicManager;
+import com.fh.service.system.fhlog.FHlogManager;
 import com.fh.util.*;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -43,7 +44,8 @@ public class CompanyBasicController extends BaseController {
 
 	@Resource(name="companybasicService")
 	private CompanyBasicManager companybasicService;
-	
+	@Resource(name="fhlogService")
+	private FHlogManager FHLOG;
 	/**保存
 	 * @param
 	 * @throws Exception
@@ -60,24 +62,34 @@ public class CompanyBasicController extends BaseController {
 		String type = pd.get("TYPE").toString();
 		if(type.equals(Const.COMPANY_BASIC_FIELD)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlField, "add")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "新增资质行业配置");
 		}else if(type.equals(Const.COMPANY_BASIC_SEQUENCE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlSequence, "add")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "新增资质序列");
 		}else if(type.equals(Const.COMPANY_BASIC_MAJOR)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMajor, "add")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "新增资质专业");
 		}else if(type.equals(Const.COMPANY_BASIC_LEVE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlLevel, "add")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "新增资质等级配置");
 		}else if(type.equals(Const.COMPANY_BASIC_MACHINETYPE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineType, "add")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "新增机器类型配置");
 		}else if(type.equals(Const.COMPANY_BASIC_CARTYPE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlCarType, "add")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "新增小推车类型配置");
 		}else if(type.equals(Const.COMPANY_BASIC_MACHINERULE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineRule, "add")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "新增机器规格");
 		}else if(type.equals(Const.COMPANY_BASIC_MAINTENANCEPROJECT)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMaintenanceProject, "add")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "新增维修项目");
 		}else if(type.equals(Const.COMPANY_BASIC_MACHINECYCLE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineCycle, "add")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "新增机器保养周期");
 		}else if(type.equals(Const.COMPANY_BASIC_RULEPOSITION)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlRulePosition, "add")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "新增规格更改部位");
 		}
 		pd.put("COMPANY_ID",user.getCompanyId());
 		companybasicService.save(pd);
@@ -106,18 +118,25 @@ public class CompanyBasicController extends BaseController {
 			if(!Jurisdiction.buttonJurisdiction(menuUrlLevel, "del")){return;} //校验权限
 		}else if(type.equals(Const.COMPANY_BASIC_STAFFPOST)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlStaffPost, "del")){return;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "删除人员岗位配置");
 		}else if(type.equals(Const.COMPANY_BASIC_MACHINETYPE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineType, "del")){return;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "删除机器类型配置");
 		}else if(type.equals(Const.COMPANY_BASIC_CARTYPE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlCarType, "del")){return;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "删除小推车类型配置");
 		}else if(type.equals(Const.COMPANY_BASIC_MACHINERULE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineRule, "del")){return;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "删除机器规格");
 		}else if(type.equals(Const.COMPANY_BASIC_MAINTENANCEPROJECT)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMaintenanceProject, "del")){return;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "删除维修项目");
 		}else if(type.equals(Const.COMPANY_BASIC_MACHINECYCLE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineCycle, "del")){return;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "删除机器保养周期");
 		}else if(type.equals(Const.COMPANY_BASIC_RULEPOSITION)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlRulePosition, "del")){return;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "删除规格更改部位");
 		}
 		companybasicService.delete(pd);
 		out.write("success");
@@ -145,18 +164,25 @@ public class CompanyBasicController extends BaseController {
 			if(!Jurisdiction.buttonJurisdiction(menuUrlLevel, "edit")){return null;} //校验权限
 		}else if(type.equals(Const.COMPANY_BASIC_STAFFPOST)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlStaffPost, "edit")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "修改人员岗位配置");
 		}else if(type.equals(Const.COMPANY_BASIC_MACHINETYPE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineType, "edit")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "修改机器类型配置");
 		}else if(type.equals(Const.COMPANY_BASIC_CARTYPE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlCarType, "edit")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "修改小推车类型配置");
 		}else if(type.equals(Const.COMPANY_BASIC_MACHINERULE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineRule, "edit")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "修改机器规格");
 		}else if(type.equals(Const.COMPANY_BASIC_MAINTENANCEPROJECT)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMaintenanceProject, "edit")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "修改维修项目");
 		}else if(type.equals(Const.COMPANY_BASIC_MACHINECYCLE)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlMachineCycle, "edit")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "修改机器保养周期");
 		}else if(type.equals(Const.COMPANY_BASIC_RULEPOSITION)){
 			if(!Jurisdiction.buttonJurisdiction(menuUrlRulePosition, "edit")){return null;} //校验权限
+			FHLOG.save(Jurisdiction.getUsername(), "修改规格更改部位");
 		}
 		Session session = Jurisdiction.getSession();
 		User user = (User)session.getAttribute(Const.SESSION_USER);
@@ -174,26 +200,26 @@ public class CompanyBasicController extends BaseController {
 	@RequestMapping(value="/fieldList")
 	public ModelAndView fieldList(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表CompanyBasic");
-		if(!Jurisdiction.buttonJurisdiction(menuUrlField, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		//if(!Jurisdiction.buttonJurisdiction(menuUrlField, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_FIELD);
 	}
 	@RequestMapping(value="/sequenceList")
 	public ModelAndView sequenceList(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表CompanyBasic");
-		if(!Jurisdiction.buttonJurisdiction(menuUrlSequence, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		//if(!Jurisdiction.buttonJurisdiction(menuUrlSequence, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_SEQUENCE);
 	}
 	@RequestMapping(value="/majorList")
 	public ModelAndView majorList(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表CompanyBasic");
-		if(!Jurisdiction.buttonJurisdiction(menuUrlMajor, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		//if(!Jurisdiction.buttonJurisdiction(menuUrlMajor, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_MAJOR);
 	}
 
 	@RequestMapping(value="/levelList")
 	public ModelAndView levelList(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表CompanyBasic");
-		if(!Jurisdiction.buttonJurisdiction(menuUrlLevel, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		//if(!Jurisdiction.buttonJurisdiction(menuUrlLevel, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_LEVE);
 	}
 
@@ -206,7 +232,7 @@ public class CompanyBasicController extends BaseController {
 	@RequestMapping(value="/staffPostList")
 	public ModelAndView staffPost(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表 staffPost");
-		if(!Jurisdiction.buttonJurisdiction(menuUrlStaffPost, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		//if(!Jurisdiction.buttonJurisdiction(menuUrlStaffPost, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_STAFFPOST);
 	}
 
@@ -219,7 +245,7 @@ public class CompanyBasicController extends BaseController {
 	@RequestMapping(value="/machineTypeList")
 	public ModelAndView machineType (Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表 machineType");
-		if(!Jurisdiction.buttonJurisdiction(menuUrlMachineType, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		//if(!Jurisdiction.buttonJurisdiction(menuUrlMachineType, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_MACHINETYPE);
 	}
 
@@ -232,7 +258,7 @@ public class CompanyBasicController extends BaseController {
 	@RequestMapping(value="/carTypeList")
 	public ModelAndView carType(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表 carType");
-		if(!Jurisdiction.buttonJurisdiction(menuUrlCarType, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		//if(!Jurisdiction.buttonJurisdiction(menuUrlCarType, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_CARTYPE);
 	}
 
@@ -245,7 +271,7 @@ public class CompanyBasicController extends BaseController {
 	@RequestMapping(value="/machineRuleList")
 	public ModelAndView machineRule(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表 machineRule");
-		if(!Jurisdiction.buttonJurisdiction(menuUrlMachineRule, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		//if(!Jurisdiction.buttonJurisdiction(menuUrlMachineRule, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_MACHINERULE);
 	}
 
@@ -258,7 +284,7 @@ public class CompanyBasicController extends BaseController {
 	@RequestMapping(value="/maintenanceProjectList")
 	public ModelAndView maintenanceProject(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表 maintenanceProject");
-		if(!Jurisdiction.buttonJurisdiction(menuUrlMaintenanceProject, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		//if(!Jurisdiction.buttonJurisdiction(menuUrlMaintenanceProject, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_MAINTENANCEPROJECT);
 	}
 
@@ -271,7 +297,7 @@ public class CompanyBasicController extends BaseController {
 	@RequestMapping(value="/machineCycleList")
 	public ModelAndView machineCycle(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表 machineCycle");
-		if(!Jurisdiction.buttonJurisdiction(menuUrlMachineCycle, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		//if(!Jurisdiction.buttonJurisdiction(menuUrlMachineCycle, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_MACHINECYCLE);
 	}
 
@@ -284,7 +310,7 @@ public class CompanyBasicController extends BaseController {
 	@RequestMapping(value="/rulePositionList")
 	public ModelAndView rulePosition(Page page) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"列表staffPost");
-		if(!Jurisdiction.buttonJurisdiction(menuUrlRulePosition, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		//if(!Jurisdiction.buttonJurisdiction(menuUrlRulePosition, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
 		return  allList(page,Const.COMPANY_BASIC_RULEPOSITION);
 	}
 

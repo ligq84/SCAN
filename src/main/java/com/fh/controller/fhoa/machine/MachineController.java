@@ -6,6 +6,7 @@ import com.fh.entity.system.User;
 import com.fh.service.fhoa.companybasic.CompanyBasicManager;
 import com.fh.service.fhoa.machine.MachineManager;
 import com.fh.service.fhoa.staff.StaffManager;
+import com.fh.service.system.fhlog.FHlogManager;
 import com.fh.util.*;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -40,7 +41,8 @@ public class MachineController extends BaseController {
 	private StaffManager staffService;
 	@Resource(name="companybasicService")
 	private CompanyBasicManager companybasicService;
-	
+	@Resource(name="fhlogService")
+	private FHlogManager FHLOG;
 	/**保存
 	 * @param
 	 * @throws Exception
@@ -50,6 +52,7 @@ public class MachineController extends BaseController {
 	public ResultData save() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"新增Machine");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
+		FHLOG.save(Jurisdiction.getUsername(), "新增机器");
 		try {
 			Session session = Jurisdiction.getSession();
 			User user = (User)session.getAttribute(Const.SESSION_USER);
@@ -125,6 +128,7 @@ public class MachineController extends BaseController {
 	public void delete(PrintWriter out) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"删除Machine");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
+		FHLOG.save(Jurisdiction.getUsername(), "删除机器");
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		machineService.delete(pd);
@@ -142,6 +146,7 @@ public class MachineController extends BaseController {
 	public ResultData edit() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"修改Machine");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		FHLOG.save(Jurisdiction.getUsername(), "修改机器");
 		try {
 			PageData pd = new PageData();
 			pd = this.getPageData();
@@ -437,6 +442,7 @@ public class MachineController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd = machineService.findById(pd);
+		FHLOG.save(Jurisdiction.getUsername(), "打印机器条码");
 		//if(null == pd.get("BARCODEURL") || "".equals(pd.getString("BARCODEURL"))){
 			String filePath = PathUtil.getClasspath();
 

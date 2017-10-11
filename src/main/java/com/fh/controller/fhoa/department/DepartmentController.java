@@ -5,6 +5,7 @@ import com.fh.entity.Page;
 import com.fh.entity.system.Department;
 import com.fh.entity.system.User;
 import com.fh.service.fhoa.department.DepartmentManager;
+import com.fh.service.system.fhlog.FHlogManager;
 import com.fh.util.AppUtil;
 import com.fh.util.Const;
 import com.fh.util.Jurisdiction;
@@ -41,7 +42,8 @@ public class DepartmentController extends BaseController {
 	String menuUrl = "department/list.do"; //菜单地址(权限用)
 	@Resource(name="departmentService")
 	private DepartmentManager departmentService;
-	
+	@Resource(name="fhlogService")
+	private FHlogManager FHLOG;
 	/**保存
 	 * @param
 	 * @throws Exception
@@ -50,6 +52,7 @@ public class DepartmentController extends BaseController {
 	public ModelAndView save() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"新增department");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
+		FHLOG.save(Jurisdiction.getUsername(), "新增部门");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
@@ -70,6 +73,7 @@ public class DepartmentController extends BaseController {
 	@ResponseBody
 	public Object delete(@RequestParam String DEPARTMENT_ID) throws Exception{
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return null;} //校验权限
+		FHLOG.save(Jurisdiction.getUsername(), "删除部门");
 		logBefore(logger, Jurisdiction.getUsername()+"删除department");
 		Map<String,String> map = new HashMap<String,String>();
 		PageData pd = new PageData();
@@ -92,6 +96,7 @@ public class DepartmentController extends BaseController {
 	public ModelAndView edit() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"修改department");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+		FHLOG.save(Jurisdiction.getUsername(), "修改部门");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();

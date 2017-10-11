@@ -31,7 +31,13 @@
 					<div class="row">
 						<div class="col-xs-12">
 							<div id="zhongxin">
-								<div style="overflow: scroll; scrolling: yes;height:415px;width: 309px;">
+								<div style="height:35px;width: 309px;margin-top: 10px;">
+									<input type="hidden" name="ROLE_ID" id="id" value="${pd.ROLE_ID}"/>
+									<input name="PARENT_ID" id="parent_id" value="${pd.parent_id }" type="hidden">
+									<label>角色名称</label>
+									<input type="text" name="ROLE_NAME" id="ROLE_NAME" placeholder="这里输入名称" value="${pd.ROLE_NAME}"  title="名称" style="width:120px;border-radius: 5px;border: 1px solid #0e77d9;"/>
+								</div>
+								<div style="overflow: scroll; scrolling: yes !important;height: 335px;width: 290px;margin-top: 20px;border: 1px solid #0e77d9;">
 								<ul id="tree" class="tree" style="overflow:auto;"></ul>
 								</div>
 							</div>
@@ -82,7 +88,7 @@
 			var ROLE_ID = "${ROLE_ID}";
 			var url = "<%=basePath%>role/saveMenuqx.do";
 			var postData;
-			postData = {"ROLE_ID":ROLE_ID,"menuIds":ids};
+			postData = {"ROLE_ID":ROLE_ID,"menuIds":ids,"ROLE_NAME":$("ROLE_NAME").val(),};
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();
 			$.post(url,postData,function(data){
