@@ -224,9 +224,9 @@ public class FhsmsController extends BaseController {
 		if(lastLoginEnd != null && !"".equals(lastLoginEnd)){
 			pd.put("lastLoginEnd", lastLoginEnd+" 00:00:00");
 		}
-		if(!"2".equals(pd.getString("TYPE"))){					//1：收信箱 2：发信箱
-			pd.put("TYPE", 1);
-		}
+		//if(!"2".equals(pd.getString("TYPE"))){					//1：收信箱 2：发信箱
+		//	pd.put("TYPE", 1);
+		//}
 		pd.put("FROM_USERNAME", Jurisdiction.getUsername()); 	//当前用户名
 		page.setPd(pd);	
 		List<PageData>	varList = fhsmsService.list(page);		//列出Fhsms列表
@@ -258,9 +258,9 @@ public class FhsmsController extends BaseController {
 		if(lastLoginEnd != null && !"".equals(lastLoginEnd)){
 			pd.put("lastLoginEnd", lastLoginEnd+" 00:00:00");
 		}
-		if(!"2".equals(pd.getString("TYPE"))){					//1：收信箱 2：发信箱
-			pd.put("TYPE", 1);
-		}
+		//if(!"2".equals(pd.getString("TYPE"))){					//1：收信箱 2：发信箱
+		//	pd.put("TYPE", 1);
+		//}
 		//pd.put("FROM_USERNAME", Jurisdiction.getUsername()); 	//当前用户名
 		page.setPd(pd);
 		List<PageData>	varList = fhsmsService.list(page);		//列出Fhsms列表

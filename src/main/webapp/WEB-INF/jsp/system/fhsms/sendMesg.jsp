@@ -17,6 +17,22 @@
 	<%@ include file="../../system/index/top.jsp"%>
 	<!-- 日期框 -->
 	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+	<style type="text/css">
+		.inputStyle{
+			border: 1px solid #0e77d9 !important;
+		}
+
+		textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"],
+		input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"],
+		input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+			border-radius: 4px !important;
+		}
+		.chosen-container {
+			border: 1px solid #0e77d9 ;
+			border-radius: 4px;
+		}
+	</style>
+</head>
 <body class="no-skin">
 
 	<!-- /section:basics/navbar.layout -->
@@ -33,7 +49,7 @@
 									<div class="form-group" style="margin-top: 10px">
 										<label for="mesg_title" class="col-sm-2 control-label"><h4 ><span style="color: red">*</span>通知标题:</h4></label>
 										<div class="col-sm-4 control-label">
-											<input type="text" name="mesg_title" id="mesg_title" value="" maxlength="50" placeholder="请输入通知标题"  class="form-control" />
+											<input type="text" name="mesg_title" id="mesg_title" value="" maxlength="50" placeholder="请输入通知标题"  class="form-control inputStyle" />
 										</div>
 									</div>
 								</div>
@@ -41,22 +57,22 @@
 									<div class="form-group" >
 										<label for="machineName" class="col-sm-2 control-label"><h4 ><span style="color: red">*</span>机器名称:</h4></label>
 										<div class="col-sm-4 control-label">
-											<input type="text" name="machineName" id="machineName" value="" maxlength="50" placeholder="请输入机器名称"  class="form-control" />
+											<input type="text" name="machineName" id="machineName" value="" maxlength="50" placeholder="请输入机器名称"  class="form-control inputStyle" />
 										</div>
 									</div>
 								</div>
 								<div class="row" >
 									<label for="chargeN" class="col-sm-2 control-label">机器负责人:</label>
 									<div class="col-sm-2">
-										<input type="text" name="chargeN" id="chargeN"  maxlength="50"  class="form-control" style="border: 0px" readonly/>
+										<input type="text" name="chargeN" id="chargeN"  maxlength="50"  class="form-control inputStyle" style="border: 0px" readonly/>
 									</div>
-										<label for="Day_Repairman" class="col-sm-1 control-label">白班维修员:</label>
+										<label for="Day_Repairman" class="col-sm-1 control-label" style="width: 130px;">白班维修员:</label>
 									<div class="col-sm-2">
-										<input type="text" name="Day_Repairman" id="Day_Repairman"  maxlength="50"  class="form-control" style="border: 0px" readonly/>
+										<input type="text" name="Day_Repairman" id="Day_Repairman"  maxlength="50"  class="form-control inputStyle" style="border: 0px" readonly/>
 									</div>
-									<label for="Night_R" class="col-sm-1 control-label">晚班维修员:</label>
+									<label for="Night_R" class="col-sm-1 control-label" style="width: 130px;">晚班维修员:</label>
 									<div class="col-sm-2">
-										<input type="text" name="Night_R" id="Night_R"  maxlength="50" class="form-control" style="border: 0px" readonly/>
+										<input type="text" name="Night_R" id="Night_R"  maxlength="50" class="form-control inputStyle" style="border: 0px" readonly/>
 									</div>
 									<input type="hidden" id="USERNAME" name="USERNAME" />
 									<input type="hidden" id="CONTENT" name="CONTENT" />
@@ -67,11 +83,11 @@
 									<label class="col-sm-2 control-label no-padding-right" ><span style="color: red">*</span>通知类型：</label>
 									<div class="col-sm-9">
 										<label style="float:left;padding-left: 8px;padding-top:7px;">
-											<input name="mesgType" type="radio" class="ace" value="2">
+											<input name="mesgType" type="radio" class="ace inputStyle" value="2">
 											<span class="lbl">维修通知</span>
 										</label>
 										<label style="float:left;padding-left: 5px;padding-top:7px;">
-											<input name="mesgType" type="radio" class="ace" value="4">
+											<input name="mesgType" type="radio" class="ace inputStyle" value="4">
 											<span class="lbl">该规格通知</span>
 										</label>
 									</div>
@@ -79,7 +95,7 @@
 								<div class="row" style="margin-top: 25px;">
 									<label class="col-sm-2 control-label no-padding-right" >目标规格：</label>
 									<div class="col-sm-2">
-										<select class="chosen-select form-control" name="rule"  id ="rule" data-placeholder="请选择目标规格" style="vertical-align:top;"  style="width:70%;" >
+										<select class="chosen-select form-control inputStyle" name="rule"  id ="rule" data-placeholder="请选择目标规格" style="vertical-align:top;"  style="width:70%;" >
 											<option value=""></option>
 											<c:forEach items="${ruleList}" var="rp">
 												<option value="${rp.NAME }"  >${rp.NAME}</option>
@@ -90,18 +106,18 @@
 								<div class="row" style="margin-top: 25px;">
 									<div class="form-group" id="rulePost">
 											<div id="rulePost1" style="margin-top: 5px;">
-												<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格1:</label>
+												<label class="col-sm-1 control-label no-padding-right" style="width: 125px;"><span style="color: red">*</span>更改部位1:</label>
 												<div class="col-sm-2">
-													<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
+													<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改部位" style="vertical-align:top;"  style="width:70%;" >
 														<option value=""></option>
 														<c:forEach items="${rulePosttionList}" var="rp">
 															<option value="${rp.NAME }" >${rp.NAME}</option>
 														</c:forEach>
 													</select>
 												</div>
-												<div class="col-sm-1">
+												<div class="col-sm-1" style="width: 120px;">
 													<a class="btn btn-mini btn-primary"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
-													<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;"  >删除</a>
+													<a class="btn btn-mini btn-primary" style="margin-top: 5px;margin-left: 5px;"  >删除</a>
 												</div>
 											</div>
 									</div>
@@ -191,7 +207,7 @@
 			var lent = rpdiv.length;
 			var netx=lent+1;
 
-			if((lent+1)%3 == 0){
+			if((lent+1)%2 == 0){
 				rulePost.append(getRPSelect(netx)+'<div class="row"></div>');
 			}else{
 				rulePost.append(getRPSelect(netx));
@@ -200,7 +216,7 @@
 		}
 		function getRPSelect(len){
 			return '<div id="rpvvalue'+len+'" style="margin-top: 5px;">'+
-					'<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格'+len+'：</label>'+
+					'<label class="col-sm-1 control-label no-padding-right"  style="width: 125px;"><span style="color: red">*</span>更改规格'+len+'：</label>'+
 					'<div class="col-sm-2">'+
 					'		<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:98%;" >'+
 					'				<option value=""></option>'+
@@ -209,9 +225,9 @@
 					</c:forEach>
 					'		</select>'+
 					'</div>'+
-					'<div class="col-sm-1">'+
+					'<div class="col-sm-1"  style="width: 120px;">'+
 					'		<a class="btn btn-mini btn-primary"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>'+
-					'		<a class="btn btn-mini btn-danger" style="margin-top: 2px" onclick="deleteRPSelect(\'rpvvalue'+len+'\')">删除</a>'+
+					'		<a class="btn btn-mini btn-primary" style="margin-top: 2px" onclick="deleteRPSelect(\'rpvvalue'+len+'\')">删除</a>'+
 					'</div>'+
 					'<div>';
 		}

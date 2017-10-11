@@ -18,7 +18,7 @@
 <%@ include file="../../system/index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />
-	<link rel="stylesheet" href="static/css/pagePublic.css" />
+<link rel="stylesheet" href="static/css/pagePublic.css" />
 </head>
 <body class="no-skin">
 

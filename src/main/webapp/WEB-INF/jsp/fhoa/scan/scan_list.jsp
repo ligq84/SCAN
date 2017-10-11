@@ -18,6 +18,7 @@
 <%@ include file="../../system/index/top.jsp"%>
 <!-- 日期框 -->
 <link rel="stylesheet" href="static/ace/css/datepicker.css" />
+<link rel="stylesheet" href="static/css/pagePublic.css" />
 </head>
 <body class="no-skin">
 
@@ -29,22 +30,20 @@
 				<div class="page-content">
 					<div class="row">
 						<div class="col-xs-12">
-							
-						<!-- 检索  -->
 						<form action="scan/list.do" method="post" name="Form" id="Form">
 							<input type="hidden" name="scan_type" value="${pd.scan_type}">
 						<table style="margin-top:5px;">
 							<tr>
-								<td style="padding-left:5px;text-align: right"><label>机器名称:</label></td>
-								<td style="padding-left:5px;">
+								<td class="searchTabletd" style="text-align: right"><label>机器名称:</label></td>
+								<td class="searchTabletd">
 									<div class="nav-search">
 										<input type="text" placeholder="机器名称" class="nav-search-input" id="machineName" autocomplete="off"
 												   name="machineName" value="${pd.machineName }" style="width: 145px;"/>
 									</div>
 								</td>
 								<c:if test="${pd.scan_type =='1,3'}">
-								<td style="padding-left:5px;text-align: right"><label>扫描类型:</label></td>
-								<td style="padding-left:5px;">
+								<td class="searchTabletd" style="text-align: right"><label>扫描类型:</label></td>
+								<td class="searchTabletd">
 									<div class="nav-search">
 										<select class="nav-search-input" name="selectScanType" id="selectScanType"  style="vertical-align:top;width: 145px;"  title="扫描类型"  >
 											<option value="">全部</option>
@@ -55,8 +54,8 @@
 								</td>
 								</c:if>
 								<c:if test="${pd.scan_type =='2' || pd.scan_type =='4'}">
-									<td style="padding-left:5px;text-align: right"><label>更改类型:</label></td>
-									<td style="padding-left:5px;">
+									<td class="searchTabletd" style="text-align: right"><label>更改类型:</label></td>
+									<td class="searchTabletd">
 										<div class="nav-search">
 											<select class="nav-search-input" name="changeType" id="changeType"  style="vertical-align:top;width: 145px;"  title="更改类型"  >
 												<option value="">全部</option>
@@ -67,8 +66,8 @@
 									</td>
 								</c:if>
 
-								<td style="padding-left:5px;text-align: right"><label>小推车名称:</label></td>
-								<td style="padding-left:5px;">
+								<td class="searchTabletd" style="text-align: right"><label>小推车名称:</label></td>
+								<td class="searchTabletd">
 									<div class="nav-search">
 											<input type="text" placeholder="小推车名称" class="nav-search-input" id="carName" autocomplete="off"
 												   name="carName" value="${pd.carName }" style="width: 145px;"/>
@@ -76,36 +75,40 @@
 								</td>
 							</tr>
 							<tr >
-								<td style="padding-left:5px;text-align: right"><label>操作人:</label></td>
-								<td style="padding-left:5px;">
+								<td class="searchTabletd"style="text-align: right"><label>操作人:</label></td>
+								<td class="searchTabletd">
 									<div class="nav-search">
 										<input type="text" placeholder="操作人" class="nav-search-input" id="staffName" autocomplete="off"
 											   name="staffName" value="${pd.staffName}" style="width: 145px;"/>
 									</div>
 								</td>
-								<td style="padding-left:5px;text-align: right"><label>扫描时间:</label></td>
-								<td style="padding-left:5px;">
-									<input class="span10 date-picker" name="lastStart" id="lastStart"  value="${pd.lastStart}" type="text" data-date-format="yyyy-mm-dd"
+								<td class="searchTabletd" style="text-align: right"><label>扫描时间:</label></td>
+								<td class="searchTabletd">
+									<div class="nav-search">
+									<input class="span10 date-picker nav-search-input" name="lastStart" id="lastStart"  value="${pd.lastStart}" type="text" data-date-format="yyyy-mm-dd"
 										   readonly="readonly" style="width:145px;" placeholder="开始日期"/>
+									</div>
 								</td>
-								<td style="padding-left:5px;">
-									<input class="span10 date-picker" name="lastEnd" name="lastEnd"  value="${pd.lastEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly"
+								<td class="searchTabletd">
+									<div class="nav-search">
+									<input class="span10 date-picker nav-search-input" name="lastEnd" name="lastEnd"  value="${pd.lastEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly"
 										   style="width:145px;" placeholder="结束日期"/>
+									</div>
 								</td>
-								<td style="vertical-align:top;padding-left:5px">
-									<a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a>
-									<a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a>
+								<td class="searchTabletd">
+									<a class="btn btn-mini btn-qg" onclick="tosearch();"  >查询</a>
+									<a class="btn btn-mini btn-qg" onclick="toExcel();" title="导出">导出</a>
 								</td>
 							</tr>
 						</table>
 						<!-- 检索  -->
 					
-						<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:5px;">	
+						<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:20px;">
 							<thead>
 								<tr>
-									<th class="center" style="width:35px;">
-									<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>
-									</th>
+									<%--<th class="center" style="width:35px;">--%>
+									<%--<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>--%>
+									<%--</th>--%>
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">扫描类型</th>
 									<c:if test="${pd.scan_type =='1,3'}">
@@ -129,9 +132,9 @@
 								<c:when test="${not empty varList}">
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
-											<td class='center'>
-												<label class="pos-rel"><input type='checkbox' name='ids' value="${var.srid}" class="ace" /><span class="lbl"></span></label>
-											</td>
+											<%--<td class='center'>--%>
+												<%--<label class="pos-rel"><input type='checkbox' name='ids' value="${var.srid}" class="ace" /><span class="lbl"></span></label>--%>
+											<%--</td>--%>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.scan_type}</td>
 											<c:if test="${pd.scan_type =='1,3'}">
@@ -161,9 +164,9 @@
 						<div class="page-header position-relative">
 						<table style="width:100%;">
 							<tr>
-								<td style="vertical-align:top;">
+								<%--<td style="vertical-align:top;">--%>
 
-								</td>
+								<%--</td>--%>
 								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 							</tr>
 						</table>

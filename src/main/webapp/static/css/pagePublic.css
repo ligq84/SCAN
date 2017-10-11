@@ -16,3 +16,6 @@ input[readonly] {
     background: none !important;
     cursor: default;
 }
+.btnTb{
+    cursor: pointer;
+}

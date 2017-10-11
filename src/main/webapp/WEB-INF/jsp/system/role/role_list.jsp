@@ -15,7 +15,7 @@
 
 <!-- jsp文件头和头部 -->
 <%@ include file="../index/top.jsp"%>
-	<link rel="stylesheet" href="static/css/pagePublic.css" />
+<link rel="stylesheet" href="static/css/pagePublic.css" />
 </head>
 <body class="no-skin">
 
@@ -27,77 +27,16 @@
 				<div class="page-content">
 					<div class="row">
 						<div class="col-xs-12">
-							<%--<table style="margin-top: 8px;">--%>
-								<%--<tr height="35">--%>
-									<%--<c:if test="${QX.add == 1 }">--%>
-									<%--<td style="width:69px;"><a href="javascript:addRole(0);" class="btn btn-sm btn-success">新增组</a></td>--%>
-									<%--</c:if>--%>
-										<%--<c:choose>--%>
-										<%--<c:when test="${not empty roleList}">--%>
-										<%--<c:forEach items="${roleList}" var="role" varStatus="vs">--%>
-											<%--<td style="width:100px;" class="center" <c:choose><c:when test="${pd.ROLE_ID == role.ROLE_ID}">bgcolor="#FFC926" onMouseOut="javascript:this.bgColor='#FFC926';"</c:when><c:otherwise>bgcolor="#E5E5E5" onMouseOut="javascript:this.bgColor='#E5E5E5';"</c:otherwise></c:choose>  onMouseMove="javascript:this.bgColor='#FFC926';" >--%>
-												<%--<a href="role.do?ROLE_ID=${role.ROLE_ID }" style="text-decoration:none; display:block;"><i class="menu-icon fa fa-users"></i><font color="#666666">${role.ROLE_NAME }</font></a>--%>
-											<%--</td>--%>
-											<%--<td style="width:5px;"></td>--%>
-										<%--</c:forEach>--%>
-										<%--</c:when>--%>
-										<%--<c:otherwise>--%>
-											<%--<tr>--%>
-											<%--<td colspan="100">没有相关数据</td>--%>
-											<%--</tr>--%>
-										<%--</c:otherwise>--%>
-										<%--</c:choose>--%>
-									<%--<td></td>--%>
-								<%--</tr>--%>
-							<%--</table>--%>
-							
-							<%--<table>--%>
-								<%--<tr height="7px;"><td colspan="100"></td></tr>--%>
-								<%--<tr>--%>
-								<%--<td>--%>
-									<%--&lt;%&ndash;<font color="#808080">本组：</font>&ndash;%&gt;--%>
-								<%--</td>--%>
-								<%--<td>--%>
-								<%--<c:if test="${QX.edit == 1 }">--%>
-								<%--&lt;%&ndash;<a class="btn btn-mini btn-info" onclick="editRole('${pd.ROLE_ID }');">修改组名称<i class="icon-arrow-right  icon-on-right"></i></a>&ndash;%&gt;--%>
-								<%--</c:if>--%>
-									<%--<c:choose>--%>
-										<%--<c:when test="${pd.ROLE_ID == '99'}">--%>
-										<%--</c:when>--%>
-										<%--<c:otherwise>--%>
-										<%--<c:if test="${QX.edit == 1 }">--%>
-										<%--<a class="btn btn-mini btn-purple" onclick="editRights('${pd.ROLE_ID }');">--%>
-											<%--<i class="icon-pencil"></i>--%>
-											<%--<c:if test="${pd.ROLE_ID == '1'}">Admin 菜单权限</c:if>--%>
-											<%--<c:if test="${pd.ROLE_ID != '1'}">组菜单权限</c:if>--%>
-										<%--</a>--%>
-										<%--</c:if>--%>
-										<%--</c:otherwise>--%>
-									<%--</c:choose>--%>
-									<%--<c:choose> --%>
-										<%--<c:when test="${pd.ROLE_ID == '1' or pd.ROLE_ID == '2'}">--%>
-										<%--</c:when>--%>
-										<%--<c:otherwise>--%>
-										 <%--<c:if test="${QX.del == 1 }">--%>
-										 <%--<a class='btn btn-mini btn-danger' title="删除" onclick="delRole('${pd.ROLE_ID }','z','${pd.ROLE_NAME }');"><i class='ace-icon fa fa-trash-o bigger-130'></i></a>--%>
-										 <%--</c:if>--%>
-										<%--</c:otherwise>--%>
-									<%--</c:choose>--%>
-								<%--</td>--%>
-								<%--</tr>--%>
-							<%--</table>--%>
 							<form action="role.do" method="post" name="Form" id="Form">
 							<table style="margin-top:5px;">
 								<tr>
-									<td>
+									<td class="searchTabletd">
 										<div class="nav-search">
-										<span class="input-icon">
-											<input type="text" placeholder="角色名字" class="nav-search-input" id="nav-search-input" autocomplete="off" name="roleName" value="${pd.roleName }" />
-											<i class="ace-icon fa fa-search nav-search-icon"></i>
-										</span>
+											<input type="text" placeholder="角色名字" class="nav-search-input" name="roleName"
+												   value="${fpd.roleName}" style="width: 145px;"/>
 										</div>
 									</td>
-									<td style="vertical-align:top;padding-left:2px">
+									<td class="searchTabletd">
 										<a class="btn btn-mini btn-qg" onclick="tosearch();"  title="查询">查询</a>
 										<c:if test="${QX.add == 1 }">
 											&nbsp;&nbsp;<a class="btn btn-mini btn-qg" onclick="addRole('${pd.ROLE_ID }');">新增角色</a>
@@ -133,8 +72,8 @@
 										<%--<td style="width:30px;"><a onclick="roleButton('${var.ROLE_ID }','add_qx');" class="btn btn-warning btn-mini" title="分配新增权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>--%>
 										<%--<td style="width:30px;"><a onclick="roleButton('${var.ROLE_ID }','del_qx');" class="btn btn-warning btn-mini" title="分配删除权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>--%>
 										<td style="text-align: center;width: 60px;">
-											<a onclick="roleButton('${var.ROLE_ID }','edit_qx');" class="btn btn-warning btn-mini" title="按钮权限">
-												<i class="ace-icon fa fa-wrench bigger-110 icon-only"></i>
+											<a onclick="roleButton('${var.ROLE_ID }','edit_qx');"  title="按钮权限" style="cursor: pointer">
+												<img src="/static/images/option.png" />
 											</a>
 										</td>
 										<%--<td style="width:30px;"><a onclick="roleButton('${var.ROLE_ID }','cha_qx');" class="btn btn-warning btn-mini" title="分配查看权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>--%>
@@ -146,7 +85,7 @@
 										</div>
 										</c:if>
 										<c:if test="${QX.edit == 1 }">
-										<a class="" onclick="editRights('${var.ROLE_ID }');">
+										<a class="" onclick="editRights('${var.ROLE_ID }');" style="cursor: pointer">
 											<img src="/static/images/edit.png" />
 										</a>
 										<%--<a class='btn btn-mini btn-info' title="编辑" onclick="editRole('${var.ROLE_ID }');"><i class='ace-icon fa fa-pencil-square-o bigger-130'></i></a>--%>
@@ -156,7 +95,7 @@
 											</c:when>
 											<c:otherwise>
 											 <c:if test="${QX.del == 1 }">
-											 <a  title="删除" onclick="delRole('${var.ROLE_ID }','c','${var.ROLE_NAME }');">
+											 <a  title="删除" onclick="delRole('${var.ROLE_ID }','c','${var.ROLE_NAME }');" style="cursor: pointer">
 												 <img src="/static/images/delete.png" />
 											 </a>
 											 </c:if>

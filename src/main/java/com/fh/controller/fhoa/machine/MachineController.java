@@ -461,7 +461,7 @@ public class MachineController extends BaseController {
 				file.delete();
 				file.createNewFile();
 			}
-			OneDimensionCode.getBarcodeWriteFile(pd.get("BARCODE").toString(), 800,200, file);
+			OneDimensionCode.getBarcodeWriteFile(pd.get("BARCODE").toString(), 600,150, file);
 			String BARCODEURL ="http://" + request.getServerName()+":" +request.getServerPort()+systemPath+fileName;
 			pd.put("BARCODEURL",BARCODEURL);
 			machineService.edit(pd);

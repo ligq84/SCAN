@@ -67,13 +67,14 @@ public class RoleController extends BaseController {
 			pd.put("COMPANY_ID",user.getCompanyId());
 
 			PageData fpd = new PageData();
-			fpd.put("ROLE_ID", "0");
+			fpd.put("roleName", pd.get("roleName"));
 
-			List<Role> roleList = roleService.listAllRolesByPId(fpd);		//列出组(页面横向排列的一级组)
+			//List<Role> roleList = roleService.listAllRolesByPId(fpd);		//列出组(页面横向排列的一级组)
 			List<Role> roleList_z = roleService.listAllRolesByPId(pd);		//列出此组下架角色
 			pd = roleService.findObjectById(pd);							//取得点击的角色组(横排的)
 			mv.addObject("pd", pd);
-			mv.addObject("roleList", roleList);
+			mv.addObject("fpd", fpd);
+			//mv.addObject("roleList", roleList);
 			mv.addObject("roleList_z", roleList_z);
 			mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 			mv.setViewName("system/role/role_list");

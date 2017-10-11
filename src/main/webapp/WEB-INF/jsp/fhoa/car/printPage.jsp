@@ -28,19 +28,18 @@
 			font-family: Microsoft YaHei;
 			color: #282828;
 			text-align: left;
-			padding-left:175px;
+			padding-left:138px;
 			padding-top: 10px;
 			letter-spacing:13px;
 		}
 	</style>
 </head>
 <body>
-<div id="zhongxin">
-
-	<table width="1190"    border="0" align="center" cellspacing="1" bgcolor="#221144">
+<div id="zhongxin" style="width: 1190px;text-align: left;">
+	<table style="width: 660px;height: 660px;border: 1px solid black;margin-left: 96px;"  cellspacing="1" bgcolor="#221144">
 		<tr bgcolor="#EFEFFF">
-			<td align="center" style="padding-top: 20px;padding-bottom: 20px;text-align: left">
-				<img src="/static/images/printCompayLogo.jpg" style="margin-left: 180px;"><br/>
+			<td align="center" style="text-align: left">
+				<img src="/static/images/printCompayLogo.jpg" style="margin-left: 52px;margin-top: 26px;width: 560px;"><br/>
 				<div class="row fontSize">
 					<label>小推车名称：</label><span>${pd.NAME}</span>
 				</div>
@@ -53,7 +52,7 @@
 				<div class="row fontSize">
 					<label>采购时间：</label><span>${pd.PURCHASEDATE}</span>
 				</div>
-				<img src="${pd.BARCODEURL}" style="margin-top: 80px;margin-left: 105px;"><br/>
+				<img src="${pd.BARCODEURL}" style="margin-top: 80px;margin-left: 70px;"><br/>
 				<div class="row fontSizeCode"  >
 					<span>${pd.BARCODE}</span>
 				</div>
@@ -61,10 +60,6 @@
 
 		</tr>
 	</table>
-
-
-
-
 </div>
 
 

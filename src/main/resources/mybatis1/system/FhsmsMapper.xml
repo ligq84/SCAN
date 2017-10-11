@@ -127,9 +127,7 @@
 		parts
 		from 
 		<include refid="tableName"></include>
-		where
-
-			TYPE = #{pd.TYPE} AND  COMPANY_ID = #{pd.COMPANY_ID}
+		where  COMPANY_ID = #{pd.COMPANY_ID}
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
@@ -152,9 +150,9 @@
 			and SEND_TIME &lt;= #{pd.lastLoginEnd} 
 		</if>
 		<if test="pd.STATUS != null and pd.STATUS != ''"><!-- 状态检索 -->
-			and STATUS = #{pd.STATUS} 
+			and STATUS = #{pd.STATUS}
 		</if>
-		order by STATUS desc,SEND_TIME DESC
+		order by STATUS DESC ,SEND_TIME DESC
 	</select>
 	
 	<!-- 列表(全部) -->

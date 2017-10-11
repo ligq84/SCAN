@@ -28,19 +28,19 @@
 			font-family: Microsoft YaHei;
 			color: #282828;
 			text-align: left;
-			padding-left: 150px;
+			padding-left:138px;
 			padding-top: 10px;
-			letter-spacing:26px;
+			letter-spacing:13px;
 		}
 	</style>
 	</head>
 <body>
-<div id="zhongxin">
+<div id="zhongxin" style="width: 1190px;text-align: left;">
 
-<table width="650"    border="0" align="center" cellspacing="1" bgcolor="#221144">
+<table  style="width: 660px;height: 660px;border: 1px solid black;margin-left: 96px;" cellspacing="1" bgcolor="#221144">
   <tr bgcolor="#EFEFFF">
-    <td align="center" style="padding-top: 20px;padding-bottom: 20px;">
-		<img src="/static/images/printCompayLogo.png"><br/>
+    <td align="center" style="text-align: left">
+		<img src="/static/images/printCompayLogo.jpg" style="margin-left: 52px;margin-top: 26px;width: 560px;"><br/>
 		<div class="row fontSize">
 			<label>机器名称：</label><span>${pd.NAME}</span>
 		</div>
@@ -53,12 +53,11 @@
 		<div class="row fontSize">
 			<label>机器功率：</label><span>${pd.POWER}</span>
 		</div>
-        <img src="${pd.BARCODEURL}" style="margin-top: 80px;"><br/>
-		<div class="row fontSizeCode">
+		<img src="${pd.BARCODEURL}" style="margin-top: 80px;margin-left: 70px;"><br/>
+		<div class="row fontSizeCode"  >
 			<span>${pd.BARCODE}</span>
 		</div>
     </td>
-
   </tr>
 </table>
 
