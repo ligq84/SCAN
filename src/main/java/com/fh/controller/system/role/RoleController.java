@@ -228,24 +228,38 @@ public class RoleController extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value="/menuqx")
+	@SuppressWarnings("all")
 	public ModelAndView listAllMenu(Model model,String ROLE_ID)throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		try{
-			Role role = roleService.getRoleById(ROLE_ID);			//根据角色ID获取角色对象
-			String roleRights = role.getRIGHTS();					//取出本角色菜单权限
-			List<Menu> menuList = menuService.listAllMenuQx("0");	//获取所有菜单
-			menuList = this.readMenu(menuList, roleRights);			//根据角色权限处理菜单权限状态(递归处理)
-			JSONArray arr = JSONArray.fromObject(menuList);
-			String json = arr.toString();
-			json = json.replaceAll("MENU_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("MENU_NAME", "name").replaceAll("subMenu", "nodes").replaceAll("hasMenu", "checked");
-			model.addAttribute("zTreeNodes", json);
+			if(null == ROLE_ID ||"".equals(ROLE_ID) || "undefined".equals(ROLE_ID)){
 
-			PageData pd = new PageData();
+				String roleRights ="";					//取出本角色菜单权限
+				List<Menu> menuList = menuService.listAllMenuQx("0");	//获取所有菜单
+				menuList = this.readMenu(menuList, roleRights);			//根据角色权限处理菜单权限状态(递归处理)
+				JSONArray arr = JSONArray.fromObject(menuList);
+				String json = arr.toString();
+				json = json.replaceAll("MENU_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("MENU_NAME", "name").replaceAll("subMenu", "nodes").replaceAll("hasMenu", "checked");
+				model.addAttribute("zTreeNodes", json);
+				mv.addObject("parent_id", "1");
+				ROLE_ID = null;
+			}else{
+				Role role = roleService.getRoleById(ROLE_ID);			//根据角色ID获取角色对象
+				String roleRights = role.getRIGHTS();					//取出本角色菜单权限
+				List<Menu> menuList = menuService.listAllMenuQx("0");	//获取所有菜单
+				menuList = this.readMenu(menuList, roleRights);			//根据角色权限处理菜单权限状态(递归处理)
+				JSONArray arr = JSONArray.fromObject(menuList);
+				String json = arr.toString();
+				json = json.replaceAll("MENU_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("MENU_NAME", "name").replaceAll("subMenu", "nodes").replaceAll("hasMenu", "checked");
+				model.addAttribute("zTreeNodes", json);
 
-			pd = this.getPageData();
-			pd.put("ROLE_ID", ROLE_ID);
-			pd = roleService.findObjectById(pd);
-			mv.addObject("pd", pd);
+				PageData pd = new PageData();
+				pd = this.getPageData();
+				pd.put("ROLE_ID", ROLE_ID);
+				pd = roleService.findObjectById(pd);
+				mv.addObject("pd", pd);
+
+			}
 
 			mv.addObject("ROLE_ID",ROLE_ID);
 			mv.setViewName("system/role/menuqx");
@@ -262,12 +276,27 @@ public class RoleController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/saveMenuqx")
-	public void saveMenuqx(@RequestParam String ROLE_ID,@RequestParam String menuIds,PrintWriter out)throws Exception{
+	public void saveMenuqx(@RequestParam String ROLE_ID,@RequestParam String menuIds,@RequestParam String ROLE_NAME,PrintWriter out)throws Exception{
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){} //校验权限
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		logBefore(logger, Jurisdiction.getUsername()+"修改菜单权限");
 		FHLOG.save(Jurisdiction.getUsername(), "修改角色菜单权限，角色ID为:"+ROLE_ID);
 		PageData pd = new PageData();
 		try{
+			if(null == ROLE_ID){
+				ROLE_ID =  this.get32UUID();
+				pd.put("ROLE_ID",ROLE_ID);				//主键
+				pd.put("ADD_QX", "0");	//初始新增权限为否
+				pd.put("DEL_QX", "0");	//删除权限
+				pd.put("EDIT_QX", "0");	//修改权限
+				pd.put("CHA_QX", "0");	//查看权限
+				pd.put("COMPANY_ID",user.getCompanyId());
+				pd.put("ROLE_NAME",ROLE_NAME);
+				roleService.add(pd);
+			}
+
+
 			if(null != menuIds && !"".equals(menuIds.trim())){
 				BigInteger rights = RightsHelper.sumRights(Tools.str2StrArray(menuIds));//用菜单ID做权处理
 				Role role = roleService.getRoleById(ROLE_ID);	//通过id获取角色对象
@@ -368,6 +397,9 @@ public class RoleController extends BaseController {
 			}
 			pd.put("ROLE_ID", ROLE_ID);
 			roleService.saveB4Button(msg,pd);
+			roleService.saveB4Button("add_qx",pd);
+			roleService.saveB4Button("del_qx",pd);
+			roleService.saveB4Button("cha_qx",pd);
 			out.write("success");
 			out.close();
 		} catch(Exception e){

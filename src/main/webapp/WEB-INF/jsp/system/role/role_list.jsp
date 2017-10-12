@@ -39,7 +39,7 @@
 									<td class="searchTabletd">
 										<a class="btn btn-mini btn-qg" onclick="tosearch();"  title="查询">查询</a>
 										<c:if test="${QX.add == 1 }">
-											&nbsp;&nbsp;<a class="btn btn-mini btn-qg" onclick="addRole('${pd.ROLE_ID }');">新增角色</a>
+											&nbsp;&nbsp;<a class="btn btn-mini btn-qg" onclick="editRights();">新增角色</a>
 										</c:if>
 									</td>
 
