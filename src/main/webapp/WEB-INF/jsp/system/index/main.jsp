@@ -25,7 +25,11 @@
 	<script type="text/javascript" src="plugins/websocketInstantMsg/ext4/ext-all-debug.js"></script>
 	<script type="text/javascript" src="plugins/websocketInstantMsg/websocket.js"></script>
 	<!-- 即时通讯 -->
-	
+	<style type="text/css">
+		::-webkit-scrollbar{
+			display: none;
+		}
+	</style>
 </head>
 	<body class="no-skin">
 		<!-- #section:basics/navbar.layout -->

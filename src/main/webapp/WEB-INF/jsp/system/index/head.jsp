@@ -1,7 +1,5 @@
 ﻿<style type="text/css">
-	.navbar{
-		background-color: #0e77d9 ;
-	}
+
 	.ace-nav > li.green > a,.ace-nav > li.green > a:hover {
 		background-color: #0e77d9;
 	}
@@ -13,10 +11,21 @@
 	}
 	.ace-nav > li > a > .badge {
 		position: relative;
-		top: -4px;
-		left: 0px;
+		top: -7px;
+		left: -9px;
 		padding-right: 5px;
 		padding-left: 5px;
+	}
+	.navbar {
+		margin: 0;
+		padding-left: 0;
+		padding-right: 0;
+		border-width: 0;
+		border-radius: 0;
+		-webkit-box-shadow: none;
+		box-shadow: none;
+		min-height: 77px;
+		background: #0e77d9;
 	}
 </style>
 		<div id="navbar" class="navbar navbar-default">
@@ -37,12 +46,12 @@
 				</button>
 
 				<!-- /section:basics/sidebar.mobile.toggle -->
-				<div class="navbar-header pull-left">
+				<div class="navbar-header pull-left" style="margin-left: 12px;margin-top: 10px;">
 					<!-- #section:basics/navbar.layout.brand -->
 					<a class="navbar-brand">
 						<small>
 							<%--<i class="fa fa-leaf"></i> ${pd.SYSNAME}--%>
-							<img style="height: 26px;" src="static/images/logo.png" alt="logo">
+							<img style="height: 38px;" src="static/images/logo.png" alt="logo">
 						</small>
 					</a>
 
@@ -54,7 +63,7 @@
 				</div>
 
 				<!-- #section:basics/navbar.dropdown -->
-				<div class="navbar-buttons navbar-header pull-right" role="navigation">
+				<div class="navbar-buttons navbar-header pull-right" role="navigation" style="margin-top: 13px;">
 					<ul class="nav ace-nav">
 						<%--<li class="grey">--%>
 							<%--<a data-toggle="dropdown" class="dropdown-toggle" href="#">--%>

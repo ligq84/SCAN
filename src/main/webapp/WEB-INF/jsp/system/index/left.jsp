@@ -1,6 +1,6 @@
 ﻿<style type="text/css">
 	.no-skin .sidebar{
-		background-color: #0e77d9;
+		background-color: white;
 	}
 	.no-skin .nav-list > li {
 		border-color: white;
@@ -13,34 +13,34 @@
 	.blue {
 		 color: #0e77d9 !important;
 	}
-
+	/*005ebd*/
 	.no-skin .nav-list > li:hover > a {
-		background-color: #0e77d9 !important;
+		background-color: #0050ac !important;
 		color: white !important;
 	}
 	.no-skin .nav-list > li.open > a {
-	    background-color: #0e77d9;
+	    background-color: #0050ac;
 		color: white;
 	}
-	.no-skin .nav-list > li .submenu > li > a {
-		border-top-color: #e4e4e4;
-		background-color: #0e77d9;
-		color: white;
-	}
-	.no-skin .sidebar-toggle {
-		background-color: #0e77d9;
-		border-color: #e0e0e0;
-	}
-	.no-skin .nav-list > li > .submenu li > .submenu > li a {
-		color: white;
-	}
-	.no-skin .nav-list > li > .submenu li.open > a {
-		color: white;
-	}
-	.nav-list > li > .submenu li > .submenu > li {
-		line-height: 18px;
-		background-color: #0e77d9;
-	}
+	/*.no-skin .nav-list > li .submenu > li > a {*/
+		/*border-top-color: #e4e4e4;*/
+		/*background-color: #005ebd;*/
+		/*color: white;*/
+	/*}*/
+	/*.no-skin .sidebar-toggle {*/
+		/*background-color: #0e77d9;*/
+		/*border-color: #e0e0e0;*/
+	/*}*/
+	/*.no-skin .nav-list > li > .submenu li > .submenu > li a {*/
+		/*color: white;*/
+	/*}*/
+	/*.no-skin .nav-list > li > .submenu li.open > a {*/
+		/*color: white;*/
+	/*}*/
+	/*.nav-list > li > .submenu li > .submenu > li {*/
+		/*line-height: 18px;*/
+		/*background-color: #0e77d9;*/
+	/*}*/
 
 </style>
 <div id="sidebar" class="sidebar                  responsive">
@@ -163,9 +163,9 @@
 				</ul><!-- /.nav-list -->
 
 				<!-- #section:basics/sidebar.layout.minimize -->
-				<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
-					<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
-				</div>
+				<%--<div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">--%>
+					<%--<i class="ace-icon fa fa-angle-double-left" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>--%>
+				<%--</div>--%>
 
 				<!-- /section:basics/sidebar.layout.minimize -->
 				<script type="text/javascript">

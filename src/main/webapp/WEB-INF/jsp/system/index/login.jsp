@@ -85,9 +85,9 @@
 		<%--<input type="hidden" name="COMPANYCODE" id="COMPANYCODE" value="TEST" placeholder="COMPANYCODE" />--%>
 		<!-- 登录 -->
 		<div id="windows1">
-		<div id="logoimage" >
-			<img src="static/images/logo.png">
-		</div>
+		<%--<div id="logoimage" >--%>
+			<%--<img src="static/images/logo.png">--%>
+		<%--</div>--%>
 		<div id="loginbox" >
 			<form action="" method="post" name="loginForm" id="loginForm">
 				<div class="control-group" style="margin-top: 34px;">
