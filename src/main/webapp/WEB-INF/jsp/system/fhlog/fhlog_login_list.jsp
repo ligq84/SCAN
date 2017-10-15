@@ -43,9 +43,6 @@
 											   autocomplete="off" name="keywords" value="${pd.keywords }" />
 									</div>
 								</td>
-							</tr>
-							<tr>
-
 								<td  class="searchTabletd" style="text-align: right"><label>登录时间:</label></td>
 								<td class="searchTabletd">
 									<div class="nav-search">
@@ -53,6 +50,7 @@
 										   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="开始日期" title="开始日期"/>
 									</div>
 								</td>
+								<td  class="searchTabletd" style="text-align: right">--</td>
 								<td class="searchTabletd">
 									<div class="nav-search">
 									<input class="span10 date-picker nav-search-input" name="lastEnd" name="lastEnd"  value="${pd.lastEnd }" type="text"

@@ -43,32 +43,41 @@
 								<div class="widget-header widget-header-blue widget-header-flat wi1dget-header-large">
 									<h4 class="lighter">维修员扫描</h4>
 								</div>
-								<div class="row">
-									<div class="form-group" style="margin-top: 10px">
-										<label for="machineCode" class="col-sm-3 control-label"><h4 >第一步：扫描机器号:</h4></label>
-										<div class="col-sm-4 control-label">
-											<input type="text" name="machineCode" id="machineCode" value="" maxlength="50" placeholder="请扫描机器号"  class="form-control" />
-										</div>
+									<div class="row" style="margin-top: 15px;">
+									<label for="machineCode" class="control-label" style="margin-left: 66px;"><h4 >扫描机器号:</h4></label>
+								</div>
+								<div class="row" style="margin-top: 15px;">
+									<div class="col-sm-4 control-label">
+										<input type="text" name="machineCode" id="machineCode" value="" maxlength="50" placeholder="请扫描机器号"  class="form-control" style="height: 44px;margin-left: 86px;"/>
 									</div>
 								</div>
-								<div class="row">
-									<div class="form-group" style="margin-top: 10px">
-										<label class="col-sm-2 control-label"><h4 >机器信息:</h4></label>
-									</div>
+								<div class="row" style="margin-top: 24px;">
+									<label class="control-label" style="margin-left: 66px;"><h4 >机器信息:</h4></label>
 								</div>
-								<div class="row" style="margin-left: 15px;">
-									<label for="NAME" class="col-sm-1 control-label" style="width: 120px;">机器名称:</label>
-									<div class="col-sm-2">
-										<input type="text" name="name" id="name"  maxlength="50"  class="form-control" style="border: 0px"/>
-									</div>
-									<label for="type" class="col-sm-1 control-label" style="width: 120px;">机器类型:</label>
-									<div class="col-sm-2">
-										<input type="text" name="type" id="type"  maxlength="50"  class="form-control" style="border: 0px"/>
-									</div>
-									<label for="code" class="col-sm-1 control-label" style="width: 120px;">机器编号:</label>
-									<div class="col-sm-2">
-										<input type="text" name="code" id="code"  maxlength="50" class="form-control" style="border: 0px"/>
-									</div>
+								<div class="row" style="margin-top: 20px;">
+									<table style="font-size: 16px;">
+										<tr>
+											<td style="width: 66px;"></td>
+											<td>机器名称:</td>
+											<td><input type="text" name="name" id="name"  maxlength="50"  class="form-control" style="border: 0px"/></td>
+											<td>机器类型:</td>
+											<td><input type="text" name="type" id="type"  maxlength="50"  class="form-control" style="border: 0px"/></td>
+											<td>机器编号:</td>
+											<td><input type="text" name="code" id="code"  maxlength="50" class="form-control" style="border: 0px"/></td>
+										</tr>
+									</table>
+									<%--<label for="NAME" class="col-sm-1 control-label" style="width: 120px;">机器名称:</label>--%>
+									<%--<div class="col-sm-2">--%>
+										<%--<input type="text" name="name" id="name"  maxlength="50"  class="form-control" style="border: 0px"/>--%>
+									<%--</div>--%>
+									<%--<label for="type" class="col-sm-1 control-label" style="width: 120px;">机器类型:</label>--%>
+									<%--<div class="col-sm-2">--%>
+										<%--<input type="text" name="type" id="type"  maxlength="50"  class="form-control" style="border: 0px"/>--%>
+									<%--</div>--%>
+									<%--<label for="code" class="col-sm-1 control-label" style="width: 120px;">机器编号:</label>--%>
+									<%--<div class="col-sm-2">--%>
+										<%--<input type="text" name="code" id="code"  maxlength="50" class="form-control" style="border: 0px"/>--%>
+									<%--</div>--%>
 									<input type="hidden" id="USERNAME" name="USERNAME" />
 									<input type="hidden" id="CONTENT" name="CONTENT" />
 									<input type="hidden" id="mhid" name="mhid" />
@@ -92,16 +101,13 @@
 								</div>
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
-										<label for="machineCode" class="col-sm-3 control-label"><h4 >第二步：选择扫描类型:</h4></label>
+										<label for="machineCode" class="control-label" style="margin-left: 66px;"><h4 选择扫描类型:</h4></label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
-										<label class="col-sm-2 control-label"></label>
-										<%--<button type="button" class="btn btn-primary btn-lg"  onclick="ScanRecord('xs')">巡视扫描</button>--%>
-										<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" onclick="xsScan()">
-											巡视扫描
-										</button>
+										<%--<label class="col-sm-2 control-label"></label>--%>
+										<button type="button" class="btn btn-primary btn-lg"  onclick="xsScan()" style="margin-left: 66px">巡视扫描</button>
 										<button type="button" class="btn btn-primary btn-lg"  onclick="machineCodeCheck('wxModal')" style="margin-left: 5em;">维修扫描</button>
 										<button type="button" class="btn btn-primary btn-lg"  onclick="machineCodeCheck('byModal')" style="margin-left: 5em;">保养扫描</button>
 										<button type="button" class="btn btn-primary btn-lg"  onclick="machineCodeCheck('gggModal')" style="margin-left: 5em;">改规格扫描</button>

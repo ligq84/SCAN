@@ -23,16 +23,14 @@
 <body class="no-skin">
 
 	<!-- /section:basics/navbar.layout -->
-	<div class="main-container" id="main-container" style="overflow-x: auto">
+	<div class="main-container" id="main-container">
 		<!-- /section:basics/sidebar -->
 		<div class="main-content">
 			<div class="main-content-inner">
 				<div class="page-content">
 					<div class="row">
-						<div class="col-xs-12" >
-							
-						<!-- 检索  -->
-						<form action="scan/michineScanReport.do" method="post" name="Form" id="Form">
+						<div class="col-xs-12">
+						<form action="scan/listrecord.do" method="post" name="Form" id="Form">
 							<input type="hidden" name="scan_type" value="${pd.scan_type}">
 						<table style="margin-top:5px;">
 							<tr>
@@ -43,6 +41,31 @@
 												   name="machineName" value="${pd.machineName }" style="width: 145px;"/>
 									</div>
 								</td>
+								<td class="searchTabletd" style="text-align: right"><label>扫描类型:</label></td>
+								<td class="searchTabletd">
+									<div class="nav-search">
+										<select class="nav-search-input" name="selectScanType" id="selectScanType"  style="vertical-align:top;width: 145px;"  title="扫描类型"  >
+											<option value="">全部</option>
+											<option value="1" <c:if test="${pd.selectScanType =='1'}">selected</c:if> >巡视扫描</option>
+											<option value="2" <c:if test="${pd.selectScanType =='2'}">selected</c:if> >维修扫描</option>
+											<option value="3" <c:if test="${pd.selectScanType == '3'}">selected</c:if> >保养扫描</option>
+											<option value="4" <c:if test="${pd.selectScanType =='4'}">selected</c:if> >改规格扫描</option>
+										</select>
+									</div>
+								</td>
+								<c:if test="${pd.scan_type =='2' || pd.scan_type =='4'}">
+									<td class="searchTabletd" style="text-align: right"><label>更改类型:</label></td>
+									<td class="searchTabletd">
+										<div class="nav-search">
+											<select class="nav-search-input" name="changeType" id="changeType"  style="vertical-align:top;width: 145px;"  title="更改类型"  >
+												<option value="">全部</option>
+												<option value="0" <c:if test="${pd.changeType =='1'}">selected</c:if> >开始操作</option>
+												<option value="1" <c:if test="${pd.changeType == '3'}">selected</c:if> >结束操作</option>
+											</select>
+										</div>
+									</td>
+								</c:if>
+								<td class="searchTabletd"></td>
 								<td class="searchTabletd" style="text-align: right"><label>小推车名称:</label></td>
 								<td class="searchTabletd">
 									<div class="nav-search">
@@ -52,8 +75,8 @@
 								</td>
 							</tr>
 							<tr >
-								<td class="searchTabletd" style="text-align: right"><label>操作人:</label></td>
-								<td class="searchTabletd" >
+								<td class="searchTabletd"style="text-align: right"><label>操作人:</label></td>
+								<td class="searchTabletd">
 									<div class="nav-search">
 										<input type="text" placeholder="操作人" class="nav-search-input" id="staffName" autocomplete="off"
 											   name="staffName" value="${pd.staffName}" style="width: 145px;"/>
@@ -66,49 +89,41 @@
 										   readonly="readonly" style="width:145px;" placeholder="开始日期"/>
 									</div>
 								</td>
-								<td class="searchTabletd" style="text-align: right">--</td>
-								<td class="searchTabletd">
+								<td class="searchTabletd">--</td>
+								<td class="searchTabletd" colspan="3">
 									<div class="nav-search">
 									<input class="span10 date-picker nav-search-input" name="lastEnd" name="lastEnd"  value="${pd.lastEnd}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly"
 										   style="width:145px;" placeholder="结束日期"/>
 									</div>
 								</td>
 								<td class="searchTabletd">
-									<a class="btn btn-mini btn-qg" onclick="tosearch();" >查询</a>
-									<a class="btn btn-mini btn-qg" onclick="toExcel();" >导出</a>
+									<a class="btn btn-mini btn-qg" onclick="tosearch();"  >查询</a>
+									<a class="btn btn-mini btn-qg" onclick="toExcel();" title="导出">导出</a>
 								</td>
 							</tr>
 						</table>
 						<!-- 检索  -->
 					
-						<table id="simple-table" class="table-striped table-bordered table-hover" style="margin-top:20px;background-color: transparent;border-collapse: collapse;border-spacing: 0;width: 2088px;">
+						<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:20px;">
 							<thead>
 								<tr>
-									<%--<th class="center" style="width:35px;" rowspan="2">--%>
+									<%--<th class="center" style="width:35px;">--%>
 									<%--<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>--%>
 									<%--</th>--%>
-									<th class="center" style="width:50px;" rowspan="2">序号</th>
-									<th class="center" style="width:120px;" rowspan="2">机器名称</th>
-									<th class="center"  style="width:120px;" rowspan="2">机器编码</th>
-									<th class="center"  style="width:120px;" rowspan="2">机器类型</th>
-									<th class="center"  style="width:120px;" rowspan="2">巡视次数</th>
-									<th class="center"  style="width:120px;" rowspan="2">保养信息</th>
-									<th class="center" colspan ="6">维修信息</th>
-									<th class="center" colspan ="6">改规格信息</th>
-								</tr>
-								<tr>
-									<th class="center"  style="width:150px;">通知维修次数</th>
-									<th class="center"  style="width:150px;">开始维修次数</th>
-									<th class="center"  style="width:150px;">结束维修次数</th>
-									<th class="center"  style="width:150px;">平均通知响应时效(分)</th>
-									<th class="center"  style="width:150px;">平均维修时长(分)</th>
-									<th class="center"  style="width:150px;">维修总用时(分)</th>
-									<th class="center"  style="width:150px;">通知改规格次数</th>
-									<th class="center"  style="width:150px;">开始改规格次数</th>
-									<th class="center"  style="width:150px;">结束改规格次数</th>
-									<th class="center"  style="width:150px;">平均通知响应时效(分)</th>
-									<th class="center"  style="width:150px;">平均改规格时长(分)</th>
-									<th class="center"  style="width:150px;">改规格总用时(分)</th>
+									<th class="center" style="width:50px;">序号</th>
+									<th class="center">扫描类型</th>
+									<c:if test="${pd.scan_type =='1,3'}">
+									<th class="center">保养类型</th>
+									</c:if>
+									<c:if test="${pd.scan_type =='2' || pd.scan_type =='4'}">
+									<th class="center">操作类型</th>
+									</c:if>
+									<th class="center">机器名称</th>
+									<th class="center">机器编码</th>
+									<th class="center">小推车名称</th>
+									<th class="center">小推车编码</th>
+									<th class="center">操作人</th>
+									<th class="center">操作时间</th>
 								</tr>
 							</thead>
 													
@@ -122,23 +137,19 @@
 												<%--<label class="pos-rel"><input type='checkbox' name='ids' value="${var.srid}" class="ace" /><span class="lbl"></span></label>--%>
 											<%--</td>--%>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'>${var.machineName}</td>
-											<td class='center'>${var.machineCode}</td>
-											<td class='center'>${var.typeName}</td>
-											<td class='center'>${var.xsCount}</td>
-											<td class='center'>${var.cycleInfo}</td>
-											<td class='center'>${var.wxtzCount}</td>
-											<td class='center'>${var.wxksCount}</td>
-											<td class='center'>${var.wxjsCount}</td>
-											<td class='center'>${var.wxavgtz}</td>
-											<td class='center'>${var.wxavgwx}</td>
-											<td class='center'>${var.wxsum}</td>
-											<td class='center'>${var.gggtzCount}</td>
-											<td class='center'>${var.gggksCount}</td>
-											<td class='center'>${var.gggjsCount}</td>
-											<td class='center'>${var.gggavgtz}</td>
-											<td class='center'>${var.gggavgggg}</td>
-											<td class='center'>${var.gggsum}</td>
+											<td class='center'>${var.scan_type}</td>
+											<c:if test="${pd.scan_type =='1,3'}">
+											<td class='center'>${var.cycle_type}</td>
+											</c:if>
+											<c:if test="${pd.scan_type =='2' || pd.scan_type =='4'}">
+											<td class='center'>${var.operation_type}</td>
+											</c:if>
+											<td class='center'>${var.mname}</td>
+											<td class='center'>${var.mcode}</td>
+											<td class='center'>${var.carName}</td>
+											<td class='center'>${var.carCode}</td>
+											<td class='center'>${var.staff_name}</td>
+											<td class='center'>${var.scan_date}</td>
 										</tr>
 									
 									</c:forEach>
@@ -154,9 +165,9 @@
 						<div class="page-header position-relative">
 						<table style="width:100%;">
 							<tr>
-								<td style="vertical-align:top;">
+								<%--<td style="vertical-align:top;">--%>
 
-								</td>
+								<%--</td>--%>
 								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 							</tr>
 						</table>
@@ -251,7 +262,7 @@
 		
 		//导出excel
 		function toExcel(){
-			window.location.href='<%=basePath%>company/excel.do';
+			window.location.href='<%=basePath%>scan/scanExcel.do';
 		}
 	</script>
 

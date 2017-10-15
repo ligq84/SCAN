@@ -62,7 +62,7 @@
 									</c:if>
 								</td>
 								</c:if>
-								<c:if test="${QX.toExcel == 1 }"><td  class="searchTabletd"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>
+								<%--<c:if test="${QX.toExcel == 1 }"><td  class="searchTabletd"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>--%>
 							</tr>
 						</table>
 						<!-- 检索  -->
@@ -74,7 +74,15 @@
 									<%--<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>--%>
 									<%--</th>--%>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">名称</th>
+									<th class="center">
+										<c:if test="${pd.TYPE == 'staffPost' }">人员岗位</c:if>
+										<c:if test="${pd.TYPE == 'machineType' }">类型名称</c:if>
+										<c:if test="${pd.TYPE == 'carType' }">类型名称</c:if>
+										<c:if test="${pd.TYPE == 'machineRule' }">机器规格</c:if>
+										<c:if test="${pd.TYPE == 'maintenanceProject' }">维修项目</c:if>
+										<c:if test="${pd.TYPE == 'machineCycle' }">保养周期</c:if>
+										<c:if test="${pd.TYPE == 'rulePosition' }">规格更改部位</c:if>
+									</th>
 									<th class="center">启用状态</th>
 									<th class="center">排序号</th>
 									<th class="center">描述</th>
@@ -124,11 +132,11 @@
 									
 									</c:forEach>
 									</c:if>
-									<c:if test="${QX.cha == 0 }">
-										<tr>
-											<td colspan="100" class="center">您无权查看</td>
-										</tr>
-									</c:if>
+									<%--<c:if test="${QX.cha == 0 }">--%>
+										<%--<tr>--%>
+											<%--<td colspan="100" class="center">您无权查看</td>--%>
+										<%--</tr>--%>
+									<%--</c:if>--%>
 								</c:when>
 								<c:otherwise>
 									<tr class="main_info">
@@ -243,7 +251,15 @@
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
-			 diag.Title ="新增";
+
+            <c:if test="${pd.TYPE == 'staffPost' }"> diag.Title ="新增人员岗位";</c:if>
+            <c:if test="${pd.TYPE == 'machineType' }">diag.Title ="新增机器类型";</c:if>
+            <c:if test="${pd.TYPE == 'carType' }">diag.Title ="新增小推车类型";</c:if>
+            <c:if test="${pd.TYPE == 'machineRule' }">diag.Title ="新增人机器规格";</c:if>
+            <c:if test="${pd.TYPE == 'maintenanceProject' }">diag.Title ="新增维修项目";</c:if>
+            <c:if test="${pd.TYPE == 'machineCycle' }">diag.Title ="新增保养周期";</c:if>
+            <c:if test="${pd.TYPE == 'rulePosition' }">diag.Title ="新增规格更改部位";</c:if>
+
 			 diag.URL = '<%=basePath%>companybasic/goAdd.do?TYPE=${pd.TYPE}';
 			 diag.Width = 450;
 			 diag.Height = 355;
@@ -281,7 +297,13 @@
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
-			 diag.Title ="编辑";
+            <c:if test="${pd.TYPE == 'staffPost' }"> diag.Title ="编辑人员岗位";</c:if>
+            <c:if test="${pd.TYPE == 'machineType' }">diag.Title ="编辑机器类型";</c:if>
+            <c:if test="${pd.TYPE == 'carType' }">diag.Title ="编辑小推车类型";</c:if>
+            <c:if test="${pd.TYPE == 'machineRule' }">diag.Title ="编辑人机器规格";</c:if>
+            <c:if test="${pd.TYPE == 'maintenanceProject' }">diag.Title ="编辑维修项目";</c:if>
+            <c:if test="${pd.TYPE == 'machineCycle' }">diag.Title ="编辑保养周期";</c:if>
+            <c:if test="${pd.TYPE == 'rulePosition' }">diag.Title ="编辑规格更改部位";</c:if>
 			 diag.URL = '<%=basePath%>companybasic/goEdit.do?OCBID='+Id+'&TYPE=${pd.TYPE}';
 			 diag.Width = 450;
 			 diag.Height = 355;

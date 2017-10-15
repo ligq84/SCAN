@@ -51,7 +51,7 @@
 							<div id="zhongxin" style="padding-top: 10px;">
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
-										<label for="mesg_title" class="col-sm-2 control-label"><h4 ><span style="color: red">*</span>通知标题:</h4></label>
+										<label for="mesg_title" class="col-sm-2 control-label"><span style="color: red">*</span>通知标题:</label>
 										<div class="col-sm-4 control-label">
 											<input type="text" name="mesg_title" id="mesg_title" value="" maxlength="50" placeholder="请输入通知标题"  class="form-control inputStyle" />
 										</div>
@@ -59,7 +59,7 @@
 								</div>
 								<div class="row">
 									<div class="form-group" >
-										<label for="machineName" class="col-sm-2 control-label"><h4 ><span style="color: red">*</span>机器名称:</h4></label>
+										<label for="machineName" class="col-sm-2 control-label"><span style="color: red">*</span>机器名称:</label>
 										<div class="col-sm-4 control-label">
 											<input type="text" name="machineName" id="machineName" value="" maxlength="50"  placeholder="请输入机器名称"
 												   class="form-control inputStyle" autocomplete="off"/>
@@ -128,9 +128,12 @@
 									</div>
 								</div>
 
-								<div class="row" style="margin-left:50px;text-align: center;">
-									<div class="form-group" style="margin-top: 100px">
+								<div class="row" style="margin-left:20px;text-align: center;">
+									<div class="form-group" style="margin-top: 50px">
 										<a class="btn btn-mini btn-primary" onclick="sendSms();">发送通知</a>
+									</div>
+									<div class="form-group" style="margin-top: 50px">
+										<a class="btn btn-mini btn-primary" onclick="backSms();">返回</a>
 									</div>
 								</div>
 							</div>
@@ -332,6 +335,9 @@
 
 		}
 		$('.chosen-select').chosen({allow_single_deselect:true,search_contains:true});
+        function backSms() {
+
+        }
 	</script>
 
 </body>

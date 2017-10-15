@@ -236,6 +236,42 @@ public class FhsmsController extends BaseController {
 		mv.addObject("QX",Jurisdiction.getHC());				//按钮权限
 		return mv;
 	}
+
+	@RequestMapping(value="/listscan")
+	@SuppressWarnings("all")
+	public ModelAndView listscan(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表Fhsms");
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		pd.put("COMPANY_ID",user.getCompanyId());
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		String lastLoginStart = pd.getString("lastLoginStart");	//开始时间
+		String lastLoginEnd = pd.getString("lastLoginEnd");		//结束时间
+		if(lastLoginStart != null && !"".equals(lastLoginStart)){
+			pd.put("lastLoginStart", lastLoginStart+" 00:00:00");
+		}
+		if(lastLoginEnd != null && !"".equals(lastLoginEnd)){
+			pd.put("lastLoginEnd", lastLoginEnd+" 00:00:00");
+		}
+		//if(!"2".equals(pd.getString("TYPE"))){					//1：收信箱 2：发信箱
+		//	pd.put("TYPE", 1);
+		//}
+		pd.put("FROM_USERNAME", Jurisdiction.getUsername()); 	//当前用户名
+		page.setPd(pd);
+		List<PageData>	varList = fhsmsService.list(page);		//列出Fhsms列表
+		mv.setViewName("system/fhsms/fhsms_listscan");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());				//按钮权限
+		return mv;
+	}
+
 	@RequestMapping(value="/adminList")
 	@SuppressWarnings("all")
 	public ModelAndView adminList(Page page) throws Exception{

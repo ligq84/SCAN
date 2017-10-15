@@ -42,13 +42,14 @@
 												   autocomplete="off" name="NAME" value="${pd.NAME}" style="width: 145px;"/>
 									</div>
 								</td>
-								<td class="searchTabletd"><label>采购开始日期:</label></td>
+								<td class="searchTabletd" style="text-align: right"><label>采购开始日期:</label></td>
 								<td class="searchTabletd">
 									<div class="nav-search">
 										<input class="span10 date-picker nav-search-input" name="lastStart" id="lastStart"  value="${pd.lastStart}" type="text"
 											   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="采购开始日期"/>
 									</div>
 								</td>
+								<td class="searchTabletd">--</td>
 								<td class="searchTabletd">
 									<div class="nav-search">
 									<input class="span10 date-picker nav-search-input" name="lastEnd" name="lastEnd"  value="${pd.lastEnd}" type="text"
@@ -69,16 +70,14 @@
 										</select>
 									</div>
 								</td>
-								<c:if test="${QX.cha == 1 }">
-									<td class="searchTabletd">
-										<a class="btn btn-mini btn-qg" onclick="tosearch();"  >
-											查询
-										</a>
-										<c:if test="${QX.add == 1 }">
-											<a class="btn btn-mini btn-qg" onclick="add();">新增小推车</a>
-										</c:if>
-									</td>
-								</c:if>
+								<td class="searchTabletd" colspan="2">
+									<a class="btn btn-mini btn-qg" onclick="tosearch();"  >
+										查询
+									</a>
+									<c:if test="${QX.add == 1 }">
+										<a class="btn btn-mini btn-qg" onclick="add();">新增小推车</a>
+									</c:if>
+								</td>
 							</tr>
 						</table>
 						<!-- 检索  -->

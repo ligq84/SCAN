@@ -110,8 +110,8 @@ setTimeout("top.hangge()",500);
 								<div class="row" style="margin-left: 15px;margin-top: 20px;">
 									<label style="color: red;font-size: 18px;">确认操作后，通知将发送给机器的负责人及白晚班维修员！</label>
 								</div>
-								<div class="row" style="margin-left:50px;text-align: center;">
-									<div class="form-group" style="margin-top: 38px">
+								<div class="row" >
+									<div class="form-group" style="margin-top: 38px;margin-left: 300px;">
 										<a class="btn btn-mini btn-primary" onclick="sendSms();">确认操作通知</a>
 									</div>
 								</div>

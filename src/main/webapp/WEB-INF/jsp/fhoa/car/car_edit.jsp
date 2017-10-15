@@ -18,6 +18,7 @@
 	<%@ include file="../../system/index/top.jsp"%>
 	<!-- 日期框 -->
 	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+	<link rel="stylesheet" href="static/css/pagePublic.css" />
 </head>
 <body class="no-skin">
 <!-- /section:basics/navbar.layout -->
@@ -47,7 +48,6 @@
 								<td style="width:90px;text-align: right;padding-top: 13px;">小推车类型:</td>
 								<td>
 									<select class="" name="TYPE" id="TYPE" data-placeholder="这里输入小推车类型" style="vertical-align:top;"  title="小推车类型" style="width:98%;" >
-										<option value=""></option>
 										<c:forEach items="${carTypeList}" var="carType">
 											<option value="${carType.OCBID }" <c:if test="${carType.OCBID == pd.TYPE }">selected</c:if> >${carType.NAME}</option>
 										</c:forEach>
@@ -140,7 +140,7 @@
 		
 		$(function() {
 			//日期框
-			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
+			$('.date-picker').datepicker({autoclose: true,todayHighlight: true,clearBtn: true});
 		});
 		</script>
 </body>

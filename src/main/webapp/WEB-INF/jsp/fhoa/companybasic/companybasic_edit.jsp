@@ -33,7 +33,15 @@
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">名称:</td>
+								<td style="width:75px;text-align: right;padding-top: 13px;">
+									<c:if test="${pd.TYPE == 'staffPost' }">人员岗位</c:if>
+									<c:if test="${pd.TYPE == 'machineType' }">类型名称</c:if>
+									<c:if test="${pd.TYPE == 'carType' }">类型名称</c:if>
+									<c:if test="${pd.TYPE == 'machineRule' }">机器规格</c:if>
+									<c:if test="${pd.TYPE == 'maintenanceProject' }">维修项目</c:if>
+									<c:if test="${pd.TYPE == 'machineCycle' }">保养周期</c:if>
+									<c:if test="${pd.TYPE == 'rulePosition' }">规格更改部位</c:if>:
+								</td>
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" style="width:98%;"/></td>
 							</tr>
 							<tr>

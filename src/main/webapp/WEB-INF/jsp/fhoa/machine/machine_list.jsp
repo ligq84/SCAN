@@ -74,14 +74,12 @@
 										</select>
 									</div>
 								</td>
-								<c:if test="${QX.cha == 1 }">
-									<td class="searchTabletd" >
-										<a class="btn btn-mini btn-qg" onclick="tosearch();" >查询</a>
-										<c:if test="${QX.add == 1 }">
-											<a class="btn btn-mini btn-qg" onclick="add();">新增机器</a>
-										</c:if>
-									</td>
-								</c:if>
+								<td class="searchTabletd" colspan="2">
+									<a class="btn btn-mini btn-qg" onclick="tosearch();" >查询</a>
+									<c:if test="${QX.add == 1 }">
+										<a class="btn btn-mini btn-qg" onclick="add();">新增机器</a>
+									</c:if>
+								</td>
 							</tr>
 						</table>
 						<!-- 检索  -->

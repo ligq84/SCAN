@@ -151,7 +151,7 @@
 									</div>
 								</td>
 								<c:if test="${QX.cha == 1 }">
-									<td class="searchTabletd" style="vertical-align:top;text-align: center;">
+									<td class="searchTabletd" style="text-align: center;">
 										<%--<a class="btn btn-light btn-xs" onclick="tosearch();"  title="检索"><i id="nav-search-icon" class="ace-icon fa fa-search bigger-110 nav-search-icon blue"></i></a>--%>
 										<a class="btn btn-mini btn-qg" onclick="tosearch();" >查询</a>
 									</td>
@@ -166,7 +166,7 @@
 										</c:if>
 									</td>
 								</c:if>
-								<c:if test="${QX.toExcel == 1 }"><td class="searchTabletd" style="vertical-align:top;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>
+								<%--<c:if test="${QX.toExcel == 1 }"><td class="searchTabletd" style="vertical-align:top;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>--%>
 
 
 							</tr>

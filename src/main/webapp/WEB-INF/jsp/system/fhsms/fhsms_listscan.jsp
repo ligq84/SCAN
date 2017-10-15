@@ -32,94 +32,87 @@
 						<div class="col-xs-12">
 							
 						<!-- 检索  -->
-						<form action="fhsms/adminList.do" method="post" name="Form" id="Form">
+						<form action="fhsms/list.do" method="post" name="Form" id="Form">
 						<input type="hidden" name="TYPE" value="${pd.TYPE}" />
-						<table style="margin-top:5px;">
-							<tr>
-								<td class="searchTabletd">
-									<label>通知标题：</label>
-								</td>
-								<td class="searchTabletd">
-									<div class="nav-search">
+							<table style="margin-top:10px;">
+								<tr>
+									<td class="searchTabletd">
+										<label>通知标题：</label>
+									</td>
+									<td class="searchTabletd">
+										<div class="nav-search">
 											<input type="text" placeholder="这里输入通知标题" class="nav-search-input" id="nav-search-input"
 												   autocomplete="off" name="keywords" value="${pd.keywords }"
-											style="width:145px;"/>
-									</div>
-								</td>
-								<td class="searchTabletd" >
-
-								</td>
-								<td class="searchTabletd" style="text-align: right">
-									<label>通知类型：</label>
-								</td>
-								<td class="searchTabletd">
-									<div class="nav-search">
-									<select class=" nav-search-input" name="SMS_TYPE" id="SMS_TYPE" data-placeholder="通知类型" style="vertical-align:top;"   style="width: 12em;" >
-										<option value=""></option>
-										<option value="2" <c:if test="${pd.SMS_TYPE == '2'}">selected</c:if> >维修通知</option>
-										<option value="3" <c:if test="${pd.SMS_TYPE == '3'}">selected</c:if> >改规格通知</option>
-									</select>
-									</div>
-								</td>
-								<td class="searchTabletd">
-									<label style="margin-left: 20px">发送人：</label>
-								</td>
-								<td class="searchTabletd">
-									<div class="nav-search">
-									<select class="nav-search-input" name="FROM_USERNAME" id="FROM_USERNAME" data-placeholder="发送人" style="vertical-align:top;"
-											style="width: 145px;;" >
-										<option value=""></option>
-										<c:forEach items="${staffList}" var="staff">
-											<option value="${staff.USERNAME }" <c:if test="${staff.USERNAME == pd.FROM_USERNAME}">selected</c:if> >${staff.NAME}</option>
-										</c:forEach>
-									</select>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td class="searchTabletd">
-									<label>发送时间：</label>
-								</td>
-								<td class="searchTabletd">
-									<div class="nav-search">
-									<input class="span10 date-picker nav-search-input" name="lastLoginStart" id="lastLoginStart"  value="${pd.lastLoginStart}" type="text"
-										   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="开始日期" title="开始日期"/>
-									</div>
-								</td>
-								<td class="searchTabletd">
-									<label>--</label>
-								</td>
-								<td class="searchTabletd" colspan="2">
-									<div class="nav-search">
-									<input class="span10 date-picker nav-search-input" name="lastLoginEnd" name="lastLoginEnd"  value="${pd.lastLoginEnd}" type="text"
-										   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="结束日期" title="结束日期"/>
-									</div>
-								</td>
-								<%--<td style="vertical-align:top;padding-left:5px;">--%>
-									<%--<select class="chosen-select form-control" name="STATUS" id="id" data-placeholder="状态" style="vertical-align:top;width: 68px;">--%>
-										<%--<option value="">全部</option>--%>
-										<%--<option value="1" <c:if test="${pd.STATUS == '1' }">selected</c:if>>已读</option>--%>
-										<%--<option value="2" <c:if test="${pd.STATUS == '2' }">selected</c:if>>未读</option>--%>
-									<%--</select>--%>
-								<%--</td>--%>
-								<%--<c:if test="${QX.cha == 1 }">--%>
-									<td class="searchTabletd" colspan="2">
-										<a class="btn btn-mini btn-qg" onclick="tosearch();">查询</a>
-										<c:if test="${QX.FHSMS == 1 }">
-											<a  class="btn btn-mini btn-qg" onclick="toSendMesg()">
-												发送通知
-											</a></c:if>
+												   style="width:145px;"/>
+										</div>
 									</td>
-								<%--</c:if>--%>
-								<%--<td style="padding-left:20px;"><a href="fhsms/adminList.do?TYPE=1"><span class="label label-<c:if test="${pd.TYPE != '2' }">success</c:if> arrowed-right arrowed-in">收信箱</span></a></td>--%>
-								<%--<td><a href="fhsms/adminList.do?TYPE=2"><span class="label label-<c:if test="${pd.TYPE == '2' }">info</c:if> arrowed-right arrowed-in">发信箱</span></a></td>--%>
+									<td class="searchTabletd">
 
-							</tr>
-						</table>
+									</td>
+									<td class="searchTabletd" style="text-align: right">
+										<label>通知类型：</label>
+									</td>
+									<td class="searchTabletd">
+										<div class="nav-search">
+											<select class=" nav-search-input" name="SMS_TYPE" id="SMS_TYPE" data-placeholder="通知类型" style="vertical-align:top;width: 145px;" >
+												<option value=""></option>
+												<option value="2" <c:if test="${pd.SMS_TYPE == '2'}">selected</c:if> >维修通知</option>
+												<option value="3" <c:if test="${pd.SMS_TYPE == '3'}">selected</c:if> >改规格通知</option>
+											</select>
+										</div>
+									</td>
+									<%--<td class="searchTabletd">--%>
+										<%--<label>发送人：</label>--%>
+									<%--</td>--%>
+									<%--<<input type="hidden" name="FROM_USERNAME" value="${pd.FROM_USERNAME}">--%>
+									<%--<td class="searchTabletd">--%>
+										<%--<div class="nav-search">--%>
+											<%--<select class="nav-search-input" name="FROM_USERNAME" id="FROM_USERNAME" data-placeholder="发送人" style="vertical-align:top;"--%>
+													<%--style="width: 145px;;" >--%>
+												<%--<option value=""></option>--%>
+												<%--<c:forEach items="${staffList}" var="staff">--%>
+													<%--<option value="${staff.USERNAME }" <c:if test="${staff.USERNAME == pd.FROM_USERNAME}">selected</c:if> >${staff.NAME}</option>--%>
+												<%--</c:forEach>--%>
+											<%--</select>--%>
+										<%--</div>--%>
+									<%--</td>--%>
+								</tr>
+								<tr>
+									<td class="searchTabletd">
+										<label>发送时间：</label>
+									</td>
+									<td class="searchTabletd">
+										<div class="nav-search">
+											<input class="span10 date-picker nav-search-input" name="lastLoginStart" id="lastLoginStart"  value="${pd.lastLoginStart}" type="text"
+												   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="开始日期" title="开始日期"/>
+										</div>
+									</td>
+									<td class="searchTabletd">
+										<label>--</label>
+									</td>
+									<td class="searchTabletd">
+										<div class="nav-search">
+											<input class="span10 date-picker nav-search-input" name="lastLoginEnd" name="lastLoginEnd"  value="${pd.lastLoginEnd}" type="text"
+												   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="结束日期" title="结束日期"/>
+										</div>
+									</td>
+									<c:if test="${QX.cha == 1 }">
+										<td class="searchTabletd">
+											<a class="btn btn-mini btn-qg" onclick="tosearch();">查询</a>
+											<%--<c:if test="${QX.FHSMS == 1 }">--%>
+												<%--<a  class="btn btn-mini btn-qg" onclick="toSendMesg()">--%>
+													<%--发送通知--%>
+												<%--</a></c:if>--%>
+										</td>
+									</c:if>
+									<%--<td style="padding-left:20px;"><a href="fhsms/adminList.do?TYPE=1"><span class="label label-<c:if test="${pd.TYPE != '2' }">success</c:if> arrowed-right arrowed-in">收信箱</span></a></td>--%>
+									<%--<td><a href="fhsms/adminList.do?TYPE=2"><span class="label label-<c:if test="${pd.TYPE == '2' }">info</c:if> arrowed-right arrowed-in">发信箱</span></a></td>--%>
+								</tr>
+							</table>
 						<!-- 检索  -->
-					
-						<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:20px;">
-							<thead>
+
+							<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:20px;">
+								<thead>
 								<tr>
 									<%--<th class="center" style="width:35px;">--%>
 									<%--<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>--%>
@@ -128,73 +121,75 @@
 									<th class="center">通知标题</th>
 									<th class="center">机器名称</th>
 									<th class="center">通知类型</th>
-									<th class="center">接收人群</th>
+									<%--<th class="center">接收人群</th>--%>
 									<th class="center">发信人</th>
 									<th class="center">收信人</th>
 									<th class="center">发信时间</th>
 									<th class="center">状态</th>
 									<th class="center">操作</th>
 								</tr>
-							</thead>
-													
-							<tbody>
-							<!-- 开始循环 -->	
-							<c:choose>
-								<c:when test="${not empty varList}">
-									<c:if test="${QX.cha == 1 }">
-									<c:forEach items="${varList}" var="var" varStatus="vs">
-										<tr>
-											<%--<td class='center'>--%>
-												<%--<label class="pos-rel"><input type='checkbox' name='ids' id="${var.TO_USERNAME}" value="${var.FHSMS_ID}" class="ace" /><span class="lbl"></span></label>--%>
-											<%--</td>--%>
-											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'>${var.TITLE}</td>
-											<td class='center'>${var.machine_name}</td>
-											<td class='center'>${var.SMS_TYPE}</td>
-											<td class='center'>${var.to_staff}</td>
-											<td class='center'>${var.FROM_USERNAME}</td>
-											<td class='center'>${var.TO_USERNAME}</td>
-											<td class='center'>${var.SEND_TIME}</td>
-											<td class='center' id="STATUS${vs.index+1}"><c:if test="${var.STATUS == '2' }"><span class="label label-important arrowed-in">未读</span></c:if><c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">已读</span></c:if></td>
-											<td class="center">
-												<c:if test="${QX.edit != 1 && QX.del != 1 }">
-												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
-												</c:if>
-												<div class="btn-group">
-													<a class="btn btn-xs btn-info" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUS}','${pd.TYPE == '2'?'2':'1' }','${var.FHSMS_ID}','${var.SANME_ID}');">
-														<i class="ace-icon fa fa-envelope-o bigger-120"></i>
-													</a>
-													<%--<c:if test="${QX.FHSMS == 1 }">--%>
-													<%--<a class="btn btn-xs btn-info" title='发送站内信' onclick="sendFhsms('${var.TO_USERNAME}');">--%>
-														<%--<i class="ace-icon fa fa-envelope-o bigger-120" title="发送站内信"></i>--%>
-													<%--</a>--%>
-													<%--</c:if>--%>
+								</thead>
 
-												</div>
+								<tbody>
+								<!-- 开始循环 -->
+								<c:choose>
+									<c:when test="${not empty varList}">
+										<c:if test="${QX.cha == 1 }">
+											<c:forEach items="${varList}" var="var" varStatus="vs">
+												<tr>
+														<%--<td class='center'>--%>
+														<%--<label class="pos-rel"><input type='checkbox' name='ids' id="${var.TO_USERNAME}" value="${var.FHSMS_ID}" class="ace" /><span class="lbl"></span></label>--%>
+														<%--</td>--%>
+													<td class='center' style="width: 30px;">${vs.index+1}</td>
+													<td class='center'>${var.TITLE}</td>
+													<td class='center'>${var.machine_name}</td>
+													<td class='center'>${var.SMS_TYPE}</td>
+													<%--<td class='center'>${var.to_staff}</td>--%>
+													<td class='center'>${var.FROM_USERNAME}</td>
+													<td class='center'>${var.TO_USERNAME}</td>
+													<td class='center'>${var.SEND_TIME}</td>
+													<td class='center' id="STATUS${vs.index+1}"><c:if test="${var.STATUS == '2' }"><span class="label label-important arrowed-in">未读</span></c:if><c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">已读</span></c:if></td>
+													<td class="center">
+														<c:if test="${QX.edit != 1 && QX.del != 1 }">
+															<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
+														</c:if>
+														<div class="btn-group">
+															<a class="btn btn-xs btn-info" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUS}','${pd.TYPE == '2'?'2':'1' }','${var.FHSMS_ID}','${var.SANME_ID}');">
+																<i class="ace-icon fa fa-envelope-o bigger-120"></i>
+															</a>
+																<%--<c:if test="${QX.FHSMS == 1 }">--%>
+																<%--<a class="btn btn-xs btn-info" title='发送站内信' onclick="sendFhsms('${var.TO_USERNAME}');">--%>
+																<%--<i class="ace-icon fa fa-envelope-o bigger-120" title="发送站内信"></i>--%>
+																<%--</a>--%>
+																<%--</c:if>--%>
 
-											</td>
+														</div>
+
+													</td>
+												</tr>
+
+											</c:forEach>
+										</c:if>
+										<c:if test="${QX.cha == 0 }">
+											<tr>
+												<td colspan="100" class="center">您无权查看</td>
+											</tr>
+										</c:if>
+									</c:when>
+									<c:otherwise>
+										<tr class="main_info">
+											<td colspan="100" class="center" >没有相关数据</td>
 										</tr>
-									
-									</c:forEach>
-									</c:if>
-									<c:if test="${QX.cha == 0 }">
-										<tr>
-											<td colspan="100" class="center">您无权查看</td>
-										</tr>
-									</c:if>
-								</c:when>
-								<c:otherwise>
-									<tr class="main_info">
-										<td colspan="100" class="center" >没有相关数据</td>
-									</tr>
-								</c:otherwise>
-							</c:choose>
-							</tbody>
-						</table>
+									</c:otherwise>
+								</c:choose>
+								</tbody>
+							</table>
 						<div class="page-header position-relative">
 						<table style="width:100%;">
 							<tr>
-
+								<%--<td style="vertical-align:top;">--%>
+									<%--<c:if test="${QX.FHSMS == 1 }"><a title="批量发送站内信" class="btn btn-mini btn-info" onclick="makeAll('确定要给选中的用户发送站内信吗?');"><i class="ace-icon fa fa-envelope-o bigger-120"></i></a></c:if>--%>
+								<%--</td>--%>
 								<td style="vertical-align:top;"><div class="pagination" style="float: right;padding-top: 0px;margin-top: 0px;">${page.pageStr}</div></td>
 							</tr>
 						</table>
@@ -234,11 +229,6 @@
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 	<script type="text/javascript">
 		$(top.hangge());//关闭加载状态
-		function toSendMesg(){
-			var form = $('<form action="<%=basePath%>fhsms/toSendMesg.do" method="get"></form>');
-			$(document.body).append(form);
-			form.submit()
-		}
 		//检索
 		function tosearch(){
 			top.jzts();
@@ -296,7 +286,7 @@
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
-			 diag.Title ="通知";
+			 diag.Title ="站内信";
 			 diag.URL = '<%=basePath%>fhsms/goAdd.do?username='+username;
 			 diag.Width = 660;
 			 diag.Height = 444;
@@ -333,7 +323,7 @@
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
-			 diag.Title ="查看通知";
+			 diag.Title ="站内信";
 			 diag.URL = '<%=basePath%>fhsms/goView.do?FHSMS_ID='+Id+'&TYPE='+type+'&SANME_ID='+SANME_ID+'&STATUS='+STATUS;
 			 diag.Width = 600;
 			 diag.Height = 460;

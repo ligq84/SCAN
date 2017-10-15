@@ -46,10 +46,12 @@
 										</select>
 									</div>
 								</td>
+								<td  class="searchTabletd" style="text-align: right;">
 
-								<td  class="searchTabletd" style="text-align: right;width: 20px;">
-									<label>操作功能:</label></td>
-
+								</td>
+								<td  class="searchTabletd" style="text-align: right;">
+									<label>操作功能:</label>
+								</td>
 								<td  class="searchTabletd" style="text-align: right">
 									<div class="nav-search">
 										<select class="nav-search-input" id="funcName" name="funcName" style="vertical-align:top;width: 145px;"  title="操作功能"  >
@@ -74,17 +76,16 @@
 										   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="开始日期" title="开始日期"/>
 									</div>
 								</td>
-								<td class="searchTabletd">
+								<td  class="searchTabletd">--</td>
+								<td class="searchTabletd" colspan="2">
 									<div class="nav-search">
 									<input class="span10 date-picker nav-search-input" name="lastEnd" name="lastEnd"  value="${pd.lastEnd }" type="text"
 										   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="结束日期" title="结束日期"/>
 									</div>
 								</td>
-								<c:if test="${QX.cha == 1 }">
 								<td class="searchTabletd">
 									<a class="btn  btn-mini btn-qg" onclick="tosearch();">查询</a>
 								</td>
-								</c:if>
 								<%--<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>--%>
 							</tr>
 						</table>

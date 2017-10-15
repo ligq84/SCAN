@@ -52,7 +52,7 @@
 								<td style="vertical-align:top;padding-left:2px">
 									<a class="btn btn-mini btn-qg" onclick="gsearch();">查询</a>
 									<c:if test="${QX.add == 1 }">
-										<a class="btn btn-sm btn-qg" onclick="add('${DEPARTMENT_ID}');">新增部门</a>
+										<a class="btn btn-mini btn-qg" onclick="add('${DEPARTMENT_ID}');">新增部门</a>
 									</c:if>
 								</td>
 								<%--</c:if>--%>
@@ -64,7 +64,7 @@
 							<thead>
 								<tr>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">名称</th>
+									<th class="center">部门名称</th>
 									<%--<th class="center">英文</th>--%>
 
 									<th class="center">负责人</th>
@@ -183,7 +183,7 @@
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
-			 diag.Title ="新增";
+			 diag.Title ="新增部门";
 			 diag.URL = '<%=basePath%>department/goAdd.do?DEPARTMENT_ID='+DEPARTMENT_ID;
 			 diag.Width = 450;
 			 diag.Height = 450;
@@ -229,7 +229,7 @@
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
-			 diag.Title ="编辑";
+			 diag.Title ="编辑部门";
 			 diag.URL = '<%=basePath%>department/goEdit.do?DEPARTMENT_ID='+Id;
 			 diag.Width = 550;
 			 diag.Height = 550;

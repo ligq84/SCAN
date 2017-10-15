@@ -136,6 +136,26 @@ public class ScanController extends BaseController {
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
 	}
+	@RequestMapping(value="/listrecord")
+	@SuppressWarnings("all")
+	public ModelAndView listrecord(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		ModelAndView mv = this.getModelAndView();
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		pd.put("COMPANY_ID",user.getCompanyId());
+
+		page.setPd(pd);
+		List<PageData> varList = scanService.list(page);	//列出Company列表
+		mv.setViewName("fhoa/scan/scan_record");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
 	@RequestMapping(value="/michineScanReport")
 	@SuppressWarnings("all")
 	public ModelAndView michineScanReport(Page page) throws Exception{

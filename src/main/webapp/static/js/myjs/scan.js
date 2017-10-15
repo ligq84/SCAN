@@ -424,7 +424,31 @@ function machineCodeCheck(model){
 }
 function xsScan() {
     $("#scan_type").val("1");
-    xsbtn();
+    var machineCode = $("#machineCode").val();
+    var mhid = $("#mhid").val();
+    if(null == machineCode || machineCode == ""){
+        $("#machineCode").tips({
+            side : 1,
+            msg : "请扫描机器",
+            bg : '#FF5080',
+            time : 15
+        });
+        $("#machineCode").focus();
+        return;
+    }else if(null == mhid || mhid == ""){
+        $("#machineCode").tips({
+            side : 1,
+            msg : "机器不存在请重新扫描",
+            bg : '#FF5080',
+            time : 15
+        });
+        $("#machineCode").val("");
+        $("#machineCode").focus();
+        return;
+    }else{
+        xsbtn();
+    }
+
 }
 function xsbtn(){
     console.log(this);
