@@ -26,8 +26,15 @@
 			<mvc:mapping path="/**/**"/>
 			<bean class="com.fh.interceptor.LoginHandlerInterceptor"/>
 		</mvc:interceptor>
+
+		<!--  Log自定义注解拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.fh.interceptor.LogHandlerInterceptor"></bean>
+		</mvc:interceptor>
 	</mvc:interceptors>
-	 
+
+
 	<!-- 配置SpringMVC的视图解析器 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"/>

@@ -5,6 +5,7 @@ import com.fh.entity.Page;
 import com.fh.entity.system.Dictionaries;
 import com.fh.entity.system.Role;
 import com.fh.entity.system.User;
+import com.fh.interceptor.Log;
 import com.fh.service.fhoa.companybasic.CompanyBasicManager;
 import com.fh.service.fhoa.datajur.DatajurManager;
 import com.fh.service.fhoa.department.DepartmentManager;
@@ -64,6 +65,7 @@ public class StaffController extends BaseController {
 
 	@RequestMapping(value="/save")
 	@ResponseBody
+	@Log(model = "人员管理模块",function="添加人员",type = "添加")
 	public ResultData save() throws Exception{
 
 		logBefore(logger, Jurisdiction.getUsername()+"新增Staff");
@@ -93,7 +95,7 @@ public class StaffController extends BaseController {
 			uspd.put("COMPANY_ID",user.getCompanyId());
 			if(null == userService.findByUsername(uspd)){	//判断用户名是否存在
                 userService.saveU(uspd); 					//执行保存
-                FHLOG.save(Jurisdiction.getUsername(), "新增系统用户："+pd.getString("USERNAME"));
+                //FHLOG.save(Jurisdiction.getUsername(), "新增系统用户："+pd.getString("USERNAME"));
             }
 
 			//员工信息添加
@@ -102,7 +104,7 @@ public class StaffController extends BaseController {
 
 			pd.put("COMPANY_ID",user.getCompanyId());
 			staffService.save(pd);					//保存员工信息到员工表
-			FHLOG.save(Jurisdiction.getUsername(), "新增员工："+pd.getString("USERNAME"));
+			//FHLOG.save(Jurisdiction.getUsername(), "新增员工："+pd.getString("USERNAME"));
 
 			String DEPARTMENT_IDS = departmentService.getDEPARTMENT_IDS(pd.getString("DEPARTMENT_ID"));//获取某个部门所有下级部门ID
 			pd.put("DATAJUR_ID", pd.getString("STAFF_ID")); //主键
@@ -121,6 +123,7 @@ public class StaffController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/delete")
+	@Log(model = "人员管理模块",function="删除人员",type = "删除")
 	public void delete(PrintWriter out) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"删除Staff");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
@@ -137,6 +140,7 @@ public class StaffController extends BaseController {
 	 */
 	@RequestMapping(value="/edit")
 	@ResponseBody
+	@Log(model = "人员管理模块",function="修改人员",type = "修改")
 	public ResultData edit() throws Exception{
 
 		try {

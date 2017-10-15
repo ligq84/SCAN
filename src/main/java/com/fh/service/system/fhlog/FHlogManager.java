@@ -14,11 +14,15 @@ import com.fh.util.PageData;
 public interface FHlogManager{
 
 	/**新增
-	 * @param pd
+	 * @param
 	 * @throws Exception
 	 */
 	public void save(String USERNAME, String CONTENT)throws Exception;
-	
+
+	public void save(String USERNAME, String CONTENT,String model,String function,String type,String operName,String companyId)throws Exception;
+
+	public void save(String USERNAME, String CONTENT,String ip,String operName,String companyId)throws Exception;
+
 	/**删除
 	 * @param pd
 	 * @throws Exception

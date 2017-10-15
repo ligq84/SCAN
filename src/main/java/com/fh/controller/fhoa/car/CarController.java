@@ -3,6 +3,7 @@ package com.fh.controller.fhoa.car;
 import com.fh.controller.base.BaseController;
 import com.fh.entity.Page;
 import com.fh.entity.system.User;
+import com.fh.interceptor.Log;
 import com.fh.service.fhoa.car.CarManager;
 import com.fh.service.fhoa.companybasic.CompanyBasicManager;
 import com.fh.service.system.fhlog.FHlogManager;
@@ -45,10 +46,11 @@ public class CarController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/save")
+	@Log(model = "设备管理模块",function="添加小推车",type = "添加")
 	public ModelAndView save() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"新增Car");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
-		FHLOG.save(Jurisdiction.getUsername(), "新增小推车");
+		//FHLOG.save(Jurisdiction.getUsername(), "新增小推车");
 		Session session = Jurisdiction.getSession();
 		User user = (User)session.getAttribute(Const.SESSION_USER);
 		ModelAndView mv = this.getModelAndView();
@@ -67,10 +69,11 @@ public class CarController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/delete")
+	@Log(model = "设备管理模块",function="删除小推车",type = "删除")
 	public void delete(PrintWriter out) throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"删除Car");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "del")){return;} //校验权限
-		FHLOG.save(Jurisdiction.getUsername(), "删除小推车");
+		//FHLOG.save(Jurisdiction.getUsername(), "删除小推车");
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		carService.delete(pd);
@@ -83,10 +86,11 @@ public class CarController extends BaseController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/edit")
+	@Log(model = "设备管理模块",function="修改小推车",type = "修改")
 	public ModelAndView edit() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"修改Car");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
-		FHLOG.save(Jurisdiction.getUsername(), "修改小推车");
+		//FHLOG.save(Jurisdiction.getUsername(), "修改小推车");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
@@ -222,6 +226,7 @@ public class CarController extends BaseController {
 	}
 
 	@RequestMapping(value="/printPage")
+	@Log(model = "设备管理模块",function="打印小推车条码",type = "新增")
 	@SuppressWarnings("all")
 	public ModelAndView printPage(HttpServletRequest request) throws Exception{
 		ModelAndView mv = this.getModelAndView();

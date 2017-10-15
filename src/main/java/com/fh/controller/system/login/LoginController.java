@@ -143,6 +143,9 @@ public class LoginController extends BaseController {
                         user.setCompanyId(pd.get("COMPANY_ID").toString());
 						session.setAttribute(Const.SESSION_USER, user);			//把用户信息放session中
 						session.removeAttribute(Const.SESSION_SECURITY_CODE);	//清除登录验证码的session
+
+						FHLOG.save(USERNAME, "登录系统",pd.getString("IP"),pd.getString("NAME"),pd.get("COMPANY_ID").toString());
+
 						//shiro加入身份验证
 						Subject subject = SecurityUtils.getSubject(); 
 					    UsernamePasswordToken token = new UsernamePasswordToken(USERNAME, PASSWORD); 
@@ -154,7 +157,7 @@ public class LoginController extends BaseController {
 					}else{
 						errInfo = "usererror"; 				//用户名或密码有误
 						logBefore(logger, USERNAME+"登录系统密码或用户名错误");
-						FHLOG.save(USERNAME, "登录系统密码或用户名错误");
+						//FHLOG.save(USERNAME, "登录系统密码或用户名错误");
 					}
 				}else{
 					errInfo = "codeerror";				 	//验证码输入有误
@@ -162,7 +165,7 @@ public class LoginController extends BaseController {
 				if(Tools.isEmpty(errInfo)){
 					errInfo = "success";					//验证成功
 					logBefore(logger, USERNAME+"登录系统");
-					FHLOG.save(USERNAME, "登录系统");
+					//FHLOG.save(USERNAME, "登录系统");
 				}
 			}
 		}else{
@@ -225,6 +228,9 @@ public class LoginController extends BaseController {
 							session.setAttribute(Const.CARID,pdm.get("CAR_ID"));
 							session.setAttribute(Const.SESSION_USER, user);			//把用户信息放session中
 							session.removeAttribute(Const.SESSION_SECURITY_CODE);	//清除登录验证码的session
+
+							FHLOG.save(USERNAME, "登录系统",pd.getString("IP"),pd.getString("NAME"),pd.get("COMPANY_ID").toString());
+
 							//shiro加入身份验证
 							Subject subject = SecurityUtils.getSubject();
 							UsernamePasswordToken token = new UsernamePasswordToken(USERNAME, PASSWORD);
@@ -236,7 +242,7 @@ public class LoginController extends BaseController {
 						}else{
 							errInfo = "usererror"; 				//用户名或密码有误
 							logBefore(logger, USERNAME+"登录系统密码或用户名错误");
-							FHLOG.save(USERNAME, "登录系统密码或用户名错误");
+							//FHLOG.save(USERNAME, "登录系统密码或用户名错误");
 						}
 					}
 
@@ -246,7 +252,7 @@ public class LoginController extends BaseController {
 				if(Tools.isEmpty(errInfo)){
 					errInfo = "success";					//验证成功
 					logBefore(logger, USERNAME+"登录系统");
-					FHLOG.save(USERNAME, "登录系统");
+					//FHLOG.save(USERNAME, "登录系统");
 				}
 			}
 		}else{
@@ -469,7 +475,7 @@ public class LoginController extends BaseController {
 	
 	/**
 	 * 用户注销
-	 * @param session
+	 * @param
 	 * @return
 	 * @throws Exception 
 	 */
@@ -540,7 +546,7 @@ public class LoginController extends BaseController {
 	}
 	
 	/**获取用户权限
-	 * @param session
+	 * @param
 	 * @return
 	 */
 	public Map<String, String> getUQX(String USERNAME,String companyId){

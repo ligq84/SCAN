@@ -158,7 +158,7 @@ public class DictionariesController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		try{
-			JSONArray arr = JSONArray.fromObject(dictionariesService.listAllDict("0"));
+			JSONArray arr = JSONArray.fromObject(dictionariesService.listAllDict("LOG")); // TODO 到时候删除
 			String json = arr.toString();
 			json = json.replaceAll("DICTIONARIES_ID", "id").replaceAll("PARENT_ID", "pId").replaceAll("NAME", "name").replaceAll("subDict", "nodes").replaceAll("hasDict", "checked").replaceAll("treeurl", "url");
 			model.addAttribute("zTreeNodes", json);

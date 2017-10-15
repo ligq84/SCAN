@@ -11,6 +11,12 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import com.fh.entity.system.Dictionaries;
+import com.fh.entity.system.User;
+import com.fh.interceptor.Log;
+import com.fh.service.system.dictionaries.DictionariesManager;
+import com.fh.util.*;
+import org.apache.shiro.session.Session;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
@@ -21,10 +27,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fh.controller.base.BaseController;
 import com.fh.entity.Page;
-import com.fh.util.AppUtil;
-import com.fh.util.ObjectExcelView;
-import com.fh.util.PageData;
-import com.fh.util.Jurisdiction;
 import com.fh.service.system.fhlog.FHlogManager;
 
 /** 
@@ -39,6 +41,9 @@ public class FHlogController extends BaseController {
 	String menuUrl = "fhlog/list.do"; //菜单地址(权限用)
 	@Resource(name="fhlogService")
 	private FHlogManager fhlogService;
+
+	@Resource(name="dictionariesService")
+	private DictionariesManager dictionariesService;
 	
 	/**删除
 	 * @param out
@@ -78,13 +83,109 @@ public class FHlogController extends BaseController {
 		if(lastEnd != null && !"".equals(lastEnd)){
 			pd.put("lastEnd", lastEnd+" 00:00:00");
 		}
+
+		String modelName = pd.getString("modelName");
+		String funcName = pd.getString("funcName");
+		if(modelName != null && !"".equals(modelName)){
+			pd.put("DICTIONARIES_ID",modelName);
+			PageData cc = dictionariesService.findById(pd);
+			pd.put("modelName", cc.getString("NAME"));
+		}
+		if(funcName != null && !"".equals(funcName)){
+			pd.put("funcName", funcName);
+		}
+
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		pd.put("companyId",user.getCompanyId());
+		pd.put("logType","0");
+
 		page.setPd(pd);
 		List<PageData>	varList = fhlogService.list(page);		//列出FHlog列表
 		mv.setViewName("system/fhlog/fhlog_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
 		mv.addObject("QX",Jurisdiction.getHC());				//按钮权限
+
+
+		List<Dictionaries>	provinceList = dictionariesService.listSubDictByParentId("LOG_ID");
+		List<PageData> pnList = new ArrayList<PageData>();
+		for(Dictionaries d :provinceList){
+			PageData pdf = new PageData();
+			pdf.put("DICTIONARIES_ID", d.getDICTIONARIES_ID());
+			pdf.put("NAME", d.getNAME());
+			pnList.add(pdf);
+		}
+		mv.addObject("modelList",pnList);
+
 		return mv;
+	}
+
+	/**用户登录日志列表
+	 * @param page
+	 * @throws Exception
+	 */
+	@RequestMapping(value="/logList")
+	public ModelAndView logList(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"列表FHlog");
+		ModelAndView mv = this.getModelAndView();
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		String keywords = pd.getString("keywords");				//关键词检索条件
+		if(null != keywords && !"".equals(keywords)){
+			pd.put("keywords", keywords.trim());
+		}
+		String lastStart = pd.getString("lastStart");	//开始时间
+		String lastEnd = pd.getString("lastEnd");		//结束时间
+		if(lastStart != null && !"".equals(lastStart)){
+			pd.put("lastStart", lastStart+" 00:00:00");
+		}
+		if(lastEnd != null && !"".equals(lastEnd)){
+			pd.put("lastEnd", lastEnd+" 00:00:00");
+		}
+
+
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		pd.put("companyId",user.getCompanyId());
+		pd.put("logType","1");
+
+		page.setPd(pd);
+		List<PageData>	varList = fhlogService.list(page);		//列出FHlog列表
+		mv.setViewName("system/fhlog/fhlog_login_list");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());				//按钮权限
+
+		return mv;
+	}
+
+
+	@RequestMapping(value="/getLevels")
+	@ResponseBody
+	public Object getLevels(){
+		Map<String,Object> map = new HashMap<String,Object>();
+		String errInfo = "success";
+		PageData pd = new PageData();
+		try{
+			pd = this.getPageData();
+			String DICTIONARIES_ID = pd.getString("id");
+			DICTIONARIES_ID = Tools.isEmpty(DICTIONARIES_ID)?"0":DICTIONARIES_ID;
+			List<Dictionaries>	varList = dictionariesService.listSubDictByParentId(DICTIONARIES_ID); //用传过来的ID获取此ID下的子列表数据
+			List<PageData> pdList = new ArrayList<PageData>();
+			for(Dictionaries d :varList){
+				PageData pdf = new PageData();
+				pdf.put("DICTIONARIES_ID", d.getDICTIONARIES_ID());
+				pdf.put("NAME", d.getNAME());
+				pdList.add(pdf);
+			}
+			map.put("list", pdList);
+		} catch(Exception e){
+			errInfo = "error";
+			logger.error(e.toString(), e);
+		}
+		map.put("result", errInfo);				//返回结果
+		return AppUtil.returnObject(new PageData(), map);
 	}
 	
 	 /**批量删除

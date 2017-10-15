@@ -32,42 +32,21 @@
 						<div class="col-xs-12">
 							
 						<!-- 检索  -->
-						<form action="fhlog/list.do" method="post" name="Form" id="Form">
+						<form action="fhlog/logList.do" method="post" name="Form" id="Form">
 						<table style="margin-top:5px;">
 							<tr>
-								<td  class="searchTabletd" style="text-align: right"><label>操作模块:</label></td>
-								<td  class="searchTabletd">
-									<div class="nav-search">
-										<select class="nav-search-input" name="modelName" id="modelName" style="vertical-align:top;width: 145px;"  title="操作模块" onchange="change1(this.value)" >
-											<option value="">全部</option>
-											<c:forEach items="${modelList}" var="staffPost">
-												<option value="${staffPost.DICTIONARIES_ID }"  <c:if test="${staffPost.NAME == pd.modelName }">selected</c:if> >${staffPost.NAME}</option>
-											</c:forEach>
-										</select>
-									</div>
-								</td>
 
-								<td  class="searchTabletd" style="text-align: right;width: 20px;">
-									<label>操作功能:</label></td>
-
-								<td  class="searchTabletd" style="text-align: right">
-									<div class="nav-search">
-										<select class="nav-search-input" id="funcName" name="funcName" style="vertical-align:top;width: 145px;"  title="操作功能"  >
-												<option value="${pd.funcName}">${pd.funcName}</option>
-										</select>
-									</div>
-								</td>
-								<td  class="searchTabletd" style="text-align: right"><label>操作人:</label></td>
+								<td  class="searchTabletd" style="text-align: right"><label>登录人:</label></td>
 								<td class="searchTabletd">
 									<div class="nav-search">
-										<input type="text" placeholder="操作人" class="nav-search-input" id="nav-search-input"
+										<input type="text" placeholder="输入姓名或账号名" class="nav-search-input" id="nav-search-input"
 											   autocomplete="off" name="keywords" value="${pd.keywords }" />
 									</div>
 								</td>
 							</tr>
 							<tr>
 
-								<td  class="searchTabletd" style="text-align: right"><label>操作时间:</label></td>
+								<td  class="searchTabletd" style="text-align: right"><label>登录时间:</label></td>
 								<td class="searchTabletd">
 									<div class="nav-search">
 									<input class="span10 date-picker nav-search-input" name="lastStart" id="lastStart"  value="${pd.lastStart }" type="text"
@@ -80,11 +59,15 @@
 										   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="结束日期" title="结束日期"/>
 									</div>
 								</td>
-								<c:if test="${QX.cha == 1 }">
+
 								<td class="searchTabletd">
 									<a class="btn  btn-mini btn-qg" onclick="tosearch();">查询</a>
 								</td>
-								</c:if>
+								<%--<c:if test="${QX.cha == 1 }">
+								<td class="searchTabletd">
+									<a class="btn  btn-mini btn-qg" onclick="tosearch();">查询</a>
+								</td>
+								</c:if>--%>
 								<%--<c:if test="${QX.toExcel == 1 }"><td style="vertical-align:top;padding-left:2px;"><a class="btn btn-light btn-xs" onclick="toExcel();" title="导出到EXCEL"><i id="nav-search-icon" class="ace-icon fa fa-download bigger-110 nav-search-icon blue"></i></a></td></c:if>--%>
 							</tr>
 						</table>
@@ -92,19 +75,16 @@
 					
 						<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:20px;">
 							<thead>
+							<tr>
 								<%--<tr>--%>
 									<%--<th class="center" style="width:35px;">--%>
 									<%--<label class="pos-rel"><input type="checkbox" class="ace" id="zcheckbox" /><span class="lbl"></span></label>--%>
 									<%--</th>--%>
 									<th class="center" style="width:50px;">序号</th>
-									<th class="center">操作模块</th>
-									<th class="center">操作功能</th>
-									<th class="center">操作类型</th>
-									<!--<th class="center">事件</th>-->
-								    <th class="center">操作人</th>
-								    <th class="center">操作人账号</th>
-									<th class="center">操作时间</th>
-								<!--<th class="center">操作</th>-->
+									<th class="center">登录账号</th>
+									<th class="center">登录人</th>
+									<th class="center">登录时间</th>
+								    <th class="center">登录IP地址</th>
                             </tr>
                         </thead>
 
@@ -112,20 +92,17 @@
                         <!-- 开始循环 -->
 							<c:choose>
 								<c:when test="${not empty varList}">
-									<c:if test="${QX.cha == 1 }">
+									<%--<c:if test="${QX.cha == 1 }">--%>
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
 											<%--<td class='center'>--%>
 												<%--<label class="pos-rel"><input type='checkbox' name='ids' value="${var.FHLOG_ID}" class="ace" /><span class="lbl"></span></label>--%>
 											<%--</td>--%>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
-											<td class='center'>${var.MODEL}</td>
-											<td class='center'>${var.FUNCTION}</td>
-											<td class='center'>${var.TYPE}</td>
-										    <td class='center' style="width: 200px;">${var.OPER_NAME}</td>
 											<td class='center' style="width: 200px;">${var.USERNAME}</td>
+											<td class='center' style="width: 200px;">${var.OPER_NAME}</td>
 											<td class='center' style="width: 150px;">${var.CZTIME}</td>
-
+											<td class='center' style="width: 150px;">${var.IP}</td>
 													<%--
                                                 <td class="center" style="width: 50px;">
                                                     <c:if test="${QX.edit != 1 && QX.del != 1 }">
@@ -142,12 +119,12 @@
                                             </tr>--%>
 
                                         </c:forEach>
-                                        </c:if>
-                                        <c:if test="${QX.cha == 0 }">
+                                        <%--</c:if>--%>
+                                       <%-- <c:if test="${QX.cha == 0 }">
                                             <tr>
                                                 <td colspan="100" class="center">您无权查看</td>
                                             </tr>
-                                        </c:if>
+                                        </c:if>--%>
                                     </c:when>
                                     <c:otherwise>
                                         <tr class="main_info">
