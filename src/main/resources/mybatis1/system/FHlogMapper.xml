@@ -13,7 +13,7 @@
 		CZTIME,	
 		CONTENT,	
 		FHLOG_ID
-		,MODEL,FUNCTION,TYPE,OPER_NAME,COMPANY_ID,LOG_TYPE
+		,MODEL,FUNCTION,TYPE,OPER_NAME,COMPANY_ID,LOG_TYPE,IP
 	</sql>
 	
 	<!-- 字段值 -->
@@ -22,7 +22,7 @@
 		#{CZTIME},	
 		#{CONTENT},	
 		#{FHLOG_ID}
-		,#{MODEL},#{FUNCTION},#{TYPE},#{OPER_NAME},#{COMPANY_ID},#{LOG_TYPE}
+		,#{MODEL},#{FUNCTION},#{TYPE},#{OPER_NAME},#{COMPANY_ID},#{LOG_TYPE},#{IP}
 	</sql>
 	
 	<!-- 新增-->
@@ -64,14 +64,15 @@
 		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
-					OPER_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
-				)
+					OPER_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') or
+					USERNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+			)
 		</if>
 		<if test="pd.lastStart!=null and pd.lastStart!=''"><!-- 开始时间检索 -->
 			and CZTIME &gt;= #{pd.lastStart} 
 		</if>
 		<if test="pd.lastEnd!=null and pd.lastEnd!=''"><!-- 结束时间检索 -->
-			 #{pd.lastEnd} &gt;=  and CZTIME
+			and  #{pd.lastEnd} &gt;=  CZTIME
 		</if>
 		<if test="pd.companyId!=null and pd.companyId!=''">
 			and COMPANY_ID = #{pd.companyId}
@@ -80,7 +81,7 @@
 			and LOG_TYPE = #{pd.logType}
 		</if>
 
-		<if test="pd.modelName!=null and pd.modelName!=''">
+		<if test="pd.modelName!=null and pd.modelName!='' and pd.modelName != '-1'">
 			and MODEL = #{pd.modelName}
 		</if>
 		<if test="pd.funcName!=null and pd.funcName!=''">

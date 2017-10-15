@@ -39,9 +39,9 @@
 								<td  class="searchTabletd">
 									<div class="nav-search">
 										<select class="nav-search-input" name="modelName" id="modelName" style="vertical-align:top;width: 145px;"  title="操作模块" onchange="change1(this.value)" >
-											<option value="">全部</option>
+											<option value="-1">全部</option>
 											<c:forEach items="${modelList}" var="staffPost">
-												<option value="${staffPost.DICTIONARIES_ID }"  <c:if test="${staffPost.NAME == pd.modelName }">selected</c:if> >${staffPost.NAME}</option>
+												<option value="${staffPost.DICdTIONARIES_ID }"  <c:if test="${staffPost.NAME == pd.modelName }">selected</c:if> >${staffPost.NAME}</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -53,7 +53,7 @@
 								<td  class="searchTabletd" style="text-align: right">
 									<div class="nav-search">
 										<select class="nav-search-input" id="funcName" name="funcName" style="vertical-align:top;width: 145px;"  title="操作功能"  >
-												<option value="${pd.funcName}">${pd.funcName}</option>
+												<%--<option value="${pd.funcName}">${pd.funcName}</option>--%>
 										</select>
 									</div>
 								</td>

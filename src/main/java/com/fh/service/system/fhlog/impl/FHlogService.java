@@ -61,6 +61,7 @@ public class FHlogService implements FHlogManager{
 		pd.put("FHLOG_ID", UuidUtil.get32UUID());		//主键
 		pd.put("CZTIME", Tools.date2Str(new Date()));	//操作时间
 		pd.put("LOG_TYPE", 1);
+		pd.put("IP", ip);
 		pd.put("COMPANY_ID", companyId);
 		dao.save("FHlogMapper.save", pd);
 	}

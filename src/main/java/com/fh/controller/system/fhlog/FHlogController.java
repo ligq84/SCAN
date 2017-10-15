@@ -81,12 +81,12 @@ public class FHlogController extends BaseController {
 			pd.put("lastStart", lastStart+" 00:00:00");
 		}
 		if(lastEnd != null && !"".equals(lastEnd)){
-			pd.put("lastEnd", lastEnd+" 00:00:00");
+			pd.put("lastEnd", lastEnd+" 23:59:59");
 		}
 
 		String modelName = pd.getString("modelName");
 		String funcName = pd.getString("funcName");
-		if(modelName != null && !"".equals(modelName)){
+		if(modelName != null && !"".equals(modelName) && !"-1".equals(modelName)){
 			pd.put("DICTIONARIES_ID",modelName);
 			PageData cc = dictionariesService.findById(pd);
 			pd.put("modelName", cc.getString("NAME"));
@@ -141,7 +141,7 @@ public class FHlogController extends BaseController {
 			pd.put("lastStart", lastStart+" 00:00:00");
 		}
 		if(lastEnd != null && !"".equals(lastEnd)){
-			pd.put("lastEnd", lastEnd+" 00:00:00");
+			pd.put("lastEnd", lastEnd+" 23:59:59");
 		}
 
 
