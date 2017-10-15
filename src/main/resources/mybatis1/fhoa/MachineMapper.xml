@@ -258,10 +258,27 @@
 			and a.barcode = #{machineCode}
 		</if>
 		<if test="name!= null and name != ''">
-			and a.name = #{name}
+			and a.NAME LIKE CONCAT(CONCAT('%', #{name}),'%')
 		</if>
 	</select>
-
+	<select id="findByBarcodeList" parameterType="pd" resultType="pd">
+		SELECT a.name,b.name  as typeName,a.barcode,a.mhid,a.name as lable,a.name as value,
+		(SELECT d.USERNAME from oa_staff c LEFT JOIN  sys_user d ON c.USER_ID = d.USER_ID where c.STAFF_ID = a.charge) as chargeName,
+		(SELECT d.USERNAME from oa_staff c LEFT JOIN  sys_user d ON c.USER_ID = d.USER_ID where c.STAFF_ID = a.Day_Repairman) as Day_Repairman,
+		(SELECT d.USERNAME from oa_staff c LEFT JOIN  sys_user d ON c.USER_ID = d.USER_ID where c.STAFF_ID = a.Night_Repairman) as Night_Repairman,
+		(SELECT c.NAME from oa_staff c where c.STAFF_ID = a.charge) as chargeN,
+		(SELECT c.NAME from oa_staff c where c.STAFF_ID = a.Day_Repairman) as Day_R,
+		(SELECT c.NAME from oa_staff c where c.STAFF_ID = a.Night_Repairman) as Night_R
+		from OA_MACHINE  a
+		LEFT JOIN oa_company_basic b ON a.type = b.ocbid
+		where  a.company_id = #{company_id}
+		<if test="machineCode!= null and machineCode != ''">
+			and a.barcode = #{machineCode}
+		</if>
+		<if test="name!= null and name != ''">
+			and a.NAME LIKE CONCAT(CONCAT('%', #{name}),'%')
+		</if>
+	</select>
 	<select id="getMachineCycleById" parameterType="pd" resultType="pd">
 		select a.MCID,a.MHID,a.CYCLEID,a.BZ,b.NAME
 		from oa_machine_cycle a

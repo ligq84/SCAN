@@ -45,7 +45,7 @@
 								</div>
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
-										<label for="machineCode" class="col-sm-2 control-label"><h4 >第一步：扫描机器号:</h4></label>
+										<label for="machineCode" class="col-sm-3 control-label"><h4 >第一步：扫描机器号:</h4></label>
 										<div class="col-sm-4 control-label">
 											<input type="text" name="machineCode" id="machineCode" value="" maxlength="50" placeholder="请扫描机器号"  class="form-control" />
 										</div>
@@ -57,15 +57,15 @@
 									</div>
 								</div>
 								<div class="row" style="margin-left: 15px;">
-									<label for="NAME" class="col-sm-2 control-label">机器名称:</label>
+									<label for="NAME" class="col-sm-1 control-label" style="width: 120px;">机器名称:</label>
 									<div class="col-sm-2">
 										<input type="text" name="name" id="name"  maxlength="50"  class="form-control" style="border: 0px"/>
 									</div>
-									<label for="type" class="col-sm-1 control-label">机器类型:</label>
+									<label for="type" class="col-sm-1 control-label" style="width: 120px;">机器类型:</label>
 									<div class="col-sm-2">
 										<input type="text" name="type" id="type"  maxlength="50"  class="form-control" style="border: 0px"/>
 									</div>
-									<label for="code" class="col-sm-1 control-label">机器编号:</label>
+									<label for="code" class="col-sm-1 control-label" style="width: 120px;">机器编号:</label>
 									<div class="col-sm-2">
 										<input type="text" name="code" id="code"  maxlength="50" class="form-control" style="border: 0px"/>
 									</div>
@@ -92,14 +92,14 @@
 								</div>
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
-										<label for="machineCode" class="col-sm-2 control-label"><h4 >第二步：选择扫描类型:</h4></label>
+										<label for="machineCode" class="col-sm-3 control-label"><h4 >第二步：选择扫描类型:</h4></label>
 									</div>
 								</div>
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
 										<label class="col-sm-2 control-label"></label>
 										<%--<button type="button" class="btn btn-primary btn-lg"  onclick="ScanRecord('xs')">巡视扫描</button>--%>
-										<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" onclick="machineCodeCheck('xsModal')">
+										<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" onclick="xsScan()">
 											巡视扫描
 										</button>
 										<button type="button" class="btn btn-primary btn-lg"  onclick="machineCodeCheck('wxModal')" style="margin-left: 5em;">维修扫描</button>

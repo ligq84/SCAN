@@ -25,7 +25,27 @@
 	<script type="text/javascript" src="plugins/selectZtree/ztree/ztree.js"></script>
 	<link type="text/css" rel="stylesheet" href="plugins/selectZtree/ztree/ztree.css"></link>
 	<!-- 树形下拉框end -->
-	
+	<style type="text/css">
+		textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+			color: #282828;
+			border: 1px solid #0e77d9;
+		}
+		input[readonly]:hover {
+			border-color: #0e77d9;
+
+		}
+		input[readonly] {
+			background-color: white !important;
+			cursor: default;
+		}
+		.form-control {
+			display: block;
+
+			border: 1px solid #0e77d9;
+			border-radius: 4px;
+
+		}
+	</style>
 </head>
 <body class="no-skin">
 <!-- /section:basics/navbar.layout -->
@@ -80,7 +100,7 @@
 							<div class="form-group" style="margin-top: 10px">
 								<label for="NAME" class="col-sm-1 control-label" style="width: 100px;"><span style="color: red">*</span>联系地址:</label>
 								<div class="col-sm-2">
-										<select id="PROVINCE" name="PROVINCE" class="chosen-select form-control" data-placeholder="请选择省份" style="vertical-align:top;">
+										<select id="PROVINCE" name="PROVINCE" class=" form-control" data-placeholder="请选择省份" style="vertical-align:top;">
 										<c:forEach items="${PROVINCEList}" var="province">
 											<option value="${province.DICTIONARIES_ID }" <c:if test="${province.DICTIONARIES_ID == pd.PROVINCE}">selected</c:if>>${province.NAME }</option>
 										</c:forEach>
@@ -577,7 +597,7 @@
 		
 		$(function() {
 			//日期框
-			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
+			$('.date-picker').datepicker({autoclose: true,todayHighlight: true,clearBtn: true});
 		});
 		function change2(value){
 			$.ajax({

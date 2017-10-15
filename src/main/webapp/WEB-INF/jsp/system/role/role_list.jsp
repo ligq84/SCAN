@@ -39,7 +39,7 @@
 									<td class="searchTabletd">
 										<a class="btn btn-mini btn-qg" onclick="tosearch();"  title="查询">查询</a>
 										<c:if test="${QX.add == 1 }">
-											&nbsp;&nbsp;<a class="btn btn-mini btn-qg" onclick="editRights();">新增角色</a>
+											&nbsp;&nbsp;<a class="btn btn-mini btn-qg" onclick="editRights('');">新增角色</a>
 										</c:if>
 									</td>
 
@@ -50,8 +50,9 @@
 								<tr>
 									<th class="center" style="width: 50px;">序号</th>
 									<th class='center'>角色</th>
+                                    <th class='center'>角色说明</th>
 									<c:if test="${QX.edit == 1 }">
-									<th class="center">按钮</th>
+									<th class="center">设置权限</th>
 									<%--<th class="center">增</th>--%>
 									<%--<th class="center">删</th>--%>
 									<%--<th class="center">改</th>--%>
@@ -68,10 +69,11 @@
 										<tr>
 										<td class='center' style="width:30px;">${vs.index+1}</td>
 										<td id="ROLE_NAMETd${var.ROLE_ID }">${var.ROLE_NAME }</td>
+                                        <td> ${var.BZ} </td>
 										<c:if test="${QX.edit == 1 }">
 										<%--<td style="width:30px;"><a onclick="roleButton('${var.ROLE_ID }','add_qx');" class="btn btn-warning btn-mini" title="分配新增权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>--%>
 										<%--<td style="width:30px;"><a onclick="roleButton('${var.ROLE_ID }','del_qx');" class="btn btn-warning btn-mini" title="分配删除权限"><i class="ace-icon fa fa-wrench bigger-110 icon-only"></i></a></td>--%>
-										<td style="text-align: center;width: 60px;">
+										<td style="text-align: center;width: 75px;">
 											<a onclick="roleButton('${var.ROLE_ID }','edit_qx');"  title="按钮权限" style="cursor: pointer">
 												<img src="/static/images/option.png" />
 											</a>
@@ -248,7 +250,7 @@
 			 diag.Title = "菜单权限";
 			 diag.URL = '<%=basePath%>role/menuqx.do?ROLE_ID='+ROLE_ID;
 			 diag.Width = 320;
-			 diag.Height = 450;
+			 diag.Height = 495;
 			 diag.CancelEvent = function(){ //关闭事件
 				diag.close();
 			 };

@@ -8712,7 +8712,7 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"] {
-  border-radius: 0 !important;
+  border-radius: 5 !important;
   color: #858585;
   background-color: #ffffff;
   border: 1px solid #d5d5d5;

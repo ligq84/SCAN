@@ -7,6 +7,7 @@
 		<id column="ROLE_ID" property="ROLE_ID"/>
 		<result column="ROLE_NAME" property="ROLE_NAME"/>
 		<result column="RIGHTS" property="RIGHTS"/>
+		<result column="BZ" property="BZ"/>
 	</resultMap>
 	
 	<!-- 字段 -->
@@ -19,7 +20,8 @@
 		DEL_QX,
 		EDIT_QX,
 		CHA_QX,
-		COMPANY_ID
+		COMPANY_ID,
+		BZ
 	</sql>
 	
 	<!-- 字段值 -->
@@ -32,7 +34,8 @@
 		#{DEL_QX},
 		#{EDIT_QX},
 		#{CHA_QX},
-		#{COMPANY_ID}
+		#{COMPANY_ID},
+		#{BZ}
 	</sql>
 	
 	<!--表名 -->
@@ -98,7 +101,13 @@
 	<update id="updateRoleRights" parameterType="Role">
 		update 
 		<include refid="tableName"></include>
-		set RIGHTS=#{RIGHTS} 
+		set RIGHTS=#{RIGHTS}
+		where ROLE_ID=#{ROLE_ID}
+	</update>
+	<update id="updateRoleInfo" parameterType="Role">
+		update
+		<include refid="tableName"></include>
+		set ROLE_NAME=#{ROLE_NAME},BZ=#{ROLE_NAME}
 		where ROLE_ID=#{ROLE_ID}
 	</update>
 	

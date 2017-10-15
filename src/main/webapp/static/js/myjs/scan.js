@@ -422,6 +422,10 @@ function machineCodeCheck(model){
     }
 
 }
+function xsScan() {
+    $("#scan_type").val("1");
+    xsbtn();
+}
 function xsbtn(){
     console.log(this);
     var scan_type = $("#scan_type").val();

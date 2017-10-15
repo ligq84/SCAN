@@ -534,7 +534,7 @@
 
 		$(function() {
 			//日期框
-			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
+			$('.date-picker').datepicker({autoclose: true,todayHighlight: true,clearBtn: true});
 		});
 	</script>
 

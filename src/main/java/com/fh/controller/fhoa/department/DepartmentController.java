@@ -121,6 +121,7 @@ public class DepartmentController extends BaseController {
 			pd.put("keywords", keywords.trim());
 		}
 		String DEPARTMENT_ID = null == pd.get("DEPARTMENT_ID")?"":pd.get("DEPARTMENT_ID").toString();
+		//String DEPARTMENT_ID ="";
 		if(null != pd.get("id") && !"".equals(pd.get("id").toString())){
 			DEPARTMENT_ID = pd.get("id").toString();
 		}

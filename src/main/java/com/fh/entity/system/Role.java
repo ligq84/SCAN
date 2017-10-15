@@ -18,7 +18,16 @@ public class Role {
 	private String DEL_QX;
 	private String EDIT_QX;
 	private String CHA_QX;
-	
+	private String BZ;
+
+	public String getBZ() {
+		return BZ;
+	}
+
+	public void setBZ(String BZ) {
+		this.BZ = BZ;
+	}
+
 	public String getROLE_ID() {
 		return ROLE_ID;
 	}

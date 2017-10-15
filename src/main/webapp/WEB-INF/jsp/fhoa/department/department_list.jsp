@@ -35,14 +35,14 @@
 								<td>
 									<div class="nav-search">
 										<span class="input-icon">
-											<input type="text" placeholder="这里输入关键词" class="nav-search-input" id="keywords" name="keywords"
+											<input type="text" placeholder="请输入部门名称" class="nav-search-input" id="keywords" name="keywords"
 												   autocomplete="off" value="${page.pd.keywords }" style="width: 145px;"/>
 											<i class="ace-icon fa fa-search nav-search-icon"></i>
 										</span>
 									</div>
 								</td>
 								<td>
-									<input type="hidden" name="DEPARTMENT_ID" id="DEPARTMENT_ID" value="">
+									<input type="hidden" name="DEPARTMENT_ID" id="DEPARTMENT_ID" value="${DEPARTMENT_ID}">
 									<%--<select name="DEPARTMENT_ID" id="DEPARTMENT_ID">--%>
 										<%--<option value="${DEPARTMENT_ID}" <c:if test="${DEPARTMENT_ID != ''}">selected</c:if>>本级</option>--%>
 										<%--<option value="" <c:if test="${DEPARTMENT_ID == ''}">selected</c:if>>全部</option>--%>
@@ -66,8 +66,9 @@
 									<th class="center" style="width:50px;">序号</th>
 									<th class="center">名称</th>
 									<%--<th class="center">英文</th>--%>
-									<th class="center">编码</th>
+
 									<th class="center">负责人</th>
+									<th class="center">负责人电话</th>
 									<th class="center">操作</th>
 								</tr>
 							</thead>
@@ -82,8 +83,9 @@
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
 											<%--<td class='center'>${var.NAME_EN}</td>--%>
-											<td class='center'>${var.BIANMA}</td>
+
 											<td class='center'>${var.HEADMAN}</td>
+											<td class='center'>${var.TEL}</td>
 											<td class="center">
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
@@ -183,8 +185,8 @@
 			 diag.Drag=true;
 			 diag.Title ="新增";
 			 diag.URL = '<%=basePath%>department/goAdd.do?DEPARTMENT_ID='+DEPARTMENT_ID;
-			 diag.Width = 700;
-			 diag.Height = 550;
+			 diag.Width = 450;
+			 diag.Height = 450;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if('none' == diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display){
 					 parent.location.href="<%=basePath%>department/listAllDepartment.do?DEPARTMENT_ID=${DEPARTMENT_ID}&dnowPage=${page.currentPage}";
@@ -229,7 +231,7 @@
 			 diag.Drag=true;
 			 diag.Title ="编辑";
 			 diag.URL = '<%=basePath%>department/goEdit.do?DEPARTMENT_ID='+Id;
-			 diag.Width = 700;
+			 diag.Width = 550;
 			 diag.Height = 550;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){

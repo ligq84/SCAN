@@ -48,7 +48,13 @@ public interface RoleManager {
 	 * @throws Exception
 	 */
 	public void updateRoleRights(Role role) throws Exception;
-	
+
+	/**
+	 * 更新角色信息
+	 * @param role
+	 * @throws Exception
+	 */
+	void updateRoleInfo(Role role) throws Exception;
 	/**通过id查找
 	 * @param roleId
 	 * @return

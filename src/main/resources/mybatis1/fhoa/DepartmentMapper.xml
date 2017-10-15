@@ -24,7 +24,8 @@
 		FUNCTIONS,
 		ADDRESS,
 		BZ,	
-		DEPARTMENT_ID
+		DEPARTMENT_ID,
+		STAFF_ID
 	</sql>
 	
 	<!-- 字段值 -->
@@ -38,7 +39,8 @@
 		#{FUNCTIONS},
 		#{ADDRESS},
 		#{BZ},	
-		#{DEPARTMENT_ID}
+		#{DEPARTMENT_ID},
+		#{STAFF_ID}
 	</sql>
 	
 	<!-- 新增-->
@@ -72,7 +74,8 @@
 			TEL = #{TEL},
 			FUNCTIONS = #{FUNCTIONS},
 			ADDRESS = #{ADDRESS},
-			DEPARTMENT_ID = DEPARTMENT_ID
+			DEPARTMENT_ID = DEPARTMENT_ID,
+			STAFF_ID = #{STAFF_ID}
 		where 
 		DEPARTMENT_ID = #{DEPARTMENT_ID}
 	</update>
@@ -96,7 +99,14 @@
 		where 
 			BIANMA = #{BIANMA}
 	</select>
-	
+	<select id="findByCompanyId" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where
+		company_id = #{COMPANY_ID}
+	</select>
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select

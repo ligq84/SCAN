@@ -12,8 +12,16 @@
 		<base href="<%=basePath%>">
 		<!-- jsp文件头和头部 -->
 		<%@ include file="../../system/index/top.jsp"%>
-		
-	
+	<link rel="stylesheet" href="static/css/pagePublic.css" />
+	<link rel="stylesheet" href="static/ace/css/jquery-ui.css" />
+	<script type="text/javascript" src="static/ace/js/jquery.js"></script>
+	<script type="text/javascript" src="static/ace/js/jquery-ui.js"></script>
+
+	<style type="text/css">
+		textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+			border-radius:4 !important;
+		}
+	</style>
 </head>
 <body class="no-skin">
 <!-- /section:basics/navbar.layout -->
@@ -31,7 +39,7 @@
 						<div id="zhongxin">
 						<table id="table_report" class="table table-striped table-bordered table-hover" style="margin-top:15px;">
 							<tr>
-								<td style="width:79px;text-align: right;padding-top: 13px;">上级:</td>
+								<td style="width:90px;text-align: right;padding-top: 13px;">上级:</td>
 								<td>
 									<div class="col-xs-4 label label-lg label-light arrowed-in arrowed-right">
 										<b>${null == pds.NAME ?'(无) 此部门为顶级':pds.NAME}</b>
@@ -39,43 +47,49 @@
 								</td>
 							</tr>
 							<tr>
-								<td style="width:70px;text-align: right;padding-top: 13px;">名称:</td>
-								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="50" placeholder="这里输入名称" title="名称" style="width:98%;"/></td>
+								<td style="width:90px;text-align: right;padding-top: 13px;">部门名称:</td>
+								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="50" placeholder="这里输入部门名称" class="pageInput"/></td>
 							</tr>
+							<%--<tr>--%>
+								<%--<td style="width:70px;text-align: right;padding-top: 13px;">英文:</td>--%>
+								<%--<td><input type="text" name="NAME_EN" id="NAME_EN" value="${pd.NAME_EN}" maxlength="50" placeholder="这里输入英文" title="英文" style="width:98%;"/></td>--%>
+							<%--</tr>--%>
+							<%--<tr>--%>
+								<%--<td style="width:70px;text-align: right;padding-top: 13px;">编码:</td>--%>
+								<%--<td><input type="text" name="BIANMA" id="BIANMA" value="${pd.BIANMA}" maxlength="32" placeholder="这里输入编码 (不重复, 禁止修改)" title="编码" style="width:76%;" onblur="hasBianma();" <c:if test="${null != pd.BIANMA}">readonly="readonly"</c:if>/></td>--%>
+							<%--</tr>--%>
 							<tr>
-								<td style="width:70px;text-align: right;padding-top: 13px;">英文:</td>
-								<td><input type="text" name="NAME_EN" id="NAME_EN" value="${pd.NAME_EN}" maxlength="50" placeholder="这里输入英文" title="英文" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:70px;text-align: right;padding-top: 13px;">编码:</td>
-								<td><input type="text" name="BIANMA" id="BIANMA" value="${pd.BIANMA}" maxlength="32" placeholder="这里输入编码 (不重复, 禁止修改)" title="编码" style="width:76%;" onblur="hasBianma();" <c:if test="${null != pd.BIANMA}">readonly="readonly"</c:if>/></td>
-							</tr>
-							<tr>
-								<td style="width:70px;text-align: right;padding-top: 13px;">负责人:</td>
-								<td><input type="text" name="HEADMAN" id="HEADMAN" value="${pd.HEADMAN}" maxlength="32" placeholder="这里输入负责人" title="负责人" style="width:66%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:70px;text-align: right;padding-top: 13px;">电话:</td>
-								<td><input type="text" name="TEL" id="TEL" value="${pd.TEL}" maxlength="32" placeholder="这里输入电话" title="电话" style="width:66%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:70px;text-align: right;padding-top: 13px;">部门职能:</td>
-								<td><input type="text" name="FUNCTIONS" id="FUNCTIONS" value="${pd.FUNCTIONS}" maxlength="32" placeholder="这里输入部门职能" title="部门职能" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:70px;text-align: right;padding-top: 13px;">地址:</td>
-								<td><input type="text" name="ADDRESS" id="ADDRESS" value="${pd.ADDRESS}" maxlength="32" placeholder="这里输入地址" title="地址" style="width:98%;"/></td>
-							</tr>
-							<tr>
-								<td style="width:70px;text-align: right;padding-top: 13px;">备注:</td>
+								<td style="width:90px;text-align: right;padding-top: 13px;">负责人姓名:</td>
 								<td>
-									<textarea rows="3" cols="46" name="BZ" id="BZ" placeholder="这里输入备注" title="备注"  style="width:98%;">${pd.BZ}</textarea>
+									<input type="hidden" name="STAFF_ID" id="STAFF_ID">
+									<input type="text" name="HEADMAN" id="HEADMAN" value="${pd.HEADMAN}" maxlength="32" placeholder="这里输入负责人"  class="pageInput"
+										  autocomplete="off"/>
+								</td>
+							</tr>
+							<tr>
+								<td style="width:90px;text-align: right;padding-top: 13px;">负责人电话:</td>
+								<td>
+									<input type="text" name="TEL" id="TEL" value="${pd.TEL}" maxlength="32" placeholder="这里输入电话" class="pageInput" readonly/>
+								</td>
+							</tr>
+							<%--<tr>--%>
+								<%--<td style="width:70px;text-align: right;padding-top: 13px;">部门职能:</td>--%>
+								<%--<td><input type="text" name="FUNCTIONS" id="FUNCTIONS" value="${pd.FUNCTIONS}" maxlength="32" placeholder="这里输入部门职能" title="部门职能" style="width:98%;"/></td>--%>
+							<%--</tr>--%>
+							<%--<tr>--%>
+								<%--<td style="width:70px;text-align: right;padding-top: 13px;">地址:</td>--%>
+								<%--<td><input type="text" name="ADDRESS" id="ADDRESS" value="${pd.ADDRESS}" maxlength="32" placeholder="这里输入地址" title="地址" style="width:98%;"/></td>--%>
+							<%--</tr>--%>
+							<tr>
+								<td style="width:90px;text-align: right;padding-top: 13px;">部门说明:</td>
+								<td>
+									<textarea rows="3" cols="46" name="BZ" id="BZ" placeholder="部门说明" title="备注"  style="width:98%;" class="pageTextarea">${pd.BZ}</textarea>
 								</td>
 							</tr>
 							<tr>
 								<td class="center" colspan="10">
-									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
+									<a class="btn btn-mini btn-qg" onclick="save();">保存</a>
+									<a class="btn btn-mini btn-qg" onclick="top.Dialog.close();">取消</a>
 								</td>
 							</tr>
 						</table>
@@ -101,42 +115,89 @@
 
 	<!-- 页面底部js¨ -->
 	<%@ include file="../../system/index/foot.jsp"%>
-	<!--提示框-->
+	<!--自动补全-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
-		<script type="text/javascript">
+	<!--提示框-->
+	<script type="text/javascript" src="static/js/bootstrap3-typeahead.min.js"></script>
+	<script type="text/javascript">
 		$(top.hangge());
-		//保存
+        $(document).ready(function($) {
+//            $('.typeahead').typeahead({
+//                source: function(query, process) {
+//                    return ["Deluxe Bicycle", "Super Deluxe Trampoline", "Super Duper Scooter"];
+//                }
+//            });
+            $("#HEADMAN").autocomplete({
+                source: function(request, response){
+                   $.ajax({
+						url: '<%=basePath%>staff/listAll.do',
+						type: 'post',
+						data: {NAME: request.term},
+						dataType:'json',
+						success: function (result) {
+                            response(result.data)
+						}
+                    });
+				},
+                select: function(event, ui){
+                    // 这里的this指向当前输入框的DOM元素
+                    // event参数是事件对象
+                    // ui对象只有一个item属性，对应数据源中被选中的对象
+                    $(this).value = ui.item.label;
+                    $("#HEADMAN").val( ui.item.value );
+                    $("#STAFF_ID").val( ui.item.STAFF_ID );
+                    $("#TEL").val( ui.item.TEL );
+                    // 必须阻止事件的默认行为，否则autocomplete默认会把ui.item.value设为输入框的value值
+                    event.preventDefault();
+                }
+            });
+            <%--({--%>
+                <%--source: function (query, process) {--%>
+                    <%--return $.ajax({--%>
+                        <%--url: '<%=basePath%>staff/listAll.do',--%>
+                        <%--type: 'post',--%>
+                        <%--data: {NAME: query},--%>
+                        <%--dataType:'json',--%>
+                        <%--success: function (result) {--%>
+                            <%--return process(result);--%>
+                        <%--},--%>
+                    <%--});--%>
+                <%--}--%>
+            <%--});--%>
+        })
+
+        //保存
 		function save(){
 			if($("#NAME").val()==""){
 				$("#NAME").tips({
 					side:3,
-		            msg:'请输入名称',
+		            msg:'请输部门名称',
 		            bg:'#AE81FF',
 		            time:2
 		        });
 				$("#NAME").focus();
 			return false;
 		}
-			if($("#NAME_EN").val()==""){
-				$("#NAME_EN").tips({
-					side:3,
-		            msg:'请输入英文',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#NAME_EN").focus();
-			return false;
-		}
-			if($("#BIANMA").val()==""){
-				$("#BIANMA").tips({
-					side:3,
-		            msg:'请输入编码',
-		            bg:'#AE81FF',
-		            time:2
-		        });
-				$("#BIANMA").focus();
-			return false;
-		}
+//			if($("#NAME_EN").val()==""){
+//				$("#NAME_EN").tips({
+//					side:3,
+//		            msg:'请输入英文',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#NAME_EN").focus();
+//			return false;
+//		}
+//			if($("#BIANMA").val()==""){
+//				$("#BIANMA").tips({
+//					side:3,
+//		            msg:'请输入编码',
+//		            bg:'#AE81FF',
+//		            time:2
+//		        });
+//				$("#BIANMA").focus();
+//			return false;
+//		}
 			$("#Form").submit();
 			$("#zhongxin").hide();
 			$("#zhongxin2").show();

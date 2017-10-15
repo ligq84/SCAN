@@ -58,6 +58,8 @@ public interface DepartmentManager{
 	 */
 	public List<Department> listSubDepartmentByParentId(String parentId) throws Exception;
 
+	PageData findByCompanyId(String COMPANY_ID) throws Exception;
+
 	/**
 	 * 通过公司id 获取部门
 	 * @param companyId

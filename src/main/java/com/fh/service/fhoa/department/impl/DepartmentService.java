@@ -94,6 +94,10 @@ public class DepartmentService implements DepartmentManager{
 	public List<Department> listSubDepartmentByParentId(String parentId) throws Exception {
 		return (List<Department>) dao.findForList("DepartmentMapper.listSubDepartmentByParentId", parentId);
 	}
+	public PageData findByCompanyId(String COMPANY_ID) throws Exception {
+		return  (PageData)dao.findForObject("DepartmentMapper.findByCompanyId", COMPANY_ID);
+	}
+
 
 	/**
 	 * 通过公司id 获取部门

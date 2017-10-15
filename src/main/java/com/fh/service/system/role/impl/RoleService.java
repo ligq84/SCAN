@@ -72,6 +72,15 @@ public class RoleService implements RoleManager{
 	public void updateRoleRights(Role role) throws Exception {
 		dao.update("RoleMapper.updateRoleRights", role);
 	}
+
+	/**
+	 * 更新角色信息
+	 * @param role
+	 * @throws Exception
+	 */
+	public void updateRoleInfo(Role role) throws Exception {
+		dao.update("RoleMapper.updateRoleInfo", role);
+	}
 	
 	/**通过id查找
 	 * @param roleId

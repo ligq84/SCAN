@@ -17,6 +17,10 @@
 	<%@ include file="../../system/index/top.jsp"%>
 	<!-- 日期框 -->
 	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+	<link rel="stylesheet" href="static/css/pagePublic.css" />
+	<link rel="stylesheet" href="static/ace/css/jquery-ui.css" />
+	<script type="text/javascript" src="static/ace/js/jquery.js"></script>
+	<script type="text/javascript" src="static/ace/js/jquery-ui.js"></script>
 	<style type="text/css">
 		.inputStyle{
 			border: 1px solid #0e77d9 !important;
@@ -57,7 +61,8 @@
 									<div class="form-group" >
 										<label for="machineName" class="col-sm-2 control-label"><h4 ><span style="color: red">*</span>机器名称:</h4></label>
 										<div class="col-sm-4 control-label">
-											<input type="text" name="machineName" id="machineName" value="" maxlength="50" placeholder="请输入机器名称"  class="form-control inputStyle" />
+											<input type="text" name="machineName" id="machineName" value="" maxlength="50"  placeholder="请输入机器名称"
+												   class="form-control inputStyle" autocomplete="off"/>
 										</div>
 									</div>
 								</div>
@@ -175,30 +180,61 @@
 				return o;
 			};
 
-
-			$("#machineName")[0].oninput =function(){
-				$.ajax({
-					type: "POST",
-					url: '<%=basePath%>scan/findByBarcode.do?name='+$("#machineName").val(),
-					data: $("#Form").serializeObject(),
-					dataType:'json',
-					cache: false,
-					success: function(data){
-						if(data.result == "success"){
-							var machine = data.data;
-							if(null!=machine && ""!=machine){
-								$("#machine_name").val(machine.name);
-								$("#chargeN").val(machine.chargeN);
-								$("#Day_Repairman").val(machine.Day_Repairman);
-								$("#Night_R").val(machine.Night_R);
-								$("#to_staff").val('机器负责人：'+machine.chargeN+'、白班维修员：'+machine.Day_R+'、晚班维修员'+machine.Night_R)
-								$("#USERNAME").val(machine.chargeName+';'+machine.Day_Repairman+';'+machine.Night_Repairman)
-								$("#mhid").val(machine.mhid);
-							}
-						}
-					}
-				});
-			};
+            $("#machineName").autocomplete({
+                source: function(request, response){
+                    $.ajax({
+                        url: '<%=basePath%>scan/findByBarcodeList.do?name='+$("#machineName").val(),
+                        type: 'post',
+                        data: {NAME: request.term},
+                        dataType:'json',
+                        success: function (result) {
+//							console.log(result.data)
+                            response(result.data)
+                        }
+                    });
+                },
+                select: function(event, ui){
+                    // 这里的this指向当前输入框的DOM元素
+                    // event参数是事件对象
+                    // ui对象只有一个item属性，对应数据源中被选中的对象
+                    $(this).value = ui.item.label;
+                    $("#machineName").val( ui.item.value );
+//                    $("#STAFF_ID").val( ui.item.STAFF_ID );
+//                    $("#TEL").val( ui.item.TEL );
+//                    $("#machine_name").val(machine.name);
+                    $("#chargeN").val(ui.item.chargeN);
+                    $("#Day_Repairman").val(ui.item.Day_Repairman);
+                    $("#Night_R").val(ui.item.Night_R);
+                    $("#to_staff").val('机器负责人：'+ui.item.chargeN+'、白班维修员：'+ui.item.Day_R+'、晚班维修员'+ui.item.Night_R)
+                    $("#USERNAME").val(ui.item.chargeName+';'+ui.item.Day_Repairman+';'+ui.item.Night_Repairman)
+                    $("#mhid").val(ui.item.mhid);
+                    // 必须阻止事件的默认行为，否则autocomplete默认会把ui.item.value设为输入框的value值
+                    event.preventDefault();
+                }
+            });
+			<%--$("#machineName")[0].oninput =function(){--%>
+				<%--$.ajax({--%>
+					<%--type: "POST",--%>
+					<%--url: '<%=basePath%>scan/findByBarcode.do?name='+$("#machineName").val(),--%>
+					<%--data: $("#Form").serializeObject(),--%>
+					<%--dataType:'json',--%>
+					<%--cache: false,--%>
+					<%--success: function(data){--%>
+						<%--if(data.result == "success"){--%>
+							<%--var machine = data.data;--%>
+							<%--if(null!=machine && ""!=machine){--%>
+								<%--$("#machine_name").val(machine.name);--%>
+								<%--$("#chargeN").val(machine.chargeN);--%>
+								<%--$("#Day_Repairman").val(machine.Day_Repairman);--%>
+								<%--$("#Night_R").val(machine.Night_R);--%>
+								<%--$("#to_staff").val('机器负责人：'+machine.chargeN+'、白班维修员：'+machine.Day_R+'、晚班维修员'+machine.Night_R)--%>
+								<%--$("#USERNAME").val(machine.chargeName+';'+machine.Day_Repairman+';'+machine.Night_Repairman)--%>
+								<%--$("#mhid").val(machine.mhid);--%>
+							<%--}--%>
+						<%--}--%>
+					<%--}--%>
+				<%--});--%>
+			<%--};--%>
 		});
 
 		function addRulePost(){

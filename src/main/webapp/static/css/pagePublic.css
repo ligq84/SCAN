@@ -19,3 +19,10 @@ input[readonly] {
 .btnTb{
     cursor: pointer;
 }
+.pageInput{
+    width: 218px;
+    border: 1px solid #0e77d9 !important;
+}
+.pageTextarea{
+    border: 1px solid #0e77d9 !important;
+}

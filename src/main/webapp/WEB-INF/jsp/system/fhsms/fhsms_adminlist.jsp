@@ -46,6 +46,9 @@
 											style="width:145px;"/>
 									</div>
 								</td>
+								<td class="searchTabletd" >
+
+								</td>
 								<td class="searchTabletd" style="text-align: right">
 									<label>通知类型：</label>
 								</td>
@@ -84,6 +87,9 @@
 									</div>
 								</td>
 								<td class="searchTabletd">
+									<label>--</label>
+								</td>
+								<td class="searchTabletd">
 									<div class="nav-search">
 									<input class="span10 date-picker nav-search-input" name="lastLoginEnd" name="lastLoginEnd"  value="${pd.lastLoginEnd}" type="text"
 										   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="结束日期" title="结束日期"/>
@@ -112,7 +118,7 @@
 						</table>
 						<!-- 检索  -->
 					
-						<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:5px;">	
+						<table id="simple-table" class="table table-striped table-bordered table-hover" style="margin-top:20px;">
 							<thead>
 								<tr>
 									<%--<th class="center" style="width:35px;">--%>
@@ -290,7 +296,7 @@
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
-			 diag.Title ="站内信";
+			 diag.Title ="通知";
 			 diag.URL = '<%=basePath%>fhsms/goAdd.do?username='+username;
 			 diag.Width = 660;
 			 diag.Height = 444;
@@ -327,7 +333,7 @@
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
-			 diag.Title ="站内信";
+			 diag.Title ="查看通知";
 			 diag.URL = '<%=basePath%>fhsms/goView.do?FHSMS_ID='+Id+'&TYPE='+type+'&SANME_ID='+SANME_ID+'&STATUS='+STATUS;
 			 diag.Width = 600;
 			 diag.Height = 460;

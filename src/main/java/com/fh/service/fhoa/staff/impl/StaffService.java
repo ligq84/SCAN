@@ -102,6 +102,5 @@ public class StaffService implements StaffManager{
 		return (PageData)dao.findForObject("StaffMapper.findByUserId", userId);
 	}
 
-	
 }
 

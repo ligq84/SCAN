@@ -74,15 +74,15 @@ public class ScanService implements ScanManager {
 	public ResultData scanoperation(PageData pd, User user){
 		try {
 			//保存巡视记录
-			PageData mrecord  = (PageData)dao.findForObject("MachineRecordMapper.findByMhid", pd);
-			if(null!= mrecord && (mrecord.get("scan_type").equals("2") ||mrecord.get("scan_type").equals("4"))){
+			List<PageData> mrecord  = (List<PageData>) dao.findForList("MachineRecordMapper.findByMhid", pd);
+			if(null!= mrecord &&mrecord.size()>0 && (mrecord.get(0).get("scan_type").equals("2") ||mrecord.get(0).get("scan_type").equals("4"))){
 				PageData staff = (PageData)dao.findForObject("StaffMapper.findByUserId", user.getUSER_ID());
-				if(!staff.getString("staff_id").equals(mrecord.getString("staff_Id"))){
+				if(!staff.getString("staff_id").equals(mrecord.get(0).getString("staff_Id"))){
 					return ResultData.init(ResultData.SUCCESS,"当前部位正在由其他维修员处理，\n 操作失败！","");
 				}
 
 				pd.put("end_date",new Date());
-				pd.put("mrid",mrecord.get("mrid"));
+				pd.put("mrid",mrecord.get(0).get("mrid"));
 				dao.update("MachineRecordMapper.edit", pd);
 			}else{
 				if(pd.get("scan_type").equals("2") ||pd.get("scan_type").equals("4")){

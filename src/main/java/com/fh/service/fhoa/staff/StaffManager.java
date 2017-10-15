@@ -68,6 +68,8 @@ public interface StaffManager{
 	public void userBinding(PageData pd)throws Exception;
 
 	PageData findByUserId(String userId)throws Exception;
+
+
 	
 }
 

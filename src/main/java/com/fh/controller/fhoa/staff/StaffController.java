@@ -188,7 +188,10 @@ public class StaffController extends BaseController {
 		pd.put("COMPANY_ID",user.getCompanyId());
 
 		String DEPARTMENT_ID = pd.getString("DEPARTMENT_ID");
-		pd.put("DEPARTMENT_ID", null == DEPARTMENT_ID?Jurisdiction.getDEPARTMENT_ID():DEPARTMENT_ID);	//只有检索条件穿过值时，才不为null,否则读取缓存
+		PageData deptpd = departmentService.findByCompanyId(user.getCompanyId());
+		if(null == pd.get("DEPARTMENT_ID")){
+			pd.put("DEPARTMENT_ID", deptpd.get("DEPARTMENT_ID"));	//只有检索条件穿过值时，才不为null,否则读取缓存
+		}
 		pd.put("item", (null == pd.getString("DEPARTMENT_ID")?Jurisdiction.getDEPARTMENT_IDS():departmentService.getDEPARTMENT_IDS(pd.getString("DEPARTMENT_ID"))));	//部门检索条件,列出此部门下级所属部门的员工
 	
 		/* 比如员工 张三 所有部门权限的部门为 A ， A 的下级有  C , D ,F ，那么当部门检索条件值为A时，只列出A以下部门的员工(自己不能修改自己的信息，只能上级部门修改)，不列出部门为A的员工，当部门检索条件值为C时，可以列出C及C以下员工 */
@@ -212,23 +215,23 @@ public class StaffController extends BaseController {
 		//列出Staff列表
 		//列表页面树形下拉框用(保持下拉树里面的数据不变)
 		String ZDEPARTMENT_ID = pd.getString("ZDEPARTMENT_ID");
-		ZDEPARTMENT_ID = Tools.notEmpty(ZDEPARTMENT_ID)?ZDEPARTMENT_ID:Jurisdiction.getDEPARTMENT_ID();
-		pd.put("ZDEPARTMENT_ID", ZDEPARTMENT_ID);
+		ZDEPARTMENT_ID = Tools.notEmpty(ZDEPARTMENT_ID)?ZDEPARTMENT_ID:deptpd.getString("DEPARTMENT_ID");
+		pd.put("ZDEPARTMENT_ID",  ZDEPARTMENT_ID);
 		List<PageData> zdepartmentPdList = new ArrayList<PageData>();
 		List<PageData> deptPD = departmentService.listAllDepartmentToSelect(ZDEPARTMENT_ID,zdepartmentPdList);
-		if(null != pd.getString("DEPARTMENT_ID") && !pd.getString("DEPARTMENT_ID").equals("0")){
-			PageData mePd = departmentService.findSelectById(pd);
-			deptPD.add(mePd);
-		}
+		//if(null != pd.getString("DEPARTMENT_ID") && !pd.getString("DEPARTMENT_ID").equals("0")){
+		//	PageData mePd = departmentService.findSelectById(pd);
+		//	deptPD.add(mePd);
+		//}
 
 		JSONArray arr = JSONArray.fromObject(deptPD);
 		mv.addObject("zTreeNodes", arr.toString());
-		PageData dpd = departmentService.findById(pd);
-		if(null != dpd){
-			ZDEPARTMENT_ID = dpd.getString("NAME");
-		}
+		//PageData dpd = departmentService.findById(pd);
+		//if(null != dpd){
+		//	ZDEPARTMENT_ID = dpd.getString("NAME");
+		//}
 
-		mv.addObject("depname", ZDEPARTMENT_ID);
+		//mv.addObject("depname", ZDEPARTMENT_ID);
 		mv.setViewName("fhoa/staff/staff_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -434,7 +437,28 @@ public class StaffController extends BaseController {
 		staffService.userBinding(pd);
 		return AppUtil.returnObject(pd, map);
 	}
-	
+	@RequestMapping(value="/listAll")
+	@ResponseBody
+	public ResultData staffListAll() throws Exception{
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		PageData pd = new PageData();
+		Map<String,Object> map = new HashMap<String,Object>();
+		pd = this.getPageData();
+		pd.put("COMPANY_ID",user.getCompanyId());
+
+		List<PageData>  pageList = staffService.listAll(pd);
+		List<PageData> dataList = new ArrayList<PageData>();
+		for(PageData pageData:pageList){
+			PageData npd = new PageData();
+			npd.put("label",pageData.get("NAME"));
+			npd.put("value",pageData.get("NAME"));
+			npd.put("STAFF_ID",pageData.get("STAFF_ID"));
+			npd.put("TEL",pageData.get("TEL"));
+			dataList.add(npd);
+		}
+		return ResultData.init(ResultData.SUCCESS,"添加成功",dataList);
+	}
 	 /**导出到excel
 	 * @param
 	 * @throws Exception

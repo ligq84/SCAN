@@ -100,6 +100,22 @@ public class ScanController extends BaseController {
 			return ResultData.init(ResultData.FAIL,"查询异常",null);
 		}
 	}
+	@RequestMapping(value="/findByBarcodeList")
+	@ResponseBody
+	public ResultData findByBarcodeList()throws Exception{
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		PageData pd = new PageData();
+		try {
+			pd = this.getPageData();
+			pd.put("company_id",user.getCompanyId());
+			List<PageData> pdList = machineService.findByBarcodeList(pd);
+			return ResultData.init(ResultData.SUCCESS,"查询成功",pdList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResultData.init(ResultData.FAIL,"查询异常",null);
+		}
+	}
 	@RequestMapping(value="/list")
 	@SuppressWarnings("all")
 	public ModelAndView list(Page page) throws Exception{
