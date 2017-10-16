@@ -111,7 +111,7 @@
 								<div class="row" style="margin-top: 25px;">
 									<div class="form-group" id="rulePost">
 											<div id="rulePost1" style="margin-top: 5px;">
-												<label class="col-sm-1 control-label no-padding-right" style="width: 125px;"><span style="color: red">*</span>更改部位1:</label>
+												<label class="col-sm-2 control-label no-padding-right" ><span style="color: red">*</span>更改部位1:</label>
 												<div class="col-sm-2">
 													<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改部位" style="vertical-align:top;"  style="width:70%;" >
 														<option value=""></option>
@@ -131,10 +131,9 @@
 								<div class="row" style="margin-left:20px;text-align: center;">
 									<div class="form-group" style="margin-top: 50px">
 										<a class="btn btn-mini btn-primary" onclick="sendSms();">发送通知</a>
-									</div>
-									<div class="form-group" style="margin-top: 50px">
 										<a class="btn btn-mini btn-primary" onclick="backSms();">返回</a>
 									</div>
+
 								</div>
 							</div>
 							<div id="zhongxin2" class="center" style="display:none"><br/><br/><br/><br/><br/><img src="static/images/jiazai.gif" /><br/><h4 class="lighter block green">提交中...</h4></div>
@@ -254,10 +253,16 @@
 			$('.chosen-select').chosen();
 		}
 		function getRPSelect(len){
-			return '<div id="rpvvalue'+len+'" style="margin-top: 5px;">'+
-					'<label class="col-sm-1 control-label no-padding-right"  style="width: 125px;"><span style="color: red">*</span>更改规格'+len+'：</label>'+
+		    var retStr='<div id="rpvvalue'+len+'" style="margin-top: 5px;">';
+
+					if((len)%2 == 0){
+                        retStr +='<label class="col-sm-1 control-label no-padding-right"  style="width: 125px;"';
+					}else{
+                        retStr +='<label class="col-sm-2 control-label no-padding-right"  ';
+					}
+            		retStr +=' ><span style="color: red">*</span>更改部位'+len+'：</label>'+
 					'<div class="col-sm-2">'+
-					'		<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:98%;" >'+
+					'		<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改部位" style="vertical-align:top;"  style="width:98%;" >'+
 					'				<option value=""></option>'+
 					<c:forEach items="${rulePosttionList}" var="rp">
 					'<option value="${rp.NAME }">${rp.NAME}</option>'+
@@ -269,6 +274,7 @@
 					'		<a class="btn btn-mini btn-primary" style="margin-top: 2px" onclick="deleteRPSelect(\'rpvvalue'+len+'\')">删除</a>'+
 					'</div>'+
 					'<div>';
+            return retStr;
 		}
 		function deleteRPSelect(id){
 			$("#"+id).remove();
@@ -336,7 +342,9 @@
 		}
 		$('.chosen-select').chosen({allow_single_deselect:true,search_contains:true});
         function backSms() {
-
+            var form = $('<form action="<%=basePath%>fhsms/adminList.do?STATUS=2" method="get"></form>');
+            $(document.body).append(form);
+            form.submit()
         }
 	</script>
 

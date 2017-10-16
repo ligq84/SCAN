@@ -181,6 +181,31 @@ public class ScanController extends BaseController {
 		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
 		return mv;
 	}
+	@RequestMapping(value="/staffScanReport")
+	@SuppressWarnings("all")
+	public ModelAndView staffScanReport(Page page) throws Exception{
+		logBefore(logger, Jurisdiction.getUsername()+"");
+		if(!Jurisdiction.buttonJurisdiction(menuUrl, "cha")){return null;} //校验权限(无权查看时页面会有提示,如果不注释掉这句代码就无法进入列表页面,所以根据情况是否加入本句代码)
+		ModelAndView mv = this.getModelAndView();
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		PageData pd = new PageData();
+		pd = this.getPageData();
+		pd.put("COMPANY_ID",user.getCompanyId());
+		if(null == pd.get("lastStart")){
+			pd.put("lastStart", DateUtil.getDay());
+		}
+		if(null == pd.get("lastEnd")){
+			pd.put("lastEnd", DateUtil.getDay());
+		}
+		page.setPd(pd);
+		List<PageData> varList = scanService.staffScanReport(page);	//列出Company列表
+		mv.setViewName("fhoa/scan/staff_scan_report");
+		mv.addObject("varList", varList);
+		mv.addObject("pd", pd);
+		mv.addObject("QX",Jurisdiction.getHC());	//按钮权限
+		return mv;
+	}
 	/**
 	 * 扫描操作
 	 * @return

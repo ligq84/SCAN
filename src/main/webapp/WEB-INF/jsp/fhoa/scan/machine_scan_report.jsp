@@ -75,7 +75,7 @@
 								</td>
 								<td class="searchTabletd">
 									<a class="btn btn-mini btn-qg" onclick="tosearch();" >查询</a>
-									<a class="btn btn-mini btn-qg" onclick="toExcel();" >导出</a>
+									<%--<a class="btn btn-mini btn-qg" onclick="toExcel();" >导出</a>--%>
 								</td>
 							</tr>
 						</table>

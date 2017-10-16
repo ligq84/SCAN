@@ -95,7 +95,7 @@
 						<div class="main_input_box">
 							<span class="add-on">
 							<i><img height="37" src="static/login/images/company_code1.png" style="z-index: 200;"/></i>
-							</span><input type="text" name="COMPANYCODE" id="COMPANYCODE"value="TEST" placeholder="请输入企业编码" />
+							</span><input type="text" name="COMPANYCODE" id="COMPANYCODE" value="" placeholder="请输入企业编码" />
 						</div>
 					</div>
 				</div>

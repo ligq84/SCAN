@@ -90,7 +90,7 @@
 						<div class="main_input_box">
 							<span class="add-on">
 							<i><img height="37" src="static/login/images/company_code1.png" style="z-index: 200;"/></i>
-							</span><input type="text" name="MACHINECODE" id="MACHINECODE"value="qg11504442814079" placeholder="请扫描小推车" />
+							</span><input type="text" name="MACHINECODE" id="MACHINECODE" value="" placeholder="请扫描小推车" />
 						</div>
 					</div>
 				</div>

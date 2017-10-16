@@ -33,7 +33,7 @@
 						<div id="zhongxin" style="padding-top: 13px;">
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">
+								<td style="width:85px;text-align: right;padding-top: 13px;">
 									<c:if test="${pd.TYPE == 'staffPost' }">人员岗位</c:if>
 									<c:if test="${pd.TYPE == 'machineType' }">类型名称</c:if>
 									<c:if test="${pd.TYPE == 'carType' }">类型名称</c:if>
@@ -45,9 +45,9 @@
 								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">启用状态:</td>
+								<td style="width:85px;text-align: right;padding-top: 13px;">启用状态:</td>
 								<td>
-									<select id="STATUS" name="STATUS"  class="chosen-select form-control" style="vertical-align:top;">
+									<select id="STATUS" name="STATUS"  class="chosen-select form-control" style="vertical-align:top;width:98%;">
 										<option value="">请选择</option>
 										<option value="0" <c:if test="${!empty pd.STATUS &&  pd.STATUS == 0 }"> selected</c:if>  >未启用</option>
 										<option value="1"<c:if test="${!empty pd.STATUS &&  pd.STATUS == 1}"> selected</c:if> >已启用</option>
@@ -55,13 +55,13 @@
 								</td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">排序号:</td>
+								<td style="width:85px;text-align: right;padding-top: 13px;">排序号:</td>
 								<td><input type="number" name="OCB_ORDER" id="OCB_ORDER" value="${pd.OCB_ORDER}" maxlength="32" placeholder="排序号" title="排序号" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:75px;text-align: right;padding-top: 13px;">描述:</td>
+								<td style="width:85px;text-align: right;padding-top: 13px;">描述:</td>
 								<td>
-									<textarea name="OCB_DESC" id="OCB_DESC"  rows="3" cols="40">
+									<textarea name="OCB_DESC" id="OCB_DESC"  rows="3" cols="40" style="width:98%;">
 										${pd.OCB_DESC}
 									</textarea>
 								</td>

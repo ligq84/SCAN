@@ -59,7 +59,7 @@ setTimeout("top.hangge()",500);
 								</div>
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
-										<label for="machineCode" class="col-sm-5 control-label" style="text-align: left;padding-left:50px;"><h2 >第一步扫描机器号:</h2></label>
+										<label for="machineCode" class="control-label" style="text-align: left;padding-left:50px;"><h2 >扫描机器号:</h2></label>
 									</div>
 								</div>
 								<div class="row">
@@ -72,7 +72,7 @@ setTimeout("top.hangge()",500);
 								</div>
 								<div class="row">
 									<div class="form-group" style="margin-top: 10px">
-										<label class="col-sm-2 control-label"><h2 >机器信息:</h2></label>
+										<label class="control-label" style="padding-left: 50px;"><h2 >机器信息:</h2></label>
 									</div>
 								</div>
 								<div class="row" style="margin-left: 15px;">

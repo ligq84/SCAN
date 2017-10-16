@@ -186,5 +186,44 @@
 		ORDER  by a.mhid
 
 	</select>
+	<select id="staffScanReport" parameterType="page" resultType="pd">
+		<![CDATA[
+		SELECT a.`NAME` as staffName,
+		(SELECT b.`NAME` from oa_department b WHERE b.DEPARTMENT_ID = a.DEPARTMENT_ID) as deptName,
+		(SELECT count(1) from oa_machine_record c WHERE c.staff_Id = a.staff_id and c.scan_type='1' and c.start_date>=#{pd.lastStart} and c.start_date<=CONCAT(#{pd.lastEnd},' 23:59:59')) as xsCount,
+		h.cycleInfo,
+	  (SELECT count(1) FROM sys_fhsms j LEFT JOIN sys_user i ON j.TO_USERNAME = i.USERNAME WHERE a.user_id = i.USER_ID and j.SMS_TYPE='2' and i.company_id='1' and j.company_id='1' and j.SEND_TIME>=#{pd.lastStart} and j.SEND_TIME<=CONCAT(#{pd.lastEnd},' 23:59:59')) as wxtzCount,
+		(SELECT count(1) from oa_scan_record i where i.staff_Id = a.staff_Id and i.operation_type='0' and i.scan_type='2' and i.scan_date >=#{pd.lastStart} and i.scan_date<=CONCAT(#{pd.lastEnd},' 23:59:59')) as wxksCount,
+		(SELECT count(1) from oa_scan_record i where i.staff_Id = a.staff_Id and i.operation_type='1' and i.scan_type='2' and i.scan_date >=#{pd.lastStart} and i.scan_date<=CONCAT(#{pd.lastEnd},' 23:59:59')) as wxjsCount,
+		ifnull((SELECT avg(TIMESTAMPDIFF(MINUTE,j.notice_date,j.start_date))from oa_machine_record j WHERE j.staff_Id = a.staff_Id and j.scan_type='2' and j.start_date>=#{pd.lastStart} and j.start_date<=CONCAT(#{pd.lastEnd},' 23:59:59') GROUP BY j.staff_Id),0) as wxavgtz,
+		ifnull((SELECT avg(TIMESTAMPDIFF(MINUTE,j.start_date,j.end_date))from oa_machine_record j WHERE j.staff_Id = a.staff_Id and j.scan_type='2' and j.start_date>=#{pd.lastStart} and j.start_date<=CONCAT(#{pd.lastEnd},' 23:59:59') GROUP BY j.staff_Id),0) as wxavgwx,
+		ifnull((SELECT sum(TIMESTAMPDIFF(MINUTE,j.start_date,j.end_date))from oa_machine_record j WHERE j.staff_Id = a.staff_Id and j.scan_type='2' and j.start_date>=#{pd.lastStart} and j.start_date<CONCAT(#{pd.lastEnd},' 23:59:59') GROUP BY j.staff_Id),0) as wxsum,
 
+		(SELECT count(1) FROM sys_fhsms j LEFT JOIN sys_user i ON j.TO_USERNAME = i.USERNAME WHERE a.user_id = i.USER_ID and j.SMS_TYPE='4' and i.company_id='1' and j.company_id='1' and j.SEND_TIME>=#{pd.lastStart} and j.SEND_TIME<=CONCAT(#{pd.lastEnd},' 23:59:59')) as gggtzCount,
+		(SELECT count(1) from oa_scan_record i where i.staff_Id = a.staff_Id and i.operation_type='0' and i.scan_type='4' and i.scan_date >=#{pd.lastStart} and i.scan_date<=CONCAT(#{pd.lastEnd},' 23:59:59')) as gggjsCount,
+		(SELECT count(1) from oa_scan_record i where i.staff_Id = a.staff_Id and i.operation_type='1' and i.scan_type='4' and i.scan_date >=#{pd.lastStart} and i.scan_date<=CONCAT(#{pd.lastEnd},' 23:59:59')) as wxjsCount,
+		ifnull((SELECT avg(TIMESTAMPDIFF(MINUTE,j.notice_date,j.start_date))from oa_machine_record j WHERE j.staff_Id = a.staff_Id and j.scan_type='4' and j.start_date>=#{pd.lastStart} and j.start_date<=CONCAT(#{pd.lastEnd},' 23:59:59') GROUP BY j.staff_Id),0) as gggavgtz,
+		ifnull((SELECT avg(TIMESTAMPDIFF(MINUTE,j.start_date,j.end_date))from oa_machine_record j WHERE j.staff_Id = a.staff_Id and j.scan_type='4' and j.start_date>=#{pd.lastStart} and j.start_date<=CONCAT(#{pd.lastEnd},' 23:59:59') GROUP BY j.staff_Id),0) as gggavgggg,
+		ifnull((SELECT sum(TIMESTAMPDIFF(MINUTE,j.start_date,j.end_date))from oa_machine_record j WHERE j.staff_Id = a.staff_Id and j.scan_type='4' and j.start_date>=#{pd.lastStart} and j.start_date<CONCAT(#{pd.lastEnd},' 23:59:59') GROUP BY j.staff_Id),0) as gggsum
+
+		FROM oa_staff a
+		LEFT JOIN
+		(SELECT d.staff_Id,GROUP_CONCAT(d.cycleName,';',d.number) as cycleInfo from (
+			SELECT f.staff_Id,e.Name as cycleName,count(1) as number from oa_machine_record f
+			LEFT JOIN oa_machine_cycle g ON g.mcid = f.cycle_type
+			LEFT JOIN oa_company_basic e ON g.cycleid = e.ocbid
+			where f.scan_type=3 GROUP BY f.staff_Id,e.Name
+			) d GROUP BY d.staff_Id
+		) h ON a.staff_Id = h.staff_Id
+		where a.company_id=#{pd.COMPANY_ID}
+		]]>
+		<if test="pd.type!= null and pd.type != ''">
+			and a.type =#{pd.type}
+		</if>
+		<if test="pd.machineName!= null and pd.machineName != ''">
+			and a.NAME  LIKE CONCAT(CONCAT('%', #{pd.machineName}),'%')
+		</if>
+		ORDER  by a.staff_Id
+
+	</select>
 </mapper>

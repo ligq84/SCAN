@@ -54,6 +54,10 @@ public class ScanService implements ScanManager {
 	public List<PageData> michineScanReport(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("ScanMapper.michineScanReport", page);
 	}
+
+	public List<PageData> staffScanReport(Page page)throws Exception{
+		return (List<PageData>)dao.findForList("ScanMapper.staffScanReport", page);
+	}
 	/**列表(全部)
 	 * @param pd
 	 * @throws Exception
