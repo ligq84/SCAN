@@ -16,6 +16,16 @@
 	<%@ include file="../../system/index/top.jsp"%>
 	<!-- 日期框 -->
 	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+	<link rel="stylesheet" href="static/css/pagePublic.css" />
+	<style type="text/css">
+		.form-control {
+			display: block;
+			font-weight: normal;
+			border: 1px solid #0e77d9 !important;
+			border-radius: 4px;
+
+		}
+	</style>
 </head>
 <body class="no-skin">
 <!-- /section:basics/navbar.layout -->
@@ -42,7 +52,7 @@
 									<c:if test="${pd.TYPE == 'machineCycle' }">保养周期</c:if>
 									<c:if test="${pd.TYPE == 'rulePosition' }">规格更改部位</c:if>:
 								</td>
-								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" style="width:98%;"/></td>
+								<td><input type="text" class="form-control"  name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:85px;text-align: right;padding-top: 13px;">启用状态:</td>
@@ -56,20 +66,18 @@
 							</tr>
 							<tr>
 								<td style="width:85px;text-align: right;padding-top: 13px;">排序号:</td>
-								<td><input type="number" name="OCB_ORDER" id="OCB_ORDER" value="${pd.OCB_ORDER}" maxlength="32" placeholder="排序号" title="排序号" style="width:98%;"/></td>
+								<td><input type="number" class="form-control"  name="OCB_ORDER" id="OCB_ORDER" value="${pd.OCB_ORDER}" maxlength="32" placeholder="排序号" title="排序号" style="width:98%;"/></td>
 							</tr>
 							<tr>
 								<td style="width:85px;text-align: right;padding-top: 13px;">描述:</td>
 								<td>
-									<textarea name="OCB_DESC" id="OCB_DESC"  rows="3" cols="40" style="width:98%;">
-										${pd.OCB_DESC}
-									</textarea>
+									<textarea name="OCB_DESC" id="OCB_DESC"  rows="3" cols="40" style="width:98%;border: 1px solid #0e77d9;">${pd.OCB_DESC}</textarea>
 								</td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">
-									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
+									<a class="btn btn-mini btn-qg" onclick="save();">保存</a>
+									<a class="btn btn-mini btn-qg" onclick="top.Dialog.close();">取消</a>
 								</td>
 							</tr>
 						</table>
@@ -152,7 +160,7 @@
 			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
 		});
 
-		$('#STATUS').chosen({disable_search:true});
+//		$('#STATUS').chosen({disable_search:true});
 		</script>
 </body>
 </html>

@@ -63,6 +63,7 @@
 			font-family: Microsoft YaHei;
 			color: #282828;
 		}
+
 	</style>
 </head>
 <body class="no-skin">
@@ -78,8 +79,8 @@
 							
 						<!-- 检索  -->
 						<form action="staff/list.do" method="post" name="Form" id="Form">
-						<input name="ZDEPARTMENT_ID" id="ZDEPARTMENT_ID" type="hidden" value="${pd.ZDEPARTMENT_ID }" />
-						<input name="DEPARTMENT_ID" id="DEPARTMENT_ID" type="hidden" value="${pd.DEPARTMENT_ID }" />
+						<%--<input name="ZDEPARTMENT_ID" id="ZDEPARTMENT_ID" type="hidden" value="${pd.ZDEPARTMENT_ID }" />--%>
+						<%--<input name="DEPARTMENT_ID" id="DEPARTMENT_ID" type="hidden" value="${pd.DEPARTMENT_ID }" />--%>
 						<table style="margin-top:5px;" id="searchTable">
 							<tr>
 								<td class="searchTabletd" style="text-align: right">
@@ -99,7 +100,12 @@
 								<td  class="searchTabletd" style="text-align: right"><label>所属部门:</label></td>
 								<td  class="searchTabletd">
 									<div class="nav-search">
-										<div class="selectTree" id="selectTree"></div>
+									<select class="nav-search-input" name="DEPARTMENT_ID" id="DEPARTMENT_ID" style="vertical-align:top;width: 145px;"  >
+										<option value="">全选</option>
+										<c:forEach items="${deptList}" var="dept">
+											<option value="${dept.DEPARTMENT_ID }" <c:if test="${dept.DEPARTMENT_ID == pd.DEPARTMENT_ID }">selected</c:if> >${dept.NAME}</option>
+										</c:forEach>
+									</select>
 									</div>
 								</td>
 
@@ -240,52 +246,7 @@
 													</a>
 													</c:if>
 												</div>
-												<%--<div class=" hidden-lg">--%>
-													<%--<div class="inline pos-rel">--%>
-														<%--&lt;%&ndash;<button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">&ndash;%&gt;--%>
-															<%--&lt;%&ndash;<i class="ace-icon fa fa-wrench bigger-120 icon-only"></i>&ndash;%&gt;--%>
-														<%--&lt;%&ndash;</button>&ndash;%&gt;--%>
-			<%----%>
-														<%--<ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">--%>
-															<%--<c:if test="${QX.userBinding == 1 }">--%>
-															<%--&lt;%&ndash;<li>&ndash;%&gt;--%>
-																<%--&lt;%&ndash;<a style="cursor:pointer;" onclick="userBinding('${var.STAFF_ID}');" class="tooltip-warning" data-rel="tooltip" title="绑定用户">&ndash;%&gt;--%>
-																	<%--&lt;%&ndash;<span class="blue">&ndash;%&gt;--%>
-																		<%--&lt;%&ndash;<i class="ace-icon glyphicon glyphicon-user"></i>&ndash;%&gt;--%>
-																	<%--&lt;%&ndash;</span>&ndash;%&gt;--%>
-																<%--&lt;%&ndash;</a>&ndash;%&gt;--%>
-															<%--&lt;%&ndash;</li>&ndash;%&gt;--%>
-															<%--</c:if>--%>
-															<%--<c:if test="${QX.Datajur == 1 }">--%>
-															<%--&lt;%&ndash;<li>&ndash;%&gt;--%>
-																<%--&lt;%&ndash;<a style="cursor:pointer;" onclick="setDatajur('${var.STAFF_ID}');" class="tooltip-warning" data-rel="tooltip" title="授权">&ndash;%&gt;--%>
-																	<%--&lt;%&ndash;<span class="orange">&ndash;%&gt;--%>
-																		<%--&lt;%&ndash;<i class="ace-icon fa fa-wrench bigger-120 icon-only"></i>&ndash;%&gt;--%>
-																	<%--&lt;%&ndash;</span>&ndash;%&gt;--%>
-																<%--&lt;%&ndash;</a>&ndash;%&gt;--%>
-															<%--&lt;%&ndash;</li>&ndash;%&gt;--%>
-															<%--</c:if>--%>
-															<%--<c:if test="${QX.edit == 1 }">--%>
-															<%--<li>--%>
-																<%--<a style="cursor:pointer;" onclick="edit('${var.STAFF_ID}');" class="tooltip-success" data-rel="tooltip" title="修改">--%>
-																	<%--<span class="green">--%>
-																		<%--<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>--%>
-																	<%--</span>--%>
-																<%--</a>--%>
-															<%--</li>--%>
-															<%--</c:if>--%>
-															<%--<c:if test="${QX.del == 1 }">--%>
-															<%--<li>--%>
-																<%--<a style="cursor:pointer;" onclick="del('${var.STAFF_ID}');" class="tooltip-error" data-rel="tooltip" title="删除">--%>
-																	<%--<span class="red">--%>
-																		<%--<i class="ace-icon fa fa-trash-o bigger-120"></i>--%>
-																	<%--</span>--%>
-																<%--</a>--%>
-															<%--</li>--%>
-															<%--</c:if>--%>
-														<%--</ul>--%>
-													<%--</div>--%>
-												<%--</div>--%>
+
 											</td>
 										</tr>
 									
@@ -387,23 +348,7 @@
 		
 		//修改
 		function edit(Id){
-			 <%--top.jzts();--%>
-			 <%--var diag = new top.Dialog();--%>
-			 <%--diag.Drag=true;--%>
-			 <%--diag.Title ="编辑";--%>
-			 <%--diag.URL = '<%=basePath%>staff/goEdit.do?STAFF_ID='+Id;--%>
-			 <%--diag.Width = 800;--%>
-			 <%--diag.Height = 500;--%>
-			 <%--diag.Modal = true;				//有无遮罩窗口--%>
-			 <%--diag. ShowMaxButton = true;	//最大化按钮--%>
-		     <%--diag.ShowMinButton = true;		//最小化按钮--%>
-			 <%--diag.CancelEvent = function(){ //关闭事件--%>
-				 <%--if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){--%>
-					 <%--nextPage(${page.currentPage});--%>
-				<%--}--%>
-				<%--diag.close();--%>
-			 <%--};--%>
-			 <%--diag.show();--%>
+
 			var form = $('<form action="<%=basePath%>staff/goEdit.do" method="get"><input type="text" name="STAFF_ID" value="'+Id+'"/><input name="ZDEPARTMENT_ID" id="ZDEPARTMENT_ID" type="hidden" value="${pd.ZDEPARTMENT_ID }" />'+
 					'<input name="DEPARTMENT_ID" id="DEPARTMENT_ID" type="hidden" value="${pd.DEPARTMENT_ID }" /></form>');
 			$(document.body).append(form);
@@ -457,23 +402,23 @@
 		};
 		
 		
-		function initComplete(){
-			//下拉树
-			var defaultNodes = {"treeNodes":${zTreeNodes}};
-			//绑定change事件
-			$("#selectTree").bind("change",function(){
-				if(!$(this).attr("relValue")){
-			      //  top.Dialog.alert("没有选择节点");
-			    }else{
-					//alert("选中节点文本："+$(this).attr("relText")+"<br/>选中节点值："+$(this).attr("relValue"));
-					$("#DEPARTMENT_ID").val($(this).attr("relValue"));
-			    }
-			});
-			//赋给data属性
-			$("#selectTree").data("data",defaultNodes);  
-			$("#selectTree").render();
-			$("#selectTree2_input").val("${'0'==depname?'请选择':depname}");
-		}
+		<%--function initComplete(){--%>
+			<%--//下拉树--%>
+			<%--var defaultNodes = {"treeNodes":${zTreeNodes}};--%>
+			<%--//绑定change事件--%>
+			<%--$("#selectTree").bind("change",function(){--%>
+				<%--if(!$(this).attr("relValue")){--%>
+			      <%--//  top.Dialog.alert("没有选择节点");--%>
+			    <%--}else{--%>
+					<%--//alert("选中节点文本："+$(this).attr("relText")+"<br/>选中节点值："+$(this).attr("relValue"));--%>
+					<%--$("#DEPARTMENT_ID").val($(this).attr("relValue"));--%>
+			    <%--}--%>
+			<%--});--%>
+			<%--//赋给data属性--%>
+			<%--$("#selectTree").data("data",defaultNodes);  --%>
+			<%--$("#selectTree").render();--%>
+			<%--$("#selectTree2_input").val("${'0'==depname?'请选择':depname}");--%>
+		<%--}--%>
 		
 		//授权(组织机构数据权限)
 		function setDatajur(Id){

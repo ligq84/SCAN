@@ -17,6 +17,79 @@
 	<%@ include file="../../system/index/top.jsp"%>
 	<!-- 日期框 -->
 	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+	<link rel="stylesheet" href="static/css/pagePublic.css" />
+		<style type="text/css">
+			/*::-webkit-scrollbar{*/
+			/*display: none;*/
+			/*}*/
+			textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+				color: #282828;
+				border: 1px solid #0e77d9;
+			}
+			input[readonly]:hover {
+				border-color: #0e77d9;
+
+			}
+			input[readonly] {
+				background-color: white !important;
+				cursor: default;
+			}
+			.form-control {
+				display: block;
+				font-weight: normal;
+				border: 1px solid #0e77d9;
+				border-radius: 4px;
+
+			}
+			.col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+				position: relative;
+				min-height: 1px;
+				padding-right: 2px;
+				padding-left: 2px;
+			}
+
+			.col-sm-1 {
+				width: 125px;;
+				font-weight: normal;
+			}
+
+			.chosen-container-single .chosen-single {
+				position: relative;
+				display: block;
+				overflow: hidden;
+				padding: 0 0 0 8px;
+				height: 34px;
+				border: 1px solid #0e77d9;
+				border-radius: 5px;
+				background: none !important;
+				box-shadow: 0 0 3px white inset, 0 1px 1px rgba(0, 0, 0, 0.1);
+				color: #282828;
+				text-decoration: none;
+				white-space: nowrap;
+				line-height: 34px;
+			}
+			.chosen-container-single .chosen-search input[type="text"] {
+				background: none !important;
+			}
+			.chosen-container .chosen-drop {
+				border: 1px solid #0e77d9;
+				background-image: none !important;
+				background-color: white;
+			}
+			.chosen-container-active.chosen-with-drop .chosen-single {
+				border-color: #0e77d9;
+			}
+			.chosen-container-single .chosen-single abbr {
+				position: absolute;
+				top: 6px;
+				right: 26px;
+				display: block;
+				width: 12px;
+				height: 12px;
+				background-image: none;
+				font-size: 1px;
+			}
+		</style>
 </head>
 <body class="no-skin">
 <!-- /section:basics/navbar.layout -->
@@ -69,7 +142,7 @@
 										<select id="CHARGE" name="CHARGE" class="chosen-select form-control" data-placeholder="这里输入机器负责人" style="vertical-align:top;">
 											<option value=""></option>
 											<c:forEach items="${staffList}" var="staff">
-												<option value="${staff.STAFF_ID }" <c:if test="${staff.STAFF_ID == pd.CHARGE}">selected</c:if>>${staff.NAME}+${staff.TEL}</option>
+												<option value="${staff.STAFF_ID }" <c:if test="${staff.STAFF_ID == pd.CHARGE}">selected</c:if>>${staff.NAME}(${staff.TEL}) </option>
 											</c:forEach>
 										</select>
 									</div>
@@ -82,16 +155,16 @@
 										<select id="DAY_REPAIRMAN" name="DAY_REPAIRMAN" class="chosen-select form-control" data-placeholder="这里输入白班维修员" style="vertical-align:top;">
 											<option value=""></option>
 											<c:forEach items="${staffList}" var="staff">
-												<option value="${staff.STAFF_ID }" <c:if test="${staff.STAFF_ID == pd.DAY_REPAIRMAN}">selected</c:if>>${staff.NAME}+${staff.TEL}</option>
+												<option value="${staff.STAFF_ID }" <c:if test="${staff.STAFF_ID == pd.DAY_REPAIRMAN}">selected</c:if>>${staff.NAME}(${staff.TEL})</option>
 											</c:forEach>
 										</select>
 									</div>
-									<label for="POWER" class="col-sm-2 control-label"><span style="color: red">*</span>晚班维修人员:</label>
+									<label for="POWER" class="col-sm-1 control-label"><span style="color: red">*</span>晚班维修人员:</label>
 									<div class="col-sm-2">
 										<select id="NIGHT_REPAIRMAN" name="NIGHT_REPAIRMAN" class="chosen-select form-control" data-placeholder="这里输入晚班维修人员" style="vertical-align:top;">
 											<option value=""></option>
 											<c:forEach items="${staffList}" var="staff">
-												<option value="${staff.STAFF_ID }" <c:if test="${staff.STAFF_ID == pd.NIGHT_REPAIRMAN}">selected</c:if>>${staff.NAME}+${staff.TEL}</option>
+												<option value="${staff.STAFF_ID }" <c:if test="${staff.STAFF_ID == pd.NIGHT_REPAIRMAN}">selected</c:if>>${staff.NAME}(${staff.TEL})</option>
 											</c:forEach>
 										</select>
 									</div>
@@ -125,7 +198,10 @@
 											<div class="col-sm-2">
 												<textarea rows="5" cols="30" name="cdesc${cl.CYCLEID}">${cl.BZ}</textarea>
 													</div>
-											</div>
+										</div>
+										<c:if test="${(ts.index+1)%3 == 0}">
+										<span class="row"></span>
+										</c:if>
 									</c:forEach>
 								</div>
 							</div>
@@ -146,14 +222,14 @@
 												</select>
 											</div>
 											<div class="col-sm-1">
-												<a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-top: 5px;" >添加</a>
-												<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;" >删除</a>
+												<a class="btn btn-mini btn-qg" onclick="addMP()" style="margin-top: 5px;" >添加</a>
+												<a class="btn btn-mini btn-qg" style="margin-top: 5px;margin-left: 5px;" >删除</a>
 											</div>
 										</div>
 									</c:if>
 									<c:if test="${projecList!= null || fn:length(projecList) > 0}">
 										<c:forEach items="${projecList}" var="project"  varStatus="pj">
-											<c:if test="${(pj.index+1)%3 != 0}">
+											<c:if test="${(pj.index+1)%2 != 0}">
 												<div id="mpvalue${pj.index+1}" style="margin-top: 5px;">
 													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>维修项目${pj.index+1}：</label>
 													<div class="col-sm-2">
@@ -165,12 +241,12 @@
 														</select>
 													</div>
 													<div class="col-sm-1">
-														<a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-top: 5px;" >添加</a>
-														<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;" onclick="deleteSelect('mpvalue${pj.index+1}')">删除</a>
+														<a class="btn btn-mini btn-qg" onclick="addMP()" style="margin-top: 5px;" >添加</a>
+														<a class="btn btn-mini btn-qg" style="margin-top: 5px;margin-left: 5px;" onclick="deleteSelect('mpvalue${pj.index+1}')">删除</a>
 													</div>
 												</div>
 											</c:if>
-											<c:if test="${(pj.index+1)%3 == 0}">
+											<c:if test="${(pj.index+1)%2 == 0}">
 												<div id="mpvalue${pj.index+1}" style="margin-top: 5px;">
 													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>维修项目${pj.index+1}：</label>
 													<div class="col-sm-2">
@@ -182,8 +258,8 @@
 														</select>
 													</div>
 													<div class="col-sm-1">
-														<a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-top: 5px;" >添加</a>
-														<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;" onclick="deleteSelect('mpvalue${pj.index+1}')">删除</a>
+														<a class="btn btn-mini btn-qg" onclick="addMP()" style="margin-top: 5px;" >添加</a>
+														<a class="btn btn-mini btn-qg" style="margin-top: 5px;margin-left: 5px;" onclick="deleteSelect('mpvalue${pj.index+1}')">删除</a>
 													</div>
 												</div>
 												<div class="row"></div>
@@ -213,7 +289,7 @@
 							<div class="col-sm-12" >
 								<div class="form-group" >
 									<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>支持规格:</label>
-									<div class="col-sm-2">
+									<div class="col-sm-7">
 										<c:forEach items="${ruleList}" var="var" varStatus="vs">
 											<label style="float:left;padding-left: 8px;padding-top:7px;">
 												<input name="ruleId" type="checkbox" class="ace" value="${var.OCBID}"
@@ -240,14 +316,14 @@
 												</select>
 											</div>
 											<div class="col-sm-1">
-												<a class="btn btn-mini btn-primary"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
-												<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;"  >删除</a>
+												<a class="btn btn-mini btn-qg"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
+												<a class="btn btn-mini btn-qg" style="margin-top: 5px;margin-left: 5px;"  >删除</a>
 											</div>
 										</div>
 									</c:if>
 									<c:if test="${partsList!= null || fn:length(partsList) > 0}">
 										<c:forEach items="${partsList}" var="parts"  varStatus="pt">
-											<c:if test="${(pt.index+1)%3 != 0}">
+											<c:if test="${(pt.index+1)%2 != 0}">
 												<div id="rulePost1" style="margin-top: 5px;">
 													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格1:</label>
 													<div class="col-sm-2">
@@ -259,12 +335,12 @@
 														</select>
 													</div>
 													<div class="col-sm-1">
-														<a class="btn btn-mini btn-primary"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
-														<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;"  >删除</a>
+														<a class="btn btn-mini btn-qg"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
+														<a class="btn btn-mini btn-qg" style="margin-top: 5px;margin-left: 5px;"  >删除</a>
 													</div>
 												</div>
 											</c:if>
-											<c:if test="${(pt.index+1)%3 == 0}">
+											<c:if test="${(pt.index+1)%2 == 0}">
 												<div id="rulePost1" style="margin-top: 5px;">
 													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格1:</label>
 													<div class="col-sm-2">
@@ -276,8 +352,8 @@
 														</select>
 													</div>
 													<div class="col-sm-1">
-														<a class="btn btn-mini btn-primary"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
-														<a class="btn btn-mini btn-danger" style="margin-top: 5px;margin-left: 5px;"  >删除</a>
+														<a class="btn btn-mini btn-qg"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
+														<a class="btn btn-mini btn-qg" style="margin-top: 5px;margin-left: 5px;"  >删除</a>
 													</div>
 												</div>
 												<div class="row"></div>
@@ -289,9 +365,9 @@
 								</div>
 							</div>
 							<div class="col-sm-12" >
-								<div class="form-group" style="margin-top:50px;text-align: center">
-									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-									<a class="btn btn-mini btn-danger" onclick="back();">返回</a>
+								<div class="form-group" style="margin-top:50px;text-align: center;height: 200px;">
+									<a class="btn btn-mini btn-qg" onclick="save();">保存</a>
+									<a class="btn btn-mini btn-qg" onclick="back();">返回</a>
 								</div>
 							</div>
 						</div>
@@ -347,7 +423,7 @@
 			var lent = rpdiv.length;
 			var netx=lent+1;
 			console.log(netx);
-			if((lent+1)%3 == 0){
+			if((lent+1)%2 == 0){
 				rulePost.append(getRPSelect(netx)+'<div class="row"></div>');
 			}else{
 				rulePost.append(getRPSelect(netx));
@@ -366,8 +442,8 @@
 					'		</select>'+
 					'</div>'+
 					'<div class="col-sm-1">'+
-					'		<a class="btn btn-mini btn-primary"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>'+
-					'		<a class="btn btn-mini btn-danger" style="margin-top: 2px" onclick="deleteRPSelect(\'rpvvalue'+len+'\')">删除</a>'+
+					'		<a class="btn btn-mini btn-qg"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>'+
+					'		<a class="btn btn-mini btn-qg" style="margin-top: 2px" onclick="deleteRPSelect(\'rpvvalue'+len+'\')">删除</a>'+
 					'</div>'+
 					'<div>';
 		}
@@ -376,12 +452,24 @@
 		}
 		function cycleChange(id,v,n){
 			if($("#"+id).is(":checked")){
-				$("#cycleDes").append('<div id="desc'+v+'">'+
-										'	<label class="col-sm-1 control-label no-padding-right">'+n+':</label>'+
-										'<div class="col-sm-2">'+
-										'	<textarea rows="5" cols="30" name="cdesc'+v+'"></textarea>'+
-										'	</div>'+
-										'</div>');
+				var cycleDes = $("#cycleDes>div");
+				var lent = cycleDes.length;
+				if((lent+1)%3 == 0){
+					$("#cycleDes").append('<div id="desc'+v+'">'+
+							'	<label class="col-sm-1 control-label no-padding-right">'+n+':</label>'+
+							'<div class="col-sm-2">'+
+							'	<textarea rows="5" cols="30" name="cdesc'+v+'"></textarea>'+
+							'	</div>'+
+							'</div><span class="row"></span>');
+				}else{
+					$("#cycleDes").append('<div id="desc'+v+'">'+
+							'	<label class="col-sm-1 control-label no-padding-right">'+n+':</label>'+
+							'<div class="col-sm-2">'+
+							'	<textarea rows="5" cols="30" name="cdesc'+v+'"></textarea>'+
+							'	</div>'+
+							'</div>');
+				}
+
 			}else{
 				$("#desc"+v).remove();
 			}
@@ -390,7 +478,7 @@
 			var mplist = $("#mplist");
 			var mpdiv = $("#mplist>div");
 			var len = mpdiv.length;
-			if((len+1)%3 == 0){
+			if((len+1)%2 == 0){
 				mplist.append(getMPSelect(len)+'<div class="row"></div>');
 			}else{
 				mplist.append(getMPSelect(len));
@@ -410,8 +498,8 @@
 			'		</select>'+
 			'</div>'+
 			'<div class="col-sm-1">'+
-			'<a class="btn btn-mini btn-primary" onclick="addMP()" style="margin-top: 5px;" >添加</a>'+
-			'		<a class="btn btn-mini btn-danger" style="margin-top: 2px" onclick="deleteSelect(\'mpvalue'+(len+1)+'\')">删除</a>'+
+			'<a class="btn btn-mini btn-qg" onclick="addMP()" style="margin-top: 5px;" >添加</a>'+
+			'		<a class="btn btn-mini btn-qg" style="margin-top: 2px" onclick="deleteSelect(\'mpvalue'+(len+1)+'\')">删除</a>'+
 			'</div>'+
 			'<div>';
 		}
@@ -548,7 +636,7 @@
 			//日期框
 			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
 			//初始化下拉框
-			$('.chosen-select').chosen({allow_single_deselect:true,search_contains:true});
+//			$('.chosen-select').chosen({allow_single_deselect:true,search_contains:true});
 		});
 		</script>
 </body>

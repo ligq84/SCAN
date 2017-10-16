@@ -98,6 +98,7 @@ public class CompanyBasicController extends BaseController {
 			FHLOG.save(user.getUSERNAME(),null,"设备管理模块","添加规格更改部位","添加",user.getNAME(),user.getCompanyId());
 		}
 		pd.put("COMPANY_ID",user.getCompanyId());
+
 		companybasicService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");

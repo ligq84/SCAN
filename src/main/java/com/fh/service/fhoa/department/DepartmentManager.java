@@ -37,6 +37,7 @@ public interface DepartmentManager{
 	 * @throws Exception
 	 */
 	public List<PageData> list(Page page)throws Exception;
+	List<PageData> deptListAll(PageData pd)throws Exception;
 	
 	/**通过id获取数据
 	 * @param pd

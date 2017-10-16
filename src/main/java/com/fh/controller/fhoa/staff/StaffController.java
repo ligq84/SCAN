@@ -15,7 +15,6 @@ import com.fh.service.system.fhlog.FHlogManager;
 import com.fh.service.system.role.RoleManager;
 import com.fh.service.system.user.UserManager;
 import com.fh.util.*;
-import net.sf.json.JSONArray;
 import org.apache.shiro.session.Session;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -187,18 +186,6 @@ public class StaffController extends BaseController {
 		pd = this.getPageData();
 		pd.put("COMPANY_ID",user.getCompanyId());
 
-		String DEPARTMENT_ID = pd.getString("DEPARTMENT_ID");
-		PageData deptpd = departmentService.findByCompanyId(user.getCompanyId());
-		if(null == pd.get("DEPARTMENT_ID")){
-			pd.put("DEPARTMENT_ID", deptpd.get("DEPARTMENT_ID"));	//只有检索条件穿过值时，才不为null,否则读取缓存
-		}
-		pd.put("item", (null == pd.getString("DEPARTMENT_ID")?Jurisdiction.getDEPARTMENT_IDS():departmentService.getDEPARTMENT_IDS(pd.getString("DEPARTMENT_ID"))));	//部门检索条件,列出此部门下级所属部门的员工
-	
-		/* 比如员工 张三 所有部门权限的部门为 A ， A 的下级有  C , D ,F ，那么当部门检索条件值为A时，只列出A以下部门的员工(自己不能修改自己的信息，只能上级部门修改)，不列出部门为A的员工，当部门检索条件值为C时，可以列出C及C以下员工 */
-		if(!(null == DEPARTMENT_ID || DEPARTMENT_ID.equals(Jurisdiction.getDEPARTMENT_ID()))){
-			pd.put("item", pd.getString("item").replaceFirst("\\(", "\\('"+DEPARTMENT_ID+"',"));
-		}
-		
 		page.setPd(pd);
 		List<PageData>	varList = staffService.list(page);
 
@@ -212,26 +199,12 @@ public class StaffController extends BaseController {
 		List<PageData>	staffPostList = companybasicService.list(postpage);
 		mv.addObject("staffPostList",staffPostList);
 
-		//列出Staff列表
-		//列表页面树形下拉框用(保持下拉树里面的数据不变)
-		String ZDEPARTMENT_ID = pd.getString("ZDEPARTMENT_ID");
-		ZDEPARTMENT_ID = Tools.notEmpty(ZDEPARTMENT_ID)?ZDEPARTMENT_ID:deptpd.getString("DEPARTMENT_ID");
-		pd.put("ZDEPARTMENT_ID",  ZDEPARTMENT_ID);
-		List<PageData> zdepartmentPdList = new ArrayList<PageData>();
-		List<PageData> deptPD = departmentService.listAllDepartmentToSelect(ZDEPARTMENT_ID,zdepartmentPdList);
-		//if(null != pd.getString("DEPARTMENT_ID") && !pd.getString("DEPARTMENT_ID").equals("0")){
-		//	PageData mePd = departmentService.findSelectById(pd);
-		//	deptPD.add(mePd);
-		//}
+		//部门列表下拉框
+		PageData spd = new PageData();
+		spd.put("COMPANY_ID",user.getCompanyId());
+		List<PageData>	deptList = departmentService.deptListAll(spd);
 
-		JSONArray arr = JSONArray.fromObject(deptPD);
-		mv.addObject("zTreeNodes", arr.toString());
-		//PageData dpd = departmentService.findById(pd);
-		//if(null != dpd){
-		//	ZDEPARTMENT_ID = dpd.getString("NAME");
-		//}
-
-		//mv.addObject("depname", ZDEPARTMENT_ID);
+		mv.addObject("deptList", deptList);
 		mv.setViewName("fhoa/staff/staff_list");
 		mv.addObject("varList", varList);
 		mv.addObject("pd", pd);
@@ -294,21 +267,11 @@ public class StaffController extends BaseController {
 		List<PageData>	staffPostList = companybasicService.list(page);
 		mv.addObject("staffPostList",staffPostList);
 
-		pd.put("ROLE_ID","1");
-		List<Role> roleList = roleService.listAllRolesByPId(pd);//列出会员组角色
-		mv.addObject("roleList", roleList);
-			//列表页面树形下拉框用(保持下拉树里面的数据不变)
-		String ZDEPARTMENT_ID = pd.getString("ZDEPARTMENT_ID");
-		ZDEPARTMENT_ID = Tools.notEmpty(ZDEPARTMENT_ID)?ZDEPARTMENT_ID:Jurisdiction.getDEPARTMENT_ID();
-		pd.put("ZDEPARTMENT_ID", ZDEPARTMENT_ID);
-		List<PageData> zdepartmentPdList = new ArrayList<PageData>();
-		JSONArray arr = JSONArray.fromObject(departmentService.listAllDepartmentToSelect(ZDEPARTMENT_ID,zdepartmentPdList));
-		mv.addObject("zTreeNodes", arr.toString());
-		PageData dpd = departmentService.findById(pd);
-		if(null != dpd){
-			ZDEPARTMENT_ID = dpd.getString("NAME");
-		}
-		mv.addObject("depname", ZDEPARTMENT_ID);
+		//部门列表下拉框
+		PageData spd = new PageData();
+		spd.put("COMPANY_ID",user.getCompanyId());
+		List<PageData>	deptList = departmentService.deptListAll(spd);
+		mv.addObject("deptList",deptList);
 
 		mv.addObject("msg", "save");
 		mv.addObject("pd", pd);
@@ -375,22 +338,15 @@ public class StaffController extends BaseController {
 		mv.addObject("staffPostList",staffPostList);
 		pd.put("STATUS",status);
 
-	//列表页面树形下拉框用(保持下拉树里面的数据不变)
-		String ZDEPARTMENT_ID = pd.getString("ZDEPARTMENT_ID");
-		ZDEPARTMENT_ID = Tools.notEmpty(ZDEPARTMENT_ID)?ZDEPARTMENT_ID:Jurisdiction.getDEPARTMENT_ID();
-		pd.put("ZDEPARTMENT_ID", ZDEPARTMENT_ID);
-		List<PageData> zdepartmentPdList = new ArrayList<PageData>();
-		JSONArray arr = JSONArray.fromObject(departmentService.listAllDepartmentToSelect(ZDEPARTMENT_ID,zdepartmentPdList));
-		mv.addObject("zTreeNodes", arr.toString());
-		PageData dpd = departmentService.findById(pd);
-		if(null != dpd){
-			ZDEPARTMENT_ID = dpd.getString("NAME");
-		}
-		mv.addObject("depname", ZDEPARTMENT_ID);
+		//部门列表下拉框
+		PageData spd = new PageData();
+		spd.put("COMPANY_ID",user.getCompanyId());
+		List<PageData>	deptList = departmentService.deptListAll(spd);
+		mv.addObject("deptList",deptList);
 
 
 		mv.setViewName("fhoa/staff/staff_edit");
-		mv.addObject("depname", departmentService.findById(pd).getString("NAME"));
+		//mv.addObject("depname", departmentService.findById(pd).getString("NAME"));
 		mv.addObject("msg", "edit");
 		mv.addObject("pd", pd);
 		return mv;

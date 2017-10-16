@@ -178,9 +178,9 @@ setTimeout("top.hangge()",500);
 								$("#to_staff").val('机器负责人：'+machine.chargeN+'、白班维修员：'+machine.Day_R+'、晚班维修员'+machine.Night_R);
 								$("#USERNAME").val(machine.chargeName+';'+machine.Day_Repairman+';'+machine.Night_Repairman);
 								$("#mhid").val(machine.mhid);
-								$("#chargeName").val(machine.chargeName);
-								$("#Day_Repairman").val(machine.Day_Repairman);
-								$("#Night_Repairman").val(machine.Night_Repairman);
+								$("#chargeName").val(machine.chargeN);
+								$("#Day_Repairman").val(machine.Day_R);
+								$("#Night_Repairman").val(machine.Night_R);
 
 							}
 						}

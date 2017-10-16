@@ -52,11 +52,14 @@ public class DepartmentController extends BaseController {
 	public ModelAndView save() throws Exception{
 		logBefore(logger, Jurisdiction.getUsername()+"新增department");
 		if(!Jurisdiction.buttonJurisdiction(menuUrl, "add")){return null;} //校验权限
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
 		FHLOG.save(Jurisdiction.getUsername(), "新增部门");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("DEPARTMENT_ID", this.get32UUID());	//主键
+		pd.put("COMPANY_ID", user.getCompanyId());	//主键
 		departmentService.save(pd);
 		mv.addObject("msg","success");
 		mv.setViewName("save_result");
@@ -116,20 +119,19 @@ public class DepartmentController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+		pd.put("COMPANY_ID", user.getCompanyId());	//主键
+
 		String keywords = pd.getString("keywords");					//检索条件
 		if(null != keywords && !"".equals(keywords)){
 			pd.put("keywords", keywords.trim());
 		}
-		String DEPARTMENT_ID = null == pd.get("DEPARTMENT_ID")?"":pd.get("DEPARTMENT_ID").toString();
-		//String DEPARTMENT_ID ="";
-		if(null != pd.get("id") && !"".equals(pd.get("id").toString())){
-			DEPARTMENT_ID = pd.get("id").toString();
-		}
-		pd.put("DEPARTMENT_ID", DEPARTMENT_ID);					//上级ID
 		page.setPd(pd);
 		List<PageData>	varList = departmentService.list(page);	//列出Dictionaries列表
-		mv.addObject("pd", departmentService.findById(pd));		//传入上级所有信息
-		mv.addObject("DEPARTMENT_ID", DEPARTMENT_ID);			//上级ID
+		//mv.addObject("pd", departmentService.findById(pd));		//传入上级所有信息
+		//mv.addObject("DEPARTMENT_ID", DEPARTMENT_ID);			//上级ID
 		mv.setViewName("fhoa/department/department_list");
 		mv.addObject("varList", varList);
 		mv.addObject("QX",Jurisdiction.getHC());				//按钮权限

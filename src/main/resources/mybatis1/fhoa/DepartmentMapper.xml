@@ -25,7 +25,8 @@
 		ADDRESS,
 		BZ,	
 		DEPARTMENT_ID,
-		STAFF_ID
+		STAFF_ID,
+		COMPANY_ID
 	</sql>
 	
 	<!-- 字段值 -->
@@ -40,7 +41,8 @@
 		#{ADDRESS},
 		#{BZ},	
 		#{DEPARTMENT_ID},
-		#{STAFF_ID}
+		#{STAFF_ID},
+		#{COMPANY_ID}
 	</sql>
 	
 	<!-- 新增-->
@@ -113,11 +115,10 @@
 		<include refid="Field"></include>
 		from 
 		<include refid="tableName"></include>
-		where
-			1=1
-		<if test="pd.DEPARTMENT_ID!= null and pd.DEPARTMENT_ID != ''"><!-- 检索 -->
-		and PARENT_ID = #{pd.DEPARTMENT_ID}
-		</if>
+		where COMPANY_ID = #{pd.COMPANY_ID}
+		<!--<if test="pd.DEPARTMENT_ID!= null and pd.DEPARTMENT_ID != ''">&lt;!&ndash; 检索 &ndash;&gt;-->
+		<!--and PARENT_ID = #{pd.DEPARTMENT_ID}-->
+		<!--</if>-->
 		<if test="pd.keywords != null and pd.keywords != ''"><!-- 关键词检索 -->
 			and
 				(
@@ -130,7 +131,15 @@
 		</if>
 		order by NAME
 	</select>
-	
+
+	<select id="deptListAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from
+		<include refid="tableName"></include>
+		where COMPANY_ID = #{COMPANY_ID}
+		order by NAME
+	</select>
 	<!-- 通过ID获取其子级列表 -->
 	<select id="listSubDepartmentByParentId" parameterType="String" resultMap="departmentResultMap">
 		select 

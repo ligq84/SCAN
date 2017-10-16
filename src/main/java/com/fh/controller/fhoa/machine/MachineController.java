@@ -320,7 +320,9 @@ public class MachineController extends BaseController {
 
 		//人员选择下拉列表
 		pd.put("COMPANY_ID",user.getCompanyId());
-		List<PageData> staffList = staffService.listAll(pd);
+		PageData staffPD = new PageData();
+		staffPD.put("COMPANY_ID",user.getCompanyId());
+		List<PageData> staffList = staffService.listAll(staffPD);
 		mv.addObject("staffList", staffList);
 
 		//机器类型下拉列表
@@ -330,6 +332,7 @@ public class MachineController extends BaseController {
 		//保养周期
 		List<PageData>	machineCycleList =  getBasicData(Const.COMPANY_BASIC_MACHINECYCLE,1,user.getCompanyId());
 		mv.addObject("machineCycleList",machineCycleList);
+
 		//机器保养周期
 		PageData cyclePD = new PageData();
 		cyclePD.put("mhid",pd.get("MHID"));

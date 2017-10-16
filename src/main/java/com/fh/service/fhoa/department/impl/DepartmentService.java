@@ -58,7 +58,10 @@ public class DepartmentService implements DepartmentManager{
 	public List<PageData> list(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("DepartmentMapper.datalistPage", page);
 	}
-	
+	public List<PageData> deptListAll(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("DepartmentMapper.deptListAll", pd);
+	}
+
 	/**通过id获取数据
 	 * @param pd
 	 * @throws Exception
