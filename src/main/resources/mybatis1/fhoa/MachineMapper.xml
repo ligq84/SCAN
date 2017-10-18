@@ -60,7 +60,10 @@
 		BARCODEURL,
 		COMPANY_ID,
 		BZ,
-		CHANGE_RULE
+		CHANGE_RULE,
+		production_date,
+		manufacturer,
+		speed
 		) values (
 		#{MHID},
 		#{NAME},
@@ -74,7 +77,10 @@
 		#{BARCODEURL},
 		#{COMPANY_ID},
 		#{BZ},
-		#{CHANGE_RULE}
+		#{CHANGE_RULE},
+		#{production_date},
+		#{manufacturer},
+		#{speed}
 		)
 	</insert>
 	
@@ -102,7 +108,10 @@
 			BARCODE = #{BARCODE},
 			BARCODEURL = #{BARCODEURL},
 			BZ = #{BZ},
-			CHANGE_RULE = #{CHANGE_RULE}
+			CHANGE_RULE = #{CHANGE_RULE},
+			production_date = #{production_date},
+			manufacturer = #{manufacturer},
+			speed = #{speed}
 		where
 		MHID = #{MHID}
 	</update>
@@ -123,7 +132,10 @@
 		a.COMPANY_ID,
 		a.DELETED,
 		a.BZ,
-		a.CHANGE_RULE
+		a.CHANGE_RULE,
+		production_date,
+		manufacturer,
+		speed
 		,(SELECT d.`name` from oa_company_basic d WHERE a.type= d.ocbid) as typeName
 		from 
 		<include refid="tableName"></include> a

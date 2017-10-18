@@ -168,6 +168,22 @@
 											</c:forEach>
 										</select>
 									</div>
+									<label for="speed" class="col-sm-1 control-label"><span style="color: red">*</span>机台速度:</label>
+									<div class="col-sm-2">
+										<input type="text" name="speed" id="speed" value="${pd.speed}" maxlength="50" placeholder="这里输入机台速度" class="form-control"/>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-12" >
+								<div class="form-group" style="margin-top: 10px">
+									<label for="manufacturer" class="col-sm-1 control-label"><span style="color: red">*</span>生产日期:</label>
+									<div class="col-sm-2">
+										<input class="span10 date-picker form-control" name="production_date" id="production_date" value="${pd.production_date}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="生产日期"  class="form-control"/>
+									</div>
+									<label for="manufacturer" class="col-sm-1 control-label"><span style="color: red">*</span>生产厂家:</label>
+									<div class="col-sm-2">
+										<input type="text" name="manufacturer" id="manufacturer" value="${pd.manufacturer}" maxlength="50" placeholder="这里输入生产厂家" class="form-control"/>
+									</div>
 								</div>
 							</div>
 							<div class="col-sm-12 widget-header widget-header-blue widget-header-flat wi1dget-header-large" style="padding: 0px;margin: 0px;">
@@ -624,7 +640,7 @@
 					}else if(data.result == "fail"){
 						alert(data.mesg);
 					}else {
-						alert("添加异常");
+						alert("操作异常");
 						$("#zhongxin").show();
 						$("#zhongxin2").hide();
 					}
@@ -634,7 +650,7 @@
 		
 		$(function() {
 			//日期框
-			$('.date-picker').datepicker({autoclose: true,todayHighlight: true});
+			$('.date-picker').datepicker({autoclose: true,todayHighlight: true,clearBtn: true});
 			//初始化下拉框
 //			$('.chosen-select').chosen({allow_single_deselect:true,search_contains:true});
 		});

@@ -207,10 +207,10 @@ public class MachineController extends BaseController {
                     machineService.saveMachineParts(rpPD);
                 }
             }
-			return ResultData.init(ResultData.SUCCESS,"添加成功",null);
+			return ResultData.init(ResultData.SUCCESS,"修改成功",null);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResultData.init(ResultData.FAIL,"添加异常","");
+			return ResultData.init(ResultData.FAIL,"修改异常","");
 		}
 
 
