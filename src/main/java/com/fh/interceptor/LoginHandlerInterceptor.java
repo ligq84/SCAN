@@ -1,11 +1,12 @@
 package com.fh.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.fh.entity.system.User;
 import com.fh.util.Const;
 import com.fh.util.Jurisdiction;
+import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 /**
  * 
 * 类名称：登录过滤，权限验证
@@ -29,7 +30,10 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter{
 			if(user!=null){
 				path = path.substring(1, path.length());
 				boolean b = Jurisdiction.hasJurisdiction(path); //访问权限校验
-				if(!b){
+				String userCompany = user.getUSERNAME()+"_"+user.getCompanyId();
+				boolean c =Jurisdiction.getSession().getAttribute(userCompany).equals(Const.USERSESSION.get(userCompany));
+
+				if(!b || !c){
 					response.sendRedirect(request.getContextPath() + Const.LOGIN);
 				}
 				return b;

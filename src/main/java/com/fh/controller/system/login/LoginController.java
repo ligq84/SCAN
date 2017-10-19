@@ -1,18 +1,22 @@
 package com.fh.controller.system.login;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
+import com.fh.controller.base.BaseController;
+import com.fh.entity.system.Menu;
+import com.fh.entity.system.Role;
+import com.fh.entity.system.User;
+import com.fh.service.fhoa.datajur.DatajurManager;
+import com.fh.service.system.appuser.AppuserManager;
+import com.fh.service.system.buttonrights.ButtonrightsManager;
+import com.fh.service.system.fhbutton.FhbuttonManager;
+import com.fh.service.system.fhlog.FHlogManager;
+import com.fh.service.system.loginimg.LogInImgManager;
+import com.fh.service.system.menu.MenuManager;
+import com.fh.service.system.role.RoleManager;
+import com.fh.service.system.user.UserManager;
+import com.fh.util.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authc.credential.AllowAllCredentialsMatcher;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -21,26 +25,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fh.controller.base.BaseController;
-import com.fh.service.fhoa.datajur.DatajurManager;
-import com.fh.service.system.appuser.AppuserManager;
-import com.fh.service.system.buttonrights.ButtonrightsManager;
-import com.fh.service.system.fhbutton.FhbuttonManager;
-import com.fh.service.system.fhlog.FHlogManager;
-import com.fh.service.system.loginimg.LogInImgManager;
-import com.fh.service.system.menu.MenuManager;
-import com.fh.entity.system.Menu;
-import com.fh.entity.system.Role;
-import com.fh.entity.system.User;
-import com.fh.service.system.role.RoleManager;
-import com.fh.service.system.user.UserManager;
-import com.fh.util.AppUtil;
-import com.fh.util.Const;
-import com.fh.util.DateUtil;
-import com.fh.util.Jurisdiction;
-import com.fh.util.PageData;
-import com.fh.util.RightsHelper;
-import com.fh.util.Tools;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 /**
  * 总入口
  * 修改日期：2015/11/2
@@ -141,11 +131,13 @@ public class LoginController extends BaseController {
                         user.setIP(pd.getString("IP"));
                         user.setSTATUS(pd.getString("STATUS"));
                         user.setCompanyId(pd.get("COMPANY_ID").toString());
+						String sessionBS = this.get32UUID();
 						session.setAttribute(Const.SESSION_USER, user);			//把用户信息放session中
 						session.removeAttribute(Const.SESSION_SECURITY_CODE);	//清除登录验证码的session
+						session.setAttribute(USERNAME+"_"+user.getCompanyId(), sessionBS);
 
 						FHLOG.save(USERNAME, "登录系统",pd.getString("IP"),pd.getString("NAME"),pd.get("COMPANY_ID").toString());
-
+						Const.USERSESSION.put(USERNAME+"_"+user.getCompanyId(),sessionBS);
 						//shiro加入身份验证
 						Subject subject = SecurityUtils.getSubject(); 
 					    UsernamePasswordToken token = new UsernamePasswordToken(USERNAME, PASSWORD); 

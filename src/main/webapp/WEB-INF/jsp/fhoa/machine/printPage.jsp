@@ -16,19 +16,27 @@
 
 	<style type="text/css">
 		.fontSize{
-			font-size:35px;
+			font-size:19px;
 			font-family: Microsoft YaHei;
 			color: #282828;
 			text-align: left;
-			padding-left: 180px;
-			padding-top: 50px;
+			margin-left: 84px;
+			margin-top: 46px;
 		}
+		.fontSize >div{
+			width: 98px;
+			display: inline-block;
+		}.fontSize >span{
+			 width: 140px;
+			 display: inline-block;
+		 }
+
 		.fontSizeCode{
 			font-size:35px;
 			font-family: Microsoft YaHei;
 			color: #282828;
 			text-align: left;
-			padding-left:138px;
+			padding-left:70px;
 			padding-top: 10px;
 			letter-spacing:13px;
 		}
@@ -39,40 +47,31 @@
 
 <table  style="width: 660px;height: 660px;border: 1px solid black;margin-left: 96px;" cellspacing="1" bgcolor="#221144">
   <tr bgcolor="#EFEFFF">
-    <td align="center" style="text-align: left">
+    <td  style="text-align: left">
 		<img src="/static/images/printCompayLogo.jpg" style="margin-left: 52px;margin-top: 26px;width: 560px;"><br/>
 		<div class="row fontSize">
-			<label>机器名称：</label><span>${pd.NAME}</span>
+			<div>机器名称：</div><span>${pd.NAME}</span>
+			<div>机器类型：</div><span>${pd.typeName}</span>
 		</div>
 		<div class="row fontSize">
-			<label>机器类型：</label><span>${pd.typeName}</span>
+			<div>机器型号：</div><span>${pd.MODEL}</span>
+			<div>机器功率：</div><span>${pd.POWER}</span>
 		</div>
 		<div class="row fontSize">
-			<label>机器型号：</label><span>${pd.MODEL}</span>
+			<div>出厂年月：</div><span>${pd.production_date}</span>
+			<div>机台速度：</div><span>${pd.speed}</span>
 		</div>
 		<div class="row fontSize">
-			<label>机器功率：</label><span>${pd.POWER}</span>
+			<div>生产厂家：</div><span style="width: 280px;">${pd.manufacturer}</span>
 		</div>
-		<img src="${pd.BARCODEURL}" style="margin-top: 80px;margin-left: 70px;"><br/>
+		<img src="${pd.BARCODEURL}" style="margin-top: 44px;margin-left: 4px;"><br/>
 		<div class="row fontSizeCode"  >
 			<span>${pd.BARCODE}</span>
 		</div>
     </td>
   </tr>
 </table>
-
-
-
-
 </div>
-		
-
-		<!-- 引入 -->
-		<script type="text/javascript">window.jQuery || document.write("<script src='static/js/jquery-1.9.1.min.js'>\x3C/script>");</script>
-		<script src="static/js/bootstrap.min.js"></script>
-		<script src="static/js/ace-elements.min.js"></script>
-		<script src="static/js/ace.min.js"></script>
-		
 <script type="text/javascript">
 
     window.print();

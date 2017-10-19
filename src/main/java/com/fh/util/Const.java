@@ -1,6 +1,10 @@
 package com.fh.util;
 
 import org.springframework.context.ApplicationContext;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 项目名称：
  * @author:fh qq313596790[青苔]
@@ -64,7 +68,7 @@ public class Const {
 	public static final String COMPANY_BASIC_MACHINECYCLE = "machineCycle";
 	public static final String COMPANY_BASIC_RULEPOSITION = "rulePosition";
 
-
+	public static Map<String,String> USERSESSION = new HashMap<String,String>();
 
 
 

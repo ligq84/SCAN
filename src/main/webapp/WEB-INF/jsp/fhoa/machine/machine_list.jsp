@@ -107,12 +107,8 @@
 							<!-- 开始循环 -->	
 							<c:choose>
 								<c:when test="${not empty varList}">
-									<c:if test="${QX.cha == 1 }">
 									<c:forEach items="${varList}" var="var" varStatus="vs">
 										<tr>
-											<%--<td class='center'>--%>
-												<%--<label class="pos-rel"><input type='checkbox' name='ids' value="${var.MHID}" class="ace" /><span class="lbl"></span></label>--%>
-											<%--</td>--%>
 											<td class='center' style="width: 30px;">${vs.index+1}</td>
 											<td class='center'>${var.NAME}</td>
 											<td class='center'>${var.typeName}</td>
@@ -123,35 +119,27 @@
 											<td class='center'>${var.DayName}</td>
 											<td class='center'>${var.NightName}</td>
 											<td class="center">
-												<c:if test="${QX.edit != 1 && QX.del != 1 }">
-												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
-												</c:if>
 												<div class=" btn-group">
+													<c:if test="${QX.edit == 1 }">
 													<a class="" title="打印条码" onclick="print('${var.BARCODE}','${var.MHID}');">
 														<img src="/static/images/tiaoma.png" />
 													</a>
+													</c:if>
 													<c:if test="${QX.edit == 1 }">
 													<a class="" title="编辑" onclick="edit('${var.MHID}');">
 														<img src="/static/images/edit.png" />
 													</a>
 													</c:if>
-													<c:if test="${QX.del == 1 }">
+													<c:if test="${QX.edit == 1 }">
 													<a class="" onclick="del('${var.MHID}');">
 														<img src="/static/images/delete.png" />
 													</a>
 													</c:if>
-
 												</div>
 											</td>
 										</tr>
 									
 									</c:forEach>
-									</c:if>
-									<c:if test="${QX.cha == 0 }">
-										<tr>
-											<td colspan="100" class="center">您无权查看</td>
-										</tr>
-									</c:if>
 								</c:when>
 								<c:otherwise>
 									<tr class="main_info">
