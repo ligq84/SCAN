@@ -153,7 +153,9 @@
 			PROVINCE = #{PROVINCE},
 			CITY = #{CITY},
 			AREA = #{AREA},
-			GRADUATE = #{GRADUATE}
+			GRADUATE = #{GRADUATE},
+			USER_ID= #{USER_ID}
+
 		where 
 			STAFF_ID = #{STAFF_ID}
 	</update>

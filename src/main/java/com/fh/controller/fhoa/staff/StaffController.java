@@ -143,8 +143,9 @@ public class StaffController extends BaseController {
 	public ResultData edit() throws Exception{
 
 		try {
+
 			logBefore(logger, Jurisdiction.getUsername()+"修改Staff");
-			if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限
+			if(!Jurisdiction.buttonJurisdiction(menuUrl, "edit")){return null;} //校验权限PageData uspd = new PageData();
 			Session session = Jurisdiction.getSession();
 			User user = (User)session.getAttribute(Const.SESSION_USER);
 			ModelAndView mv = this.getModelAndView();
@@ -152,21 +153,41 @@ public class StaffController extends BaseController {
 			pd = this.getPageData();
 			pd.put("COMPANY_ID",user.getCompanyId());
 
-			PageData opd = userService.findByUsername(pd);
-			if(null != opd){
-                opd.put("PASSWORD",pd.get("PASSWORD"));
-                opd.put("ROLE_ID",pd.get("ROLE_ID"));
-                userService.editU(opd);
-            }
+			//增加登录用户
+			PageData uspd = new PageData();
+			uspd.put("USER_ID", this.get32UUID());	//ID 主键
+			uspd.put("LAST_LOGIN", "");				//最后登录时间
+			uspd.put("IP", "");						//IP
+			uspd.put("STATUS", "0");					//状态
+			uspd.put("SKIN", "default");
+			uspd.put("RIGHTS", "");
+			uspd.put("PASSWORD", pd.get("PASSWORD"));
+			uspd.put("ROLE_ID", pd.get("ROLE_ID"));
+			uspd.put("USERNAME",pd.get("USERNAME"));
+			uspd.put("NUMBER", Math.random()*1000+1);
+			uspd.put("NAME",pd.get("NAME"));
+			uspd.put("PHONE", pd.get("TEL"));
+			uspd.put("EMAIL",pd.get("EMAIL"));
+			uspd.put("BZ", "");
+			uspd.put("COMPANY_ID",user.getCompanyId());
+			PageData sysuser = userService.findByUsername(uspd);
+			if(null == sysuser){	//判断用户名是否存在
+				userService.saveU(uspd); 					//执行保存
+				//FHLOG.save(Jurisdiction.getUsername(), "新增系统用户："+pd.getString("USERNAME"));
+				pd.put("USER_ID", uspd.get("USER_ID"));
+			}else{
+				userService.editU(sysuser);
+				pd.put("USER_ID", sysuser.get("USER_ID"));
+			}
 			staffService.edit(pd);
 			String DEPARTMENT_IDS = departmentService.getDEPARTMENT_IDS(pd.getString("DEPARTMENT_ID"));//获取某个部门所有下级部门ID
 			pd.put("DATAJUR_ID", pd.getString("STAFF_ID")); //主键
 			pd.put("DEPARTMENT_IDS", DEPARTMENT_IDS);		//部门ID集
 			datajurService.edit(pd);						//把此员工默认部门及以下部门ID保存到组织数据权限表
-			return ResultData.init(ResultData.SUCCESS,"添加成功","");
+			return ResultData.init(ResultData.SUCCESS,"更新成功","");
 		} catch (Exception e) {
 			e.printStackTrace();
-			return ResultData.init(ResultData.FAIL,"添加异常","");
+			return ResultData.init(ResultData.FAIL,"更新异常","");
 		}
 
 	}

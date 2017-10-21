@@ -34,11 +34,8 @@
 							<tr>
 								<td>
 									<div class="nav-search">
-										<span class="input-icon">
-											<input type="text" placeholder="请输入部门名称" class="nav-search-input" id="keywords" name="keywords"
+										<input type="text" placeholder="请输入部门名称" class="nav-search-input" id="keywords" name="keywords"
 												   autocomplete="off" value="${page.pd.keywords }" style="width: 145px;"/>
-											<i class="ace-icon fa fa-search nav-search-icon"></i>
-										</span>
 									</div>
 								</td>
 								<td>
@@ -186,7 +183,7 @@
 			 diag.Title ="新增部门";
 			 diag.URL = '<%=basePath%>department/goAdd.do?DEPARTMENT_ID='+DEPARTMENT_ID;
 			 diag.Width = 450;
-			 diag.Height = 450;
+			 diag.Height = 320;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if('none' == diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display){
 					 parent.location.href="<%=basePath%>department/listAllDepartment.do?DEPARTMENT_ID=${DEPARTMENT_ID}&dnowPage=${page.currentPage}";

@@ -75,11 +75,7 @@
 </head>
 <body>
 
-	<c:if test="${pd.isMusic == 'yes' }">
-	<%--<div style="display: none">--%>
-	    <%--<audio src="static/login/music/fh1.mp3" autoplay=""></audio>--%>
-	<%--</div>	--%>
-	</c:if>
+
 	<canvas class="cavs"></canvas>
 	<div style="width:100%;height:100%;text-align: center;margin: 0 auto;position: absolute;">
 		<%--<input type="hidden" name="COMPANYCODE" id="COMPANYCODE" value="TEST" placeholder="COMPANYCODE" />--%>
@@ -117,13 +113,15 @@
 						</div>
 					</div>
 				</div>
+				<c:if test="${sessionScope.errLoginCount>3}">
 				<div class="control-group">
 					<div class="controls" style="text-align: left;">
-						<input type="text" name="code" id="code" class="login_code"  style="height:30px;width: 5em;border: 1px solid  #A8A8A8;border-radius:5px;margin-left: 0px;" />
-						<img style="height:30px;border: 1px solid  #A8A8A8;" id="codeImg" alt="点击更换" title="点击更换" src="" />
+						<input type="text" name="code" id="code" class="login_code"  style="height:30px;line-height:40px;width: 5em;border: 1px solid  #A8A8A8;border-radius:5px;margin-left: 0px;" />
+						<img style="height:38px;border: 1px solid  #A8A8A8;margin-top: -9px;" id="codeImg" alt="点击更换" title="点击更换" src="" />
 
 					</div>
 				</div>
+				</c:if>
 				<div class="control-group">
 					<div class="controls">
 						<img  src="static/login/submit.png" onclick="severCheck();" id="submit"/>
@@ -136,86 +134,6 @@
 		<div id="logobutton" >
 			<span style="font-family: 微软雅黑;color: #fff;">湖南趣逛信息科技有限公司</span>
 		</div>
-		<!-- 注册 -->
-		<div id="windows2" style="display: none;">
-		<div id="loginbox">
-			<form action="" method="post" name="loginForm" id="loginForm">
-				<div class="control-group normal_text">
-					<h3>
-						<img src="static/login/logo.png" alt="Logo" />
-					</h3>
-				</div>
-				<div class="control-group">
-					<div class="controls">
-						<div class="main_input_box">
-							<span class="add-on bg_lg">
-							<i>用户</i>
-							</span><input type="text" name="USERNAME" id="USERNAME" value="" placeholder="请输入用户名" />
-						</div>
-					</div>
-				</div>
-				<div class="control-group">
-					<div class="controls">
-						<div class="main_input_box">
-							<span class="add-on bg_ly">
-							<i>密码</i>
-							</span><input type="password" name="PASSWORD" id="PASSWORD" placeholder="请输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/>
-						</div>
-					</div>
-				</div>
-				<div class="control-group">
-					<div class="controls">
-						<div class="main_input_box">
-							<span class="add-on bg_ly">
-							<i>重输</i>
-							</span><input type="password" name="chkpwd" id="chkpwd" placeholder="请重新输入密码" class="keypad" keypadMode="full" allowKeyboard="true" value=""/>
-						</div>
-					</div>
-				</div>
-				<div class="control-group">
-					<div class="controls">
-						<div class="main_input_box">
-							<span class="add-on bg_lg">
-							<i>姓名</i>
-							</span><input type="text" name="NAME" id="name" value="" placeholder="请输入姓名" />
-						</div>
-					</div>
-				</div>
-				<div class="control-group">
-					<div class="controls">
-						<div class="main_input_box">
-							<span class="add-on bg_lg">
-							<i>邮箱</i>
-							</span><input type="text" name="EMAIL" id="EMAIL" value="" placeholder="请输入邮箱" />
-						</div>
-					</div>
-				</div>
-				<div class="form-actions">
-					<div style="width:86%;padding-left:8%;">
-
-						<div style="float: left;padding-top:2px;">
-							<i><img src="static/login/yan.png" /></i>
-						</div>
-						<div style="float: left;" class="codediv">
-							<input type="text" name="rcode" id="rcode" class="login_code"
-								style="height:16px; padding-top:4px;" />
-						</div>
-						<div style="float: left;">
-							<i><img style="height:22px;" id="zcodeImg" alt="点击更换" title="点击更换" src="" /></i>
-						</div>
-						<span class="pull-right" style="padding-right:3%;"><a href="javascript:changepage(2);" class="btn btn-success">取消</a></span>
-						<span class="pull-right"><a onclick="register();" class="flip-link btn btn-info" id="to-recover">提交</a></span>
-					</div>
-				</div>
-			</form>
-			<div class="controls">
-				<div class="main_input_box">
-					<font color="white"><span id="nameerr">Copyright © FHqq313596790 2100</span></font>
-				</div>
-			</div>
-		</div>
-		</div>
-		
 	</div>
 	<div id="templatemo_banner_slide" class="container_wapper">
 		<div class="camera_wrap camera_emboss" id="camera_slide">
@@ -223,20 +141,6 @@
 			<div data-src="static/login/images/logo_bg.png"></div>
 			<div data-src="static/login/images/logo_bg.png"></div>
 			<div data-src="static/login/images/logo_bg.png"></div>
-			<%--<c:choose>--%>
-				<%--<c:when test="${not empty pd.listImg}">--%>
-					<%--<c:forEach items="${pd.listImg}" var="var" varStatus="vs">--%>
-						<%--<div data-src="static/login/images/${var.FILEPATH }"></div>--%>
-					<%--</c:forEach>--%>
-				<%--</c:when>--%>
-				<%--<c:otherwise>--%>
-					<%--<div data-src="static/login/images/banner_slide_01.jpg"></div>--%>
-					<%--<div data-src="static/login/images/banner_slide_02.jpg"></div>--%>
-					<%--<div data-src="static/login/images/banner_slide_03.jpg"></div>--%>
-					<%--<div data-src="static/login/images/banner_slide_04.jpg"></div>--%>
-					<%--<div data-src="static/login/images/banner_slide_05.jpg"></div>--%>
-				<%--</c:otherwise>--%>
-			<%--</c:choose>--%>
 		</div>
 		<!-- #camera_wrap_3 -->
 	</div>
@@ -247,11 +151,12 @@
 			if(check()){
 				var loginname = $("#loginname").val();
 				var password = $("#password").val();
-				var code = ""+loginname+",fh,"+password+""+",fh,"+$("#code").val()+",fh,"+$("#COMPANYCODE").val();
+				var cd = $("#code").val() == undefined?"": $("#code").val();
+				var code = ""+loginname+",fh,"+password+""+",fh,"+cd+",fh,"+$("#COMPANYCODE").val();
 				$.ajax({
 					type: "POST",
 					url: 'login_login',
-			    	data: {KEYDATA:code,tm:new Date().getTime()},
+			    		data: {KEYDATA:code,tm:new Date().getTime()},
 					dataType:'json',
 					cache: false,
 					success: function(data){
@@ -263,8 +168,9 @@
 								side : 1,
 								msg : "用户名或密码有误",
 								bg : '#FF5080',
-								time : 15
+								time : 3
 							});
+							window.location.reload();
 							showfh();
 							$("#loginname").focus();
 						}else if("codeerror" == data.result){
@@ -272,17 +178,28 @@
 								side : 1,
 								msg : "验证码输入有误",
 								bg : '#FF5080',
-								time : 15
+								time : 3
 							});
+							window.location.reload();
 							showfh();
 							$("#code").focus();
-						}else{
+						}else if("carerror" == data.result){
+						$("#COMPANYCODE").tips({
+							side : 1,
+							msg : "没有这个公司",
+							bg : '#FF5080',
+							time : 3
+						});
+						showfh();
+						$("#COMPANYCODE").focus();
+					}else{
 							$("#loginname").tips({
 								side : 1,
 								msg : "缺少参数",
 								bg : '#FF5080',
-								time : 15
-							});
+								time : 3
+							})
+							window.location.reload();
 							showfh();
 							$("#loginname").focus();
 						}
@@ -317,7 +234,19 @@
 
 		//客户端校验
 		function check() {
-
+            if ($("#COMPANYCODE").val() == "") {
+                $("#COMPANYCODE").tips({
+                    side : 2,
+                    msg : '企业编码不得为空',
+                    bg : '#AE81FF',
+                    time : 3
+                });
+                showfh();
+                $("#COMPANYCODE").focus();
+                return false;
+            } else {
+                $("#COMPANYCODE").val(jQuery.trim($('#COMPANYCODE').val()));
+            }
 			if ($("#loginname").val() == "") {
 				$("#loginname").tips({
 					side : 2,
@@ -342,6 +271,7 @@
 				$("#password").focus();
 				return false;
 			}
+            <c:if test="${sessionScope.errLoginCount>3}">
 			if ($("#code").val() == "") {
 				$("#code").tips({
 					side : 1,
@@ -353,11 +283,12 @@
 				$("#code").focus();
 				return false;
 			}
+			</c:if>
 			$("#loginbox").tips({
 				side : 1,
 				msg : '正在登录 , 请稍后 ...',
 				bg : '#68B500',
-				time : 10
+				time : 3
 			});
 
 			return true;

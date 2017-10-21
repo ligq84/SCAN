@@ -298,6 +298,11 @@ public class RoleController extends BaseController {
 				roleService.updateRoleRights(role);				//更新当前角色菜单权限
 				pd.put("rights",rights.toString());
                 roleService.updateRoleInfo(role);
+
+				PageData btnpd = new PageData();
+				btnpd.put("value",rights.toString());
+				btnpd.put("ROLE_ID",ROLE_ID);
+				roleService.saveB4Button("cha_qx",btnpd);
 			}else{
 				Role role = new Role();
 				role.setRIGHTS("");
@@ -305,12 +310,18 @@ public class RoleController extends BaseController {
 				roleService.updateRoleRights(role);				//更新当前角色菜单权限(没有任何勾选)
 				pd.put("rights","");
                 roleService.updateRoleInfo(role);
+
+				PageData btnpd = new PageData();
+				btnpd.put("value","");
+				btnpd.put("ROLE_ID",ROLE_ID);
+				roleService.saveB4Button("cha_qx",btnpd);
 			}
 
             pd.put("ROLE_ID", ROLE_ID);
             if(!"1".equals(ROLE_ID)){						//当修改admin权限时,不修改其它角色权限
                 roleService.setAllRights(pd);				//更新此角色所有子角色的菜单权限
             }
+
 			out.write("success");
 			out.close();
 		} catch(Exception e){
@@ -396,7 +407,7 @@ public class RoleController extends BaseController {
 			roleService.saveB4Button(msg,pd);
 			roleService.saveB4Button("add_qx",pd);
 			roleService.saveB4Button("del_qx",pd);
-			roleService.saveB4Button("cha_qx",pd);
+
 			out.write("success");
 			out.close();
 		} catch(Exception e){

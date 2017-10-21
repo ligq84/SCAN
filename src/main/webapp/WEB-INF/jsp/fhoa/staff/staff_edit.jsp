@@ -97,6 +97,9 @@
 			background-image: none;
 			font-size: 1px;
 		}
+		.date-picker{
+			cursor: pointer !important;
+		}
 	</style>
 </head>
 <body class="no-skin">
@@ -122,6 +125,7 @@
 								<label for="SEX" class="col-sm-1 control-label"><span style="color: red">*</span>性别:</label>
 								<div class="col-sm-2">
 									<select name="SEX" id="SEX" class="form-control">
+										<option>请选择</option>
 										<option <c:if test="${pd.SEX == '男'}">selected</c:if>>男</option>
 										<option <c:if test="${pd.SEX == '女'}">selected</c:if>>女</option>
 									</select>
@@ -153,6 +157,7 @@
 								<label for="NAME" class="col-sm-1 control-label"><span style="color: red">*</span>联系地址:</label>
 								<div class="col-sm-2">
 										<select id="PROVINCE" name="PROVINCE" class=" form-control" data-placeholder="请选择省份" style="vertical-align:top;">
+										<option value="">请选择省份</option>
 										<c:forEach items="${PROVINCEList}" var="province">
 											<option value="${province.DICTIONARIES_ID }" <c:if test="${province.DICTIONARIES_ID == pd.PROVINCE}">selected</c:if>>${province.NAME }</option>
 										</c:forEach>
@@ -237,7 +242,7 @@
 								<label for="NAME" class="col-sm-1 control-label" ><span style="color: red">*</span>所在岗位:</label>
 								<div class="col-sm-2">
 									<select class="chosen-select form-control" name="POST" id="POST" data-placeholder="这里输入现岗位" style="vertical-align:top;"  title="现岗位" style="width:98%;" >
-										<option value=""></option>
+										<option value="">请选择</option>
 										<c:forEach items="${staffPostList}" var="staffPost">
 											<option value="${staffPost.OCBID }" <c:if test="${staffPost.OCBID == pd.POST }">selected</c:if> >${staffPost.NAME}</option>
 										</c:forEach>
@@ -252,7 +257,7 @@
 								</div>
 								<label for="NAME" class="col-sm-1 control-label" ><span style="color: red">*</span>邮箱:</label>
 								<div class="col-sm-2">
-									<input type="text" class="control-label"  name="EMAIL" id="EMAIL" value="${pd.EMAIL}" maxlength="50" placeholder="这里输入邮箱" title="邮箱" style="width:98%;text-align: left"/>
+									<input type="text" class="form-control"  name="EMAIL" id="EMAIL" value="${pd.EMAIL}" maxlength="50" placeholder="这里输入邮箱" title="邮箱" style="width:98%;text-align: left"/>
 								</div>
 							</div>
 						</div>
@@ -271,12 +276,12 @@
 							<div class="form-group" style="margin-top: 10px">
 								<label for="USERNAME" class="col-sm-1 control-label" ><span style="color: red">*</span>系统账号:</label>
 								<div class="col-sm-2">
-									<input type="text" class="control-label" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="30" placeholder="这里输入系统账号"
+									<input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="30" placeholder="这里输入系统账号"
 										   style="width:98%; text-align: left;"  <c:if test="${msg =='edit' && not empty pd.USERNAME }">readonly</c:if> />
 								</div>
 								<label for="PASSWORD" class="col-sm-1 control-label" ><span style="color: red">*</span>登录密码:</label>
 								<div class="col-sm-2">
-									<input type="text"  class="control-label" name="PASSWORD" id="PASSWORD" value="${pd.PASSWORD}" maxlength="30" placeholder="这里输入登录密码"
+									<input type="text"  class="form-control" name="PASSWORD" id="PASSWORD" value="${pd.PASSWORD}" maxlength="30" placeholder="这里输入登录密码"
 										   style="width:98%;text-align: left;"/>
 								</div>
 								<label for="role_id" class="col-sm-1 control-label" ><span style="color: red">*</span>系统角色:</label>
@@ -555,8 +560,8 @@
 				$("#ADDRESS").focus();
 			return false;
 			}
-			$("#zhongxin").hide();
-			$("#zhongxin2").show();
+//			$("#zhongxin").hide();
+//			$("#zhongxin2").show();
 
 			$.ajax({
 				type: "POST",
@@ -574,8 +579,8 @@
 						alert(data.mesg);
 					}else {
 						alert("添加异常");
-						$("#zhongxin").show();
-						$("#zhongxin2").hide();
+//						$("#zhongxin").show();
+//						$("#zhongxin2").hide();
 					}
 				}
 			});

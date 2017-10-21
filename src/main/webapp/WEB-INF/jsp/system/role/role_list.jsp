@@ -250,7 +250,7 @@
 			 diag.Title = "菜单权限";
 			 diag.URL = '<%=basePath%>role/menuqx.do?ROLE_ID='+ROLE_ID;
 			 diag.Width = 320;
-			 diag.Height = 495;
+			 diag.Height = 425;
 			 diag.CancelEvent = function(){ //关闭事件
 				diag.close();
 			 };

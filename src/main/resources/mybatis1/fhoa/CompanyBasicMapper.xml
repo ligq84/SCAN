@@ -94,6 +94,7 @@
 		<if test="pd.STATUS!= null and pd.STATUS != ''">
 			and  STATUS = #{pd.STATUS}
 		</if>
+		order by ocb_order desc
 	</select>
 	
 	<!-- 列表(全部) -->

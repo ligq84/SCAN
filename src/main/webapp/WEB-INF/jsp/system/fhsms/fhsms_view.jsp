@@ -51,17 +51,20 @@
 										${pd.SMS_TYPE}
 									</div>
 									<br/>
+									<c:if test="${pd.SMS_TYPE == '更改规格通知' }">
 									<label class="col-sm-1 control-label">目标规格:</label>
 									<div class="col-sm-2 control-label" style="display: inline;">
-										${pd.rule}
+											${pd.rule}
 									</div>
 									<br/>
 									<label class="col-sm-1 control-label">更改部位:</label>
 									<div class="col-sm-2 control-label" style="display: inline;">
-										${pd.parts}
+											${pd.parts}
 									</div>
 									<br/>
-									<label class="col-sm-1 control-label">发送人:</label>
+									</c:if>
+
+									<label class="col-sm-1 control-label">发&nbsp;&nbsp;送&nbsp;&nbsp;人:</label>
 									<div class="col-sm-2 control-label" style="display: inline;">
 										${pd.TO_USERNAME}
 									</div>
@@ -96,6 +99,7 @@
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 		<script type="text/javascript">
+//		$("#_DialogButtons_0").css("text-align","center");
 		$(top.hangge());
 		//保存
 		function save(){

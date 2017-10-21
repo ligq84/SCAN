@@ -36,14 +36,17 @@
 									<input type="hidden" name="ROLE_ID" id="id" value="${pd.ROLE_ID}"/>
 									<input name="PARENT_ID" id="parent_id" value="${pd.parent_id }" type="hidden">
 									<label>角色名称:</label>
-									<input type="text" name="ROLE_NAME" id="ROLE_NAME" placeholder="这里输入名称" value="${pd.ROLE_NAME}"  title="名称" style="width:120px;border-radius: 5px;border: 1px solid #0e77d9;"/>
+									<input type="text" name="ROLE_NAME" id="ROLE_NAME" placeholder="这里输入名称" value="${pd.ROLE_NAME}"  title="名称" style="width:200px;border-radius: 5px;border: 1px solid #0e77d9;"/>
 								</div>
 								<div style="height:35px;width: 309px;margin-top: 10px;">
-									<label>角色描述:</label>
-									<textarea name="BZ" id="BZ" style="border: 1px solid #0e77d9;">${pd.BZ}</textarea>
+									<label style="vertical-align: top;">角色描述:</label>
+									<textarea name="BZ" id="BZ" style="border: 1px solid #0e77d9;width: 200px;border-radius: 5px;">${pd.BZ}</textarea>
 								</div>
-								<div style="overflow: scroll; scrolling: yes !important;height: 335px;width: 290px;margin-top: 35px;border: 1px solid #0e77d9;">
-								<ul id="tree" class="tree" style="overflow:auto;"></ul>
+								<div style="height: 265px;width: 290px;margin-top: 35px;">
+									<label style="vertical-align: top;">角色权限:</label>
+									<div style="overflow: scroll; scrolling: yes !important;height: 260px;width: 200px;border: 1px solid #0e77d9;display: inline-block;border-radius: 5px;">
+										<ul id="tree" class="tree" style="overflow:auto;"></ul>
+									</div>
 								</div>
 							</div>
 

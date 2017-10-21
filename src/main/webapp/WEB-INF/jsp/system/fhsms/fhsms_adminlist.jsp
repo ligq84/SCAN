@@ -55,7 +55,7 @@
 								<td class="searchTabletd">
 									<div class="nav-search">
 									<select class=" nav-search-input" name="SMS_TYPE" id="SMS_TYPE" data-placeholder="通知类型" style="vertical-align:top;"   style="width: 12em;" >
-										<option value=""></option>
+										<option value="">全部</option>
 										<option value="2" <c:if test="${pd.SMS_TYPE == '2'}">selected</c:if> >维修通知</option>
 										<option value="3" <c:if test="${pd.SMS_TYPE == '3'}">selected</c:if> >改规格通知</option>
 									</select>
@@ -93,23 +93,18 @@
 									<div class="nav-search">
 									<input class="span10 date-picker nav-search-input" name="lastLoginEnd" name="lastLoginEnd"  value="${pd.lastLoginEnd}" type="text"
 										   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="结束日期" title="结束日期"/>
+									<a class="btn btn-mini btn-qg" onclick="tosearch();">查询</a>
+									<c:if test="${QX.FHSMS == 1 }">
+										<a  class="btn btn-mini btn-qg" onclick="toSendMesg()">
+											发送通知
+										</a>
+									</c:if>
 									</div>
 								</td>
-								<%--<td style="vertical-align:top;padding-left:5px;">--%>
-									<%--<select class="chosen-select form-control" name="STATUS" id="id" data-placeholder="状态" style="vertical-align:top;width: 68px;">--%>
-										<%--<option value="">全部</option>--%>
-										<%--<option value="1" <c:if test="${pd.STATUS == '1' }">selected</c:if>>已读</option>--%>
-										<%--<option value="2" <c:if test="${pd.STATUS == '2' }">selected</c:if>>未读</option>--%>
-									<%--</select>--%>
-								<%--</td>--%>
-								<%--<c:if test="${QX.cha == 1 }">--%>
-									<td class="searchTabletd" colspan="2">
-										<a class="btn btn-mini btn-qg" onclick="tosearch();">查询</a>
-										<c:if test="${QX.FHSMS == 1 }">
-											<a  class="btn btn-mini btn-qg" onclick="toSendMesg()">
-												发送通知
-											</a></c:if>
-									</td>
+
+								<td class="searchTabletd" colspan="2">
+
+								</td>
 								<%--</c:if>--%>
 								<%--<td style="padding-left:20px;"><a href="fhsms/adminList.do?TYPE=1"><span class="label label-<c:if test="${pd.TYPE != '2' }">success</c:if> arrowed-right arrowed-in">收信箱</span></a></td>--%>
 								<%--<td><a href="fhsms/adminList.do?TYPE=2"><span class="label label-<c:if test="${pd.TYPE == '2' }">info</c:if> arrowed-right arrowed-in">发信箱</span></a></td>--%>
@@ -160,18 +155,13 @@
 												<c:if test="${QX.edit != 1 && QX.del != 1 }">
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
+												<%--<c:if test="${USERNAME != var.FROM_USERNAME}">--%>
 												<div class="btn-group">
-													<a class="btn btn-xs btn-info" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUS}','${pd.TYPE == '2'?'2':'1' }','${var.FHSMS_ID}','${var.SANME_ID}');">
+													<a class="btn btn-xs btn-info" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUS}','${pd.TYPE == '2'?'2':'1' }','${var.FHSMS_ID}','${var.SANME_ID}','${var.TO_USERNAME}');">
 														<i class="ace-icon fa fa-envelope-o bigger-120"></i>
 													</a>
-													<%--<c:if test="${QX.FHSMS == 1 }">--%>
-													<%--<a class="btn btn-xs btn-info" title='发送站内信' onclick="sendFhsms('${var.TO_USERNAME}');">--%>
-														<%--<i class="ace-icon fa fa-envelope-o bigger-120" title="发送站内信"></i>--%>
-													<%--</a>--%>
-													<%--</c:if>--%>
-
 												</div>
-
+												<%--</c:if>--%>
 											</td>
 										</tr>
 									
@@ -325,24 +315,28 @@
 		}
 		
 		//查看信件
-		function viewx(ztid,STATUS,type,Id,SANME_ID){
-			if(type == "1" && STATUS == '2' && $("#"+ztid).html() == '<span class="label label-important arrowed-in">未读</span>'){
-				$("#"+ztid).html('<span class="label label-success arrowed">已读</span>');
-				top.readFhsms();//读取站内信时减少未读总数  <!-- readFhsms()函数在 WebRoot\static\js\myjs\head.js中 -->
-			}
+		function viewx(ztid,STATUS,type,Id,SANME_ID,TO_USERNAME){
+//			if(type == "1" && STATUS == '2' && $("#"+ztid).html() == '<span class="label label-important arrowed-in">未读</span>'){
+//				$("#"+ztid).html('<span class="label label-success arrowed">已读</span>');
+//				top.readFhsms();//读取站内信时减少未读总数  <!-- readFhsms()函数在 WebRoot\static\js\myjs\head.js中 -->
+//			}
 			 top.jzts();
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="查看通知";
-			 diag.URL = '<%=basePath%>fhsms/goView.do?FHSMS_ID='+Id+'&TYPE='+type+'&SANME_ID='+SANME_ID+'&STATUS='+STATUS;
-			 diag.Width = 600;
-			 diag.Height = 460;
+			 diag.URL = '<%=basePath%>fhsms/goView.do?FHSMS_ID='+Id+'&TYPE='+type+'&SANME_ID='+SANME_ID+'&STATUS='+STATUS+'&TO_USERNAME='+TO_USERNAME;
+			 diag.Width = 500;
+			 diag.Height =220;
+//			diag.AutoClose = true;
 			 diag.CancelEvent = function(){ //关闭事件
 				diag.close();
 			 };
-			 diag.show();
+			diag.ShowButtonRow=true;
+			diag.show();
+			diag.okButton.style="display:none;";
+			diag.cancelButton.value="关闭";
 		}
-		
+
 		//批量操作
 		function makeAll(msg){
 			bootbox.confirm(msg, function(result) {

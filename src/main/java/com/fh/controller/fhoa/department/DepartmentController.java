@@ -82,11 +82,11 @@ public class DepartmentController extends BaseController {
 		PageData pd = new PageData();
 		pd.put("DEPARTMENT_ID", DEPARTMENT_ID);
 		String errInfo = "success";
-		if(departmentService.listSubDepartmentByParentId(DEPARTMENT_ID).size() > 0){//判断是否有子级，是：不允许删除
-			errInfo = "false";
-		}else{
-			departmentService.delete(pd);	//执行删除
-		}
+		//if(departmentService.listSubDepartmentByParentId(DEPARTMENT_ID).size() > 0){//判断是否有子级，是：不允许删除
+		//	errInfo = "false";
+		//}else{
+		departmentService.delete(pd);	//执行删除
+		//}
 		map.put("result", errInfo);
 		return AppUtil.returnObject(new PageData(), map);
 	}

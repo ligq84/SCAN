@@ -119,10 +119,10 @@
 												<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
 												</c:if>
 												<div class="btn-group">
+													<c:if test="${QX.edit == 1 }">
 													<a title="打印条码" onclick="print('${var.BARCODE}','${var.CAR_ID}');">
 														<img src="/static/images/tiaoma.png" />
 													</a>
-													<c:if test="${QX.edit == 1 }">
 													<a  title="编辑" onclick="edit('${var.CAR_ID}');">
 														<img src="/static/images/edit.png" />
 													</a>

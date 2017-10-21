@@ -105,11 +105,11 @@ public class FhsmsController extends BaseController {
 					pd.put("TO_USERNAME", arrUSERNAME[i]);					//收信人
 
 					fhsmsService.save(pd);									//存入发信
-					pd.put("FHSMS_ID", this.get32UUID());					//主键2
-					pd.put("TYPE", "1");									//类型1：收信
-					pd.put("FROM_USERNAME", arrUSERNAME[i]);				//发信人
-					pd.put("TO_USERNAME", Jurisdiction.getUsername());		//收信人
-					fhsmsService.save(pd);
+					//pd.put("FHSMS_ID", this.get32UUID());					//主键2
+					//pd.put("TYPE", "1");									//类型1：收信
+					//pd.put("FROM_USERNAME", arrUSERNAME[i]);				//发信人
+					//pd.put("TO_USERNAME", Jurisdiction.getUsername());		//收信人
+					//fhsmsService.save(pd);
 					count++;
 				}
 				msg = "ok";
@@ -161,11 +161,11 @@ public class FhsmsController extends BaseController {
 					pd.put("SMS_TYPE",pd.get("SMS_TYPE"));
 					pd.put("response_status","0");
 					fhsmsService.save(pd);									//存入发信
-					pd.put("FHSMS_ID", this.get32UUID());					//主键2
-					pd.put("TYPE", "1");									//类型1：收信
-					pd.put("FROM_USERNAME", arrUSERNAME[i]);				//发信人
-					pd.put("TO_USERNAME", Jurisdiction.getUsername());		//收信人
-					fhsmsService.save(pd);
+					//pd.put("FHSMS_ID", this.get32UUID());					//主键2
+					//pd.put("TYPE", "1");									//类型1：收信
+					//pd.put("FROM_USERNAME", arrUSERNAME[i]);				//发信人
+					//pd.put("TO_USERNAME", Jurisdiction.getUsername());		//收信人
+					//fhsmsService.save(pd);
 					count++;
 				}
 				msg = "ok";
@@ -305,6 +305,7 @@ public class FhsmsController extends BaseController {
 		List<PageData> staffList =  staffService.listSelect(page);
 		mv.addObject("staffList", staffList);
 		mv.addObject("pd", pd);
+		mv.addObject("USERNAME", user.getUSERNAME());
 		mv.addObject("QX",Jurisdiction.getHC());				//按钮权限
 		return mv;
 	}
@@ -333,7 +334,10 @@ public class FhsmsController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		if("1".equals(pd.getString("TYPE")) && "2".equals(pd.getString("STATUS"))){ //在收信箱里面查看未读的站内信时去数据库改变未读状态为已读
+		Session session = Jurisdiction.getSession();
+		User user = (User)session.getAttribute(Const.SESSION_USER);
+
+		if("1".equals(pd.getString("TYPE")) && "2".equals(pd.getString("STATUS"))&& user.getUSERNAME().equals(pd.get("TO_USERNAME"))){ //在收信箱里面查看未读的站内信时去数据库改变未读状态为已读
 			fhsmsService.edit(pd);
 		}
 		pd = fhsmsService.findById(pd);	//根据ID读取

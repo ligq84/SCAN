@@ -93,7 +93,7 @@
 										</label>
 										<label style="float:left;padding-left: 5px;padding-top:7px;">
 											<input name="mesgType" type="radio" class="ace inputStyle" value="4">
-											<span class="lbl">该规格通知</span>
+											<span class="lbl">改规格通知</span>
 										</label>
 									</div>
 								</div>
