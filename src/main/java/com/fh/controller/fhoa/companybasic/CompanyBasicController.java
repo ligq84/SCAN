@@ -371,6 +371,8 @@ public class CompanyBasicController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
+		int orderNum = companybasicService.getTypeOrder(pd);
+		pd.put("OCB_ORDER",orderNum+1);
 		mv.setViewName("fhoa/companybasic/companybasic_edit");
 		mv.addObject("msg", "save");
 		mv.addObject("pd", pd);

@@ -1,8 +1,9 @@
 package com.fh.service.fhoa.companybasic;
 
-import java.util.List;
 import com.fh.entity.Page;
 import com.fh.util.PageData;
+
+import java.util.List;
 
 /** 
  * 说明： 公司基础信息接口
@@ -53,6 +54,8 @@ public interface CompanyBasicManager{
 	 * @throws Exception
 	 */
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception;
+
+	Integer getTypeOrder(PageData pd)throws Exception;
 	
 }
 

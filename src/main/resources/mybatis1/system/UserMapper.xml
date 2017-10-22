@@ -87,7 +87,8 @@
 		select a.USER_ID,a.USERNAME,a.PASSWORD,a.NAME,a.RIGHTS,a.ROLE_ID,a.LAST_LOGIN,a.IP,a.STATUS,a.BZ,a.SKIN,a.EMAIL,a.NUMBER,a.PHONE,a.company_id as COMPANY_ID
 		from SYS_USER a
 		LEFT JOIN  OA_COMPANY B ON  a.company_id = b.company_id
-		where  deleted=0
+		LEFT JOIN  oa_staff c on c.USER_ID = a.USER_ID
+		where  a.deleted=0 and c.deleted = 0 and c.STATUS = 0
 		<if test="USERNAME!=null and PASSWORD!=null">
 			and a.USERNAME = #{USERNAME} and a.PASSWORD=#{PASSWORD}
 		</if>

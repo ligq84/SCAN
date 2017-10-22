@@ -100,6 +100,13 @@
 		.date-picker{
 			cursor: pointer !important;
 		}
+		.row{
+			margin: 0px;
+		}
+		.form-horizontal .form-group {
+			 margin-right:0px;
+			margin-left: 0px;
+		}
 	</style>
 </head>
 <body class="no-skin">
@@ -389,15 +396,35 @@
 				$("#TEL").focus();
 			return false;
 			}
+			if(!isNaN($("#TEL").val())){
+				$("#TEL").tips({
+					side:3,
+					msg:'电话只能是数字',
+					bg:'#AE81FF',
+					time:2
+				});
+				$("#TEL").focus();
+				return false;
+			}
 			if($("#EMAIL").val()==""){
 				$("#EMAIL").tips({
 					side:3,
-		            msg:'请输入邮箱',
-		            bg:'#AE81FF',
-		            time:2
-		        });
+					msg:'请输入邮箱',
+					bg:'#AE81FF',
+					time:2
+				});
 				$("#EMAIL").focus();
-			return false;
+				return false;
+			}
+			if(!ismail($("#EMAIL").val())){
+				$("#EMAIL").tips({
+					side:3	,
+					msg:'邮箱格式不正确',
+					bg:'#AE81FF',
+					time:2
+				});
+				$("#EMAIL").focus();
+				return false;
 			}
 			if($("#SEX").val()==""){
 				$("#SEX").tips({
@@ -500,6 +527,17 @@
 				$("#SFID").focus();
 			return false;
 			}
+			if(!IdentityCodeValid($("#SFID").val())){
+				$("#SFID").tips({
+					side:3,
+					msg:'身份证不合法',
+					bg:'#AE81FF',
+					time:2
+				});
+				$("#SFID").focus();
+				return false;
+			}
+
 			if($("#DJOINTIME").val()==""){
 				$("#DJOINTIME").tips({
 					side:3,
@@ -553,13 +591,54 @@
 			if($("#ADDRESS").val()==""){
 				$("#ADDRESS").tips({
 					side:3,
-		            msg:'请输入现住址',
-		            bg:'#AE81FF',
-		            time:2
-		        });
+					msg:'请输入现住址',
+					bg:'#AE81FF',
+					time:2
+				});
 				$("#ADDRESS").focus();
-			return false;
+				return false;
 			}
+			if($("#USERNAME").val()==""){
+				$("#USERNAME").tips({
+					side:3,
+					msg:'请输入系统账号',
+					bg:'#AE81FF',
+					time:2
+				});
+				$("#USERNAME").focus();
+				return false;
+			}
+			if($("#PASSWORD").val()==""){
+				$("#PASSWORD").tips({
+					side:3,
+					msg:'请输入密码',
+					bg:'#AE81FF',
+					time:2
+				});
+				$("#PASSWORD").focus();
+				return false;
+			}
+			if($("#PASSWORD").val().length<6){
+				$("#PASSWORD").tips({
+					side:3,
+					msg:'密码不能小于6位',
+					bg:'#AE81FF',
+					time:2
+				});
+				$("#PASSWORD").focus();
+				return false;
+			}
+			if($("#ROLE_ID").val()==""){
+				$("#ROLE_ID").tips({
+					side:3,
+					msg:'请输入角色',
+					bg:'#AE81FF',
+					time:2
+				});
+				$("#ROLE_ID").focus();
+				return false;
+			}
+
 //			$("#zhongxin").hide();
 //			$("#zhongxin2").show();
 
@@ -590,7 +669,9 @@
 		
 		$(function() {
 			//日期框
-			$('.date-picker').datepicker({autoclose: true,todayHighlight: true,clearBtn: true});
+			$('.date-picker').datepicker({autoclose: true,todayHighlight: true,clearBtn: true,onSelect: function(selectedDate){
+				$('.date-picker').not(this).datepicker("option", "maxDate", new Date());
+			}});
 		});
 		function change2(value){
 			$.ajax({
@@ -684,6 +765,50 @@
 				$('#AREA').chosen();
 			}
 		});
+
+		function ismail(mail){
+			return(new RegExp(/^(?:[a-zA-Z0-9]+[_\-\+\.]?)*[a-zA-Z0-9]+@(?:([a-zA-Z0-9]+[_\-]?)*[a-zA-Z0-9]+\.)+([a-zA-Z]{2,})+$/).test(mail));
+		}
+		function IdentityCodeValid(code) {
+			var city={11:"北京",12:"天津",13:"河北",14:"山西",15:"内蒙古",21:"辽宁",22:"吉林",23:"黑龙江 ",31:"上海",32:"江苏",33:"浙江",34:"安徽",35:"福建",36:"江西",37:"山东",41:"河南",42:"湖北 ",43:"湖南",44:"广东",45:"广西",46:"海南",50:"重庆",51:"四川",52:"贵州",53:"云南",54:"西藏 ",61:"陕西",62:"甘肃",63:"青海",64:"宁夏",65:"新疆",71:"台湾",81:"香港",82:"澳门",91:"国外 "};
+			var tip = "";
+			var pass= true;
+
+			if(!code || !/^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i.test(code)){
+				tip = "身份证号格式错误";
+				pass = false;
+			}
+			else if(!city[code.substr(0,2)]){
+				tip = "地址编码错误";
+				pass = false;
+			}
+			else{
+				//18位身份证需要验证最后一位校验位
+				if(code.length == 18){
+					code = code.split('');
+					//∑(ai×Wi)(mod 11)
+					//加权因子
+					var factor = [ 7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2 ];
+					//校验位
+					var parity = [ 1, 0, 'X', 9, 8, 7, 6, 5, 4, 3, 2 ];
+					var sum = 0;
+					var ai = 0;
+					var wi = 0;
+					for (var i = 0; i < 17; i++)
+					{
+						ai = code[i];
+						wi = factor[i];
+						sum += ai * wi;
+					}
+					var last = parity[sum % 11];
+					if(parity[sum % 11] != code[17]){
+						tip = "校验位错误";
+						pass =false;
+					}
+				}
+			}
+			return pass;
+		}
 		</script>
 </body>
 </html>

@@ -78,6 +78,10 @@ public class CompanyBasicService implements CompanyBasicManager{
 	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
 		dao.update("CompanyBasicMapper.deleteAll", ArrayDATA_IDS);
 	}
-	
+
+	public Integer getTypeOrder(PageData pd)throws Exception{
+		return (Integer)dao.findForObject("CompanyBasicMapper.getTypeOrder", pd);
+	}
+
 }
 

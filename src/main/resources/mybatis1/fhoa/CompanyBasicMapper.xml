@@ -116,6 +116,9 @@
                  #{item}
 		</foreach>
 	</update>
-	
+	<select id="getTypeOrder" parameterType="pd" resultType="Integer">
+		SELECT MAX(ocb_order) as numCount  from  OA_COMPANY_BASIC where TYPE =#{TYPE}
+	</select>
+
 	<!-- fh313596790qq(青苔) -->
 </mapper>
