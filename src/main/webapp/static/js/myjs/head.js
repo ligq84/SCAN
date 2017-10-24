@@ -185,7 +185,7 @@ function fhsms(){
 	 jzts();
 	 var diag = new top.Dialog();
 	 diag.Drag=true;
-	 diag.Title ="站内信";
+	 diag.Title ="个人通知";
 	 diag.URL = locat+'/fhsms/list.do?STATUS=2';
 	 diag.Width = 800;
 	 diag.Height = 500;

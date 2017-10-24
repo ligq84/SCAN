@@ -258,8 +258,8 @@
 			 diag.Drag=true;
 			 diag.Title ="新增";
 			 diag.URL = '<%=basePath%>car/goAdd.do';
-			 diag.Width =550;
-			 diag.Height = 455;
+			 diag.Width =400;
+			 diag.Height = 430;
 			 diag.Modal = true;				//有无遮罩窗口
 			 diag. ShowMaxButton = true;	//最大化按钮
 		     diag.ShowMinButton = true;		//最小化按钮
@@ -296,8 +296,8 @@
 			 diag.Drag=true;
 			 diag.Title ="编辑";
 			 diag.URL = '<%=basePath%>car/goEdit.do?CAR_ID='+Id;
-			 diag.Width = 550;
-			 diag.Height = 455;
+			 diag.Width = 400;
+			 diag.Height = 430;
 			 diag.Modal = true;				//有无遮罩窗口
 			 diag. ShowMaxButton = true;	//最大化按钮
 		     diag.ShowMinButton = true;		//最小化按钮 

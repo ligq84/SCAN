@@ -89,6 +89,9 @@
 				background-image: none;
 				font-size: 1px;
 			}
+			.row{
+				margin: 0px;
+			}
 		</style>
 </head>
 <body class="no-skin">
@@ -119,7 +122,7 @@
 									<label for="TYPE" class="col-sm-1 control-label"><span style="color: red">*</span>机器类型:</label>
 									<div class="col-sm-2">
 										<select class="chosen-select form-control" name="TYPE" id="TYPE" data-placeholder="请选择机器类型" style="vertical-align:top;"  title="现岗位" style="width:98%;" >
-											<option value=""></option>
+											<option value="">请选择</option>
 											<c:forEach items="${machineTypeList}" var="machineType">
 											<option value="${machineType.OCBID }" <c:if test="${machineType.OCBID == pd.TYPE}">selected</c:if> >${machineType.NAME}</option>
 											</c:forEach>
@@ -131,7 +134,7 @@
 								<div class="form-group" style="margin-top: 10px">
 									<label for="MODEL" class="col-sm-1 control-label"><span style="color: red">*</span>机器型号:</label>
 									<div class="col-sm-2">
-										<input type="text" name="MODEL" id="MODEL" value="${pd.MODEL}" maxlength="50" placeholder="这里输入机器型号" title="机器型号" class="form-control"/>
+										<input type="text" name="MODEL" id="MODEL" value="${pd.MODEL}" maxlength="50" placeholder="这里输入机器型号" title="机器型号" class="form-control" />
 									</div>
 									<label for="POWER" class="col-sm-1 control-label"><span style="color: red">*</span>机器功率:</label>
 									<div class="col-sm-2">
@@ -141,16 +144,14 @@
 									<div class="col-sm-2">
 										<input type="text" name="speed" id="speed" value="${pd.speed}" maxlength="50" placeholder="这里输入机台速度" class="form-control"/>
 									</div>
-
-
-
 								</div>
 							</div>
 							<div class="col-sm-12" >
 								<div class="form-group" style="margin-top: 10px">
 									<label for="manufacturer" class="col-sm-1 control-label"><span style="color: red">*</span>生产日期:</label>
 									<div class="col-sm-2">
-										<input class="span10 date-picker form-control" name="production_date" id="production_date" value="${pd.production_date}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="生产日期"  class="form-control"/>
+										<input class="span10 date-picker form-control" name="production_date" id="production_date" value="${pd.production_date}" type="text" data-date-format="yyyy-mm-dd" readonly="readonly" placeholder="生产日期"
+											   class="form-control" style="cursor: pointer"/>
 									</div>
 									<label for="manufacturer" class="col-sm-1 control-label"><span style="color: red">*</span>生产厂家:</label>
 									<div class="col-sm-2">
@@ -298,15 +299,15 @@
 									<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格:</label>
 									<div class="col-sm-2">
 										<label style="float:left;padding-left: 20px;padding-top:7px;">
-											<input name="CHANGE_RULE" type="radio" value="0" class="ace" <c:if test="${pd.CHANGE_RULE == 0}">checked</c:if> ><span class="lbl">支持</span>
+											<input name="CHANGE_RULE" type="radio" value="0" class="ace" <c:if test="${pd.CHANGE_RULE == 0}">checked</c:if> ><span class="lbl" onclick="selectChangeRule(0)">支持</span>
 										</label>
 										<label style="float:left;padding-left:35px;padding-top:7px;">
-											<input name="CHANGE_RULE" type="radio" value="1" class="ace"  <c:if test="${pd.CHANGE_RULE == 1}">checked</c:if>  ><span class="lbl">不支持</span>
+											<input name="CHANGE_RULE" type="radio" value="1" class="ace"  <c:if test="${pd.CHANGE_RULE == 1}">checked</c:if>  ><span class="lbl" onclick="selectChangeRule(0)">不支持</span>
 										</label>
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-12" >
+							<div class="col-sm-12" id="selectRuleDiv1">
 								<div class="form-group" >
 									<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>支持规格:</label>
 									<div class="col-sm-7">
@@ -322,11 +323,11 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-sm-12" >
+							<div class="col-sm-12" id="selectRuleDiv2">
 								<div class="form-group" id="rulePost">
 									<c:if test="${partsList== null || fn:length(partsList) == 0}">
 										<div id="rulePost1" style="margin-top: 5px;">
-											<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格1:</label>
+											<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改部位1:</label>
 											<div class="col-sm-2">
 												<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
 													<option value=""></option>
@@ -345,7 +346,7 @@
 										<c:forEach items="${partsList}" var="parts"  varStatus="pt">
 											<c:if test="${(pt.index+1)%2 != 0}">
 												<div id="rulePost1" style="margin-top: 5px;">
-													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格1:</label>
+													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改部位1:</label>
 													<div class="col-sm-2">
 														<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
 															<option value=""></option>
@@ -362,7 +363,7 @@
 											</c:if>
 											<c:if test="${(pt.index+1)%2 == 0}">
 												<div id="rulePost1" style="margin-top: 5px;">
-													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格1:</label>
+													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改部位1:</label>
 													<div class="col-sm-2">
 														<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
 															<option value=""></option>
@@ -415,6 +416,15 @@
 	<!--提示框-->
 	<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 		<script type="text/javascript">
+		function  selectChangeRule(status){
+			if(status == 0){
+				$("#selectRuleDiv1").css("display:block");
+				$("#selectRuleDiv2").css("display:block");
+			}else{
+				$("#selectRuleDiv1").css("display:none");
+				$("#selectRuleDiv2").css("display:none");
+			}
+		}
 		$(top.hangge());
 		$.fn.serializeObject = function() {
 			var o = {};
@@ -452,9 +462,9 @@
 		}
 		function getRPSelect(len){
 			return '<div id="rpvvalue'+len+'" style="margin-top: 5px;">'+
-					'<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格'+len+'：</label>'+
+					'<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改部位'+len+'：</label>'+
 					'<div class="col-sm-2">'+
-					'		<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:98%;" >'+
+					'		<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改部位" style="vertical-align:top;"  style="width:98%;" >'+
 					'				<option value=""></option>'+
 					<c:forEach items="${rulePosttionList}" var="rp">
 									'<option value="${rp.OCBID }">${rp.NAME}</option>'+
@@ -547,11 +557,39 @@
 				$("#MODEL").focus();
 				return false;
 			}
+			if(/[\u4E00-\u9FA5]/i.test($("#MODEL").val())){
+				$("#MODEL").tips({side:3, msg:'型号不能有中文', bg:'#AE81FF', time:2});
+				$("#MODEL").focus();
+				return false;
+			}
+
 			if($("#POWER").val()==""){
 				$("#POWER").tips({side:3, msg:'请输入功率', bg:'#AE81FF', time:2});
 				$("#POWER").focus();
 				return false;
 			}
+			if(/[\u4E00-\u9FA5]/i.test($("#POWER").val())){
+				$("#POWER").tips({side:3, msg:'功率不能有中文', bg:'#AE81FF', time:2});
+				$("#POWER").focus();
+				return false;
+			}
+			if($("#speed").val()==""){
+				$("#speed").tips({side:3, msg:'请输入机台速度', bg:'#AE81FF', time:2});
+				$("#speed").focus();
+				return false;
+			}
+			if($("#production_date").val()==""){
+				$("#production_date").tips({side:3, msg:'请输入生产日期', bg:'#AE81FF', time:2});
+				$("#production_date").focus();
+				return false;
+			}
+			if($("#manufacturer").val()==""){
+				$("#manufacturer").tips({side:3, msg:'请输入入生产产家', bg:'#AE81FF', time:2});
+				$("#manufacturer").focus();
+				return false;
+			}
+
+
 			if($("#CHARGE").val()==""){
 				$("#CHARGE").next('.chosen-container').tips({side:3, msg:'请输入机器负责人', bg:'#AE81FF', time:2});
 				$("#CHARGE").focus();
@@ -624,8 +662,8 @@
 				return false;
 			}
 
-			$("#zhongxin").hide();
-			$("#zhongxin2").show();
+//			$("#zhongxin").hide();
+//			$("#zhongxin2").show();
 			var from = $("#Form").serializeObject();
 
 
@@ -645,8 +683,8 @@
 						alert(data.mesg);
 					}else {
 						alert("操作异常");
-						$("#zhongxin").show();
-						$("#zhongxin2").hide();
+//						$("#zhongxin").show();
+//						$("#zhongxin2").hide();
 					}
 				}
 			});
@@ -656,7 +694,7 @@
 			//日期框
 			$('.date-picker').datepicker({autoclose: true,todayHighlight: true,clearBtn: true});
 			//初始化下拉框
-//			$('.chosen-select').chosen({allow_single_deselect:true,search_contains:true});
+			$('.chosen-select').chosen({allow_single_deselect:true,search_contains:true});
 		});
 		</script>
 </body>

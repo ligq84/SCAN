@@ -19,6 +19,13 @@
 	<!-- 日期框 -->
 	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
 	<link rel="stylesheet" href="static/css/pagePublic.css" />
+	<style type="text/css">
+		.textst{
+			width: 220px;
+			border: 1px solid #0e77d9 !important;
+			border-radius: 5px;
+		}
+	</style>
 </head>
 <body class="no-skin">
 <!-- /section:basics/navbar.layout -->
@@ -36,18 +43,18 @@
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
 								<td style="width:90px;text-align: right;padding-top: 13px;">小推车名称:</td>
-								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输小推车名称" title="小推车名称" style="width:98%;"/></td>
+								<td><input type="text" name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" placeholder="这里输小推车名称" title="小推车名称" class="textst"/></td>
 							</tr>
 							<tr>
 								<td style="width:90px;text-align: right;padding-top: 13px;">小推车编号:</td>
 								<td>
-									<input type="text" name="BARCODE" id="BARCODE" value="${pd.BARCODE}" maxlength="255"  style="width:98%;" readonly/>
+									<input type="text" name="BARCODE" id="BARCODE" value="${pd.BARCODE}" maxlength="255"  class="textst" readonly/>
 								</td>
 							</tr>
 							<tr>
 								<td style="width:90px;text-align: right;padding-top: 13px;">小推车类型:</td>
 								<td>
-									<select class="" name="TYPE" id="TYPE" data-placeholder="这里输入小推车类型" style="vertical-align:top;"  title="小推车类型" style="width:98%;" >
+									<select  name="TYPE" id="TYPE" data-placeholder="这里输入小推车类型" style="vertical-align:top;" class="textst"  title="小推车类型">
 										<c:forEach items="${carTypeList}" var="carType">
 											<option value="${carType.OCBID }" <c:if test="${carType.OCBID == pd.TYPE }">selected</c:if> >${carType.NAME}</option>
 										</c:forEach>
@@ -57,20 +64,20 @@
 							<tr>
 								<td style="width:90px;text-align: right;padding-top: 13px;">采购时间:</td>
 								<td>
-									<input class="span10 date-picker" name="PURCHASEDATE" id="PURCHASEDATE" value="${pd.PURCHASEDATE}" type="text" data-date-format="yyyy-mm-dd"
-										   readonly="readonly" placeholder="采购时间" title="采购时间" class="form-control"/>
+									<input class="span10 date-picker textst" name="PURCHASEDATE" id="PURCHASEDATE" value="${pd.PURCHASEDATE}" type="text" data-date-format="yyyy-mm-dd"
+										   readonly="readonly" placeholder="采购时间" title="采购时间" class="form-control" />
 								</td>
 							</tr>
 							<tr>
 								<td style="width:90px;text-align: right;padding-top: 13px;">备注:</td>
 								<td>
-									<textarea name="BZ" id="BZ" cols="30" rows="5">${pd.BZ}</textarea>
+									<textarea name="BZ" id="BZ" cols="30" rows="5" class="textst">${pd.BZ}</textarea>
 								</td>
 							</tr>
 							<tr>
 								<td style="text-align: center;" colspan="10">
-									<a class="btn btn-mini btn-primary" onclick="save();">保存</a>
-									<a class="btn btn-mini btn-danger" onclick="top.Dialog.close();">取消</a>
+									<a class="btn btn-mini btn-qg" onclick="save();">保存</a>
+									<a class="btn btn-mini btn-qg" onclick="top.Dialog.close();">取消</a>
 								</td>
 							</tr>
 						</table>
