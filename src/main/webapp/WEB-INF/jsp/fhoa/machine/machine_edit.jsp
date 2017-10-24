@@ -137,41 +137,13 @@
 									<div class="col-sm-2">
 										<input type="text" name="POWER" id="POWER" value="${pd.POWER}" maxlength="50"  class="form-control" placeholder="这里输入机器功率" />
 									</div>
-									<label for="TYPE" class="col-sm-1 control-label"><span style="color: red">*</span>机器负责人:</label>
-									<div class="col-sm-2">
-										<select id="CHARGE" name="CHARGE" class="chosen-select form-control" data-placeholder="这里输入机器负责人" style="vertical-align:top;">
-											<option value=""></option>
-											<c:forEach items="${staffList}" var="staff">
-												<option value="${staff.STAFF_ID }" <c:if test="${staff.STAFF_ID == pd.CHARGE}">selected</c:if>>${staff.NAME}(${staff.TEL}) </option>
-											</c:forEach>
-										</select>
-									</div>
-								</div>
-							</div>
-							<div class="col-sm-12" >
-								<div class="form-group" style="margin-top: 10px">
-									<label for="MODEL" class="col-sm-1 control-label"><span style="color: red">*</span>白班维修人员:</label>
-									<div class="col-sm-2">
-										<select id="DAY_REPAIRMAN" name="DAY_REPAIRMAN" class="chosen-select form-control" data-placeholder="这里输入白班维修员" style="vertical-align:top;">
-											<option value=""></option>
-											<c:forEach items="${staffList}" var="staff">
-												<option value="${staff.STAFF_ID }" <c:if test="${staff.STAFF_ID == pd.DAY_REPAIRMAN}">selected</c:if>>${staff.NAME}(${staff.TEL})</option>
-											</c:forEach>
-										</select>
-									</div>
-									<label for="POWER" class="col-sm-1 control-label"><span style="color: red">*</span>晚班维修人员:</label>
-									<div class="col-sm-2">
-										<select id="NIGHT_REPAIRMAN" name="NIGHT_REPAIRMAN" class="chosen-select form-control" data-placeholder="这里输入晚班维修人员" style="vertical-align:top;">
-											<option value=""></option>
-											<c:forEach items="${staffList}" var="staff">
-												<option value="${staff.STAFF_ID }" <c:if test="${staff.STAFF_ID == pd.NIGHT_REPAIRMAN}">selected</c:if>>${staff.NAME}(${staff.TEL})</option>
-											</c:forEach>
-										</select>
-									</div>
 									<label for="speed" class="col-sm-1 control-label"><span style="color: red">*</span>机台速度:</label>
 									<div class="col-sm-2">
 										<input type="text" name="speed" id="speed" value="${pd.speed}" maxlength="50" placeholder="这里输入机台速度" class="form-control"/>
 									</div>
+
+
+
 								</div>
 							</div>
 							<div class="col-sm-12" >
@@ -186,6 +158,38 @@
 									</div>
 								</div>
 							</div>
+							<div class="col-sm-12" >
+								<div class="form-group" style="margin-top: 10px">
+									<label for="TYPE" class="col-sm-1 control-label"><span style="color: red">*</span>机器负责人:</label>
+									<div class="col-sm-2">
+										<select id="CHARGE" name="CHARGE" class="chosen-select form-control" data-placeholder="这里输入机器负责人" style="vertical-align:top;">
+											<option value="">请选择</option>
+											<c:forEach items="${staffList}" var="staff">
+												<option value="${staff.STAFF_ID }" <c:if test="${staff.STAFF_ID == pd.CHARGE}">selected</c:if>>${staff.NAME}(${staff.TEL}) </option>
+											</c:forEach>
+										</select>
+									</div>
+									<label for="MODEL" class="col-sm-1 control-label"><span style="color: red">*</span>白班维修人员:</label>
+									<div class="col-sm-2">
+										<select id="DAY_REPAIRMAN" name="DAY_REPAIRMAN" class="chosen-select form-control" data-placeholder="这里输入白班维修员" style="vertical-align:top;">
+											<option value="">请选择</option>
+											<c:forEach items="${staffList}" var="staff">
+												<option value="${staff.STAFF_ID }" <c:if test="${staff.STAFF_ID == pd.DAY_REPAIRMAN}">selected</c:if>>${staff.NAME}(${staff.TEL})</option>
+											</c:forEach>
+										</select>
+									</div>
+									<label for="POWER" class="col-sm-1 control-label"><span style="color: red">*</span>晚班维修人员:</label>
+									<div class="col-sm-2">
+										<select id="NIGHT_REPAIRMAN" name="NIGHT_REPAIRMAN" class="chosen-select form-control" data-placeholder="这里输入晚班维修人员" style="vertical-align:top;">
+											<option value="">请选择</option>
+											<c:forEach items="${staffList}" var="staff">
+												<option value="${staff.STAFF_ID }" <c:if test="${staff.STAFF_ID == pd.NIGHT_REPAIRMAN}">selected</c:if>>${staff.NAME}(${staff.TEL})</option>
+											</c:forEach>
+										</select>
+									</div>
+								</div>
+							</div>
+
 							<div class="col-sm-12 widget-header widget-header-blue widget-header-flat wi1dget-header-large" style="padding: 0px;margin: 0px;">
 								<h4 class="lighter">机器保养信息</h4>
 							</div>
