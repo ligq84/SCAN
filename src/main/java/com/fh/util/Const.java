@@ -26,6 +26,7 @@ public class Const {
 	public static final String TRUE = "T";
 	public static final String FALSE = "F";
 	public static final String LOGIN = "/login_toLogin.do";					//登录地址
+	public static final String LOGINSCAN = "/scan.do";					//登录地址
 	public static final String SYSNAME = "admin/config/SYSNAME.txt";		//系统名称路径
 	public static final String PAGE	= "admin/config/PAGE.txt";				//分页条数配置路径
 	public static final String EMAIL = "admin/config/EMAIL.txt";			//邮箱服务器配置路径
