@@ -331,10 +331,10 @@
 			 diag.CancelEvent = function(){ //关闭事件
 				diag.close();
 			 };
-			diag.ShowButtonRow=true;
+//			diag.ShowButtonRow=true;
 			diag.show();
-			diag.okButton.style="display:none;";
-			diag.cancelButton.value="关闭";
+//			diag.okButton.style="display:none;";
+//			diag.cancelButton.value="关闭";
 		}
 
 		//批量操作

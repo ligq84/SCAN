@@ -608,6 +608,17 @@
 				$("#USERNAME").focus();
 				return false;
 			}
+			if($("#USERNAME").val().length<6){
+				$("#USERNAME").tips({
+					side:3,
+					msg:'系统账号不能小于6位',
+					bg:'#AE81FF',
+					time:2
+				});
+				$("#USERNAME").focus();
+				return false;
+			}
+
 			if($("#PASSWORD").val()==""){
 				$("#PASSWORD").tips({
 					side:3,

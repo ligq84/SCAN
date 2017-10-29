@@ -44,28 +44,29 @@
 						<table id="table_report" class="table table-striped table-bordered table-hover">
 							<tr>
 								<td style="width:85px;text-align: right;padding-top: 13px;">
+									<span style="color: red">*</span>
 									<c:if test="${pd.TYPE == 'staffPost' }">人员岗位</c:if>
 									<c:if test="${pd.TYPE == 'machineType' }">类型名称</c:if>
 									<c:if test="${pd.TYPE == 'carType' }">类型名称</c:if>
 									<c:if test="${pd.TYPE == 'machineRule' }">机器规格</c:if>
 									<c:if test="${pd.TYPE == 'maintenanceProject' }">维修项目</c:if>
 									<c:if test="${pd.TYPE == 'machineCycle' }">保养周期</c:if>
-									<c:if test="${pd.TYPE == 'rulePosition' }">规格更改部位</c:if><span style="color: red">*</span>:
+									<c:if test="${pd.TYPE == 'rulePosition' }">规格更改部位</c:if>:
 								</td>
 								<td><input type="text" class="form-control"  name="NAME" id="NAME" value="${pd.NAME}" maxlength="255" style="width:98%;"/></td>
 							</tr>
 							<tr>
-								<td style="width:85px;text-align: right;padding-top: 13px;">启用状态<span style="color: red">*</span>:</td>
+								<td style="width:85px;text-align: right;padding-top: 13px;"><span style="color: red">*</span>启用状态:</td>
 								<td>
 									<select id="STATUS" name="STATUS"  class="chosen-select form-control" style="vertical-align:top;width:98%;">
-										<option value="">请选择</option>
-										<option value="0" <c:if test="${!empty pd.STATUS &&  pd.STATUS == 0 }"> selected</c:if>  >未启用</option>
+										<%--<option value="">请选择</option>--%>
 										<option value="1"<c:if test="${!empty pd.STATUS &&  pd.STATUS == 1}"> selected</c:if> >已启用</option>
+										<option value="0" <c:if test="${!empty pd.STATUS &&  pd.STATUS == 0 }"> selected</c:if>  >未启用</option>
 									</select>
 								</td>
 							</tr>
 							<tr>
-								<td style="width:85px;text-align: right;padding-top: 13px;">排序号<span style="color: red">*</span>:</td>
+								<td style="width:85px;text-align: right;padding-top: 13px;">排序号:</td>
 								<td><input type="number" class="form-control"  name="OCB_ORDER" id="OCB_ORDER" value="${pd.OCB_ORDER}" maxlength="32" placeholder="排序号" title="排序号" style="width:98%;" readonly/></td>
 							</tr>
 							<tr>

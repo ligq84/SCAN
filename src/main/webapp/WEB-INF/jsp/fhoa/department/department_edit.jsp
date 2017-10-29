@@ -62,11 +62,12 @@
 								<td>
 									<input type="text" name="TEL" id="TEL" value="${pd.TEL}" maxlength="32" placeholder="这里输入电话" class="pageInput" readonly  style="border-radius: 4px"/>
 								</td>
-							</tr>v
+							</tr>
 							<tr>
 								<td style="width:90px;text-align: right;padding-top: 13px;">部门说明:</td>
 								<td>
-									<textarea rows="3" cols="46" name="BZ" id="BZ" placeholder="部门说明" title="备注"  style="width:69%;" class="pageTextarea"  style="border-radius: 4px">${pd.BZ}</textarea>
+									<textarea rows="3" cols="46" name="BZ" id="BZ" placeholder="部门说明" title="备注"
+											  style="width:218px;border-radius: 5px;" class="pageTextarea"  style="border-radius: 4px">${pd.BZ}</textarea>
 								</td>
 							</tr>
 							<tr>

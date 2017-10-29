@@ -27,7 +27,7 @@
 							<div id="zhongxin" style="padding-top:13px;">
 							<table class="center" style="width:100%;">
 								<tr style="text-align: center;">
-									<td><input type="text" name="ROLE_NAME" id="roleName" placeholder="这里输入名称" value="${pd.ROLE_NAME}"  title="名称" style="width:99%;"/></td>
+									<td><input type="text" name="ROLE_NAME" id="roleName" placeholder="这里输角色权限" value="${pd.ROLE_NAME}"  title="名称" style="width:99%;"/></td>
 								</tr>
 								<tr>
 									<td style="text-align: center;padding-top:5px;">

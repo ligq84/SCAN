@@ -18,6 +18,7 @@ $(function() {
 
     $("#machineCode").focus();
     $("#machineCode")[0].oninput =function(){
+        //alert(event.keyCode);
         $.ajax({
             type: "POST",
             url:scanUrl+ 'scan/findByBarcode.do',
@@ -74,7 +75,7 @@ function machineCodeCheck(model){
             side : 1,
             msg : "请扫描机器",
             bg : '#FF5080',
-            time : 15
+            time : 3
         });
         $("#machineCode").focus();
         return;
@@ -83,7 +84,7 @@ function machineCodeCheck(model){
             side : 1,
             msg : "机器不存在请重新扫描",
             bg : '#FF5080',
-            time : 15
+            time : 3
         });
         $("#machineCode").val("");
         $("#machineCode").focus();
@@ -274,14 +275,25 @@ function machineCodeCheck(model){
                     if(data.result == "success"){
                         machineR = data.data;
                         if(null!=machineR){
-                            //如果已经存在维修记录说明 这次肯定是结束维修
-                            $("#operation_type").val("1");
-                            $("input[name=partsType]").each(function(){
-                                if($(this).attr("dvalue") == "1"){
-                                    $(this).addClass("btn-primary");
-                                    $(this).addClass("btn-default");
-                                }
-                            });
+                            //if(null == machineR.end_date && null!=machineR.start_date){
+                                $("#operation_type").val("1");
+                                $("input[name=partsType]").each(function(){
+                                    if($(this).attr("dvalue") == "1"){
+                                        $(this).addClass("btn-primary");
+                                        $(this).addClass("btn-default");
+                                    }
+                                });
+                            //}else {
+                            //    $("#operation_type").val("0");
+                            //    $("input[name=partsType]").each(function(){
+                            //        if($(this).attr("dvalue") == "0"){
+                            //            $(this).addClass("btn-primary");
+                            //            $(this).addClass("btn-default");
+                            //        }
+                            //    });
+                            //    machineR = null;
+                            //}
+
                         }else{
                             $("#operation_type").val("0");
                             $("input[name=partsType]").each(function(){
@@ -431,7 +443,7 @@ function xsScan() {
             side : 1,
             msg : "请扫描机器",
             bg : '#FF5080',
-            time : 15
+            time : 3
         });
         $("#machineCode").focus();
         return;
@@ -440,7 +452,7 @@ function xsScan() {
             side : 1,
             msg : "机器不存在请重新扫描",
             bg : '#FF5080',
-            time : 15
+            time : 3
         });
         $("#machineCode").val("");
         $("#machineCode").focus();
@@ -469,7 +481,6 @@ function xsbtn(){
         }
 
     }else if(scan_type == "3"){
-        //维修检查
         var cycle_type = $("#cycle_type").val();
         if(null== cycle_type || cycle_type=="" ){
             alert("请选择保养类型");
@@ -506,9 +517,16 @@ function xsbtn(){
                 }else if(scan_type == "4"){
                     $('#gggModal').modal("hide");
                 }
-
+                $("#repair_position").val("");
+                $("#cycle_type").val("");
+                $("#target_rule").val("");
+                $("#change_position").val("");
             }else{
                 alert(data.mesg);
+                $("#repair_position").val("");
+                $("#cycle_type").val("");
+                $("#target_rule").val("");
+                $("#change_position").val("");
             }
         }
     });

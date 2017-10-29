@@ -92,6 +92,9 @@
 			.row{
 				margin: 0px;
 			}
+			/*#selectRuleDiv1,#selectRuleDiv2{*/
+				/*display: none;*/
+			/*}*/
 		</style>
 </head>
 <body class="no-skin">
@@ -217,7 +220,7 @@
 										<div id="desc${cl.CYCLEID}">
 											<label class="col-sm-1 control-label no-padding-right">${cl.NAME}:</label>
 											<div class="col-sm-2">
-												<textarea rows="5" cols="30" name="cdesc${cl.CYCLEID}">${cl.BZ}</textarea>
+												<textarea rows="5" cols="30" name="cdesc${cl.CYCLEID}" class="cdesc">${cl.BZ}</textarea>
 													</div>
 										</div>
 										<c:if test="${(ts.index+1)%3 == 0}">
@@ -244,7 +247,7 @@
 											</div>
 											<div class="col-sm-1">
 												<a class="btn btn-mini btn-qg" onclick="addMP()" style="margin-top: 5px;" >添加</a>
-												<a class="btn btn-mini btn-qg" style="margin-top: 5px;margin-left: 5px;" >删除</a>
+												<%--<a class="btn btn-mini btn-qg" style="margin-top: 5px;margin-left: 5px;" >删除</a>--%>
 											</div>
 										</div>
 									</c:if>
@@ -302,7 +305,7 @@
 											<input name="CHANGE_RULE" type="radio" value="0" class="ace" <c:if test="${pd.CHANGE_RULE == 0}">checked</c:if> ><span class="lbl" onclick="selectChangeRule(0)">支持</span>
 										</label>
 										<label style="float:left;padding-left:35px;padding-top:7px;">
-											<input name="CHANGE_RULE" type="radio" value="1" class="ace"  <c:if test="${pd.CHANGE_RULE == 1}">checked</c:if>  ><span class="lbl" onclick="selectChangeRule(0)">不支持</span>
+											<input name="CHANGE_RULE" type="radio" value="1" class="ace"  <c:if test="${pd.CHANGE_RULE == 1}">checked</c:if>  ><span class="lbl" onclick="selectChangeRule(1)">不支持</span>
 										</label>
 									</div>
 								</div>
@@ -329,7 +332,7 @@
 										<div id="rulePost1" style="margin-top: 5px;">
 											<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改部位1:</label>
 											<div class="col-sm-2">
-												<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
+												<select class="chosen-select form-control changeRule" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
 													<option value=""></option>
 													<c:forEach items="${rulePosttionList}" var="rp">
 														<option value="${rp.OCBID }" >${rp.NAME}</option>
@@ -338,7 +341,7 @@
 											</div>
 											<div class="col-sm-1">
 												<a class="btn btn-mini btn-qg"  style="margin-top: 5px;" onclick="addRulePost()">添加</a>
-												<a class="btn btn-mini btn-qg" style="margin-top: 5px;margin-left: 5px;"  >删除</a>
+												<%--<a class="btn btn-mini btn-qg" style="margin-top: 5px;margin-left: 5px;"  >删除</a>--%>
 											</div>
 										</div>
 									</c:if>
@@ -348,7 +351,7 @@
 												<div id="rulePost1" style="margin-top: 5px;">
 													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改部位1:</label>
 													<div class="col-sm-2">
-														<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
+														<select class="chosen-select form-control changeRule" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
 															<option value=""></option>
 															<c:forEach items="${rulePosttionList}" var="rp">
 																<option value="${rp.OCBID }" <c:if test="${rp.OCBID == parts.PARTSID }">selected</c:if> >${rp.NAME}</option>
@@ -365,7 +368,7 @@
 												<div id="rulePost1" style="margin-top: 5px;">
 													<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改部位1:</label>
 													<div class="col-sm-2">
-														<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改规格" style="vertical-align:top;"  style="width:70%;" >
+														<select class="chosen-select form-control changeRule" name="rpv"  data-placeholder="请选择更改部位" style="vertical-align:top;"  style="width:70%;" >
 															<option value=""></option>
 															<c:forEach items="${rulePosttionList}" var="rp">
 																<option value="${rp.OCBID }" <c:if test="${rp.OCBID == parts.PARTSID }">selected</c:if> >${rp.NAME}</option>
@@ -418,11 +421,15 @@
 		<script type="text/javascript">
 		function  selectChangeRule(status){
 			if(status == 0){
-				$("#selectRuleDiv1").css("display:block");
-				$("#selectRuleDiv2").css("display:block");
+				$("#selectRuleDiv1").css("display","block");
+				$("#selectRuleDiv2").css("display","block");
+				$('.chosen-changeRule').each(function(){
+					$(this).css("display","block");
+				})
+				$('.chosen-select').chosen({allow_single_deselect:true,search_contains:true});
 			}else{
-				$("#selectRuleDiv1").css("display:none");
-				$("#selectRuleDiv2").css("display:none");
+				$("#selectRuleDiv1").css("display","none");
+				$("#selectRuleDiv2").css("display","none");
 			}
 		}
 		$(top.hangge());
@@ -464,7 +471,7 @@
 			return '<div id="rpvvalue'+len+'" style="margin-top: 5px;">'+
 					'<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改部位'+len+'：</label>'+
 					'<div class="col-sm-2">'+
-					'		<select class="chosen-select form-control" name="rpv"  data-placeholder="请选择更改部位" style="vertical-align:top;"  style="width:98%;" >'+
+					'		<select class="chosen-select form-control changeRule" name="rpv"  data-placeholder="请选择更改部位" style="vertical-align:top;"  style="width:98%;" >'+
 					'				<option value=""></option>'+
 					<c:forEach items="${rulePosttionList}" var="rp">
 									'<option value="${rp.OCBID }">${rp.NAME}</option>'+
@@ -488,14 +495,14 @@
 					$("#cycleDes").append('<div id="desc'+v+'">'+
 							'	<label class="col-sm-1 control-label no-padding-right">'+n+':</label>'+
 							'<div class="col-sm-2">'+
-							'	<textarea rows="5" cols="30" name="cdesc'+v+'"></textarea>'+
+							'	<textarea rows="5" cols="30" name="cdesc'+v+'" class="cdesc"></textarea>'+
 							'	</div>'+
 							'</div><span class="row"></span>');
 				}else{
 					$("#cycleDes").append('<div id="desc'+v+'">'+
 							'	<label class="col-sm-1 control-label no-padding-right">'+n+':</label>'+
 							'<div class="col-sm-2">'+
-							'	<textarea rows="5" cols="30" name="cdesc'+v+'"></textarea>'+
+							'	<textarea rows="5" cols="30" name="cdesc'+v+'" class="cdesc"></textarea>'+
 							'	</div>'+
 							'</div>');
 				}
@@ -616,6 +623,21 @@
 			if(cycleName == ""){
 				$("input[name=cycleName]").eq(0).tips({side:3, msg:'请选择机器保养信息', bg:'#AE81FF', time:2});
 				return false
+			}else{
+				var rebool;
+				$(".cdesc").each(function(){
+//					alert($(this).val())
+					if(!$(this).val()){
+						$(this).tips({side:3, msg:'输入保养信息详细', bg:'#AE81FF', time:2});
+						rebool =true;
+						return false;
+					}else{
+						rebool =false;
+					}
+				});
+				if(rebool){
+					return false
+				}
 			}
 			var bl=false;
 			$("select[name=mpv]").each(function(){
@@ -639,25 +661,28 @@
 				$("input[name=CHANGE_RULE]").eq(0).tips({side:3, msg:'请选择是否支持更改规格', bg:'#AE81FF', time:2});
 				return false
 			}
+			if(CHANGE_RULE == "0"){
+				var ruleId="";
+				$("input[name=ruleId]").each(function(){
+					if($(this).is(':checked')){
+						ruleId+=$(this).val()+',';
+					}
+				});
+				if(ruleId == ""){
+					$("input[name=ruleId]").eq(0).tips({side:3, msg:'请选择支持规格', bg:'#AE81FF', time:2});
+					return false
+				}
 
-			var ruleId="";
-			$("input[name=ruleId]").each(function(){
-				if($(this).is(':checked')){
-					ruleId+=$(this).val()+',';
-				}
-			});
-			if(ruleId == ""){
-				$("input[name=ruleId]").eq(0).tips({side:3, msg:'请选择支持规格', bg:'#AE81FF', time:2});
-				return false
+				var bool=false;
+				$("select[name=rpv]").each(function(){
+					if(!$(this).val()){
+						$(this).next('.chosen-container').tips({side:3, msg:'请输入更改规格', bg:'#AE81FF', time:2});
+						bool=true;
+						return false;
+					}
+				});
 			}
-			var bool=false;
-			$("select[name=rpv]").each(function(){
-				if(!$(this).val()){
-					$(this).next('.chosen-container').tips({side:3, msg:'请输入更改规格', bg:'#AE81FF', time:2});
-					bool=true;
-					return false;
-				}
-			});
+
 			if(bool){
 				return false;
 			}
@@ -695,6 +720,8 @@
 			$('.date-picker').datepicker({autoclose: true,todayHighlight: true,clearBtn: true});
 			//初始化下拉框
 			$('.chosen-select').chosen({allow_single_deselect:true,search_contains:true});
+
+
 		});
 		</script>
 </body>
