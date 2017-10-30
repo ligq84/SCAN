@@ -155,8 +155,7 @@
 			AREA = #{AREA},
 			GRADUATE = #{GRADUATE},
 			USER_ID= #{USER_ID}
-
-		where 
+		where
 			STAFF_ID = #{STAFF_ID}
 	</update>
 	

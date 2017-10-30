@@ -295,6 +295,9 @@
 			<if test="PASSWORD != null and PASSWORD != ''">
 				,PASSWORD				= #{PASSWORD}
 			</if>
+			<if test="USERNAME != null and USERNAME != ''">
+				, USERNAME = #{USERNAME}
+			</if>
 			where 
 				USER_ID = #{USER_ID}
 	</update>

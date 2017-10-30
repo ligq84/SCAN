@@ -295,8 +295,10 @@ public class RoleController extends BaseController {
 				BigInteger rights = RightsHelper.sumRights(Tools.str2StrArray(menuIds));//用菜单ID做权处理
 				Role role = roleService.getRoleById(ROLE_ID);	//通过id获取角色对象
 				role.setRIGHTS(rights.toString());
+				role.setROLE_NAME(ROLE_NAME);
+				role.setBZ(BZ);
 				roleService.updateRoleRights(role);				//更新当前角色菜单权限
-				pd.put("rights",rights.toString());
+				//pd.put("rights",rights.toString());
                 roleService.updateRoleInfo(role);
 
 				PageData btnpd = new PageData();
@@ -307,8 +309,10 @@ public class RoleController extends BaseController {
 				Role role = new Role();
 				role.setRIGHTS("");
 				role.setROLE_ID(ROLE_ID);
+				role.setROLE_NAME(ROLE_NAME);
+				role.setBZ(BZ);
 				roleService.updateRoleRights(role);				//更新当前角色菜单权限(没有任何勾选)
-				pd.put("rights","");
+				//pd.put("rights","");
                 roleService.updateRoleInfo(role);
 
 				PageData btnpd = new PageData();

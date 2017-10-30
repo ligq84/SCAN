@@ -90,29 +90,32 @@ public class MachineController extends BaseController {
                     machineService.saveMachineProject(mpvPD);
                 }
             }
-			//支持规格
-			String[] ruleId;
-			if(null!=pd.get("ruleId")){
-                ruleId=pd.get("ruleId").toString().split(",");
-                for(String rId:ruleId){
-                    PageData mrulePD = new PageData();
-                    mrulePD.put("mhid",MHID);
-                    mrulePD.put("ruleId",rId);
-                    machineService.saveMachineRule(mrulePD);
-                }
-            }
+			if(null!=pd.get("CHANGE_RULE")&&pd.getString("CHANGE_RULE").equals("0")){
+				//支持规格
+				String[] ruleId;
+				if(null!=pd.get("ruleId")){
+					ruleId=pd.get("ruleId").toString().split(",");
+					for(String rId:ruleId){
+						PageData mrulePD = new PageData();
+						mrulePD.put("mhid",MHID);
+						mrulePD.put("ruleId",rId);
+						machineService.saveMachineRule(mrulePD);
+					}
+				}
 
-			//更改规格
-			String[] rpv;
-			if(null!=pd.get("rpv")){
-                rpv=pd.get("rpv").toString().split(",");
-                for(String rp:rpv){
-                    PageData rpPD = new PageData();
-                    rpPD.put("mhid",MHID);
-                    rpPD.put("partsId",rp);
-                    machineService.saveMachineParts(rpPD);
-                }
-            }
+				//更改规格
+				String[] rpv;
+				if(null!=pd.get("rpv")){
+					rpv=pd.get("rpv").toString().split(",");
+					for(String rp:rpv){
+						PageData rpPD = new PageData();
+						rpPD.put("mhid",MHID);
+						rpPD.put("partsId",rp);
+						machineService.saveMachineParts(rpPD);
+					}
+				}
+			}
+
 
 			return ResultData.init(ResultData.SUCCESS,"添加成功",null);
 		} catch (Exception e) {
@@ -182,31 +185,34 @@ public class MachineController extends BaseController {
                     machineService.saveMachineProject(mpvPD);
                 }
             }
-			//支持规格
-			String[] ruleId;
-			if(null!=pd.get("ruleId")){
-                machineService.deleteMachineRule(MHID);
-                ruleId=pd.get("ruleId").toString().split(",");
-                for(String rId:ruleId){
-                    PageData mrulePD = new PageData();
-                    mrulePD.put("mhid",MHID);
-                    mrulePD.put("ruleId",rId);
-                    machineService.saveMachineRule(mrulePD);
-                }
-            }
+			if(null!=pd.get("CHANGE_RULE")&&pd.getString("CHANGE_RULE").equals("0")){
+				//支持规格
+				String[] ruleId;
+				if(null!=pd.get("ruleId")){
+					machineService.deleteMachineRule(MHID);
+					ruleId=pd.get("ruleId").toString().split(",");
+					for(String rId:ruleId){
+						PageData mrulePD = new PageData();
+						mrulePD.put("mhid",MHID);
+						mrulePD.put("ruleId",rId);
+						machineService.saveMachineRule(mrulePD);
+					}
+				}
 
-			//更改规格
-			String[] rpv;
-			if(null!=pd.get("rpv")){
-                machineService.deleteMachineParts(MHID);
-                rpv=pd.get("rpv").toString().split(",");
-                for(String rp:rpv){
-                    PageData rpPD = new PageData();
-                    rpPD.put("mhid",MHID);
-                    rpPD.put("partsId",rp);
-                    machineService.saveMachineParts(rpPD);
-                }
-            }
+				//更改规格
+				String[] rpv;
+				if(null!=pd.get("rpv")){
+					machineService.deleteMachineParts(MHID);
+					rpv=pd.get("rpv").toString().split(",");
+					for(String rp:rpv){
+						PageData rpPD = new PageData();
+						rpPD.put("mhid",MHID);
+						rpPD.put("partsId",rp);
+						machineService.saveMachineParts(rpPD);
+					}
+				}
+			}
+
 			return ResultData.init(ResultData.SUCCESS,"修改成功",null);
 		} catch (Exception e) {
 			e.printStackTrace();

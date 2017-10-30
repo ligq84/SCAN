@@ -176,6 +176,9 @@ public class StaffController extends BaseController {
 				//FHLOG.save(Jurisdiction.getUsername(), "新增系统用户："+pd.getString("USERNAME"));
 				pd.put("USER_ID", uspd.get("USER_ID"));
 			}else{
+				sysuser.put("ROLE_ID",pd.get("ROLE_ID"));
+				sysuser.put("PASSWORD",pd.get("PASSWORD"));
+				sysuser.put("USERNAME",pd.get("USERNAME"));
 				userService.editU(sysuser);
 				pd.put("USER_ID", sysuser.get("USER_ID"));
 			}
@@ -246,6 +249,10 @@ public class StaffController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("COMPANY_ID",user.getCompanyId());
+		pd.put("ROLE_ID","1");
+		List<Role> roleList = roleService.listAllRolesByPId(pd);//列出会员组角色
+		mv.addObject("roleList", roleList);
+
 		List<Dictionaries>	provinceList = dictionariesService.listSubDictByParentId("1"); //用传过来的ID获取此ID下的子列表数据
 		List<PageData> pnList = new ArrayList<PageData>();
 		for(Dictionaries d :provinceList){

@@ -196,8 +196,19 @@
 							<div class="form-group" style="margin-top: 10px">
 								<label for="NAME" class="col-sm-1 control-label" ><span style="color: red">*</span>最高学历:</label>
 								<div class="col-sm-2">
-									<input type="text" class="form-control"  name="EDUCATION" id="EDUCATION" value="${pd.EDUCATION}" maxlength="10" placeholder="这里输入学历" title="学历"
-										   style="width:98%;"/>
+									<%--<input type="text" class="form-control"  name="EDUCATION" id="EDUCATION" value="${pd.EDUCATION}" maxlength="10" placeholder="这里输入学历" title="学历"--%>
+										   <%--style="width:98%;"/>--%>
+									<select id="EDUCATION" name="EDUCATION"   class="chosen-select form-control" data-placeholder="请选择输入学历" style="vertical-align:top;">
+										<option value="">请选择</option>
+										<option value="小学" <c:if test="${pd.EDUCATION =='小学'}">selected</c:if>>小学</option>
+										<option value="初中" <c:if test="${pd.EDUCATION =='初中'}">selected</c:if>>初中</option>
+										<option value="高中" <c:if test="${pd.EDUCATION =='高中'}">selected</c:if>>高中</option>
+										<option value="中专" <c:if test="${pd.EDUCATION =='中专'}">selected</c:if>>中专</option>
+										<option value="本科" <c:if test="${pd.EDUCATION =='本科'}">selected</c:if>>本科</option>
+										<option value="研究生" <c:if test="${pd.EDUCATION =='研究生'}">selected</c:if>>研究生</option>
+										<option value="博士" <c:if test="${pd.EDUCATION =='博士'}">selected</c:if>>博士</option>
+										<option value="其他" <c:if test="${pd.EDUCATION =='其他'}">selected</c:if>>其他</option>
+									</select>
 								</div>
 								<label for="NAME" class="col-sm-1 control-label" ><span style="color: red">*</span>毕业学校:</label>
 								<div class="col-sm-2">
@@ -262,7 +273,7 @@
 										<option value="1" <c:if test="${pd.STATUS == 1}">selected</c:if>>离职</option>
 									</select>
 								</div>
-								<label for="NAME" class="col-sm-1 control-label" ><span style="color: red">*</span>邮箱:</label>
+								<label for="NAME" class="col-sm-1 control-label" >邮箱:</label>
 								<div class="col-sm-2">
 									<input type="text" class="form-control"  name="EMAIL" id="EMAIL" value="${pd.EMAIL}" maxlength="50" placeholder="这里输入邮箱" title="邮箱" style="width:98%;text-align: left"/>
 								</div>
@@ -396,7 +407,7 @@
 				$("#TEL").focus();
 			return false;
 			}
-			if(!isNaN($("#TEL").val())){
+			if(isNaN($("#TEL").val())){
 				$("#TEL").tips({
 					side:3,
 					msg:'电话只能是数字',
@@ -406,26 +417,26 @@
 				$("#TEL").focus();
 				return false;
 			}
-			if($("#EMAIL").val()==""){
-				$("#EMAIL").tips({
-					side:3,
-					msg:'请输入邮箱',
-					bg:'#AE81FF',
-					time:2
-				});
-				$("#EMAIL").focus();
-				return false;
-			}
-			if(!ismail($("#EMAIL").val())){
-				$("#EMAIL").tips({
-					side:3	,
-					msg:'邮箱格式不正确',
-					bg:'#AE81FF',
-					time:2
-				});
-				$("#EMAIL").focus();
-				return false;
-			}
+//			if($("#EMAIL").val()==""){
+//				$("#EMAIL").tips({
+//					side:3,
+//					msg:'请输入邮箱',
+//					bg:'#AE81FF',
+//					time:2
+//				});
+//				$("#EMAIL").focus();
+//				return false;
+//			}
+//			if(!ismail($("#EMAIL").val())){
+//				$("#EMAIL").tips({
+//					side:3	,
+//					msg:'邮箱格式不正确',
+//					bg:'#AE81FF',
+//					time:2
+//				});
+//				$("#EMAIL").focus();
+//				return false;
+//			}
 			if($("#SEX").val()==""){
 				$("#SEX").tips({
 					side:3,
@@ -527,16 +538,16 @@
 				$("#SFID").focus();
 			return false;
 			}
-			if(!IdentityCodeValid($("#SFID").val())){
-				$("#SFID").tips({
-					side:3,
-					msg:'身份证不合法',
-					bg:'#AE81FF',
-					time:2
-				});
-				$("#SFID").focus();
-				return false;
-			}
+//			if(!IdentityCodeValid($("#SFID").val())){
+//				$("#SFID").tips({
+//					side:3,
+//					msg:'身份证不合法',
+//					bg:'#AE81FF',
+//					time:2
+//				});
+//				$("#SFID").focus();
+//				return false;
+//			}
 
 			if($("#DJOINTIME").val()==""){
 				$("#DJOINTIME").tips({
@@ -599,45 +610,50 @@
 				return false;
 			}
 			if($("#USERNAME").val()==""){
-				$("#USERNAME").tips({
-					side:3,
-					msg:'请输入系统账号',
-					bg:'#AE81FF',
-					time:2
-				});
-				$("#USERNAME").focus();
-				return false;
+
+			}else{
+				if($("#USERNAME").val().length<6){
+					$("#USERNAME").tips({
+						side:3,
+						msg:'账号不能小于6位',
+						bg:'#AE81FF',
+						time:2
+					});
+					$("#USERNAME").focus();
+					return false;
+				}
+				if($("#PASSWORD").val()==""){
+					$("#PASSWORD").tips({
+						side:3,
+						msg:'请输入密码',
+						bg:'#AE81FF',
+						time:2
+					});
+					$("#PASSWORD").focus();
+					return false;
+				}
+				if($("#PASSWORD").val().length<6){
+					$("#PASSWORD").tips({
+						side:3,
+						msg:'密码不能小于6位',
+						bg:'#AE81FF',
+						time:2
+					});
+					$("#PASSWORD").focus();
+					return false;
+				}
+				if($("#ROLE_ID").val()==""){
+					$("#ROLE_ID").tips({
+						side:3,
+						msg:'请输入角色',
+						bg:'#AE81FF',
+						time:2
+					});
+					$("#ROLE_ID").focus();
+					return false;
+				}
 			}
-			if($("#PASSWORD").val()==""){
-				$("#PASSWORD").tips({
-					side:3,
-					msg:'请输入密码',
-					bg:'#AE81FF',
-					time:2
-				});
-				$("#PASSWORD").focus();
-				return false;
-			}
-			if($("#PASSWORD").val().length<6){
-				$("#PASSWORD").tips({
-					side:3,
-					msg:'密码不能小于6位',
-					bg:'#AE81FF',
-					time:2
-				});
-				$("#PASSWORD").focus();
-				return false;
-			}
-			if($("#ROLE_ID").val()==""){
-				$("#ROLE_ID").tips({
-					side:3,
-					msg:'请输入角色',
-					bg:'#AE81FF',
-					time:2
-				});
-				$("#ROLE_ID").focus();
-				return false;
-			}
+
 
 //			$("#zhongxin").hide();
 //			$("#zhongxin2").show();

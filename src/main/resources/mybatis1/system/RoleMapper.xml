@@ -107,7 +107,7 @@
 	<update id="updateRoleInfo" parameterType="Role">
 		update
 		<include refid="tableName"></include>
-		set ROLE_NAME=#{ROLE_NAME},BZ=#{ROLE_NAME}
+		set ROLE_NAME=#{ROLE_NAME},BZ=#{BZ}
 		where ROLE_ID=#{ROLE_ID}
 	</update>
 	

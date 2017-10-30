@@ -117,7 +117,7 @@
 									</div>
 									<label for="BARCODE" class="col-sm-1 control-label"><span style="color: red">*</span>机器编号:</label>
 									<div class="col-sm-2">
-										<input type="text" name="BARCODE" id="BARCODE" value="${pd.BARCODE}" maxlength="50"  class="form-control" readonly/>
+										<input type="text" name="BARCODE" id="BARCODE" value="${pd.BARCODE}" maxlength="50"  class="form-control" readonly style="cursor: pointer;"/>
 									</div>
 									<label for="TYPE" class="col-sm-1 control-label"><span style="color: red">*</span>机器类型:</label>
 									<div class="col-sm-2">
@@ -297,12 +297,12 @@
 							<div class="col-sm-12" >
 								<div class="form-group" style="margin-top: 10px">
 									<label class="col-sm-1 control-label no-padding-right"><span style="color: red">*</span>更改规格:</label>
-									<div class="col-sm-2">
+									<div class="col-sm-3">
 										<label style="float:left;padding-left: 20px;padding-top:7px;">
 											<input name="CHANGE_RULE" type="radio" value="0" class="ace" <c:if test="${pd.CHANGE_RULE == 0}">checked</c:if> ><span class="lbl" onclick="selectChangeRule(0)">支持</span>
 										</label>
 										<label style="float:left;padding-left:35px;padding-top:7px;">
-											<input name="CHANGE_RULE" type="radio" value="1" class="ace"  <c:if test="${pd.CHANGE_RULE == 1}">checked</c:if>  ><span class="lbl" onclick="selectChangeRule(0)">不支持</span>
+											<input name="CHANGE_RULE" type="radio" value="1" class="ace"  <c:if test="${pd.CHANGE_RULE == 1}">checked</c:if>  ><span class="lbl" onclick="selectChangeRule(1)">不支持</span>
 										</label>
 									</div>
 								</div>
@@ -418,11 +418,11 @@
 		<script type="text/javascript">
 		function  selectChangeRule(status){
 			if(status == 0){
-				$("#selectRuleDiv1").css("display:block");
-				$("#selectRuleDiv2").css("display:block");
+				$("#selectRuleDiv1").css("display","block");
+				$("#selectRuleDiv2").css("display","block");
 			}else{
-				$("#selectRuleDiv1").css("display:none");
-				$("#selectRuleDiv2").css("display:none");
+				$("#selectRuleDiv1").css("display","none");
+				$("#selectRuleDiv2").css("display","none");
 			}
 		}
 		$(top.hangge());
@@ -638,29 +638,34 @@
 			if(CHANGE_RULE == ""){
 				$("input[name=CHANGE_RULE]").eq(0).tips({side:3, msg:'请选择是否支持更改规格', bg:'#AE81FF', time:2});
 				return false
+			}else{
+				if(CHANGE_RULE == "0"){
+					var ruleId="";
+					$("input[name=ruleId]").each(function(){
+						if($(this).is(':checked')){
+							ruleId+=$(this).val()+',';
+						}
+					});
+					if(ruleId == ""){
+						$("input[name=ruleId]").eq(0).tips({side:3, msg:'请选择支持规格', bg:'#AE81FF', time:2});
+						return false
+					}
+					var bool=false;
+					$("select[name=rpv]").each(function(){
+						if(!$(this).val()){
+							$(this).next('.chosen-container').tips({side:3, msg:'请输入更改规格', bg:'#AE81FF', time:2});
+							bool=true;
+							return false;
+						}
+					});
+					if(bool){
+						return false;
+					}
+				}
+
 			}
 
-			var ruleId="";
-			$("input[name=ruleId]").each(function(){
-				if($(this).is(':checked')){
-					ruleId+=$(this).val()+',';
-				}
-			});
-			if(ruleId == ""){
-				$("input[name=ruleId]").eq(0).tips({side:3, msg:'请选择支持规格', bg:'#AE81FF', time:2});
-				return false
-			}
-			var bool=false;
-			$("select[name=rpv]").each(function(){
-				if(!$(this).val()){
-					$(this).next('.chosen-container').tips({side:3, msg:'请输入更改规格', bg:'#AE81FF', time:2});
-					bool=true;
-					return false;
-				}
-			});
-			if(bool){
-				return false;
-			}
+
 
 //			$("#zhongxin").hide();
 //			$("#zhongxin2").show();
