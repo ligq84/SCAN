@@ -16,6 +16,7 @@
 	<%@ include file="../../system/index/top.jsp"%>
 	<!-- 日期框 -->
 	<link rel="stylesheet" href="static/ace/css/datepicker.css" />
+	<link rel="stylesheet" href="static/css/pagePublic.css" />
 </head>
 <body class="no-skin">
 <!-- /section:basics/navbar.layout -->
@@ -74,6 +75,7 @@
 										${pd.SEND_TIME}
 									</div>
 									<br/>
+									<a class="btn btn-mini btn-qg" onclick="top.Dialog.close();" style="margin-left: 200px;margin-top: 10px;">关闭</a>
 							</tr>
 						</table>
 						</div>

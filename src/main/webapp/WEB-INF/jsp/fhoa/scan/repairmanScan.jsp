@@ -176,8 +176,7 @@
 				</div>
 				<h4 class="modal-title" style="margin-top: 10px;">保养说明:</h4>
 				<div class="row">
-					<textarea id="cycleDesc" style="margin-left: 2em;margin-top: 10px;" rows="8" cols="45">
-					</textarea>
+					<textarea id="cycleDesc" style="margin-left: 2em;margin-top: 10px;" rows="8" cols="45" readonly></textarea>
 				</div>
 			</div>
 			<div class="modal-footer">

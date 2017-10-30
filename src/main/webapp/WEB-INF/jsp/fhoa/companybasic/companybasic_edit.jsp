@@ -58,9 +58,9 @@
 								<td style="width:90px;text-align: right;padding-top: 13px;"><span style="color: red">*</span>启用状态:</td>
 								<td>
 									<select id="STATUS" name="STATUS"  class="chosen-select form-control" style="vertical-align:top;width:98%;">
-										<option value="">请选择</option>
-										<option value="0" <c:if test="${!empty pd.STATUS &&  pd.STATUS == 0 }"> selected</c:if>  >未启用</option>
+										<%--<option value="">请选择</option>--%>
 										<option value="1"<c:if test="${!empty pd.STATUS &&  pd.STATUS == 1}"> selected</c:if> >已启用</option>
+										<option value="0" <c:if test="${!empty pd.STATUS &&  pd.STATUS == 0 }"> selected</c:if>  >未启用</option>
 									</select>
 								</td>
 							</tr>

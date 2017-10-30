@@ -284,12 +284,12 @@
 				return false;
 			}
 			</c:if>
-			$("#loginbox").tips({
-				side : 1,
-				msg : '正在登录 , 请稍后 ...',
-				bg : '#68B500',
-				time : 3
-			});
+//			$("#loginbox").tips({
+//				side : 1,
+//				msg : '正在登录 , 请稍后 ...',
+//				bg : '#68B500',
+//				time : 3
+//			});
 
 			return true;
 		}

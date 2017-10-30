@@ -182,7 +182,7 @@
 			 diag.Drag=true;
 			 diag.Title ="新增部门";
 			 diag.URL = '<%=basePath%>department/goAdd.do?DEPARTMENT_ID='+DEPARTMENT_ID;
-			 diag.Width = 450;
+			 diag.Width = 380;
 			 diag.Height = 320;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if('none' == diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display){
@@ -228,8 +228,8 @@
 			 diag.Drag=true;
 			 diag.Title ="编辑部门";
 			 diag.URL = '<%=basePath%>department/goEdit.do?DEPARTMENT_ID='+Id;
-			 diag.Width = 550;
-			 diag.Height = 550;
+			 diag.Width = 380;
+			 diag.Height = 320;
 			 diag.CancelEvent = function(){ //关闭事件
 				 if(diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display == 'none'){
 					 parent.location.href="<%=basePath%>department/listAllDepartment.do?DEPARTMENT_ID=${DEPARTMENT_ID}&dnowPage=${page.currentPage}";

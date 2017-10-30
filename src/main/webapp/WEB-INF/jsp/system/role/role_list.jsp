@@ -30,9 +30,10 @@
 							<form action="role.do" method="post" name="Form" id="Form">
 							<table style="margin-top:5px;">
 								<tr>
+									<td class="searchTabletd"><label>角色名字:</label></td>
 									<td class="searchTabletd">
 										<div class="nav-search">
-											<input type="text" placeholder="角色名字" class="nav-search-input" name="roleName"
+											<input type="text" placeholder="请输入角色名字" class="nav-search-input" name="roleName"
 												   value="${fpd.roleName}" style="width: 145px;"/>
 										</div>
 									</td>
@@ -63,7 +64,6 @@
 								</thead>
 								<c:choose>
 									<c:when test="${not empty roleList_z}">
-										<c:if test="${QX.cha == 1 }">
 										<c:forEach items="${roleList_z}" var="var" varStatus="vs">
 										
 										<tr>
@@ -106,12 +106,6 @@
 										</td>
 										</tr>
 										</c:forEach>
-										</c:if>
-										<c:if test="${QX.cha == 0 }">
-											<tr>
-												<td colspan="100" class="center">您无权查看</td>
-											</tr>
-										</c:if>
 									</c:when>
 									<c:otherwise>
 										<tr>

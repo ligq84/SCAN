@@ -34,7 +34,13 @@ public class LoginHandlerInterceptor extends HandlerInterceptorAdapter{
 				boolean c =Jurisdiction.getSession().getAttribute(userCompany).equals(Const.USERSESSION.get(userCompany));
 
 				if(!b || !c){
-					response.sendRedirect(request.getContextPath() + Const.LOGIN);
+					Object carId = Jurisdiction.getSession().getAttribute(Const.CARID);
+					if(null!=carId){
+						response.sendRedirect(request.getContextPath() + Const.LOGINSCAN);
+					}else{
+						response.sendRedirect(request.getContextPath() + Const.LOGIN);
+					}
+
 				}
 				return b;
 			}else{
