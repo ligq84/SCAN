@@ -16,30 +16,30 @@
 
 	<style type="text/css">
 		.fontSize{
-			font-size:35px;
+			font-size:10px;
 			font-family: Microsoft YaHei;
 			color: #282828;
 			text-align: left;
-			padding-left: 180px;
-			padding-top: 50px;
+			padding-left: 50px;
+			padding-top: 10px;
 		}
 		.fontSizeCode{
-			font-size:35px;
+			font-size:12px;
 			font-family: Microsoft YaHei;
 			color: #282828;
 			text-align: left;
-			padding-left:138px;
-			padding-top: 10px;
-			letter-spacing:13px;
+			padding-left:47px;
+			padding-top: 0px;
+			letter-spacing:10px;
 		}
 	</style>
 </head>
 <body>
 <div id="zhongxin" style="width: 1190px;text-align: left;">
-	<table style="width: 660px;height: 660px;border: 1px solid black;margin-left: 96px;"  cellspacing="1" bgcolor="#221144">
+	<table style="width: 330px;height: 330px;border: 1px solid black;margin-left: 21px;"  cellspacing="1" bgcolor="#221144">
 		<tr bgcolor="#EFEFFF">
 			<td align="center" style="text-align: left">
-				<img src="/static/images/printCompayLogo.jpg" style="margin-left: 52px;margin-top: 26px;width: 560px;"><br/>
+				<img src="/static/images/printCompayLogo.jpg" style="margin-left: 21px;margin-top: 16px;width: 288px;"><br/>
 				<div class="row fontSize">
 					<label>小推车名称：</label><span>${pd.NAME}</span>
 				</div>
@@ -52,7 +52,7 @@
 				<div class="row fontSize">
 					<label>采购时间：</label><span>${pd.PURCHASEDATE}</span>
 				</div>
-				<img src="${pd.BARCODEURL}" style="margin-top: 80px;margin-left: 70px;"><br/>
+				<img src="${pd.BARCODEURL}" style="margin-top: 20px;margin-left: 12px;"><br/>
 				<div class="row fontSizeCode"  >
 					<span>${pd.BARCODE}</span>
 				</div>

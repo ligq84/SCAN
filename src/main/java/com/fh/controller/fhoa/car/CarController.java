@@ -252,7 +252,7 @@ public class CarController extends BaseController {
 				file.delete();
 				file.createNewFile();
 			}
-			OneDimensionCode.getBarcodeWriteFile(pd.get("BARCODE").toString(),600,150, file);
+			OneDimensionCode.getBarcodeWriteFile(pd.get("BARCODE").toString(),300,75, file);
 			String BARCODEURL ="http://" + request.getServerName()+":" +request.getServerPort()+systemPath+fileName;
 			pd.put("BARCODEURL",BARCODEURL);
 			carService.edit(pd);

@@ -247,7 +247,7 @@
 									<%--<input type="hidden" name="DEPARTMENT_ID" id="DEPARTMENT_ID" value="${pd.DEPARTMENT_ID}"/>--%>
 									<%--<div class="selectTree" id="selectTree"></div>--%>
 										<select class="nav-search-input form-control" name="DEPARTMENT_ID" id="DEPARTMENT_ID" style="vertical-align:top;" >
-											<option value="">全选</option>
+											<option value="">请选择</option>
 											<c:forEach items="${deptList}" var="dept">
 												<option value="${dept.DEPARTMENT_ID }" <c:if test="${dept.DEPARTMENT_ID == pd.DEPARTMENT_ID }">selected</c:if> >${dept.NAME}</option>
 											</c:forEach>
@@ -292,17 +292,17 @@
 						</div>
 						<div class="row" style="margin-left: 15px;">
 							<div class="form-group" style="margin-top: 10px">
-								<label for="USERNAME" class="col-sm-1 control-label" ><span style="color: red">*</span>系统账号:</label>
+								<label for="USERNAME" class="col-sm-1 control-label" >系统账号:</label>
 								<div class="col-sm-2">
 									<input type="text" class="form-control" name="USERNAME" id="USERNAME" value="${pd.USERNAME}" maxlength="30" placeholder="这里输入系统账号"
-										   style="width:98%; text-align: left;"  <c:if test="${msg =='edit' && not empty pd.USERNAME }">readonly</c:if> />
+										   style="width:98%; text-align: left;cursor: pointer"  <c:if test="${msg =='edit' && not empty pd.USERNAME }">readonly</c:if> />
 								</div>
-								<label for="PASSWORD" class="col-sm-1 control-label" ><span style="color: red">*</span>登录密码:</label>
+								<label for="PASSWORD" class="col-sm-1 control-label" >登录密码:</label>
 								<div class="col-sm-2">
 									<input type="text"  class="form-control" name="PASSWORD" id="PASSWORD" value="${pd.PASSWORD}" maxlength="30" placeholder="这里输入登录密码"
 										   style="width:98%;text-align: left;"/>
 								</div>
-								<label for="role_id" class="col-sm-1 control-label" ><span style="color: red">*</span>系统角色:</label>
+								<label for="role_id" class="col-sm-1 control-label" >系统角色:</label>
 								<div class="col-sm-2">
 									<select class="chosen-select form-control control-label"  name="ROLE_ID" id="role_id" data-placeholder="这里输入系统角色" style="vertical-align:top;"  title="系统角色" style="width:98%;" >
 										<option value=""></option>
@@ -612,6 +612,17 @@
 			if($("#USERNAME").val()==""){
 
 			}else{
+				if(/[\u4E00-\u9FA5]/i.test($("#USERNAME").val())){
+					$("#USERNAME").tips({
+						side:3,
+						msg:'系统账号不能有中文',
+						bg:'#AE81FF',
+						time:2
+					});
+					$("#USERNAME").focus();
+					return false;
+				}
+
 				if($("#USERNAME").val().length<6){
 					$("#USERNAME").tips({
 						side:3,
