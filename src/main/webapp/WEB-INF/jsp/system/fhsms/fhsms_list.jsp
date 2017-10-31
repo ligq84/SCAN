@@ -96,15 +96,16 @@
 												   data-date-format="yyyy-mm-dd" readonly="readonly" style="width:145px;" placeholder="结束日期" title="结束日期"/>
 										</div>
 									</td>
-									<c:if test="${QX.cha == 1 }">
+									<%--<c:if test="${QX.cha == 1 }">--%>
 										<td class="searchTabletd">
 											<a class="btn btn-mini btn-qg" onclick="tosearch();">查询</a>
-											<c:if test="${QX.FHSMS == 1 }">
+											<c:if test="${QX.add == 1 }">
 												<a  class="btn btn-mini btn-qg" onclick="toSendMesg()">
 													发送通知
-												</a></c:if>
+												</a>
+											</c:if>
 										</td>
-									</c:if>
+									<%--</c:if>--%>
 									<%--<td style="padding-left:20px;"><a href="fhsms/adminList.do?TYPE=1"><span class="label label-<c:if test="${pd.TYPE != '2' }">success</c:if> arrowed-right arrowed-in">收信箱</span></a></td>--%>
 									<%--<td><a href="fhsms/adminList.do?TYPE=2"><span class="label label-<c:if test="${pd.TYPE == '2' }">info</c:if> arrowed-right arrowed-in">发信箱</span></a></td>--%>
 								</tr>
@@ -121,7 +122,7 @@
 									<th class="center">通知标题</th>
 									<th class="center">机器名称</th>
 									<th class="center">通知类型</th>
-									<%--<th class="center">接收人群</th>--%>
+									<th class="center">接收人群</th>
 									<th class="center">发信人</th>
 									<th class="center">收信人</th>
 									<th class="center">发信时间</th>
@@ -134,47 +135,43 @@
 								<!-- 开始循环 -->
 								<c:choose>
 									<c:when test="${not empty varList}">
-										<c:if test="${QX.cha == 1 }">
+										<%--<c:if test="${QX.cha == 1 }">--%>
 											<c:forEach items="${varList}" var="var" varStatus="vs">
 												<tr>
-														<%--<td class='center'>--%>
-														<%--<label class="pos-rel"><input type='checkbox' name='ids' id="${var.TO_USERNAME}" value="${var.FHSMS_ID}" class="ace" /><span class="lbl"></span></label>--%>
-														<%--</td>--%>
 													<td class='center' style="width: 30px;">${vs.index+1}</td>
 													<td class='center'>${var.TITLE}</td>
 													<td class='center'>${var.machine_name}</td>
 													<td class='center'>${var.SMS_TYPE}</td>
-													<%--<td class='center'>${var.to_staff}</td>--%>
+													<td class='center'>${var.to_staff}</td>
 													<td class='center'>${var.FROM_USERNAME}</td>
 													<td class='center'>${var.TO_USERNAME}</td>
 													<td class='center'>${var.SEND_TIME}</td>
-													<td class='center' id="STATUS${vs.index+1}"><c:if test="${var.STATUS == '2' }"><span class="label label-important arrowed-in">未读</span></c:if><c:if test="${var.STATUS == '1' }"><span class="label label-success arrowed">已读</span></c:if></td>
-													<td class="center">
-														<c:if test="${QX.edit != 1 && QX.del != 1 }">
-															<span class="label label-large label-grey arrowed-in-right arrowed-in"><i class="ace-icon fa fa-lock" title="无权限"></i></span>
+													<td class='center' id="STATUS${vs.index+1}">
+														<c:if test="${var.STATUS == '2' }">
+															<span class="label label-important arrowed-in">未读</span>
 														</c:if>
+														<c:if test="${var.STATUS == '1' }">
+															<span class="label label-success arrowed">已读</span>
+														</c:if>
+													</td>
+													<td class="center">
+
 														<div class="btn-group">
 															<a class="btn btn-xs btn-info" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUS}','${pd.TYPE == '2'?'2':'1' }','${var.FHSMS_ID}','${var.SANME_ID}');">
 																<i class="ace-icon fa fa-envelope-o bigger-120"></i>
 															</a>
-																<%--<c:if test="${QX.FHSMS == 1 }">--%>
-																<%--<a class="btn btn-xs btn-info" title='发送站内信' onclick="sendFhsms('${var.TO_USERNAME}');">--%>
-																<%--<i class="ace-icon fa fa-envelope-o bigger-120" title="发送站内信"></i>--%>
-																<%--</a>--%>
-																<%--</c:if>--%>
-
 														</div>
 
 													</td>
 												</tr>
 
 											</c:forEach>
-										</c:if>
-										<c:if test="${QX.cha == 0 }">
-											<tr>
-												<td colspan="100" class="center">您无权查看</td>
-											</tr>
-										</c:if>
+										<%--</c:if>--%>
+										<%--<c:if test="${QX.cha == 0 }">--%>
+											<%--<tr>--%>
+												<%--<td colspan="100" class="center">您无权查看</td>--%>
+											<%--</tr>--%>
+										<%--</c:if>--%>
 									</c:when>
 									<c:otherwise>
 										<tr class="main_info">

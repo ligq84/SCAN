@@ -52,7 +52,11 @@ public class FhsmsService implements FhsmsManager{
 	public List<PageData> list(Page page)throws Exception{
 		return (List<PageData>)dao.findForList("FhsmsMapper.datalistPage", page);
 	}
-	
+
+	public List<PageData> timeWindow(PageData pageData)throws Exception{
+		return (List<PageData>)dao.findForList("FhsmsMapper.timeWindow", pageData);
+	}
+
 	/**列表(全部)
 	 * @param pd
 	 * @throws Exception

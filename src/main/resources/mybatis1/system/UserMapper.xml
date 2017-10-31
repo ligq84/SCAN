@@ -378,7 +378,7 @@
 
 	<select id="getCodeByCarCode" parameterType="String" resultType="pd">
 		SELECT b.`code` AS MCODE,a.CAR_ID FROM oa_car a
-		LEFT JOIN oa_company b ON a.company_id = a.company_id
+		LEFT JOIN oa_company b ON a.company_id = b.company_id
 		WHERE a.barcode=#{barcode} and a.deleted=0
 	</select>
 

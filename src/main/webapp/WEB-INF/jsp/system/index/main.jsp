@@ -29,6 +29,10 @@
 		::-webkit-scrollbar{
 			display: none;
 		}
+		.modal-backdrop.in {
+			opacity: 0.5;
+			filter: alpha(opacity=50);
+		}
 	</style>
 </head>
 	<body class="no-skin">
@@ -130,7 +134,20 @@
 			</div><!-- /.main-content -->
 
 		</div><!-- /.main-container -->
+		<div class="modal fade" id="myModal" tabindex="100" role="dialog" aria-labelledby="myModalLabel" >
+			<div class="modal-dialog"  style="width:138px;text-align: center">
+				<div class="modal-content">
+					<div class="modal-header" >
+						<div class="row" id="tpmesg">
 
+						</div>
+						<a  href="<%=basePath%>fhsms/tolist.do'" onclick="$('#myModal').modal('hide')"  target="mainFrame">立即查看 </a>
+					</div>
+
+
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
 		<!-- basic scripts -->
 		<!-- 页面底部js¨ -->
 		<%@ include file="foot.jsp"%>
@@ -186,5 +203,40 @@
 		
 		<!--提示框-->
 		<script type="text/javascript" src="static/js/jquery.tips.js"></script>
+	 	<script type="text/javascript">
+			showsms();
+			window.setInterval(showsms,5000)
+			function showsms(){
+				var mainUrl=$("#mainFrame").attr("src");
+				if($('#myModal').modal()=="show" || mainUrl.indexOf("fhsms/tolist")>0){
+
+				}else{
+					$.ajax({
+						url: '<%=basePath%>fhsms/timeWindow.do',
+						type: 'post',
+						dataType:'json',
+						success: function (result) {
+							if(result.result="success"){
+								console.log(result)
+								if(null != result.data&&result.data.length>0){
+									var str="";
+									$("#tpmesg").html("");
+									for(var i = 0;i<result.data.length;i++){
+										if(result.data[i].SMS_TYPE == "2"){
+											str+="您有新的"+result.data[i].number+"条维修通知<br/>"
+										}
+										if(result.data[i].SMS_TYPE == "4"){
+											str+="您有新的"+result.data[i].number+"条改规格通知<br/>"
+										}
+									}
+									$("#tpmesg").html(str);
+									$('#myModal').modal('show')
+								}
+							}
+						}
+					});
+				}
+			}
+		</script>
 	</body>
 </html>

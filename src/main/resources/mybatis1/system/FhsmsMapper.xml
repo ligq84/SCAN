@@ -143,6 +143,9 @@
 		<if test="pd.FROM_USERNAME != null and pd.FROM_USERNAME != ''">
 			and FROM_USERNAME = #{pd.FROM_USERNAME}
 		</if>
+		<if test="pd.TO_USERNAME != null and pd.TO_USERNAME != ''">
+			and TO_USERNAME = #{pd.TO_USERNAME}
+		</if>
 		<if test="pd.lastLoginStart!=null and pd.lastLoginStart!=''"><!-- 开始时间检索 -->
 			and SEND_TIME &gt;= #{pd.lastLoginStart} 
 		</if>
@@ -227,4 +230,13 @@
 		FHSMS_ID = #{FHSMS_ID}
 	</update>
 
+	<select id="timeWindow" parameterType="pd" resultType="pd">
+		select
+		SMS_TYPE,count(1) as number
+		from sys_fhsms
+		where   STATUS = 2  and SMS_TYPE in(2,4)
+		and   COMPANY_ID = #{COMPANY_ID} and TO_USERNAME = #{TO_USERNAME} and STATUS = 2
+
+
+	</select>
 </mapper>

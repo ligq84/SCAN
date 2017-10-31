@@ -55,7 +55,24 @@ setTimeout("top.hangge()",500);
 	<script src="static/ace/js/ace/ace.js"></script>
 	<!-- inline scripts related to this page -->
 	<script type="text/javascript">
-		$(top.hangge());
+//		$(top.hangge());
+//		timeWindow();
+		function timeWindow(){
+			top.jzts();
+			var diag = new top.Dialog();
+			diag.Drag=true;
+			diag.Title ="通知提醒";
+			diag.URL = '<%=basePath%>fhsms/timeWindow.do';
+			diag.Width = 380;
+			diag.Height = 320;
+			diag.CancelEvent = function(){ //关闭事件
+				if('none' == diag.innerFrame.contentWindow.document.getElementById('zhongxin').style.display){
+					parent.location.href="<%=basePath%>fhsms/listscan.do";
+				}
+				diag.close();
+			};
+			diag.show();
+		}
 	</script>
 <script type="text/javascript" src="static/ace/js/jquery.js"></script>
 </body>

@@ -35,7 +35,9 @@ public interface FhsmsManager{
 	 * @throws Exception
 	 */
 	public List<PageData> list(Page page)throws Exception;
-	
+
+	List<PageData> timeWindow(PageData pageData)throws Exception;
+
 	/**列表(全部)
 	 * @param pd
 	 * @throws Exception
