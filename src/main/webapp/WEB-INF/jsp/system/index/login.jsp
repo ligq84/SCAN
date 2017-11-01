@@ -138,9 +138,13 @@
 	<div id="templatemo_banner_slide" class="container_wapper">
 		<div class="camera_wrap camera_emboss" id="camera_slide">
 			<!-- 背景图片 -->
-			<div data-src="static/login/images/logo_bg.png"></div>
-			<div data-src="static/login/images/logo_bg.png"></div>
-			<div data-src="static/login/images/logo_bg.png"></div>
+			<%--<div data-src="static/login/images/logo_bg.png"></div>--%>
+			<%--<div data-src="static/login/images/logo_bg.png"></div>--%>
+			<%--<div data-src="static/login/images/logo_bg.png"></div>--%>
+			<div data-src="static/images/1024.jpg"></div>
+			<div data-src="static/images/1024.jpg"></div>
+			<div data-src="static/images/1024.jpg"></div>
+
 		</div>
 		<!-- #camera_wrap_3 -->
 	</div>

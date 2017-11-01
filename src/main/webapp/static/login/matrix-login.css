@@ -44,9 +44,9 @@ body {   padding: 0;    margin-top:0px;margin: 0px;}
 #logoimage{
  overflow: hidden !important; z-index: 101;  text-align: center;  position: relative; margin-top:70px;margin-left:13%;background-color:rgba(0,0,0,0);width: 500px;
 }
-#logo, #loginbox {    width: 20%;    margin-left: auto;  margin-right: auto;   position: relative;}
+#logo, #loginbox {    width: 23%;    margin-left: auto;  margin-right: auto;   position: relative;}
 #logo img {  margin: 0 auto;    display: block;}
-#loginbox { overflow: hidden !important; z-index: 100;  text-align: center;  position: relative; margin-top:16.5%;margin-right:17%;background-color: white}
+#loginbox { overflow: hidden !important; z-index: 100;  text-align: center;  position: relative; margin-top:22.5%;margin-right:11%;background-color: white}
 #logobutton{overflow: hidden !important; z-index: 101;  text-align: center;  position: absolute; bottom:50px !important;
  background-color:rgba(0,0,0,0);font-size: 14px;left: 48%;}
 /* #loginbox form{ width:100%; background:#2E363F; position:relative; top:0; left:0; } */
