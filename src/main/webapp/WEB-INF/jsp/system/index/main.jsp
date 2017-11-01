@@ -141,7 +141,8 @@
 						<div class="row" id="tpmesg">
 
 						</div>
-						<a  href="<%=basePath%>fhsms/tolist.do'" onclick="$('#myModal').modal('hide')"  target="mainFrame">立即查看 </a>
+						<a  href="<%=basePath%>fhsms/tolist.do" onclick="$('#myModal').modal('hide')"  target="mainFrame">立即查看 </a>
+						<a  href="javascript:void(0)" onclick="$('#myModal').modal('hide')"  target="mainFrame">取消 </a>
 					</div>
 
 
@@ -205,12 +206,8 @@
 		<script type="text/javascript" src="static/js/jquery.tips.js"></script>
 	 	<script type="text/javascript">
 			showsms();
-			window.setInterval(showsms,5000)
+			window.setInterval(showsms,30000)
 			function showsms(){
-				var mainUrl=$("#mainFrame").attr("src");
-				if($('#myModal').modal()=="show" || mainUrl.indexOf("fhsms/tolist")>0){
-
-				}else{
 					$.ajax({
 						url: '<%=basePath%>fhsms/timeWindow.do',
 						type: 'post',
@@ -229,13 +226,18 @@
 											str+="您有新的"+result.data[i].number+"条改规格通知<br/>"
 										}
 									}
-									$("#tpmesg").html(str);
-									$('#myModal').modal('show')
+									if(str.length>1){
+										$("#tpmesg").html(str);
+										$('#myModal').modal('show')
+									}
+
+								}else {
+									$('#myModal').modal('hide')
 								}
 							}
 						}
 					});
-				}
+
 			}
 		</script>
 	</body>

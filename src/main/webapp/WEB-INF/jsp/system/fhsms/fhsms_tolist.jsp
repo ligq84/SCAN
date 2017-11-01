@@ -157,7 +157,7 @@
 													<td class="center">
 
 														<div class="btn-group">
-															<a class="btn btn-xs btn-info" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUS}','${pd.TYPE == '2'?'2':'1' }','${var.FHSMS_ID}','${var.SANME_ID}');">
+															<a class="btn btn-xs btn-info" title="查看" onclick="viewx('STATUS${vs.index+1}','${var.STATUS}','${pd.TYPE == '2'?'2':'1' }','${var.FHSMS_ID}','${var.SANME_ID}','${var.TO_USERNAME}');">
 																<i class="ace-icon fa fa-envelope-o bigger-120"></i>
 															</a>
 														</div>
@@ -312,7 +312,7 @@
 		}
 		
 		//查看信件
-		function viewx(ztid,STATUS,type,Id,SANME_ID){
+		function viewx(ztid,STATUS,type,Id,SANME_ID,TO_USERNAME){
 			if(type == "1" && STATUS == '2' && $("#"+ztid).html() == '<span class="label label-important arrowed-in">未读</span>'){
 				$("#"+ztid).html('<span class="label label-success arrowed">已读</span>');
 				top.readFhsms();//读取站内信时减少未读总数  <!-- readFhsms()函数在 WebRoot\static\js\myjs\head.js中 -->
@@ -321,7 +321,7 @@
 			 var diag = new top.Dialog();
 			 diag.Drag=true;
 			 diag.Title ="站内信";
-			 diag.URL = '<%=basePath%>fhsms/goView.do?FHSMS_ID='+Id+'&TYPE='+type+'&SANME_ID='+SANME_ID+'&STATUS='+STATUS;
+			 diag.URL = '<%=basePath%>fhsms/goView.do?FHSMS_ID='+Id+'&TYPE='+type+'&SANME_ID='+SANME_ID+'&STATUS='+STATUS+'&TO_USERNAME='+TO_USERNAME;
 			 diag.Width = 600;
 			 diag.Height = 460;
 			 diag.CancelEvent = function(){ //关闭事件
