@@ -141,7 +141,7 @@
 						<div class="row" id="tpmesg">
 
 						</div>
-						<a  href="<%=basePath%>fhsms/tolist.do" onclick="$('#myModal').modal('hide')"  target="mainFrame">立即查看 </a>
+						<a   onclick="$('#myModal').modal('hide');siMenu('z109','lm109','通知中心','fhsms/tolist.do')"  target="mainFrame">立即查看 </a>
 						<a  href="javascript:void(0)" onclick="$('#myModal').modal('hide')"  target="mainFrame">取消 </a>
 					</div>
 
