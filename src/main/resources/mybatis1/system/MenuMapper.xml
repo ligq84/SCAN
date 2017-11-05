@@ -63,7 +63,7 @@
 			<include refid="Field"></include>
 		from
 			<include refid="tableName"></include>
-		where PARENT_ID = #{parentId} order by (MENU_ORDER+0)
+		where PARENT_ID = #{parentId} and SYSTEM_TYPE!=3 order by (MENU_ORDER+0)
 	</select>
 	<select id="listSubMenuByParentIdTwo" parameterType="pd" resultMap="menuResultMap">
 		select
