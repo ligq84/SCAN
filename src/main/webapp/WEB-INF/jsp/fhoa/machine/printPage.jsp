@@ -16,12 +16,12 @@
 
 	<style type="text/css">
 		.fontSize{
-			font-size:19px;
+			font-size:16px;
 			font-family: Microsoft YaHei;
 			color: #282828;
 			text-align: left;
-			margin-left: 84px;
-			margin-top: 46px;
+			margin-left: 36px;
+			margin-top: 18px;
 		}
 		.fontSize >div{
 			width: 98px;
@@ -32,23 +32,23 @@
 		 }
 
 		.fontSizeCode{
-			font-size:35px;
+			font-size:16px;
 			font-family: Microsoft YaHei;
 			color: #282828;
 			text-align: left;
-			padding-left:70px;
-			padding-top: 10px;
+			padding-left:107px;
+			padding-top: 5px;
 			letter-spacing:13px;
 		}
 	</style>
 	</head>
 <body>
-<div id="zhongxin" style="width: 1190px;text-align: left;">
+<div id="zhongxin" style="width: 1024px;text-align: left;">
 
-<table  style="width: 660px;height: 660px;border: 1px solid black;margin-left: 96px;" cellspacing="1" bgcolor="#221144">
+<table  style="width: 600px;height: 330px;border: 1px solid black;margin-left: 96px;" cellspacing="1" bgcolor="#221144">
   <tr bgcolor="#EFEFFF">
     <td  style="text-align: left">
-		<img src="/static/images/printCompayLogo.jpg" style="margin-left: 52px;margin-top: 26px;width: 560px;"><br/>
+		<%--<img src="/static/images/printCompayLogo.jpg" style="margin-left: 52px;margin-top: 26px;width: 560px;"><br/>--%>
 		<div class="row fontSize">
 			<div>机器名称：</div><span>${pd.NAME}</span>
 			<div>机器类型：</div><span>${pd.typeName}</span>
@@ -64,7 +64,8 @@
 		<div class="row fontSize">
 			<div>生产厂家：</div><span style="width: 280px;">${pd.manufacturer}</span>
 		</div>
-		<img src="${pd.BARCODEURL}" style="margin-top: 44px;margin-left: 4px;"><br/>
+		<img src="${pd.BARCODEURL}" style="margin-top: 18px;margin-left: 57px;width: 400px;height: 97px">
+			<img src="/static/images/machine_logo.png" style="margin-top: 18px;margin-left: 30px;"><br/>
 		<div class="row fontSizeCode"  >
 			<span>${pd.BARCODE}</span>
 		</div>
