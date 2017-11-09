@@ -36,7 +36,7 @@
 				/static/images/** 			= anon
 				/uploadFiles/uploadImgs/** 	= anon
 	           	/code.do 					= anon
-				/scan 						= anon
+				/slogin 					= anon
 	           	/login_login	 			= anon
 				/scan_login					= anon
 	           	/app**/** 					= anon

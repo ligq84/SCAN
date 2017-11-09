@@ -78,7 +78,7 @@ public class LoginController extends BaseController {
 		return mv;
 	}
 
-	@RequestMapping(value="/scan")
+	@RequestMapping(value="/slogin")
 	public ModelAndView toScan()throws Exception{
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
