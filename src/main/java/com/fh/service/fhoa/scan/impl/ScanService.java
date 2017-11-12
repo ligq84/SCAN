@@ -103,6 +103,7 @@ public class ScanService implements ScanManager {
 				}
 				pd.put("mrid", UuidUtil.get32UUID());
 				pd.put("start_date",new Date());
+				pd.put("create_date",new Date());
 				dao.save("MachineRecordMapper.save", pd);
 			}
 			//保存扫描记录
@@ -110,6 +111,7 @@ public class ScanService implements ScanManager {
 			pd.put("target_rule",pd.get("target_rule_scan"));
 			pd.put("change_position",pd.get("change_position_scan"));
 			pd.put("cycle_type",pd.get("cycle_type_scan"));
+			pd.put("create_date",new Date());
 			save(pd);
 			return ResultData.init(ResultData.SUCCESS,"操作成功","");
 		} catch (Exception e) {
